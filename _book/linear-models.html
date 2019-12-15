@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 7 Linear Models | Course Handouts for Bayesian Data Analysis Class</title>
+  <meta name="description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Spring semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
+  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 7 Linear Models | Course Handouts for Bayesian Data Analysis Class" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Spring semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 7 Linear Models | Course Handouts for Bayesian Data Analysis Class" />
+  
+  <meta name="twitter:description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Spring semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
+  
+
+<meta name="author" content="Mark Lai" />
+
+
+<meta name="date" content="2019-12-14" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="markov-chain-monte-carlo.html"/>
+<link rel="next" href="model-diagnostics.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<script src="libs/viz-0.3/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.1/grViz.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">PSYC 621 Course Notes</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#history-of-bayesian-statistics"><i class="fa fa-check"></i><b>1.1</b> History of Bayesian Statistics</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="introduction.html"><a href="introduction.html#thomas-bayes-17011762"><i class="fa fa-check"></i><b>1.1.1</b> Thomas Bayes (1701–1762)</a></li>
+<li class="chapter" data-level="1.1.2" data-path="introduction.html"><a href="introduction.html#pierre-simon-laplace-17491827"><i class="fa fa-check"></i><b>1.1.2</b> Pierre-Simon Laplace (1749–1827)</a></li>
+<li class="chapter" data-level="1.1.3" data-path="introduction.html"><a href="introduction.html#th-century"><i class="fa fa-check"></i><b>1.1.3</b> 20th Century</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#motivations-for-using-bayesian-methods"><i class="fa fa-check"></i><b>1.2</b> Motivations for Using Bayesian Methods</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="introduction.html"><a href="introduction.html#problem-with-classical-frequentist-statistics"><i class="fa fa-check"></i><b>1.2.1</b> Problem with classical (frequentist) statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#probability"><i class="fa fa-check"></i><b>1.3</b> Probability</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="introduction.html"><a href="introduction.html#classical-interpretation"><i class="fa fa-check"></i><b>1.3.1</b> Classical Interpretation</a></li>
+<li class="chapter" data-level="1.3.2" data-path="introduction.html"><a href="introduction.html#frequentist-interpretation"><i class="fa fa-check"></i><b>1.3.2</b> Frequentist Interpretation</a></li>
+<li class="chapter" data-level="1.3.3" data-path="introduction.html"><a href="introduction.html#problem-of-the-single-case"><i class="fa fa-check"></i><b>1.3.3</b> Problem of the single case</a></li>
+<li class="chapter" data-level="1.3.4" data-path="introduction.html"><a href="introduction.html#subjectivist-interpretation"><i class="fa fa-check"></i><b>1.3.4</b> Subjectivist Interpretation</a></li>
+<li class="chapter" data-level="1.3.5" data-path="introduction.html"><a href="introduction.html#basics-of-probability"><i class="fa fa-check"></i><b>1.3.5</b> Basics of Probability</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#bayess-theorem"><i class="fa fa-check"></i><b>1.4</b> Bayes’s Theorem</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="introduction.html"><a href="introduction.html#example-1-base-rate-fallacy-from-wikipedia"><i class="fa fa-check"></i><b>1.4.1</b> Example 1: Base rate fallacy (From Wikipedia)</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="introduction.html"><a href="introduction.html#bayesian-statistics"><i class="fa fa-check"></i><b>1.5</b> Bayesian Statistics</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="introduction.html"><a href="introduction.html#example-2-locating-a-plane"><i class="fa fa-check"></i><b>1.5.1</b> Example 2: Locating a Plane</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="introduction.html"><a href="introduction.html#comparing-bayesian-and-frequentist-statistics"><i class="fa fa-check"></i><b>1.6</b> Comparing Bayesian and Frequentist Statistics</a></li>
+<li class="chapter" data-level="1.7" data-path="introduction.html"><a href="introduction.html#software-for-bayesian-statistics"><i class="fa fa-check"></i><b>1.7</b> Software for Bayesian Statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="bayesian-inference.html"><a href="bayesian-inference.html"><i class="fa fa-check"></i><b>2</b> Bayesian Inference</a><ul>
+<li class="chapter" data-level="2.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#steps-of-bayesian-data-analysis"><i class="fa fa-check"></i><b>2.1</b> Steps of Bayesian Data Analysis</a></li>
+<li class="chapter" data-level="2.2" data-path="bayesian-inference.html"><a href="bayesian-inference.html#real-data-example"><i class="fa fa-check"></i><b>2.2</b> Real Data Example</a></li>
+<li class="chapter" data-level="2.3" data-path="bayesian-inference.html"><a href="bayesian-inference.html#choosing-a-model"><i class="fa fa-check"></i><b>2.3</b> Choosing a Model</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#exchangeability"><i class="fa fa-check"></i><b>2.3.1</b> Exchangeability*</a></li>
+<li class="chapter" data-level="2.3.2" data-path="bayesian-inference.html"><a href="bayesian-inference.html#probability-distributions"><i class="fa fa-check"></i><b>2.3.2</b> Probability Distributions</a></li>
+<li class="chapter" data-level="2.3.3" data-path="bayesian-inference.html"><a href="bayesian-inference.html#the-likelihood"><i class="fa fa-check"></i><b>2.3.3</b> The Likelihood</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="bayesian-inference.html"><a href="bayesian-inference.html#specifying-priors"><i class="fa fa-check"></i><b>2.4</b> Specifying Priors</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#beta-distribution"><i class="fa fa-check"></i><b>2.4.1</b> Beta Distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="bayesian-inference.html"><a href="bayesian-inference.html#obtain-the-posterior-distributions"><i class="fa fa-check"></i><b>2.5</b> Obtain the Posterior Distributions</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#grid-approximation"><i class="fa fa-check"></i><b>2.5.1</b> Grid Approximation</a></li>
+<li class="chapter" data-level="2.5.2" data-path="bayesian-inference.html"><a href="bayesian-inference.html#using-conjugate-priors"><i class="fa fa-check"></i><b>2.5.2</b> Using Conjugate Priors</a></li>
+<li class="chapter" data-level="2.5.3" data-path="bayesian-inference.html"><a href="bayesian-inference.html#laplace-approximation-with-maximum-a-posteriori-estimation"><i class="fa fa-check"></i><b>2.5.3</b> Laplace Approximation with Maximum A Posteriori Estimation</a></li>
+<li class="chapter" data-level="2.5.4" data-path="bayesian-inference.html"><a href="bayesian-inference.html#markov-chain-monte-carlo-mcmc"><i class="fa fa-check"></i><b>2.5.4</b> Markov Chain Monte Carlo (MCMC)</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="bayesian-inference.html"><a href="bayesian-inference.html#summarizing-the-posterior-distribution"><i class="fa fa-check"></i><b>2.6</b> Summarizing the Posterior Distribution</a><ul>
+<li class="chapter" data-level="2.6.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#posterior-mean-median-and-mode"><i class="fa fa-check"></i><b>2.6.1</b> Posterior Mean, Median, and Mode</a></li>
+<li class="chapter" data-level="2.6.2" data-path="bayesian-inference.html"><a href="bayesian-inference.html#uncertainty-estimates"><i class="fa fa-check"></i><b>2.6.2</b> Uncertainty Estimates</a></li>
+<li class="chapter" data-level="2.6.3" data-path="bayesian-inference.html"><a href="bayesian-inference.html#credible-intervals"><i class="fa fa-check"></i><b>2.6.3</b> Credible Intervals</a></li>
+<li class="chapter" data-level="2.6.4" data-path="bayesian-inference.html"><a href="bayesian-inference.html#probability-of-theta-higherlower-than-a-certain-value"><i class="fa fa-check"></i><b>2.6.4</b> Probability of <span class="math inline">\(\theta\)</span> Higher/Lower Than a Certain Value</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="bayesian-inference.html"><a href="bayesian-inference.html#model-checking"><i class="fa fa-check"></i><b>2.7</b> Model Checking</a><ul>
+<li class="chapter" data-level="2.7.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#posterior-predictive-distribution"><i class="fa fa-check"></i><b>2.7.1</b> Posterior Predictive Distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="bayesian-inference.html"><a href="bayesian-inference.html#posterior-predictive-check"><i class="fa fa-check"></i><b>2.8</b> Posterior Predictive Check</a></li>
+<li class="chapter" data-level="2.9" data-path="bayesian-inference.html"><a href="bayesian-inference.html#summary"><i class="fa fa-check"></i><b>2.9</b> Summary</a><ul>
+<li class="chapter" data-level="2.9.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#key-concepts"><i class="fa fa-check"></i><b>2.9.1</b> Key Concepts</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="one-parameter-models.html"><a href="one-parameter-models.html"><i class="fa fa-check"></i><b>3</b> One-Parameter Models</a><ul>
+<li class="chapter" data-level="3.1" data-path="one-parameter-models.html"><a href="one-parameter-models.html#binomialbernoulli-data"><i class="fa fa-check"></i><b>3.1</b> Binomial/Bernoulli data</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="one-parameter-models.html"><a href="one-parameter-models.html#reparameterization"><i class="fa fa-check"></i><b>3.1.1</b> Reparameterization*</a></li>
+<li class="chapter" data-level="3.1.2" data-path="one-parameter-models.html"><a href="one-parameter-models.html#posterior-predictive-check-1"><i class="fa fa-check"></i><b>3.1.2</b> Posterior Predictive Check</a></li>
+<li class="chapter" data-level="3.1.3" data-path="one-parameter-models.html"><a href="one-parameter-models.html#comparison-to-frequentist-results"><i class="fa fa-check"></i><b>3.1.3</b> Comparison to frequentist results</a></li>
+<li class="chapter" data-level="3.1.4" data-path="one-parameter-models.html"><a href="one-parameter-models.html#sensitivity-to-different-priors"><i class="fa fa-check"></i><b>3.1.4</b> Sensitivity to different priors</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="one-parameter-models.html"><a href="one-parameter-models.html#poisson-data"><i class="fa fa-check"></i><b>3.2</b> Poisson Data</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="one-parameter-models.html"><a href="one-parameter-models.html#example-2"><i class="fa fa-check"></i><b>3.2.1</b> Example 2</a></li>
+<li class="chapter" data-level="3.2.2" data-path="one-parameter-models.html"><a href="one-parameter-models.html#choosing-a-model-1"><i class="fa fa-check"></i><b>3.2.2</b> Choosing a model</a></li>
+<li class="chapter" data-level="3.2.3" data-path="one-parameter-models.html"><a href="one-parameter-models.html#choosing-a-prior"><i class="fa fa-check"></i><b>3.2.3</b> Choosing a prior</a></li>
+<li class="chapter" data-level="3.2.4" data-path="one-parameter-models.html"><a href="one-parameter-models.html#model-equations-and-diagram"><i class="fa fa-check"></i><b>3.2.4</b> Model Equations and Diagram</a></li>
+<li class="chapter" data-level="3.2.5" data-path="one-parameter-models.html"><a href="one-parameter-models.html#getting-the-posterior"><i class="fa fa-check"></i><b>3.2.5</b> Getting the posterior</a></li>
+<li class="chapter" data-level="3.2.6" data-path="one-parameter-models.html"><a href="one-parameter-models.html#posterior-predictive-check-2"><i class="fa fa-check"></i><b>3.2.6</b> Posterior Predictive Check</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html"><i class="fa fa-check"></i><b>4</b> Brief Introduction to STAN</a><ul>
+<li class="chapter" data-level="4.1" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#stan"><i class="fa fa-check"></i><b>4.1</b> <code>STAN</code></a><ul>
+<li class="chapter" data-level="4.1.1" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#stan-code"><i class="fa fa-check"></i><b>4.1.1</b> <code>STAN</code> code</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#rstan"><i class="fa fa-check"></i><b>4.2</b> <code>RStan</code></a><ul>
+<li class="chapter" data-level="4.2.1" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#assembling-data-list-in-r"><i class="fa fa-check"></i><b>4.2.1</b> Assembling data list in R</a></li>
+<li class="chapter" data-level="4.2.2" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#call-rstan"><i class="fa fa-check"></i><b>4.2.2</b> Call <code>rstan</code></a></li>
+<li class="chapter" data-level="4.2.3" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#summarize-the-results"><i class="fa fa-check"></i><b>4.2.3</b> Summarize the results</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#resources"><i class="fa fa-check"></i><b>4.3</b> Resources</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="group-comparisons.html"><a href="group-comparisons.html"><i class="fa fa-check"></i><b>5</b> Group Comparisons</a><ul>
+<li class="chapter" data-level="5.1" data-path="group-comparisons.html"><a href="group-comparisons.html#data"><i class="fa fa-check"></i><b>5.1</b> Data</a></li>
+<li class="chapter" data-level="5.2" data-path="group-comparisons.html"><a href="group-comparisons.html#between-subject-comparisons"><i class="fa fa-check"></i><b>5.2</b> Between-Subject Comparisons</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="group-comparisons.html"><a href="group-comparisons.html#plots"><i class="fa fa-check"></i><b>5.2.1</b> Plots</a></li>
+<li class="chapter" data-level="5.2.2" data-path="group-comparisons.html"><a href="group-comparisons.html#independent-sample-t-test"><i class="fa fa-check"></i><b>5.2.2</b> Independent sample t-test</a></li>
+<li class="chapter" data-level="5.2.3" data-path="group-comparisons.html"><a href="group-comparisons.html#bayesian-normal-model"><i class="fa fa-check"></i><b>5.2.3</b> Bayesian Normal Model</a></li>
+<li class="chapter" data-level="5.2.4" data-path="group-comparisons.html"><a href="group-comparisons.html#robust-model"><i class="fa fa-check"></i><b>5.2.4</b> Robust Model</a></li>
+<li class="chapter" data-level="5.2.5" data-path="group-comparisons.html"><a href="group-comparisons.html#shifted-lognormal-model"><i class="fa fa-check"></i><b>5.2.5</b> Shifted Lognormal Model*</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="group-comparisons.html"><a href="group-comparisons.html#notes-on-model-comparison"><i class="fa fa-check"></i><b>5.3</b> Notes on Model Comparison</a></li>
+<li class="chapter" data-level="5.4" data-path="group-comparisons.html"><a href="group-comparisons.html#within-subject-comparisons"><i class="fa fa-check"></i><b>5.4</b> Within-Subject Comparisons</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="group-comparisons.html"><a href="group-comparisons.html#plots-1"><i class="fa fa-check"></i><b>5.4.1</b> Plots</a></li>
+<li class="chapter" data-level="5.4.2" data-path="group-comparisons.html"><a href="group-comparisons.html#independent-sample-t-test-1"><i class="fa fa-check"></i><b>5.4.2</b> Independent sample <span class="math inline">\(t\)</span>-test</a></li>
+<li class="chapter" data-level="5.4.3" data-path="group-comparisons.html"><a href="group-comparisons.html#bayesian-normal-model-1"><i class="fa fa-check"></i><b>5.4.3</b> Bayesian Normal Model</a></li>
+<li class="chapter" data-level="5.4.4" data-path="group-comparisons.html"><a href="group-comparisons.html#using-brms"><i class="fa fa-check"></i><b>5.4.4</b> Using <code>brms</code>*</a></li>
+<li class="chapter" data-level="5.4.5" data-path="group-comparisons.html"><a href="group-comparisons.html#region-of-practical-equivalence-rope"><i class="fa fa-check"></i><b>5.4.5</b> Region of Practical Equivalence (ROPE)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html"><i class="fa fa-check"></i><b>6</b> Markov Chain Monte Carlo</a><ul>
+<li class="chapter" data-level="6.1" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#monte-carlo-simulation-with-one-unknown"><i class="fa fa-check"></i><b>6.1</b> Monte Carlo Simulation With One Unknown</a></li>
+<li class="chapter" data-level="6.2" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#markov-chain-monte-carlo-mcmc-with-one-parameter"><i class="fa fa-check"></i><b>6.2</b> Markov Chain Monte Carlo (MCMC) With One Parameter</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#the-metropolis-algorithm"><i class="fa fa-check"></i><b>6.2.1</b> The Metropolis algorithm</a></li>
+<li class="chapter" data-level="6.2.2" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#the-metropolis-hastings-algorithm"><i class="fa fa-check"></i><b>6.2.2</b> The Metropolis-Hastings Algorithm</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#markov-chain"><i class="fa fa-check"></i><b>6.3</b> Markov Chain</a></li>
+<li class="chapter" data-level="6.4" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#effective-sample-size-n_texteff"><i class="fa fa-check"></i><b>6.4</b> Effective Sample Size (<span class="math inline">\(n_\text{eff}\)</span>)</a></li>
+<li class="chapter" data-level="6.5" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#mc-error"><i class="fa fa-check"></i><b>6.5</b> MC Error</a></li>
+<li class="chapter" data-level="6.6" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#burn-inwarmup"><i class="fa fa-check"></i><b>6.6</b> Burn-in/Warmup</a><ul>
+<li class="chapter" data-level="6.6.1" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#thinning"><i class="fa fa-check"></i><b>6.6.1</b> Thinning</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#diagnostics-of-mcmc"><i class="fa fa-check"></i><b>6.7</b> Diagnostics of MCMC</a><ul>
+<li class="chapter" data-level="6.7.1" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#mixing"><i class="fa fa-check"></i><b>6.7.1</b> Mixing</a></li>
+<li class="chapter" data-level="6.7.2" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#acceptance-rate"><i class="fa fa-check"></i><b>6.7.2</b> Acceptance Rate</a></li>
+<li class="chapter" data-level="6.7.3" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#diagnostics-using-multiple-chains"><i class="fa fa-check"></i><b>6.7.3</b> Diagnostics Using Multiple Chains</a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#multiple-parameters"><i class="fa fa-check"></i><b>6.8</b> Multiple Parameters</a></li>
+<li class="chapter" data-level="6.9" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#hamiltonian-monte-carlo"><i class="fa fa-check"></i><b>6.9</b> Hamiltonian Monte Carlo</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="linear-models.html"><a href="linear-models.html"><i class="fa fa-check"></i><b>7</b> Linear Models</a><ul>
+<li class="chapter" data-level="7.1" data-path="linear-models.html"><a href="linear-models.html#what-is-regression"><i class="fa fa-check"></i><b>7.1</b> What is Regression?</a></li>
+<li class="chapter" data-level="7.2" data-path="linear-models.html"><a href="linear-models.html#one-predictor"><i class="fa fa-check"></i><b>7.2</b> One Predictor</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="linear-models.html"><a href="linear-models.html#a-continuous-predictor"><i class="fa fa-check"></i><b>7.2.1</b> A continuous predictor</a></li>
+<li class="chapter" data-level="7.2.2" data-path="linear-models.html"><a href="linear-models.html#centering"><i class="fa fa-check"></i><b>7.2.2</b> Centering</a></li>
+<li class="chapter" data-level="7.2.3" data-path="linear-models.html"><a href="linear-models.html#a-categorical-predictor"><i class="fa fa-check"></i><b>7.2.3</b> A categorical predictor</a></li>
+<li class="chapter" data-level="7.2.4" data-path="linear-models.html"><a href="linear-models.html#predictors-with-multiple-categories"><i class="fa fa-check"></i><b>7.2.4</b> Predictors with multiple categories</a></li>
+<li class="chapter" data-level="7.2.5" data-path="linear-models.html"><a href="linear-models.html#stan-4"><i class="fa fa-check"></i><b>7.2.5</b> STAN</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="linear-models.html"><a href="linear-models.html#multiple-regression"><i class="fa fa-check"></i><b>7.3</b> Multiple Regression</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="linear-models.html"><a href="linear-models.html#two-predictor-example"><i class="fa fa-check"></i><b>7.3.1</b> Two Predictor Example</a></li>
+<li class="chapter" data-level="7.3.2" data-path="linear-models.html"><a href="linear-models.html#interactions"><i class="fa fa-check"></i><b>7.3.2</b> Interactions</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="linear-models.html"><a href="linear-models.html#tabulating-the-models"><i class="fa fa-check"></i><b>7.4</b> Tabulating the Models</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="model-diagnostics.html"><a href="model-diagnostics.html"><i class="fa fa-check"></i><b>8</b> Model Diagnostics</a><ul>
+<li class="chapter" data-level="8.1" data-path="model-diagnostics.html"><a href="model-diagnostics.html#assumptions-of-linear-models"><i class="fa fa-check"></i><b>8.1</b> Assumptions of Linear Models</a></li>
+<li class="chapter" data-level="8.2" data-path="model-diagnostics.html"><a href="model-diagnostics.html#diagnostic-tools"><i class="fa fa-check"></i><b>8.2</b> Diagnostic Tools</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="model-diagnostics.html"><a href="model-diagnostics.html#posterior-predictive-check-7"><i class="fa fa-check"></i><b>8.2.1</b> Posterior Predictive Check</a></li>
+<li class="chapter" data-level="8.2.2" data-path="model-diagnostics.html"><a href="model-diagnostics.html#marginal-model-plots"><i class="fa fa-check"></i><b>8.2.2</b> Marginal model plots</a></li>
+<li class="chapter" data-level="8.2.3" data-path="model-diagnostics.html"><a href="model-diagnostics.html#residual-plots"><i class="fa fa-check"></i><b>8.2.3</b> Residual plots</a></li>
+<li class="chapter" data-level="8.2.4" data-path="model-diagnostics.html"><a href="model-diagnostics.html#multicollinearity"><i class="fa fa-check"></i><b>8.2.4</b> Multicollinearity</a></li>
+<li class="chapter" data-level="8.2.5" data-path="model-diagnostics.html"><a href="model-diagnostics.html#robust-models"><i class="fa fa-check"></i><b>8.2.5</b> Robust Models</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="model-diagnostics.html"><a href="model-diagnostics.html#other-topics"><i class="fa fa-check"></i><b>8.3</b> Other Topics</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html"><i class="fa fa-check"></i><b>9</b> Model Comparison and Regularization</a><ul>
+<li class="chapter" data-level="9.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#overfitting-and-underfitting"><i class="fa fa-check"></i><b>9.1</b> Overfitting and Underfitting</a></li>
+<li class="chapter" data-level="9.2" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#kullback-leibler-divergence"><i class="fa fa-check"></i><b>9.2</b> Kullback-Leibler Divergence</a></li>
+<li class="chapter" data-level="9.3" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#information-criteria"><i class="fa fa-check"></i><b>9.3</b> Information Criteria</a><ul>
+<li class="chapter" data-level="9.3.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#experiment-on-deviance"><i class="fa fa-check"></i><b>9.3.1</b> Experiment on Deviance</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#information-criteria-1"><i class="fa fa-check"></i><b>9.4</b> Information Criteria</a><ul>
+<li class="chapter" data-level="9.4.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#akaike-information-criteria-aic"><i class="fa fa-check"></i><b>9.4.1</b> Akaike Information Criteria (AIC)</a></li>
+<li class="chapter" data-level="9.4.2" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#deviance-information-criteria-dic"><i class="fa fa-check"></i><b>9.4.2</b> Deviance Information Criteria (DIC)</a></li>
+<li class="chapter" data-level="9.4.3" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#watanabe-akaike-information-criteria-waic"><i class="fa fa-check"></i><b>9.4.3</b> Watanabe-Akaike Information Criteria (WAIC)</a></li>
+<li class="chapter" data-level="9.4.4" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#leave-one-out-cross-validation"><i class="fa fa-check"></i><b>9.4.4</b> Leave-One-Out Cross Validation</a></li>
+<li class="chapter" data-level="9.4.5" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#example"><i class="fa fa-check"></i><b>9.4.5</b> Example</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#stackingmodel-averaging"><i class="fa fa-check"></i><b>9.5</b> Stacking/Model Averaging</a><ul>
+<li class="chapter" data-level="9.5.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#model-weights"><i class="fa fa-check"></i><b>9.5.1</b> Model Weights</a></li>
+<li class="chapter" data-level="9.5.2" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#model-averaging"><i class="fa fa-check"></i><b>9.5.2</b> Model Averaging</a></li>
+<li class="chapter" data-level="9.5.3" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#stacking"><i class="fa fa-check"></i><b>9.5.3</b> Stacking</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#shrinkage-priors"><i class="fa fa-check"></i><b>9.6</b> Shrinkage Priors</a><ul>
+<li class="chapter" data-level="9.6.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#number-of-parameters"><i class="fa fa-check"></i><b>9.6.1</b> Number of parameters</a></li>
+<li class="chapter" data-level="9.6.2" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#sparsity-inducing-priors"><i class="fa fa-check"></i><b>9.6.2</b> Sparsity-Inducing Priors</a></li>
+<li class="chapter" data-level="9.6.3" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#finnish-horseshoe"><i class="fa fa-check"></i><b>9.6.3</b> Finnish Horseshoe</a></li>
+</ul></li>
+<li class="chapter" data-level="9.7" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#variable-selection"><i class="fa fa-check"></i><b>9.7</b> Variable Selection</a><ul>
+<li class="chapter" data-level="9.7.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#projection-based-method"><i class="fa fa-check"></i><b>9.7.1</b> Projection-Based Method</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html"><i class="fa fa-check"></i><b>10</b> Hierarchical &amp; Multilevel Models</a><ul>
+<li class="chapter" data-level="10.1" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#anova"><i class="fa fa-check"></i><b>10.1</b> ANOVA</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#frequentist-anova"><i class="fa fa-check"></i><b>10.1.1</b> “Frequentist” ANOVA</a></li>
+<li class="chapter" data-level="10.1.2" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#bayesian-anova"><i class="fa fa-check"></i><b>10.1.2</b> Bayesian ANOVA</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#multilevel-modeling-mlm"><i class="fa fa-check"></i><b>10.2</b> Multilevel Modeling (MLM)</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#examples-of-clustering"><i class="fa fa-check"></i><b>10.2.1</b> Examples of clustering</a></li>
+<li class="chapter" data-level="10.2.2" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#data-1"><i class="fa fa-check"></i><b>10.2.2</b> Data</a></li>
+<li class="chapter" data-level="10.2.3" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#intraclass-correlation"><i class="fa fa-check"></i><b>10.2.3</b> Intraclass correlation</a></li>
+<li class="chapter" data-level="10.2.4" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#is-mlm-needed"><i class="fa fa-check"></i><b>10.2.4</b> Is MLM needed?</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#varying-coefficients"><i class="fa fa-check"></i><b>10.3</b> Varying Coefficients</a><ul>
+<li class="chapter" data-level="10.3.1" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#varying-intercepts"><i class="fa fa-check"></i><b>10.3.1</b> Varying Intercepts</a></li>
+<li class="chapter" data-level="10.3.2" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#varying-slopes"><i class="fa fa-check"></i><b>10.3.2</b> Varying Slopes</a></li>
+<li class="chapter" data-level="10.3.3" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#varying-sigma"><i class="fa fa-check"></i><b>10.3.3</b> Varying <span class="math inline">\(\sigma\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#model-comparisons"><i class="fa fa-check"></i><b>10.4</b> Model Comparisons</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>11</b> Generalized Linear Models</a><ul>
+<li class="chapter" data-level="11.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#basics-of-generalized-linear-models"><i class="fa fa-check"></i><b>11.1</b> Basics of Generalized Linear Models</a></li>
+<li class="chapter" data-level="11.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#binary-logistic-regression"><i class="fa fa-check"></i><b>11.2</b> Binary Logistic Regression</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#the-logit-link"><i class="fa fa-check"></i><b>11.2.1</b> The logit link</a></li>
+<li class="chapter" data-level="11.2.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#choice-of-priors"><i class="fa fa-check"></i><b>11.2.2</b> Choice of Priors</a></li>
+<li class="chapter" data-level="11.2.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#interpreting-the-coefficients"><i class="fa fa-check"></i><b>11.2.3</b> Interpreting the coefficients</a></li>
+<li class="chapter" data-level="11.2.4" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#model-checking-1"><i class="fa fa-check"></i><b>11.2.4</b> Model Checking</a></li>
+<li class="chapter" data-level="11.2.5" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#complete-separation"><i class="fa fa-check"></i><b>11.2.5</b> Complete Separation</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#binomial-logistic-regression"><i class="fa fa-check"></i><b>11.3</b> Binomial Logistic Regression</a></li>
+<li class="chapter" data-level="11.4" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#probit-regression"><i class="fa fa-check"></i><b>11.4</b> Probit Regression</a></li>
+<li class="chapter" data-level="11.5" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#poisson-regression"><i class="fa fa-check"></i><b>11.5</b> Poisson Regression</a><ul>
+<li class="chapter" data-level="11.5.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#interpretations-2"><i class="fa fa-check"></i><b>11.5.1</b> Interpretations</a></li>
+<li class="chapter" data-level="11.5.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#model-checking-2"><i class="fa fa-check"></i><b>11.5.2</b> Model Checking</a></li>
+<li class="chapter" data-level="11.5.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#other-models-in-glm"><i class="fa fa-check"></i><b>11.5.3</b> Other models in GLM</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="missing-data.html"><a href="missing-data.html"><i class="fa fa-check"></i><b>12</b> Missing Data</a><ul>
+<li class="chapter" data-level="12.1" data-path="missing-data.html"><a href="missing-data.html#missing-data-mechanisms"><i class="fa fa-check"></i><b>12.1</b> Missing Data Mechanisms</a><ul>
+<li class="chapter" data-level="12.1.1" data-path="missing-data.html"><a href="missing-data.html#mcar-missing-completely-at-random"><i class="fa fa-check"></i><b>12.1.1</b> MCAR (Missing Completely at Random)</a></li>
+<li class="chapter" data-level="12.1.2" data-path="missing-data.html"><a href="missing-data.html#mar-missing-at-random"><i class="fa fa-check"></i><b>12.1.2</b> MAR (Missing At Random)</a></li>
+<li class="chapter" data-level="12.1.3" data-path="missing-data.html"><a href="missing-data.html#nmar-not-missing-at-random"><i class="fa fa-check"></i><b>12.1.3</b> NMAR (Not Missing At Random)</a></li>
+<li class="chapter" data-level="12.1.4" data-path="missing-data.html"><a href="missing-data.html#ignorable-missingness"><i class="fa fa-check"></i><b>12.1.4</b> Ignorable Missingness*</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="missing-data.html"><a href="missing-data.html#bayesian-approaches-for-missing-data"><i class="fa fa-check"></i><b>12.2</b> Bayesian Approaches for Missing Data</a><ul>
+<li class="chapter" data-level="12.2.1" data-path="missing-data.html"><a href="missing-data.html#complete-case-analysislistwise-deletion"><i class="fa fa-check"></i><b>12.2.1</b> Complete Case Analysis/Listwise Deletion</a></li>
+<li class="chapter" data-level="12.2.2" data-path="missing-data.html"><a href="missing-data.html#treat-missing-data-as-parameters"><i class="fa fa-check"></i><b>12.2.2</b> Treat Missing Data as Parameters</a></li>
+<li class="chapter" data-level="12.2.3" data-path="missing-data.html"><a href="missing-data.html#multiple-imputation"><i class="fa fa-check"></i><b>12.2.3</b> Multiple Imputation</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Course Handouts for Bayesian Data Analysis Class</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="linear-models" class="section level1">
+<h1><span class="header-section-number">Chapter 7</span> Linear Models</h1>
+<div id="what-is-regression" class="section level2">
+<h2><span class="header-section-number">7.1</span> What is Regression?</h2>
+<p>Regression is a class of statistical techniques to understand the relationship
+between an outcome variable (also called a criterion/response/dependent
+variable) and one or more predictor variables (also called
+explanatory/independent variables). For example, if we have the following
+scatter plot between two variables (<span class="math inline">\(Y\)</span> and <span class="math inline">\(X\)</span>):</p>
+<p><img src="07_linear_model_files/figure-html/reg-curve-1.png" width="672" /></p>
+<p>We want to find some pattern from this relationship. In conventional regression,
+we model the conditional distribution of <span class="math inline">\(Y\)</span> given <span class="math inline">\(X\)</span>, <span class="math inline">\(P(Y \mid X)\)</span>, by
+separating the outcome variable <span class="math inline">\(Y\)</span> into (a) a <em>systematic component</em> that
+depends on the predictor, and (b) a <em>random</em>/<em>probabilistic</em> component that does
+not depend on the predictor. For example, we can start with a systematic
+component which only depends on the predictor value:</p>
+<p><img src="07_linear_model_files/figure-html/reg-systematic-1.png" width="672" /></p>
+<p>As you can see, all the red dots fall exactly on the curve in the graph above,
+meaning that as long as one knows the <span class="math inline">\(X\)</span> value, one can predict the <span class="math inline">\(Y\)</span> value
+with 100% accuracy. We can thus write <span class="math inline">\(Y^* = f(X)\)</span> (where <span class="math inline">\(Y^*\)</span> is the
+systematic component of <span class="math inline">\(Y\)</span>).</p>
+<p>However, in almost all scientific inquiries, one can never make prediction with
+100% certainty (even in physics, which has measurement error and quantum
+mechanics). This can be due to the fact that we haven’t obtain all the factors
+that determine <span class="math inline">\(Y\)</span>, and there are things that are truly random (as in quantum
+physics). Therefore, we need to expand our model to incorporate this randomness,
+by adding a probabilistic component. Therefore, instead of saying the <span class="math inline">\(Y\)</span>
+depends just on <span class="math inline">\(X\)</span>, we say that the value of <span class="math inline">\(Y\)</span> is random, but the information
+about <span class="math inline">\(X\)</span> provides information about how <span class="math inline">\(Y\)</span> is distributed. This is achieved by
+studying the conditional distribution <span class="math inline">\(P(Y \mid X)\)</span> such that the conditional
+expectation, <span class="math inline">\(\mathrm{E}(Y \mid X)\)</span>, is completely determined by <span class="math inline">\(X\)</span>, whereas on top of
+the conditional expectation, the observed <span class="math inline">\(Y\)</span> value can be scattered around the
+conditional expectations, like the graph on the left below:</p>
+<p><img src="07_linear_model_files/figure-html/reg-combo-1.png" width="576" /></p>
+<p>We can write the systematic part as:
+<span class="math display">\[\mathrm{E}(Y \mid X) = f(X; \beta_1, \beta_2, \ldots), \]</span>
+where <span class="math inline">\(\beta_1\)</span>, <span class="math inline">\(\beta_2\)</span>, <span class="math inline">\(\ldots\)</span> are the parameters for some arbitrary
+function <span class="math inline">\(f(\cdot)\)</span>. The random part is about <span class="math inline">\(P(Y \mid X)\)</span> which can take some
+arbitrary form of distributions. The problem is that in reality, even if such a
+model holds, we do not know what <span class="math inline">\(f(\cdot)\)</span> and the true distribution of <span class="math inline">\(Y \mid X\)</span> are, as we are only presented with data like those illustrated in the graph
+on the right above.</p>
+<p>The regression model we will discuss here, which you have learned (or will
+learn) in introductory statistics, assumes that</p>
+<ol style="list-style-type: lower-alpha">
+<li>the function for the systematic component, <span class="math inline">\(f(\cdot)\)</span>, is a linear function
+(in the <span class="math inline">\(\beta\)</span>s),</li>
+<li><span class="math inline">\(Y \mid X\)</span> is normally distributed, and</li>
+<li><span class="math inline">\(Y_i\)</span>’s are conditionally exchangeable given <span class="math inline">\(X\)</span> with equal variance
+<span class="math inline">\(\sigma^2\)</span>.</li>
+</ol>
+<p>Under these conditions, if we assume <span class="math inline">\(Y\)</span> and <span class="math inline">\(X\)</span> have a linear relationship that
+can be quantified by a straight line with an intercept <span class="math inline">\(\beta_0\)</span> and a slope
+<span class="math inline">\(\beta_1\)</span>, we have a model
+<span class="math display">\[Y_i \sim \mathcal{N}(\beta_0 + \beta_1 X_i, \sigma)\]</span></p>
+</div>
+<div id="one-predictor" class="section level2">
+<h2><span class="header-section-number">7.2</span> One Predictor</h2>
+<div id="a-continuous-predictor" class="section level3">
+<h3><span class="header-section-number">7.2.1</span> A continuous predictor</h3>
+<p>We will use a data set, <code>kidiq</code>, that is available in the <code>rstanarm</code> package.
+You can import the data into R by (Internet connection needed):</p>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb140-1" data-line-number="1">kidiq &lt;-<span class="st"> </span>haven<span class="op">::</span><span class="kw">read_dta</span>(<span class="st">&quot;http://www.stat.columbia.edu/~gelman/arm/examples/child.iq/kidiq.dta&quot;</span>)</a></code></pre></div>
+<p>Or from the file I uploaded</p>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb141-1" data-line-number="1">kidiq &lt;-<span class="st"> </span>haven<span class="op">::</span><span class="kw">read_dta</span>(<span class="st">&quot;../data/kidiq.dta&quot;</span>)</a>
+<a class="sourceLine" id="cb141-2" data-line-number="2">psych<span class="op">::</span><span class="kw">describe</span>(kidiq)</a></code></pre></div>
+<pre><code>&gt;#           vars   n   mean    sd median trimmed   mad min max range  skew
+&gt;# kid_score    1 434  86.80 20.41   90.0   87.93 19.27  20 144 124.0 -0.46
+&gt;# mom_hs       2 434   0.79  0.41    1.0    0.86  0.00   0   1   1.0 -1.39
+&gt;# mom_iq       3 434 100.00 15.00   97.9   99.11 15.89  71 139  67.9  0.47
+&gt;# mom_work     4 434   2.90  1.18    3.0    2.99  1.48   1   4   3.0 -0.45
+&gt;# mom_age      5 434  22.79  2.70   23.0   22.71  2.97  17  29  12.0  0.18
+&gt;#           kurtosis   se
+&gt;# kid_score    -0.19 0.98
+&gt;# mom_hs       -0.07 0.02
+&gt;# mom_iq       -0.59 0.72
+&gt;# mom_work     -1.39 0.06
+&gt;# mom_age      -0.65 0.13</code></pre>
+<p>Below is a description of the data</p>
+<pre><code>kidiq
+
+    Data from a survey of adult American women and their children (a subsample 
+    from the National Longitudinal Survey of Youth).
+
+    Source: Gelman and Hill (2007)
+
+    434 obs. of 5 variables
+
+        kid_score Child&#39;s IQ score
+        mom_hs Indicator for whether the mother has a high school degree
+        mom_iq Mother&#39;s IQ score
+        mom_work 1 = did not work in first three years of child&#39;s life
+                 2 = worked in 2nd or 3rd year of child&#39;s life
+                 3 = worked part-time in first year of child&#39;s life
+                 4 = worked full-time in first year of child&#39;s life
+        mom_age Mother&#39;s age</code></pre>
+<div id="visualizing-the-data" class="section level4">
+<h4><span class="header-section-number">7.2.1.1</span> Visualizing the data</h4>
+<p>Let’s first see a scatterplot matrix</p>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb144-1" data-line-number="1">psych<span class="op">::</span><span class="kw">pairs.panels</span>(kidiq)</a></code></pre></div>
+<p><img src="07_linear_model_files/figure-html/panel-kidiq-1.png" width="768" /></p>
+<p>We will first use mother’s score on an IQ test to predict the child’s test
+score, as shown in the following scatter plot</p>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb145-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb145-2" data-line-number="2"><span class="co"># With ggplot2, first specify the `aesthetics`, i.e., what is the x variable</span></a>
+<a class="sourceLine" id="cb145-3" data-line-number="3"><span class="co"># and what is the y variable</span></a>
+<a class="sourceLine" id="cb145-4" data-line-number="4"><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> mom_iq, <span class="dt">y =</span> kid_score), <span class="dt">data =</span> kidiq) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb145-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="fl">0.7</span>) <span class="op">+</span><span class="st">  </span><span class="co"># add a layer with the points</span></a>
+<a class="sourceLine" id="cb145-6" data-line-number="6"><span class="st">  </span><span class="kw">geom_smooth</span>()  <span class="co"># add a smoother</span></a></code></pre></div>
+<pre><code>&gt;# `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</code></pre>
+<p><img src="07_linear_model_files/figure-html/kidiq-momiq-1.png" width="672" /></p>
+<p>Here we use the <code>ggplot2</code> package to plot the data. You have already used the
+this package for some previous assignments and exercise, but here I’ll give you
+a little bit more information. It is an extremely powerful graphical system
+based on the grammar of graphics (gg), and is used a lot in for data analysts in
+both academia and industry (if you want to learn more, check out this tutorial:
+<a href="http://tutorials.iq.harvard.edu/R/Rgraphics/Rgraphics.html" class="uri">http://tutorials.iq.harvard.edu/R/Rgraphics/Rgraphics.html</a> and this book:
+<a href="https://ggplot2-book.org" class="uri">https://ggplot2-book.org</a>). The blue line above is obtained with <em>smoothing</em>,
+which is a non-parametric way to estimate the true relationship between <span class="math inline">\(X\)</span> and
+<span class="math inline">\(Y\)</span> and can be used to check whether a linear regression model is appropriate.
+The grey region is the 95% CI for the smoother.</p>
+</div>
+<div id="choosing-a-model-2" class="section level4">
+<h4><span class="header-section-number">7.2.1.2</span> Choosing a model</h4>
+<p>We will use a linear regression model:
+<span class="math display">\[\texttt{kid_score}_i \sim \mathrm{N}(\mu_i, \sigma)\]</span>
+which, as you should recognize, is the normal model with conditional
+exchangeability you’ve seen for group comparisons. However, this time <span class="math inline">\(\mu_i\)</span>
+is modelled as a function of a continuous variable, <code>mom_iq</code>, instead of a
+binary grouping variable:
+<span class="math display">\[\mu_i = \beta_0 + \beta_1 \texttt{mom_iq}_i\]</span>
+In this model there are three parameters:</p>
+<ul>
+<li><span class="math inline">\(\beta_0\)</span>: mean <code>kid_score</code> when <code>mom_iq</code> = 0; also called regression
+<em>intercept</em>.</li>
+<li><span class="math inline">\(\beta_1\)</span>: mean increase in <code>kid_score</code> for every unit increase in <code>mom_iq</code>;
+also called regression <em>slope</em> or <em>regression coefficient</em>.</li>
+<li><span class="math inline">\(\sigma\)</span>: error standard deviation <span class="math inline">\(\sigma\)</span>; i.e., variability of <code>kid_score</code>
+among those with same <code>mom_iq</code> score, and is assumed constant across <code>mom_iq</code>
+levels.</li>
+</ul>
+<p>You may not be aware when you first learned regression that <span class="math inline">\(\sigma\)</span>, sometimes
+also called residual standard error in least square estimation, is also a
+parameter; however, as long as it appears in the conditional distribution it
+needs to be estimated.</p>
+</div>
+<div id="choosing-priors" class="section level4">
+<h4><span class="header-section-number">7.2.1.3</span> Choosing priors</h4>
+<p>In the general case, we need to specify a 3-dimensional joint prior distribution
+for the three parameters. However, a general practice is to assume prior
+independence among the parameters, which implies that prior to looking at the
+data, we have no knowledge whether the parameters are positively related or
+negatively related. With independence we are allowed to just specify three
+different priors for the three parameters.</p>
+<p>In general, we want to be conservative by specifying some weakly informative
+priors, so the variance of the priors should be large but not unrealistic. For
+example, we don’t expect a one unit difference in <code>mom_iq</code> is associated with a
+100 units difference in <code>kid_iq</code>. Also, to increase numerical stability, we will
+rescale <code>mom_iq</code> and <code>kid_iq</code> by dividing them by 100, respectively:</p>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb147-1" data-line-number="1">kidiq100 &lt;-<span class="st"> </span>kidiq <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb147-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mom_iq =</span> mom_iq <span class="op">/</span><span class="st"> </span><span class="dv">100</span>,  <span class="co"># divid mom_iq by 100</span></a>
+<a class="sourceLine" id="cb147-3" data-line-number="3">         <span class="dt">kid_score =</span> kid_score <span class="op">/</span><span class="st"> </span><span class="dv">100</span>)  <span class="co"># divide kid_score by 100</span></a></code></pre></div>
+<p>We will be using the prior distributions:</p>
+<p><span class="math display">\[\begin{align*}
+  \beta_0 &amp; \sim \mathcal{N}(0, 1)  \\
+  \beta_1 &amp; \sim \mathcal{N}(0, 1)  \\
+  \sigma &amp; \sim t^+(4, 0, 1)
+\end{align*}\]</span></p>
+<p>which are similar to the ones in the group comparison example. The half-<span class="math inline">\(t\)</span>
+distribution is recommended by <span class="citation">Gelman (<a href="#ref-Gelman2006">2006</a>)</span> and has the following shape:</p>
+<p><img src="07_linear_model_files/figure-html/half-t-1.png" width="672" /></p>
+<p>As you can see, there is more density towards zero, but the tail is still quite
+heavy (as compared to a normal distribution), as you can see by comparing it to
+the tail of a half-normal distribution (which just means it starts from 0
+instead of <span class="math inline">\(-\infty\)</span>). This will avoid some extremely large values, but also not
+be overly restrictive in case <span class="math inline">\(\sigma\)</span> is extremely large.</p>
+<p>These priors can be set in <code>brms</code>. First check the default prior set up using
+<code>get_prior</code>:</p>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb148-1" data-line-number="1"><span class="kw">get_prior</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_iq, <span class="dt">data =</span> kidiq100)</a></code></pre></div>
+<pre><code>&gt;#                 prior     class   coef group resp dpar nlpar bound
+&gt;# 1                             b                                   
+&gt;# 2                             b mom_iq                            
+&gt;# 3 student_t(3, 1, 10) Intercept                                   
+&gt;# 4 student_t(3, 0, 10)     sigma</code></pre>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb150-1" data-line-number="1">m1 &lt;-<span class="st"> </span><span class="kw">brm</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_iq, <span class="dt">data =</span> kidiq100, </a>
+<a class="sourceLine" id="cb150-2" data-line-number="2">          <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </a>
+<a class="sourceLine" id="cb150-3" data-line-number="3">                    <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>, <span class="dt">coef =</span> <span class="st">&quot;mom_iq&quot;</span>), </a>
+<a class="sourceLine" id="cb150-4" data-line-number="4">                    <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </a>
+<a class="sourceLine" id="cb150-5" data-line-number="5">          <span class="dt">seed =</span> <span class="dv">2302</span></a>
+<a class="sourceLine" id="cb150-6" data-line-number="6">)</a></code></pre></div>
+</div>
+<div id="obtaining-the-posteriors" class="section level4">
+<h4><span class="header-section-number">7.2.1.4</span> Obtaining the posteriors</h4>
+<div id="check-convergence" class="section level5">
+<h5><span class="header-section-number">7.2.1.4.1</span> Check convergence</h5>
+<p>The <code>brm</code> function by default used 4 chains, with 2,000 iterations for each
+chain, and half of the iterations are used for warmup (so leaving 4,000 draws in
+total for summarizing the posterior). If you run <code>summary(m1)</code> (in the next
+subsection), you will get a summary of the posterior distributions for each
+parameter, and in this example all <code>Rhat</code> is 1.00, so it appears that the chains
+have converged.</p>
+<p>You can see more with a graphical interface:</p>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb151-1" data-line-number="1">shinystan<span class="op">::</span><span class="kw">launch_shinystan</span>(m1)</a></code></pre></div>
+</div>
+<div id="summarizing-the-posterior" class="section level5">
+<h5><span class="header-section-number">7.2.1.4.2</span> Summarizing the posterior</h5>
+<p>If you use the <code>summary</code> function on the model you will see a concise output
+with the estimate and the posterior <em>SD</em>.</p>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb152-1" data-line-number="1"><span class="kw">summary</span>(m1, <span class="dt">prob =</span> <span class="fl">0.95</span>)  <span class="co"># prob = 0.95 is the default</span></a></code></pre></div>
+<pre><code>&gt;#  Family: gaussian 
+&gt;#   Links: mu = identity; sigma = identity 
+&gt;# Formula: kid_score ~ mom_iq 
+&gt;#    Data: kidiq100 (Number of observations: 434) 
+&gt;# Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+&gt;#          total post-warmup samples = 4000
+&gt;# 
+&gt;# Population-Level Effects: 
+&gt;#           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+&gt;# Intercept     0.26      0.06     0.14     0.38 1.00     3642     2826
+&gt;# mom_iq        0.61      0.06     0.49     0.72 1.00     3638     2758
+&gt;# 
+&gt;# Family Specific Parameters: 
+&gt;#       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+&gt;# sigma     0.18      0.01     0.17     0.20 1.00     3565     2810
+&gt;# 
+&gt;# Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
+&gt;# is a crude measure of effective sample size, and Rhat is the potential 
+&gt;# scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+<p>And here is the HPDI with the <code>broom</code> package and the <code>tidy()</code> function:</p>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb154-1" data-line-number="1">broom<span class="op">::</span><span class="kw">tidy</span>(m1, <span class="dt">conf.method =</span> <span class="st">&quot;HPDinterval&quot;</span>, <span class="dt">conf.level =</span> <span class="fl">.90</span>)</a></code></pre></div>
+<pre><code>&gt;#          term estimate std.error   lower   upper
+&gt;# 1 b_Intercept    0.261   0.05904   0.163   0.359
+&gt;# 2    b_mom_iq    0.607   0.05845   0.511   0.703
+&gt;# 3       sigma    0.183   0.00645   0.173   0.194
+&gt;# 4        lp__  117.094   1.26376 114.572 118.450</code></pre>
+<p>You can plot the density and mixing of the posterior distributions:</p>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb156-1" data-line-number="1"><span class="kw">plot</span>(m1)</a></code></pre></div>
+<p><img src="07_linear_model_files/figure-html/plot-m1-1.png" width="576" /></p>
+</div>
+</div>
+<div id="posterior-predictive-check-6" class="section level4">
+<h4><span class="header-section-number">7.2.1.5</span> Posterior Predictive Check</h4>
+<p>Now, we want to draw some new data based on the posterior distributions.
+This can be done with <code>pp_check</code></p>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb157-1" data-line-number="1"><span class="kw">pp_check</span>(m1, <span class="dt">nsamples =</span> <span class="dv">100</span>)</a></code></pre></div>
+<p><img src="07_linear_model_files/figure-html/ppc-m1-1.png" width="672" /></p>
+<p>Looks like there is some skewness not captured in the model. We will talk more
+about diagnostics for regression models next week.</p>
+</div>
+<div id="visualizing-and-interpreting" class="section level4">
+<h4><span class="header-section-number">7.2.1.6</span> Visualizing and interpreting</h4>
+<p>Using the posterior mean, we have the following regression line</p>
+<p><span class="math display">\[\widehat{\texttt{kid_score}} = 0.261 + 
+0.607 \times \texttt{mom_iq}\]</span></p>
+<p>So, based on our model, if we observe two participants with 1 unit difference in
+<code>mom_iq</code>, the child’s IQ score is expected to be different by
+0.607 points, 95% CI [0.493, 0.723]. As <code>mom_iq</code> and <code>kid_score</code> are on similar scale,
+there seems to be strong heritability for IQ.</p>
+<p>However, in Bayesian statistics, we want to be explicit about the uncertainty
+in the parameter estimate, as the posterior mean/median is just one of the
+infinitely many possible values in the posterior distribution. We can visualize
+with the following code:</p>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb158-1" data-line-number="1">draws_m1 &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(m1)  <span class="co"># Store the posterior draws as a data frame</span></a>
+<a class="sourceLine" id="cb158-2" data-line-number="2"><span class="co"># change the names for the first 2 columns just for convenience</span></a>
+<a class="sourceLine" id="cb158-3" data-line-number="3"><span class="kw">colnames</span>(draws_m1)[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>)</a>
+<a class="sourceLine" id="cb158-4" data-line-number="4"><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> mom_iq, <span class="dt">y =</span> kid_score), <span class="dt">data =</span> kidiq100) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb158-5" data-line-number="5"><span class="st">  </span><span class="co"># Add transparent regression lines using different posterior draws</span></a>
+<a class="sourceLine" id="cb158-6" data-line-number="6"><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">data =</span> draws_m1, <span class="kw">aes</span>(<span class="dt">intercept =</span> a, <span class="dt">slope =</span> b), </a>
+<a class="sourceLine" id="cb158-7" data-line-number="7">              <span class="dt">color =</span> <span class="st">&quot;skyblue&quot;</span>, <span class="dt">size =</span> <span class="fl">0.2</span>, <span class="dt">alpha =</span> <span class="fl">0.10</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb158-8" data-line-number="8"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="fl">0.7</span>) <span class="op">+</span><span class="st">  </span><span class="co"># add a layer with the points</span></a>
+<a class="sourceLine" id="cb158-9" data-line-number="9"><span class="st">  </span><span class="co"># Add the predicted line with the posterior means on top </span></a>
+<a class="sourceLine" id="cb158-10" data-line-number="10"><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="kw">fixef</span>(m1)[<span class="dv">1</span>, <span class="st">&quot;Estimate&quot;</span>], </a>
+<a class="sourceLine" id="cb158-11" data-line-number="11">              <span class="dt">slope =</span> <span class="kw">fixef</span>(m1)[<span class="dv">2</span>, <span class="st">&quot;Estimate&quot;</span>]) </a></code></pre></div>
+<p><img src="07_linear_model_files/figure-html/line-m1-1.png" width="672" /></p>
+<p>Or with <code>brms</code>, we can use the handy <code>marginal_effects()</code> function:</p>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb159-1" data-line-number="1"><span class="kw">plot</span>(<span class="kw">marginal_effects</span>(m1), <span class="dt">points =</span> <span class="ot">TRUE</span>, <span class="dt">point_args =</span> <span class="kw">list</span>(<span class="dt">size =</span> <span class="fl">0.5</span>))</a></code></pre></div>
+<pre><code>&gt;# Warning: Method &#39;marginal_effects&#39; is deprecated. Please use
+&gt;# &#39;conditional_effects&#39; instead.</code></pre>
+<p><img src="07_linear_model_files/figure-html/marginal-m1-1.png" width="672" /></p>
+<div id="predictive-intervals" class="section level5">
+<h5><span class="header-section-number">7.2.1.6.1</span> Predictive intervals</h5>
+<p>In addition, one can construct a predictive interval for each level of
+<code>mom_iq</code>. A 90% predictive interval is one such that a new observation
+generated from our model will have a 90% chance of falling in that interval.
+This is an interval about the probability of new data, <span class="math inline">\(\tilde y\)</span>, which is
+different from a credible interval as the latter is about the probability of
+the parameter.</p>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb161-1" data-line-number="1"><span class="co"># Need to load the mmp_brm.R script</span></a>
+<a class="sourceLine" id="cb161-2" data-line-number="2"><span class="kw">mmp_brm</span>(m1, <span class="dt">x =</span> <span class="st">&quot;mom_iq&quot;</span>, <span class="dt">prob =</span> <span class="fl">0.90</span>, </a>
+<a class="sourceLine" id="cb161-3" data-line-number="3">        <span class="dt">plot_pi =</span> <span class="ot">TRUE</span>)  <span class="co"># the predictive interval will be shown in green</span></a></code></pre></div>
+<pre><code>&gt;# `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;
+&gt;# `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;
+&gt;# `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;
+&gt;# `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</code></pre>
+<p><img src="07_linear_model_files/figure-html/mmp-m1-1.png" width="672" /></p>
+</div>
+<div id="r2-effect-size" class="section level5">
+<h5><span class="header-section-number">7.2.1.6.2</span> <span class="math inline">\(R^2\)</span> effect size</h5>
+<p>We can also compute an <span class="math inline">\(R^2\)</span> as an effect size for the results. <span class="math inline">\(R^2\)</span> is
+the proportion of variance of the outcome variable predicted by the predictor,
+or
+<span class="math display">\[R^2 = \frac{\mathrm{Var}(\beta_0 + \beta_1 X)}{\mathrm{Var}(\beta_0 + \beta_1 X) + \sigma^2}
+      = \frac{\beta_1^2 \mathrm{Var}(X)}{\beta_1^2 \mathrm{Var}(X) + \sigma^2}
+      = 1 - \frac{\sigma^2}{\beta_1^2 \mathrm{Var}(X) + \sigma^2}\]</span></p>
+<p>Without going too much into the detail, you can get:</p>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb163-1" data-line-number="1"><span class="kw">bayes_R2</span>(m1)  <span class="co"># Bayesian R^2</span></a></code></pre></div>
+<pre><code>&gt;#    Estimate Est.Error Q2.5 Q97.5
+&gt;# R2    0.199    0.0304 0.14 0.259</code></pre>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb165-1" data-line-number="1"><span class="kw">bayes_R2</span>(m1, <span class="dt">summary =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb165-2" data-line-number="2"><span class="st">  </span><span class="kw">mcmc_areas</span>(<span class="dt">prob =</span> <span class="fl">.90</span>)  <span class="co"># showing density and 95% CI</span></a></code></pre></div>
+<p><img src="07_linear_model_files/figure-html/r2-m1-1.png" width="672" /></p>
+<p>This is interpreted as:</p>
+<blockquote>
+<p>Based on the model, 19.922% of the variance of
+kid’s score can be predicted by mother’s IQ, 95% CI [
+13.992%, 25.924%].</p>
+</blockquote>
+<p>Note that <span class="math inline">\(R^2\)</span> is commonly referred to variance explained, but as “explained”
+usually implies causation this only makes sense when causal inference is the
+goal.</p>
+</div>
+</div>
+</div>
+<div id="centering" class="section level3">
+<h3><span class="header-section-number">7.2.2</span> Centering</h3>
+<p>In the previous model, the intercept is the estimated mean <code>kid_score</code> when
+<code>mom_iq</code> is zero. As illustrated in the graph below, this value is not very
+meaningful, as <code>mom_iq = 0</code> is far from the main bulk of data:</p>
+<p><img src="07_linear_model_files/figure-html/plot-m1-2-1.png" width="672" /></p>
+<p>And many scholar caution against extrapolation in regression. Therefore, for
+interpretation purpose one should consider <em>center</em> the predictors so that
+the zero point is meaningful.</p>
+<p>One can center the predictors to a meaningful value in the data.
+For <code>mom_iq</code>, usually the
+population mean for IQ is 100, so we can center the predictor to 1 by
+subtracting 1 from it:</p>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb166-1" data-line-number="1">kidiq100 &lt;-<span class="st"> </span>kidiq100 <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb166-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mom_iq_c =</span> mom_iq <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb167-1" data-line-number="1">m1c &lt;-<span class="st"> </span><span class="kw">brm</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_iq_c, <span class="dt">data =</span> kidiq100, </a>
+<a class="sourceLine" id="cb167-2" data-line-number="2">           <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </a>
+<a class="sourceLine" id="cb167-3" data-line-number="3">                     <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>, <span class="dt">coef =</span> <span class="st">&quot;mom_iq_c&quot;</span>), </a>
+<a class="sourceLine" id="cb167-4" data-line-number="4">                     <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </a>
+<a class="sourceLine" id="cb167-5" data-line-number="5">           <span class="dt">seed =</span> <span class="dv">2302</span></a>
+<a class="sourceLine" id="cb167-6" data-line-number="6">)</a></code></pre></div>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb168-1" data-line-number="1">broom<span class="op">::</span><span class="kw">tidy</span>(m1c)</a></code></pre></div>
+<pre><code>&gt;#          term estimate std.error   lower   upper
+&gt;# 1 b_Intercept    0.868   0.00875   0.854   0.882
+&gt;# 2  b_mom_iq_c    0.610   0.05820   0.516   0.707
+&gt;# 3       sigma    0.183   0.00606   0.174   0.193
+&gt;# 4        lp__  117.158   1.20882 114.819 118.455</code></pre>
+<p>Now, we can interpret the intercept as the predicted average <code>kid_score</code> when
+<code>mom_iq</code> = 100 (or 1 in the rescaled version) for participants whose mother does not have a high school
+degree, which is 86.797 points, 95% CI [85.035, 88.438].</p>
+<blockquote>
+<p>Centering is especially important when evaluating interaction models.</p>
+</blockquote>
+</div>
+<div id="a-categorical-predictor" class="section level3">
+<h3><span class="header-section-number">7.2.3</span> A categorical predictor</h3>
+<p>We can repeat the analysis using a categorical predictor, <code>mom_hs</code>, indicating
+whether the mother has a high school degree (1 = yes, 0 = no). We can visualize
+the data:</p>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb170-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">factor</span>(mom_hs), <span class="dt">y =</span> kid_score), <span class="dt">data =</span> kidiq100) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb170-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_boxplot</span>()  <span class="co"># add a layer with a boxplot</span></a></code></pre></div>
+<p><img src="07_linear_model_files/figure-html/kid_score-mom_hs-1.png" width="384" /></p>
+<p>Our regression model is</p>
+<p><span class="math display">\[\begin{align}
+  \texttt{kid_score}_i &amp; \sim \mathcal{N}(\mu_i), \sigma) \\
+  \mu_i &amp; = \beta_1 \texttt{mom_hs}_i
+\end{align}\]</span></p>
+<p>where <span class="math inline">\(\beta_0\)</span> is the expected <code>kid_score</code> when the mother did not have
+a high school degree, and <span class="math inline">\(\beta_1\)</span> is the expected difference between those
+whose mothers have a high school degree and those without.</p>
+<p>We will choose the following priors:</p>
+<p><span class="math display">\[\begin{align*}
+  \beta_0 &amp; \sim \mathcal{N}(0, 1)  \\
+  \beta_1 &amp; \sim \mathcal{N}(0, 1)  \\
+  \sigma &amp; \sim t^+(4, 0, 1)
+\end{align*}\]</span></p>
+<p>It is safe to say that whether mother has a high school degree would not lead to
+a difference of 100 points in IQ.</p>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb171-1" data-line-number="1"><span class="co"># First recode `mom_hs` to be a factor (not necessary but useful for plot)</span></a>
+<a class="sourceLine" id="cb171-2" data-line-number="2">kidiq100 &lt;-<span class="st"> </span>kidiq100 <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb171-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mom_hs =</span> <span class="kw">factor</span>(mom_hs, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>)))</a></code></pre></div>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb172-1" data-line-number="1">m2 &lt;-<span class="st"> </span><span class="kw">brm</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_hs, <span class="dt">data =</span> kidiq100, </a>
+<a class="sourceLine" id="cb172-2" data-line-number="2">          <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </a>
+<a class="sourceLine" id="cb172-3" data-line-number="3">                    <span class="co"># set for all &quot;b&quot; coefficients</span></a>
+<a class="sourceLine" id="cb172-4" data-line-number="4">                    <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>),</a>
+<a class="sourceLine" id="cb172-5" data-line-number="5">                    <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </a>
+<a class="sourceLine" id="cb172-6" data-line-number="6">          <span class="dt">seed =</span> <span class="dv">2302</span></a>
+<a class="sourceLine" id="cb172-7" data-line-number="7">)</a></code></pre></div>
+<p>You can use the <code>summary</code> function, or the <code>tidy()</code> function in the <code>broom</code>
+package:</p>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb173-1" data-line-number="1">broom<span class="op">::</span><span class="kw">tidy</span>(m2)</a></code></pre></div>
+<pre><code>&gt;#          term estimate std.error   lower  upper
+&gt;# 1 b_Intercept    0.776   0.02010  0.7435  0.809
+&gt;# 2 b_mom_hsyes    0.117   0.02287  0.0798  0.155
+&gt;# 3       sigma    0.199   0.00678  0.1879  0.211
+&gt;# 4        lp__   81.247   1.25133 78.7915 82.558</code></pre>
+<p>The chains have converged. Using the posterior medians, the estimated child’s
+IQ score is 77.582 points, 95% CI [73.641, 81.519] for the group whose
+mother does not have a high school degree, and the estimated average difference
+between the group whose mother has a high school degree and those who does not
+on <code>kid_score</code> is 11.746 points, 95% CI [7.243, 16.094]. We can also obtain
+the posterior distribution for the mean of the <code>mom_hs = 1</code> group by adding
+up the posterior draws of <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>:</p>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb175-1" data-line-number="1">draws_m2 &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(m2)  <span class="co"># Store the posterior draws as a data frame</span></a>
+<a class="sourceLine" id="cb175-2" data-line-number="2"><span class="co"># Add up the two columns to get the predicted mean for `mom_hs = 1`</span></a>
+<a class="sourceLine" id="cb175-3" data-line-number="3">yhat_hs &lt;-<span class="st"> </span>draws_m2<span class="op">$</span>b_Intercept <span class="op">+</span><span class="st"> </span>draws_m2<span class="op">$</span>b_mom_hsyes</a>
+<a class="sourceLine" id="cb175-4" data-line-number="4">psych<span class="op">::</span><span class="kw">describe</span>(yhat_hs)</a></code></pre></div>
+<pre><code>&gt;#    vars    n mean   sd median trimmed  mad  min  max range  skew kurtosis se
+&gt;# X1    1 4000 0.89 0.01   0.89    0.89 0.01 0.85 0.93  0.09 -0.01     0.15  0</code></pre>
+<p>You can also use <code>marginal_effects()</code>:</p>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb177-1" data-line-number="1"><span class="kw">plot</span>(<span class="kw">marginal_effects</span>(m2))</a></code></pre></div>
+<pre><code>&gt;# Warning: Method &#39;marginal_effects&#39; is deprecated. Please use
+&gt;# &#39;conditional_effects&#39; instead.</code></pre>
+<p><img src="07_linear_model_files/figure-html/marginal-m2-1.png" width="672" /></p>
+<p>This is an example of the beauty of Bayesian and the MCMC method. In
+frequentist, although it’s easy to get <span class="math inline">\(\hat{\beta_0} + \hat{\beta_1}\)</span>, it is
+hard to get the corresponding <span class="math inline">\(\mathit{SE}\)</span>, whereas with MCMC, one just needs to
+do the addition in each iteration, and in the end all those values will form
+the posterior samples of <span class="math inline">\(\beta_0 + \beta_1\)</span>.</p>
+</div>
+<div id="predictors-with-multiple-categories" class="section level3">
+<h3><span class="header-section-number">7.2.4</span> Predictors with multiple categories</h3>
+<p>In Bayesian, using predictors with multiple categories is just the same as in
+frequentist. In R this can be handled automatically. For example, if I recode
+<code>mom_iq</code> into three categories:</p>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb179-1" data-line-number="1">kidiq_cat &lt;-<span class="st"> </span>kidiq100 <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb179-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mom_iq_cat =</span> </a>
+<a class="sourceLine" id="cb179-3" data-line-number="3">           <span class="kw">findInterval</span>(mom_iq, <span class="kw">c</span>(.<span class="dv">7</span>, <span class="fl">.85</span>, <span class="dv">1</span>, <span class="fl">1.15</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb179-4" data-line-number="4"><span class="st">           </span><span class="kw">factor</span>(<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;low&quot;</span>, <span class="st">&quot;below average&quot;</span>, </a>
+<a class="sourceLine" id="cb179-5" data-line-number="5">                             <span class="st">&quot;above average&quot;</span>, <span class="st">&quot;high&quot;</span>)))</a></code></pre></div>
+<p>I can put the categorical predictor into the model with <code>brm()</code></p>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb180-1" data-line-number="1">m1_cat &lt;-<span class="st"> </span><span class="kw">brm</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_iq_cat, <span class="dt">data =</span> kidiq_cat, </a>
+<a class="sourceLine" id="cb180-2" data-line-number="2">              <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </a>
+<a class="sourceLine" id="cb180-3" data-line-number="3">                        <span class="co"># set for all &quot;b&quot; coefficients</span></a>
+<a class="sourceLine" id="cb180-4" data-line-number="4">                        <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>),</a>
+<a class="sourceLine" id="cb180-5" data-line-number="5">                        <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </a>
+<a class="sourceLine" id="cb180-6" data-line-number="6">              <span class="dt">seed =</span> <span class="dv">2302</span></a>
+<a class="sourceLine" id="cb180-7" data-line-number="7">)</a></code></pre></div>
+<p>And R by default will choose the first category as the reference group. See the
+results below.</p>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb181-1" data-line-number="1"><span class="kw">plot</span>(<span class="kw">marginal_effects</span>(m1_cat))</a></code></pre></div>
+<pre><code>&gt;# Warning: Method &#39;marginal_effects&#39; is deprecated. Please use
+&gt;# &#39;conditional_effects&#39; instead.</code></pre>
+<p><img src="07_linear_model_files/figure-html/marginal-m1_cat-1.png" width="672" /></p>
+</div>
+<div id="stan-4" class="section level3">
+<h3><span class="header-section-number">7.2.5</span> STAN</h3>
+<p>It’s also easy to implement it in STAN</p>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb183-1" data-line-number="1"><span class="kw">library</span>(rstan)</a>
+<a class="sourceLine" id="cb183-2" data-line-number="2"><span class="kw">rstan_options</span>(<span class="dt">auto_write =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<pre class="stan"><code>data {
+  int&lt;lower=0&gt; N;  // number of observations
+  vector[N] y;  // response variable;
+  int&lt;lower=0&gt; p;  // number of predictor variables (exclude intercept)
+  matrix[N, p] X;  // predictor variable;matrix
+}
+parameters {
+  real beta_0;  // intercept
+  vector[p] beta;  // slopes
+  real&lt;lower=0&gt; sigma;  // error standard deviation
+}
+model {
+  // `normal_id_glm` is specially designed for regression
+  y ~ normal_id_glm(X, beta_0, beta, sigma);
+  // prior
+  beta_0 ~ normal(0, 1);
+  beta ~ normal(0, 1);
+  sigma ~ student_t(4, 0, 1);
+}
+generated quantities {
+  real yrep[N];  // simulated data based on model
+  vector[N] yhat = beta_0 + X * beta;  // used to compute R-squared effect size
+  for (i in 1:N) {
+    yrep[i] = normal_rng(yhat[i], sigma);
+  }
+}</code></pre>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb185-1" data-line-number="1">m1_stan &lt;-<span class="st"> </span><span class="kw">stan</span>(<span class="st">&quot;../codes/normal_regression.stan&quot;</span>, </a>
+<a class="sourceLine" id="cb185-2" data-line-number="2">     <span class="dt">data =</span> <span class="kw">list</span>(<span class="dt">N =</span> <span class="kw">nrow</span>(kidiq100), </a>
+<a class="sourceLine" id="cb185-3" data-line-number="3">                 <span class="dt">y =</span> kidiq100<span class="op">$</span>kid_score, </a>
+<a class="sourceLine" id="cb185-4" data-line-number="4">                 <span class="dt">p =</span> <span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb185-5" data-line-number="5">                 <span class="dt">X =</span> <span class="kw">as.matrix</span>(kidiq100<span class="op">$</span>mom_iq_c)), </a>
+<a class="sourceLine" id="cb185-6" data-line-number="6">     <span class="dt">seed =</span> <span class="dv">1234</span>)</a></code></pre></div>
+<p>And the <span class="math inline">\(R^2\)</span> can be obtained as</p>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb186-1" data-line-number="1">m1_r2 &lt;-<span class="st"> </span><span class="kw">bayes_R2</span>(<span class="kw">as.matrix</span>(m1_stan, <span class="st">&quot;yhat&quot;</span>), <span class="dt">y =</span> kidiq100<span class="op">$</span>kid_score)</a>
+<a class="sourceLine" id="cb186-2" data-line-number="2">psych<span class="op">::</span><span class="kw">describe</span>(m1_r2)</a></code></pre></div>
+<pre><code>&gt;#    vars    n mean   sd median trimmed  mad min  max range skew kurtosis se
+&gt;# X1    1 4000  0.2 0.03    0.2     0.2 0.03 0.1 0.31  0.21 0.02     0.16  0</code></pre>
+</div>
+</div>
+<div id="multiple-regression" class="section level2">
+<h2><span class="header-section-number">7.3</span> Multiple Regression</h2>
+<div id="two-predictor-example" class="section level3">
+<h3><span class="header-section-number">7.3.1</span> Two Predictor Example</h3>
+<p>Now let’s put both predictors to the model, as in multiple regression.
+<span class="math display">\[\begin{align}
+  \texttt{kid_score}_i &amp; \sim \mathcal{N}(\mu_i, \sigma) \\
+  \mu_i &amp; = \beta_0 + \beta_1 (\texttt{mom_iq_c}_i) + 
+                      \beta_2 (\texttt{mom_hs}_i)
+\end{align}\]</span>
+Remember that the coefficients are are slopes when all other predictors are
+constant.</p>
+<p>We will choose the following priors, same as the previous models:</p>
+<p><span class="math display">\[\begin{align*}
+  \beta_0 &amp; \sim \mathcal{N}(0, 1)  \\
+  \beta_1 &amp; \sim \mathcal{N}(0, 1)  \\
+  \beta_2 &amp; \sim \mathcal{N}(0, 1)  \\
+  \sigma &amp; \sim t^+(4, 0, 1)
+\end{align*}\]</span></p>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb188-1" data-line-number="1">m3 &lt;-<span class="st"> </span><span class="kw">brm</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_iq_c <span class="op">+</span><span class="st"> </span>mom_hs, <span class="dt">data =</span> kidiq100, </a>
+<a class="sourceLine" id="cb188-2" data-line-number="2">          <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </a>
+<a class="sourceLine" id="cb188-3" data-line-number="3">                    <span class="co"># set for all &quot;b&quot; coefficients</span></a>
+<a class="sourceLine" id="cb188-4" data-line-number="4">                    <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>),</a>
+<a class="sourceLine" id="cb188-5" data-line-number="5">                    <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </a>
+<a class="sourceLine" id="cb188-6" data-line-number="6">          <span class="dt">seed =</span> <span class="dv">2302</span></a>
+<a class="sourceLine" id="cb188-7" data-line-number="7">)</a></code></pre></div>
+<p>The chains have converged. We have the following results (with <code>mcmc_areas</code>)</p>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb189-1" data-line-number="1"><span class="kw">stanplot</span>(m3, <span class="dt">type =</span> <span class="st">&quot;areas&quot;</span>, <span class="dt">prob =</span> <span class="fl">0.90</span>)</a></code></pre></div>
+<p><img src="07_linear_model_files/figure-html/plot-m3-1.png" width="672" /></p>
+<p>We can plot the data with two regression lines
+(left for <code>mom_hs</code> = “no” and right for <code>mom_hs</code> = &quot;yes):</p>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb190-1" data-line-number="1"><span class="kw">plot</span>(</a>
+<a class="sourceLine" id="cb190-2" data-line-number="2">  <span class="kw">marginal_effects</span>(m3, <span class="dt">effects =</span> <span class="st">&quot;mom_iq_c&quot;</span>, </a>
+<a class="sourceLine" id="cb190-3" data-line-number="3">                   <span class="co"># Request two lines using `conditions`</span></a>
+<a class="sourceLine" id="cb190-4" data-line-number="4">                   <span class="dt">conditions =</span> <span class="kw">tibble</span>(<span class="dt">mom_hs =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>))), </a>
+<a class="sourceLine" id="cb190-5" data-line-number="5">  <span class="dt">points =</span> <span class="ot">TRUE</span>, <span class="dt">point_args =</span> <span class="kw">list</span>(<span class="dt">size =</span> <span class="fl">0.5</span>)</a>
+<a class="sourceLine" id="cb190-6" data-line-number="6">)</a></code></pre></div>
+<pre><code>&gt;# Warning: Method &#39;marginal_effects&#39; is deprecated. Please use
+&gt;# &#39;conditional_effects&#39; instead.</code></pre>
+<p><img src="07_linear_model_files/figure-html/marginal-m3-1.png" width="528" /></p>
+<p>Using the posterior mean, we have the following regression line
+<span class="math display">\[\widehat{\texttt{kid_score}} = 0.821 + 
+                                  0.561 \times \texttt{mom_iq_c} + 
+                                  0.06 \times \texttt{mom_hs}\]</span>
+So, based on our model, if we observe two participants with 1 unit difference in
+<code>mom_iq_c</code>, and for both the mothers have high school degree (or both without),
+the child’s IQ score is expected to be different by 0.561 points, 95% CI [0.448, 0.683]. On the
+other hand, for two observations with the same <code>mom_iq_c</code>, our model predicted
+that the child’s IQ score when the mother has high school degree is higher by
+6.031 points, 95% CI [1.634, 10.407] on average.</p>
+</div>
+<div id="interactions" class="section level3">
+<h3><span class="header-section-number">7.3.2</span> Interactions</h3>
+<p>The previous model assumes that the average difference in <code>kid_score</code> for
+participants that are 1 unit different in <code>mom_iq_c</code> is constant for the <code>mom_hs = 1</code> group and the <code>mom_hs = 0</code> group, as indicated by the same slope of the two
+regression lines associated with <code>mom_iq_c</code>. However, this assumption can be
+relaxed by including an interaction term:
+<span class="math display">\[\begin{align}
+  \texttt{kid_score}_i &amp; \sim \mathcal{N}(\mu_i), \sigma) \\
+  \mu_i &amp; = \beta_0 + \beta_1 (\texttt{mom_iq_c}_i) + 
+                      \beta_2 (\texttt{mom_hs}_i) + 
+                      \beta_3 (\texttt{mom_iq_c}_i \times 
+                               \texttt{mom_hs}_i)  \\
+  \beta_0 &amp; \sim \mathcal{N}(0, 1)  \\
+  \beta_1 &amp; \sim \mathcal{N}(0, 1)  \\
+  \beta_2 &amp; \sim \mathcal{N}(0, 1)  \\
+  \beta_3 &amp; \sim \mathcal{N}(0, 0.5)  \\
+  \sigma &amp; \sim t^+(4, 0, 1)
+\end{align}\]</span>
+Note that the prior scale is smaller for <span class="math inline">\(\beta_3\)</span>. This is chosen because
+generally the magnitude of an interaction effect is smaller than the main
+effect.</p>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb192-1" data-line-number="1">m4 &lt;-<span class="st"> </span><span class="kw">brm</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_iq_c <span class="op">*</span><span class="st"> </span>mom_hs, <span class="dt">data =</span> kidiq100, </a>
+<a class="sourceLine" id="cb192-2" data-line-number="2">          <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </a>
+<a class="sourceLine" id="cb192-3" data-line-number="3">                    <span class="co"># set for all &quot;b&quot; coefficients</span></a>
+<a class="sourceLine" id="cb192-4" data-line-number="4">                    <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>),</a>
+<a class="sourceLine" id="cb192-5" data-line-number="5">                    <span class="co"># for interaction</span></a>
+<a class="sourceLine" id="cb192-6" data-line-number="6">                    <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="fl">0.5</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>, </a>
+<a class="sourceLine" id="cb192-7" data-line-number="7">                          <span class="dt">coef =</span> <span class="st">&quot;mom_iq_c:mom_hsyes&quot;</span>), </a>
+<a class="sourceLine" id="cb192-8" data-line-number="8">                    <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </a>
+<a class="sourceLine" id="cb192-9" data-line-number="9">          <span class="dt">seed =</span> <span class="dv">2302</span></a>
+<a class="sourceLine" id="cb192-10" data-line-number="10">)</a></code></pre></div>
+<p><code>~ mom_iq_c * mom_hs</code> means including the interaction effect as well as the
+individual main effects. The chains have converged. We have the following
+results</p>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb193-1" data-line-number="1"><span class="kw">summary</span>(m4)</a></code></pre></div>
+<pre><code>&gt;#  Family: gaussian 
+&gt;#   Links: mu = identity; sigma = identity 
+&gt;# Formula: kid_score ~ mom_iq_c * mom_hs 
+&gt;#    Data: kidiq100 (Number of observations: 434) 
+&gt;# Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+&gt;#          total post-warmup samples = 4000
+&gt;# 
+&gt;# Population-Level Effects: 
+&gt;#                    Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+&gt;# Intercept              0.85      0.02     0.81     0.89 1.00     3118     2663
+&gt;# mom_iq_c               0.91      0.14     0.64     1.19 1.00     2385     2476
+&gt;# mom_hsyes              0.03      0.02    -0.01     0.08 1.00     3190     2792
+&gt;# mom_iq_c:mom_hsyes    -0.42      0.15    -0.73    -0.12 1.00     2399     2257
+&gt;# 
+&gt;# Family Specific Parameters: 
+&gt;#       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+&gt;# sigma     0.18      0.01     0.17     0.19 1.00     3722     2436
+&gt;# 
+&gt;# Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
+&gt;# is a crude measure of effective sample size, and Rhat is the potential 
+&gt;# scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+<p>Using the posterior median, we have the following regression line
+<span class="math display">\[\widehat{\texttt{kid_score}} = 0.85 + 
+                                 0.914 \times \texttt{mom_iq_c} + 
+                                 0.032 \times \texttt{mom_hs} + 
+                                 -0.423 \times \texttt{mom_iq_c} \times \texttt{mom_hs}\]</span></p>
+<p>Interaction effect is generally not easy to interpret. It would be easier to
+write the regression line for <code>mom_hs</code> = “no” (0) and <code>mom_hs</code> = “yes” (1). To
+do this, note that the regression line for <code>mom_hs</code> = “yes” is</p>
+<p><span class="math display">\[\begin{align*}
+  \mathrm{E}(\texttt{kid_score} \mid \texttt{mom_iq_c}, \texttt{mom_hs} = 1)
+  = (\beta_0 + \beta_2) + (\beta_1 + \beta_3)(\texttt{mom_iq_c})
+  = \beta_0^* + \beta_1^*(\texttt{mom_iq_c})
+\end{align*}\]</span></p>
+<p>Note that the posterior mean of <span class="math inline">\(\beta_0^*\)</span> is equal to the sum of the posterior
+means of <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_2\)</span> (and same for <span class="math inline">\(\beta_1^*\)</span>). (However, the
+posterior medians may be different, because the median is not a linear function
+of the posterior samples)</p>
+<p>When <code>mom_hs</code> = 0,
+<span class="math display">\[\widehat{\texttt{kid_score}} = 0.85 + 
+                                 0.914 \times \texttt{mom_iq_c}\]</span></p>
+<p>and when <code>mom_hs</code> = 1
+<span class="math display">\[\widehat{\texttt{kid_score}} = 0.882 + 
+                                 0.491 \times 
+                                  \texttt{mom_iq_c}\]</span></p>
+<p>We can plot the data with two regression lines with the following code:</p>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb195-1" data-line-number="1"><span class="kw">plot</span>(</a>
+<a class="sourceLine" id="cb195-2" data-line-number="2">  <span class="kw">marginal_effects</span>(m4, <span class="dt">effects =</span> <span class="st">&quot;mom_iq_c&quot;</span>, </a>
+<a class="sourceLine" id="cb195-3" data-line-number="3">                   <span class="co"># Request two lines using `conditions`</span></a>
+<a class="sourceLine" id="cb195-4" data-line-number="4">                   <span class="dt">conditions =</span> <span class="kw">tibble</span>(<span class="dt">mom_hs =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>))), </a>
+<a class="sourceLine" id="cb195-5" data-line-number="5">  <span class="dt">points =</span> <span class="ot">TRUE</span>, <span class="dt">point_args =</span> <span class="kw">list</span>(<span class="dt">size =</span> <span class="fl">0.5</span>)</a>
+<a class="sourceLine" id="cb195-6" data-line-number="6">)</a></code></pre></div>
+<pre><code>&gt;# Warning: Method &#39;marginal_effects&#39; is deprecated. Please use
+&gt;# &#39;conditional_effects&#39; instead.</code></pre>
+<p><img src="07_linear_model_files/figure-html/marginal-m4-1.png" width="528" /></p>
+<p>We can get an <span class="math inline">\(R^2\)</span> effect size.</p>
+<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb197-1" data-line-number="1"><span class="kw">bayes_R2</span>(m4)</a></code></pre></div>
+<pre><code>&gt;#    Estimate Est.Error  Q2.5 Q97.5
+&gt;# R2    0.227    0.0314 0.165 0.287</code></pre>
+<p>So the two predictors, plus the main effect, explained
+22.684%
+of the variance of <code>kid_score</code>. However, comparing to the model with only
+<code>mom_iq_c</code> as predictor, including <code>mom_hs</code> and the interaction increased
+the <span class="math inline">\(R^2\)</span> by <span class="math inline">\(2.762\%\)</span>.</p>
+<p>You can plot the density of the posterior distributions for the three <span class="math inline">\(\beta\)</span>s:</p>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb199-1" data-line-number="1"><span class="co"># `pars = &quot;b&quot;` will include all regression coefficients</span></a>
+<a class="sourceLine" id="cb199-2" data-line-number="2"><span class="kw">stanplot</span>(m4, <span class="dt">type =</span> <span class="st">&quot;areas&quot;</span>, <span class="dt">pars =</span> <span class="st">&quot;b&quot;</span>, <span class="dt">prob =</span> <span class="fl">0.90</span>)</a></code></pre></div>
+<p><img src="07_linear_model_files/figure-html/areas-m4-1.png" width="672" /></p>
+<p>And below I plot the 90% predictive intervals and the variations of the
+regression lines, separated by the status of <code>mom_hs</code>. The R code is a bit
+cumbersome though.</p>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb200-1" data-line-number="1"><span class="co"># Obtain the predictive intervals</span></a>
+<a class="sourceLine" id="cb200-2" data-line-number="2">pi_m4 &lt;-<span class="st"> </span><span class="kw">predictive_interval</span>(m4, <span class="dt">prob =</span> <span class="fl">0.9</span>)</a>
+<a class="sourceLine" id="cb200-3" data-line-number="3"><span class="kw">colnames</span>(pi_m4) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;lwr&quot;</span>, <span class="st">&quot;upr&quot;</span>)  <span class="co"># change the names for convenience</span></a>
+<a class="sourceLine" id="cb200-4" data-line-number="4"><span class="co"># Combine the PIs with the original data</span></a>
+<a class="sourceLine" id="cb200-5" data-line-number="5">df_plot &lt;-<span class="st"> </span><span class="kw">cbind</span>(kidiq100, pi_m4)</a>
+<a class="sourceLine" id="cb200-6" data-line-number="6"><span class="co"># Create a data frame for the regression lines</span></a>
+<a class="sourceLine" id="cb200-7" data-line-number="7">draws_m4 &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(m4)</a>
+<a class="sourceLine" id="cb200-8" data-line-number="8">df_lines &lt;-<span class="st"> </span><span class="kw">rbind</span>(<span class="kw">data.frame</span>(<span class="dt">mom_hs =</span> <span class="st">&quot;no&quot;</span>, <span class="dt">a =</span> draws_m4[ , <span class="dv">1</span>], </a>
+<a class="sourceLine" id="cb200-9" data-line-number="9">                             <span class="dt">b =</span> draws_m4[ , <span class="dv">2</span>]), </a>
+<a class="sourceLine" id="cb200-10" data-line-number="10">                  <span class="kw">data.frame</span>(<span class="dt">mom_hs =</span> <span class="st">&quot;yes&quot;</span>, <span class="dt">a =</span> draws_m4[ , <span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>draws_m4[ , <span class="dv">3</span>], </a>
+<a class="sourceLine" id="cb200-11" data-line-number="11">                             <span class="dt">b =</span> draws_m4[ , <span class="dv">2</span>] <span class="op">+</span><span class="st"> </span>draws_m4[ , <span class="dv">4</span>]))</a>
+<a class="sourceLine" id="cb200-12" data-line-number="12">df_mean_line &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">mom_hs =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>), </a>
+<a class="sourceLine" id="cb200-13" data-line-number="13">                             <span class="dt">a =</span> <span class="kw">c</span>(<span class="kw">fixef</span>(m4)[<span class="dv">1</span>, <span class="st">&quot;Estimate&quot;</span>], </a>
+<a class="sourceLine" id="cb200-14" data-line-number="14">                                   <span class="kw">sum</span>(<span class="kw">fixef</span>(m4)[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>), <span class="st">&quot;Estimate&quot;</span>])), </a>
+<a class="sourceLine" id="cb200-15" data-line-number="15">                             <span class="dt">b =</span> <span class="kw">c</span>(<span class="kw">fixef</span>(m4)[<span class="dv">2</span>, <span class="st">&quot;Estimate&quot;</span>], </a>
+<a class="sourceLine" id="cb200-16" data-line-number="16">                                   <span class="kw">sum</span>(<span class="kw">fixef</span>(m4)[<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">4</span>), <span class="st">&quot;Estimate&quot;</span>])))</a>
+<a class="sourceLine" id="cb200-17" data-line-number="17"></a>
+<a class="sourceLine" id="cb200-18" data-line-number="18"><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> mom_iq_c, <span class="dt">y =</span> kid_score), <span class="dt">data =</span> df_plot) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb200-19" data-line-number="19"><span class="st">  </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>mom_hs) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb200-20" data-line-number="20"><span class="st">    </span><span class="co"># Add a layer of predictive intervals</span></a>
+<a class="sourceLine" id="cb200-21" data-line-number="21"><span class="st">  </span><span class="kw">geom_ribbon</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> lwr, <span class="dt">ymax =</span> upr),</a>
+<a class="sourceLine" id="cb200-22" data-line-number="22">              <span class="dt">fill =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb200-23" data-line-number="23"><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">data =</span> df_lines, <span class="kw">aes</span>(<span class="dt">intercept =</span> a, <span class="dt">slope =</span> b), </a>
+<a class="sourceLine" id="cb200-24" data-line-number="24">              <span class="dt">color =</span> <span class="st">&quot;skyblue&quot;</span>, <span class="dt">size =</span> <span class="fl">0.2</span>, <span class="dt">alpha =</span> <span class="fl">0.10</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb200-25" data-line-number="25"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="fl">0.7</span>, <span class="kw">aes</span>(<span class="dt">col =</span> <span class="kw">factor</span>(mom_hs))) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb200-26" data-line-number="26"><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">data =</span> df_mean_line, <span class="kw">aes</span>(<span class="dt">intercept =</span> a, <span class="dt">slope =</span> b))</a></code></pre></div>
+<p><img src="07_linear_model_files/figure-html/pi-m4-1.png" width="576" /></p>
+<p>And you can see the uncertainty is larger for <code>mom_hs</code> = 0. This makes sense
+because there are less participants in this group.</p>
+</div>
+</div>
+<div id="tabulating-the-models" class="section level2">
+<h2><span class="header-section-number">7.4</span> Tabulating the Models</h2>
+<p>There is a handy function in the <code>sjPlot</code> package, <code>tab_model()</code>, which can
+show a neat summary of the various models:</p>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb201-1" data-line-number="1">sjPlot<span class="op">::</span><span class="kw">tab_model</span>(m1c, m2, m3, m4)</a></code></pre></div>
+<table style="border-collapse:collapse; border:none;">
+<tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
+ 
+</th>
+<th colspan="2" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
+kid.score
+</th>
+<th colspan="2" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
+kid.score
+</th>
+<th colspan="2" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
+kid.score
+</th>
+<th colspan="2" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">
+kid.score
+</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">
+Predictors
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+Estimates
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+CI (95%)
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+Estimates
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+CI (95%)
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">
+Estimates
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  col7">
+CI (95%)
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  col8">
+Estimates
+</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  col9">
+CI (95%)
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+Intercept
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.87
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.85 – 0.88
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.78
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.74 – 0.82
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.82
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7">
+0.78 – 0.86
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8">
+0.85
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9">
+0.81 – 0.89
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+mom.iq
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.61
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.50 – 0.72
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.56
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7">
+0.45 – 0.68
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8">
+0.91
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9">
+0.64 – 1.19
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+mom_hs: yes
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.12
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.07 – 0.16
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+0.06
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7">
+0.02 – 0.10
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8">
+0.03
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9">
+-0.01 – 0.08
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+mom_iq_c.mom_hsyes
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7">
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8">
+-0.42
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9">
+-0.73 – -0.12
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">
+Observations
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="2">
+434
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="2">
+434
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="2">
+434
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="2">
+434
+</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+R<sup>2</sup> Bayes
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">
+0.201
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">
+0.056
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">
+0.215
+</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">
+0.227
+</td>
+</tr>
+</table>
+<p>However right now it only supports HTML. You can also use the following code:</p>
+<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb202-1" data-line-number="1"><span class="kw">source</span>(<span class="st">&quot;../codes/extract_brmsfit.R&quot;</span>)</a>
+<a class="sourceLine" id="cb202-2" data-line-number="2">texreg<span class="op">::</span><span class="kw">screenreg</span>(<span class="kw">map</span>(<span class="kw">list</span>(m1c, m2, m3, m4), extract_brmsfit))</a></code></pre></div>
+<pre><code>&gt;# 
+&gt;# ============================================================================
+&gt;#                     Model 1       Model 2       Model 3       Model 4       
+&gt;# ----------------------------------------------------------------------------
+&gt;# Intercept              0.87 *        0.78 *        0.82 *        0.85 *     
+&gt;#                     [0.85; 0.88]  [0.74; 0.82]  [0.78; 0.86]  [ 0.81;  0.89]
+&gt;# mom_iq_c               0.61 *                      0.56 *        0.91 *     
+&gt;#                     [0.50; 0.73]                [0.45; 0.69]  [ 0.65;  1.20]
+&gt;# mom_hsyes                            0.12 *        0.06 *        0.03       
+&gt;#                                   [0.08; 0.16]  [0.02; 0.10]  [-0.01;  0.08]
+&gt;# mom_iq_c:mom_hsyes                                              -0.42 *     
+&gt;#                                                               [-0.73; -0.14]
+&gt;# ----------------------------------------------------------------------------
+&gt;# R^2                    0.20          0.06          0.21          0.23       
+&gt;# Num. obs.            434           434           434           434          
+&gt;# loo IC              -240.27       -167.74       -245.34       -252.21       
+&gt;# WAIC                -240.28       -167.75       -245.35       -252.22       
+&gt;# ============================================================================
+&gt;# * 0 outside the confidence interval</code></pre>
+<p>Replacing <code>texreg::screenreg()</code> by <code>texreg::texreg()</code> will generate table for
+PDF output.</p>
+<p>We will talk about model checking, robust models, and other extensions to the
+normal regression model next week.</p>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-Gelman2006">
+<p>Gelman, Andrew. 2006. “Prior distributions for variance parameters in hierarchical models (Comment on Article by Browne and Draper).” <em>Bayesian Analysis</em> 1 (3): 515–34. <a href="https://doi.org/10.1214/06-BA117A">https://doi.org/10.1214/06-BA117A</a>.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="markov-chain-monte-carlo.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="model-diagnostics.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["notes_bookdown.pdf", "notes_bookdown.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

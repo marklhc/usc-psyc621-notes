@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 6 Markov Chain Monte Carlo | Course Handouts for Bayesian Data Analysis Class</title>
+  <meta name="description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Spring semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
+  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 6 Markov Chain Monte Carlo | Course Handouts for Bayesian Data Analysis Class" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Spring semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 6 Markov Chain Monte Carlo | Course Handouts for Bayesian Data Analysis Class" />
+  
+  <meta name="twitter:description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Spring semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
+  
+
+<meta name="author" content="Mark Lai" />
+
+
+<meta name="date" content="2019-12-14" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="group-comparisons.html"/>
+<link rel="next" href="linear-models.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<script src="libs/viz-0.3/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.1/grViz.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">PSYC 621 Course Notes</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#history-of-bayesian-statistics"><i class="fa fa-check"></i><b>1.1</b> History of Bayesian Statistics</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="introduction.html"><a href="introduction.html#thomas-bayes-17011762"><i class="fa fa-check"></i><b>1.1.1</b> Thomas Bayes (1701–1762)</a></li>
+<li class="chapter" data-level="1.1.2" data-path="introduction.html"><a href="introduction.html#pierre-simon-laplace-17491827"><i class="fa fa-check"></i><b>1.1.2</b> Pierre-Simon Laplace (1749–1827)</a></li>
+<li class="chapter" data-level="1.1.3" data-path="introduction.html"><a href="introduction.html#th-century"><i class="fa fa-check"></i><b>1.1.3</b> 20th Century</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#motivations-for-using-bayesian-methods"><i class="fa fa-check"></i><b>1.2</b> Motivations for Using Bayesian Methods</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="introduction.html"><a href="introduction.html#problem-with-classical-frequentist-statistics"><i class="fa fa-check"></i><b>1.2.1</b> Problem with classical (frequentist) statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#probability"><i class="fa fa-check"></i><b>1.3</b> Probability</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="introduction.html"><a href="introduction.html#classical-interpretation"><i class="fa fa-check"></i><b>1.3.1</b> Classical Interpretation</a></li>
+<li class="chapter" data-level="1.3.2" data-path="introduction.html"><a href="introduction.html#frequentist-interpretation"><i class="fa fa-check"></i><b>1.3.2</b> Frequentist Interpretation</a></li>
+<li class="chapter" data-level="1.3.3" data-path="introduction.html"><a href="introduction.html#problem-of-the-single-case"><i class="fa fa-check"></i><b>1.3.3</b> Problem of the single case</a></li>
+<li class="chapter" data-level="1.3.4" data-path="introduction.html"><a href="introduction.html#subjectivist-interpretation"><i class="fa fa-check"></i><b>1.3.4</b> Subjectivist Interpretation</a></li>
+<li class="chapter" data-level="1.3.5" data-path="introduction.html"><a href="introduction.html#basics-of-probability"><i class="fa fa-check"></i><b>1.3.5</b> Basics of Probability</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#bayess-theorem"><i class="fa fa-check"></i><b>1.4</b> Bayes’s Theorem</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="introduction.html"><a href="introduction.html#example-1-base-rate-fallacy-from-wikipedia"><i class="fa fa-check"></i><b>1.4.1</b> Example 1: Base rate fallacy (From Wikipedia)</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="introduction.html"><a href="introduction.html#bayesian-statistics"><i class="fa fa-check"></i><b>1.5</b> Bayesian Statistics</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="introduction.html"><a href="introduction.html#example-2-locating-a-plane"><i class="fa fa-check"></i><b>1.5.1</b> Example 2: Locating a Plane</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="introduction.html"><a href="introduction.html#comparing-bayesian-and-frequentist-statistics"><i class="fa fa-check"></i><b>1.6</b> Comparing Bayesian and Frequentist Statistics</a></li>
+<li class="chapter" data-level="1.7" data-path="introduction.html"><a href="introduction.html#software-for-bayesian-statistics"><i class="fa fa-check"></i><b>1.7</b> Software for Bayesian Statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="bayesian-inference.html"><a href="bayesian-inference.html"><i class="fa fa-check"></i><b>2</b> Bayesian Inference</a><ul>
+<li class="chapter" data-level="2.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#steps-of-bayesian-data-analysis"><i class="fa fa-check"></i><b>2.1</b> Steps of Bayesian Data Analysis</a></li>
+<li class="chapter" data-level="2.2" data-path="bayesian-inference.html"><a href="bayesian-inference.html#real-data-example"><i class="fa fa-check"></i><b>2.2</b> Real Data Example</a></li>
+<li class="chapter" data-level="2.3" data-path="bayesian-inference.html"><a href="bayesian-inference.html#choosing-a-model"><i class="fa fa-check"></i><b>2.3</b> Choosing a Model</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#exchangeability"><i class="fa fa-check"></i><b>2.3.1</b> Exchangeability*</a></li>
+<li class="chapter" data-level="2.3.2" data-path="bayesian-inference.html"><a href="bayesian-inference.html#probability-distributions"><i class="fa fa-check"></i><b>2.3.2</b> Probability Distributions</a></li>
+<li class="chapter" data-level="2.3.3" data-path="bayesian-inference.html"><a href="bayesian-inference.html#the-likelihood"><i class="fa fa-check"></i><b>2.3.3</b> The Likelihood</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="bayesian-inference.html"><a href="bayesian-inference.html#specifying-priors"><i class="fa fa-check"></i><b>2.4</b> Specifying Priors</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#beta-distribution"><i class="fa fa-check"></i><b>2.4.1</b> Beta Distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="bayesian-inference.html"><a href="bayesian-inference.html#obtain-the-posterior-distributions"><i class="fa fa-check"></i><b>2.5</b> Obtain the Posterior Distributions</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#grid-approximation"><i class="fa fa-check"></i><b>2.5.1</b> Grid Approximation</a></li>
+<li class="chapter" data-level="2.5.2" data-path="bayesian-inference.html"><a href="bayesian-inference.html#using-conjugate-priors"><i class="fa fa-check"></i><b>2.5.2</b> Using Conjugate Priors</a></li>
+<li class="chapter" data-level="2.5.3" data-path="bayesian-inference.html"><a href="bayesian-inference.html#laplace-approximation-with-maximum-a-posteriori-estimation"><i class="fa fa-check"></i><b>2.5.3</b> Laplace Approximation with Maximum A Posteriori Estimation</a></li>
+<li class="chapter" data-level="2.5.4" data-path="bayesian-inference.html"><a href="bayesian-inference.html#markov-chain-monte-carlo-mcmc"><i class="fa fa-check"></i><b>2.5.4</b> Markov Chain Monte Carlo (MCMC)</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="bayesian-inference.html"><a href="bayesian-inference.html#summarizing-the-posterior-distribution"><i class="fa fa-check"></i><b>2.6</b> Summarizing the Posterior Distribution</a><ul>
+<li class="chapter" data-level="2.6.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#posterior-mean-median-and-mode"><i class="fa fa-check"></i><b>2.6.1</b> Posterior Mean, Median, and Mode</a></li>
+<li class="chapter" data-level="2.6.2" data-path="bayesian-inference.html"><a href="bayesian-inference.html#uncertainty-estimates"><i class="fa fa-check"></i><b>2.6.2</b> Uncertainty Estimates</a></li>
+<li class="chapter" data-level="2.6.3" data-path="bayesian-inference.html"><a href="bayesian-inference.html#credible-intervals"><i class="fa fa-check"></i><b>2.6.3</b> Credible Intervals</a></li>
+<li class="chapter" data-level="2.6.4" data-path="bayesian-inference.html"><a href="bayesian-inference.html#probability-of-theta-higherlower-than-a-certain-value"><i class="fa fa-check"></i><b>2.6.4</b> Probability of <span class="math inline">\(\theta\)</span> Higher/Lower Than a Certain Value</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="bayesian-inference.html"><a href="bayesian-inference.html#model-checking"><i class="fa fa-check"></i><b>2.7</b> Model Checking</a><ul>
+<li class="chapter" data-level="2.7.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#posterior-predictive-distribution"><i class="fa fa-check"></i><b>2.7.1</b> Posterior Predictive Distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="bayesian-inference.html"><a href="bayesian-inference.html#posterior-predictive-check"><i class="fa fa-check"></i><b>2.8</b> Posterior Predictive Check</a></li>
+<li class="chapter" data-level="2.9" data-path="bayesian-inference.html"><a href="bayesian-inference.html#summary"><i class="fa fa-check"></i><b>2.9</b> Summary</a><ul>
+<li class="chapter" data-level="2.9.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#key-concepts"><i class="fa fa-check"></i><b>2.9.1</b> Key Concepts</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="one-parameter-models.html"><a href="one-parameter-models.html"><i class="fa fa-check"></i><b>3</b> One-Parameter Models</a><ul>
+<li class="chapter" data-level="3.1" data-path="one-parameter-models.html"><a href="one-parameter-models.html#binomialbernoulli-data"><i class="fa fa-check"></i><b>3.1</b> Binomial/Bernoulli data</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="one-parameter-models.html"><a href="one-parameter-models.html#reparameterization"><i class="fa fa-check"></i><b>3.1.1</b> Reparameterization*</a></li>
+<li class="chapter" data-level="3.1.2" data-path="one-parameter-models.html"><a href="one-parameter-models.html#posterior-predictive-check-1"><i class="fa fa-check"></i><b>3.1.2</b> Posterior Predictive Check</a></li>
+<li class="chapter" data-level="3.1.3" data-path="one-parameter-models.html"><a href="one-parameter-models.html#comparison-to-frequentist-results"><i class="fa fa-check"></i><b>3.1.3</b> Comparison to frequentist results</a></li>
+<li class="chapter" data-level="3.1.4" data-path="one-parameter-models.html"><a href="one-parameter-models.html#sensitivity-to-different-priors"><i class="fa fa-check"></i><b>3.1.4</b> Sensitivity to different priors</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="one-parameter-models.html"><a href="one-parameter-models.html#poisson-data"><i class="fa fa-check"></i><b>3.2</b> Poisson Data</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="one-parameter-models.html"><a href="one-parameter-models.html#example-2"><i class="fa fa-check"></i><b>3.2.1</b> Example 2</a></li>
+<li class="chapter" data-level="3.2.2" data-path="one-parameter-models.html"><a href="one-parameter-models.html#choosing-a-model-1"><i class="fa fa-check"></i><b>3.2.2</b> Choosing a model</a></li>
+<li class="chapter" data-level="3.2.3" data-path="one-parameter-models.html"><a href="one-parameter-models.html#choosing-a-prior"><i class="fa fa-check"></i><b>3.2.3</b> Choosing a prior</a></li>
+<li class="chapter" data-level="3.2.4" data-path="one-parameter-models.html"><a href="one-parameter-models.html#model-equations-and-diagram"><i class="fa fa-check"></i><b>3.2.4</b> Model Equations and Diagram</a></li>
+<li class="chapter" data-level="3.2.5" data-path="one-parameter-models.html"><a href="one-parameter-models.html#getting-the-posterior"><i class="fa fa-check"></i><b>3.2.5</b> Getting the posterior</a></li>
+<li class="chapter" data-level="3.2.6" data-path="one-parameter-models.html"><a href="one-parameter-models.html#posterior-predictive-check-2"><i class="fa fa-check"></i><b>3.2.6</b> Posterior Predictive Check</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html"><i class="fa fa-check"></i><b>4</b> Brief Introduction to STAN</a><ul>
+<li class="chapter" data-level="4.1" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#stan"><i class="fa fa-check"></i><b>4.1</b> <code>STAN</code></a><ul>
+<li class="chapter" data-level="4.1.1" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#stan-code"><i class="fa fa-check"></i><b>4.1.1</b> <code>STAN</code> code</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#rstan"><i class="fa fa-check"></i><b>4.2</b> <code>RStan</code></a><ul>
+<li class="chapter" data-level="4.2.1" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#assembling-data-list-in-r"><i class="fa fa-check"></i><b>4.2.1</b> Assembling data list in R</a></li>
+<li class="chapter" data-level="4.2.2" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#call-rstan"><i class="fa fa-check"></i><b>4.2.2</b> Call <code>rstan</code></a></li>
+<li class="chapter" data-level="4.2.3" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#summarize-the-results"><i class="fa fa-check"></i><b>4.2.3</b> Summarize the results</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#resources"><i class="fa fa-check"></i><b>4.3</b> Resources</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="group-comparisons.html"><a href="group-comparisons.html"><i class="fa fa-check"></i><b>5</b> Group Comparisons</a><ul>
+<li class="chapter" data-level="5.1" data-path="group-comparisons.html"><a href="group-comparisons.html#data"><i class="fa fa-check"></i><b>5.1</b> Data</a></li>
+<li class="chapter" data-level="5.2" data-path="group-comparisons.html"><a href="group-comparisons.html#between-subject-comparisons"><i class="fa fa-check"></i><b>5.2</b> Between-Subject Comparisons</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="group-comparisons.html"><a href="group-comparisons.html#plots"><i class="fa fa-check"></i><b>5.2.1</b> Plots</a></li>
+<li class="chapter" data-level="5.2.2" data-path="group-comparisons.html"><a href="group-comparisons.html#independent-sample-t-test"><i class="fa fa-check"></i><b>5.2.2</b> Independent sample t-test</a></li>
+<li class="chapter" data-level="5.2.3" data-path="group-comparisons.html"><a href="group-comparisons.html#bayesian-normal-model"><i class="fa fa-check"></i><b>5.2.3</b> Bayesian Normal Model</a></li>
+<li class="chapter" data-level="5.2.4" data-path="group-comparisons.html"><a href="group-comparisons.html#robust-model"><i class="fa fa-check"></i><b>5.2.4</b> Robust Model</a></li>
+<li class="chapter" data-level="5.2.5" data-path="group-comparisons.html"><a href="group-comparisons.html#shifted-lognormal-model"><i class="fa fa-check"></i><b>5.2.5</b> Shifted Lognormal Model*</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="group-comparisons.html"><a href="group-comparisons.html#notes-on-model-comparison"><i class="fa fa-check"></i><b>5.3</b> Notes on Model Comparison</a></li>
+<li class="chapter" data-level="5.4" data-path="group-comparisons.html"><a href="group-comparisons.html#within-subject-comparisons"><i class="fa fa-check"></i><b>5.4</b> Within-Subject Comparisons</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="group-comparisons.html"><a href="group-comparisons.html#plots-1"><i class="fa fa-check"></i><b>5.4.1</b> Plots</a></li>
+<li class="chapter" data-level="5.4.2" data-path="group-comparisons.html"><a href="group-comparisons.html#independent-sample-t-test-1"><i class="fa fa-check"></i><b>5.4.2</b> Independent sample <span class="math inline">\(t\)</span>-test</a></li>
+<li class="chapter" data-level="5.4.3" data-path="group-comparisons.html"><a href="group-comparisons.html#bayesian-normal-model-1"><i class="fa fa-check"></i><b>5.4.3</b> Bayesian Normal Model</a></li>
+<li class="chapter" data-level="5.4.4" data-path="group-comparisons.html"><a href="group-comparisons.html#using-brms"><i class="fa fa-check"></i><b>5.4.4</b> Using <code>brms</code>*</a></li>
+<li class="chapter" data-level="5.4.5" data-path="group-comparisons.html"><a href="group-comparisons.html#region-of-practical-equivalence-rope"><i class="fa fa-check"></i><b>5.4.5</b> Region of Practical Equivalence (ROPE)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html"><i class="fa fa-check"></i><b>6</b> Markov Chain Monte Carlo</a><ul>
+<li class="chapter" data-level="6.1" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#monte-carlo-simulation-with-one-unknown"><i class="fa fa-check"></i><b>6.1</b> Monte Carlo Simulation With One Unknown</a></li>
+<li class="chapter" data-level="6.2" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#markov-chain-monte-carlo-mcmc-with-one-parameter"><i class="fa fa-check"></i><b>6.2</b> Markov Chain Monte Carlo (MCMC) With One Parameter</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#the-metropolis-algorithm"><i class="fa fa-check"></i><b>6.2.1</b> The Metropolis algorithm</a></li>
+<li class="chapter" data-level="6.2.2" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#the-metropolis-hastings-algorithm"><i class="fa fa-check"></i><b>6.2.2</b> The Metropolis-Hastings Algorithm</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#markov-chain"><i class="fa fa-check"></i><b>6.3</b> Markov Chain</a></li>
+<li class="chapter" data-level="6.4" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#effective-sample-size-n_texteff"><i class="fa fa-check"></i><b>6.4</b> Effective Sample Size (<span class="math inline">\(n_\text{eff}\)</span>)</a></li>
+<li class="chapter" data-level="6.5" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#mc-error"><i class="fa fa-check"></i><b>6.5</b> MC Error</a></li>
+<li class="chapter" data-level="6.6" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#burn-inwarmup"><i class="fa fa-check"></i><b>6.6</b> Burn-in/Warmup</a><ul>
+<li class="chapter" data-level="6.6.1" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#thinning"><i class="fa fa-check"></i><b>6.6.1</b> Thinning</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#diagnostics-of-mcmc"><i class="fa fa-check"></i><b>6.7</b> Diagnostics of MCMC</a><ul>
+<li class="chapter" data-level="6.7.1" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#mixing"><i class="fa fa-check"></i><b>6.7.1</b> Mixing</a></li>
+<li class="chapter" data-level="6.7.2" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#acceptance-rate"><i class="fa fa-check"></i><b>6.7.2</b> Acceptance Rate</a></li>
+<li class="chapter" data-level="6.7.3" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#diagnostics-using-multiple-chains"><i class="fa fa-check"></i><b>6.7.3</b> Diagnostics Using Multiple Chains</a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#multiple-parameters"><i class="fa fa-check"></i><b>6.8</b> Multiple Parameters</a></li>
+<li class="chapter" data-level="6.9" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#hamiltonian-monte-carlo"><i class="fa fa-check"></i><b>6.9</b> Hamiltonian Monte Carlo</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="linear-models.html"><a href="linear-models.html"><i class="fa fa-check"></i><b>7</b> Linear Models</a><ul>
+<li class="chapter" data-level="7.1" data-path="linear-models.html"><a href="linear-models.html#what-is-regression"><i class="fa fa-check"></i><b>7.1</b> What is Regression?</a></li>
+<li class="chapter" data-level="7.2" data-path="linear-models.html"><a href="linear-models.html#one-predictor"><i class="fa fa-check"></i><b>7.2</b> One Predictor</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="linear-models.html"><a href="linear-models.html#a-continuous-predictor"><i class="fa fa-check"></i><b>7.2.1</b> A continuous predictor</a></li>
+<li class="chapter" data-level="7.2.2" data-path="linear-models.html"><a href="linear-models.html#centering"><i class="fa fa-check"></i><b>7.2.2</b> Centering</a></li>
+<li class="chapter" data-level="7.2.3" data-path="linear-models.html"><a href="linear-models.html#a-categorical-predictor"><i class="fa fa-check"></i><b>7.2.3</b> A categorical predictor</a></li>
+<li class="chapter" data-level="7.2.4" data-path="linear-models.html"><a href="linear-models.html#predictors-with-multiple-categories"><i class="fa fa-check"></i><b>7.2.4</b> Predictors with multiple categories</a></li>
+<li class="chapter" data-level="7.2.5" data-path="linear-models.html"><a href="linear-models.html#stan-4"><i class="fa fa-check"></i><b>7.2.5</b> STAN</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="linear-models.html"><a href="linear-models.html#multiple-regression"><i class="fa fa-check"></i><b>7.3</b> Multiple Regression</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="linear-models.html"><a href="linear-models.html#two-predictor-example"><i class="fa fa-check"></i><b>7.3.1</b> Two Predictor Example</a></li>
+<li class="chapter" data-level="7.3.2" data-path="linear-models.html"><a href="linear-models.html#interactions"><i class="fa fa-check"></i><b>7.3.2</b> Interactions</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="linear-models.html"><a href="linear-models.html#tabulating-the-models"><i class="fa fa-check"></i><b>7.4</b> Tabulating the Models</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="model-diagnostics.html"><a href="model-diagnostics.html"><i class="fa fa-check"></i><b>8</b> Model Diagnostics</a><ul>
+<li class="chapter" data-level="8.1" data-path="model-diagnostics.html"><a href="model-diagnostics.html#assumptions-of-linear-models"><i class="fa fa-check"></i><b>8.1</b> Assumptions of Linear Models</a></li>
+<li class="chapter" data-level="8.2" data-path="model-diagnostics.html"><a href="model-diagnostics.html#diagnostic-tools"><i class="fa fa-check"></i><b>8.2</b> Diagnostic Tools</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="model-diagnostics.html"><a href="model-diagnostics.html#posterior-predictive-check-7"><i class="fa fa-check"></i><b>8.2.1</b> Posterior Predictive Check</a></li>
+<li class="chapter" data-level="8.2.2" data-path="model-diagnostics.html"><a href="model-diagnostics.html#marginal-model-plots"><i class="fa fa-check"></i><b>8.2.2</b> Marginal model plots</a></li>
+<li class="chapter" data-level="8.2.3" data-path="model-diagnostics.html"><a href="model-diagnostics.html#residual-plots"><i class="fa fa-check"></i><b>8.2.3</b> Residual plots</a></li>
+<li class="chapter" data-level="8.2.4" data-path="model-diagnostics.html"><a href="model-diagnostics.html#multicollinearity"><i class="fa fa-check"></i><b>8.2.4</b> Multicollinearity</a></li>
+<li class="chapter" data-level="8.2.5" data-path="model-diagnostics.html"><a href="model-diagnostics.html#robust-models"><i class="fa fa-check"></i><b>8.2.5</b> Robust Models</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="model-diagnostics.html"><a href="model-diagnostics.html#other-topics"><i class="fa fa-check"></i><b>8.3</b> Other Topics</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html"><i class="fa fa-check"></i><b>9</b> Model Comparison and Regularization</a><ul>
+<li class="chapter" data-level="9.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#overfitting-and-underfitting"><i class="fa fa-check"></i><b>9.1</b> Overfitting and Underfitting</a></li>
+<li class="chapter" data-level="9.2" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#kullback-leibler-divergence"><i class="fa fa-check"></i><b>9.2</b> Kullback-Leibler Divergence</a></li>
+<li class="chapter" data-level="9.3" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#information-criteria"><i class="fa fa-check"></i><b>9.3</b> Information Criteria</a><ul>
+<li class="chapter" data-level="9.3.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#experiment-on-deviance"><i class="fa fa-check"></i><b>9.3.1</b> Experiment on Deviance</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#information-criteria-1"><i class="fa fa-check"></i><b>9.4</b> Information Criteria</a><ul>
+<li class="chapter" data-level="9.4.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#akaike-information-criteria-aic"><i class="fa fa-check"></i><b>9.4.1</b> Akaike Information Criteria (AIC)</a></li>
+<li class="chapter" data-level="9.4.2" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#deviance-information-criteria-dic"><i class="fa fa-check"></i><b>9.4.2</b> Deviance Information Criteria (DIC)</a></li>
+<li class="chapter" data-level="9.4.3" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#watanabe-akaike-information-criteria-waic"><i class="fa fa-check"></i><b>9.4.3</b> Watanabe-Akaike Information Criteria (WAIC)</a></li>
+<li class="chapter" data-level="9.4.4" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#leave-one-out-cross-validation"><i class="fa fa-check"></i><b>9.4.4</b> Leave-One-Out Cross Validation</a></li>
+<li class="chapter" data-level="9.4.5" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#example"><i class="fa fa-check"></i><b>9.4.5</b> Example</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#stackingmodel-averaging"><i class="fa fa-check"></i><b>9.5</b> Stacking/Model Averaging</a><ul>
+<li class="chapter" data-level="9.5.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#model-weights"><i class="fa fa-check"></i><b>9.5.1</b> Model Weights</a></li>
+<li class="chapter" data-level="9.5.2" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#model-averaging"><i class="fa fa-check"></i><b>9.5.2</b> Model Averaging</a></li>
+<li class="chapter" data-level="9.5.3" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#stacking"><i class="fa fa-check"></i><b>9.5.3</b> Stacking</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#shrinkage-priors"><i class="fa fa-check"></i><b>9.6</b> Shrinkage Priors</a><ul>
+<li class="chapter" data-level="9.6.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#number-of-parameters"><i class="fa fa-check"></i><b>9.6.1</b> Number of parameters</a></li>
+<li class="chapter" data-level="9.6.2" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#sparsity-inducing-priors"><i class="fa fa-check"></i><b>9.6.2</b> Sparsity-Inducing Priors</a></li>
+<li class="chapter" data-level="9.6.3" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#finnish-horseshoe"><i class="fa fa-check"></i><b>9.6.3</b> Finnish Horseshoe</a></li>
+</ul></li>
+<li class="chapter" data-level="9.7" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#variable-selection"><i class="fa fa-check"></i><b>9.7</b> Variable Selection</a><ul>
+<li class="chapter" data-level="9.7.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#projection-based-method"><i class="fa fa-check"></i><b>9.7.1</b> Projection-Based Method</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html"><i class="fa fa-check"></i><b>10</b> Hierarchical &amp; Multilevel Models</a><ul>
+<li class="chapter" data-level="10.1" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#anova"><i class="fa fa-check"></i><b>10.1</b> ANOVA</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#frequentist-anova"><i class="fa fa-check"></i><b>10.1.1</b> “Frequentist” ANOVA</a></li>
+<li class="chapter" data-level="10.1.2" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#bayesian-anova"><i class="fa fa-check"></i><b>10.1.2</b> Bayesian ANOVA</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#multilevel-modeling-mlm"><i class="fa fa-check"></i><b>10.2</b> Multilevel Modeling (MLM)</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#examples-of-clustering"><i class="fa fa-check"></i><b>10.2.1</b> Examples of clustering</a></li>
+<li class="chapter" data-level="10.2.2" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#data-1"><i class="fa fa-check"></i><b>10.2.2</b> Data</a></li>
+<li class="chapter" data-level="10.2.3" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#intraclass-correlation"><i class="fa fa-check"></i><b>10.2.3</b> Intraclass correlation</a></li>
+<li class="chapter" data-level="10.2.4" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#is-mlm-needed"><i class="fa fa-check"></i><b>10.2.4</b> Is MLM needed?</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#varying-coefficients"><i class="fa fa-check"></i><b>10.3</b> Varying Coefficients</a><ul>
+<li class="chapter" data-level="10.3.1" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#varying-intercepts"><i class="fa fa-check"></i><b>10.3.1</b> Varying Intercepts</a></li>
+<li class="chapter" data-level="10.3.2" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#varying-slopes"><i class="fa fa-check"></i><b>10.3.2</b> Varying Slopes</a></li>
+<li class="chapter" data-level="10.3.3" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#varying-sigma"><i class="fa fa-check"></i><b>10.3.3</b> Varying <span class="math inline">\(\sigma\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#model-comparisons"><i class="fa fa-check"></i><b>10.4</b> Model Comparisons</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>11</b> Generalized Linear Models</a><ul>
+<li class="chapter" data-level="11.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#basics-of-generalized-linear-models"><i class="fa fa-check"></i><b>11.1</b> Basics of Generalized Linear Models</a></li>
+<li class="chapter" data-level="11.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#binary-logistic-regression"><i class="fa fa-check"></i><b>11.2</b> Binary Logistic Regression</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#the-logit-link"><i class="fa fa-check"></i><b>11.2.1</b> The logit link</a></li>
+<li class="chapter" data-level="11.2.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#choice-of-priors"><i class="fa fa-check"></i><b>11.2.2</b> Choice of Priors</a></li>
+<li class="chapter" data-level="11.2.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#interpreting-the-coefficients"><i class="fa fa-check"></i><b>11.2.3</b> Interpreting the coefficients</a></li>
+<li class="chapter" data-level="11.2.4" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#model-checking-1"><i class="fa fa-check"></i><b>11.2.4</b> Model Checking</a></li>
+<li class="chapter" data-level="11.2.5" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#complete-separation"><i class="fa fa-check"></i><b>11.2.5</b> Complete Separation</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#binomial-logistic-regression"><i class="fa fa-check"></i><b>11.3</b> Binomial Logistic Regression</a></li>
+<li class="chapter" data-level="11.4" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#probit-regression"><i class="fa fa-check"></i><b>11.4</b> Probit Regression</a></li>
+<li class="chapter" data-level="11.5" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#poisson-regression"><i class="fa fa-check"></i><b>11.5</b> Poisson Regression</a><ul>
+<li class="chapter" data-level="11.5.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#interpretations-2"><i class="fa fa-check"></i><b>11.5.1</b> Interpretations</a></li>
+<li class="chapter" data-level="11.5.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#model-checking-2"><i class="fa fa-check"></i><b>11.5.2</b> Model Checking</a></li>
+<li class="chapter" data-level="11.5.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#other-models-in-glm"><i class="fa fa-check"></i><b>11.5.3</b> Other models in GLM</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="missing-data.html"><a href="missing-data.html"><i class="fa fa-check"></i><b>12</b> Missing Data</a><ul>
+<li class="chapter" data-level="12.1" data-path="missing-data.html"><a href="missing-data.html#missing-data-mechanisms"><i class="fa fa-check"></i><b>12.1</b> Missing Data Mechanisms</a><ul>
+<li class="chapter" data-level="12.1.1" data-path="missing-data.html"><a href="missing-data.html#mcar-missing-completely-at-random"><i class="fa fa-check"></i><b>12.1.1</b> MCAR (Missing Completely at Random)</a></li>
+<li class="chapter" data-level="12.1.2" data-path="missing-data.html"><a href="missing-data.html#mar-missing-at-random"><i class="fa fa-check"></i><b>12.1.2</b> MAR (Missing At Random)</a></li>
+<li class="chapter" data-level="12.1.3" data-path="missing-data.html"><a href="missing-data.html#nmar-not-missing-at-random"><i class="fa fa-check"></i><b>12.1.3</b> NMAR (Not Missing At Random)</a></li>
+<li class="chapter" data-level="12.1.4" data-path="missing-data.html"><a href="missing-data.html#ignorable-missingness"><i class="fa fa-check"></i><b>12.1.4</b> Ignorable Missingness*</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="missing-data.html"><a href="missing-data.html#bayesian-approaches-for-missing-data"><i class="fa fa-check"></i><b>12.2</b> Bayesian Approaches for Missing Data</a><ul>
+<li class="chapter" data-level="12.2.1" data-path="missing-data.html"><a href="missing-data.html#complete-case-analysislistwise-deletion"><i class="fa fa-check"></i><b>12.2.1</b> Complete Case Analysis/Listwise Deletion</a></li>
+<li class="chapter" data-level="12.2.2" data-path="missing-data.html"><a href="missing-data.html#treat-missing-data-as-parameters"><i class="fa fa-check"></i><b>12.2.2</b> Treat Missing Data as Parameters</a></li>
+<li class="chapter" data-level="12.2.3" data-path="missing-data.html"><a href="missing-data.html#multiple-imputation"><i class="fa fa-check"></i><b>12.2.3</b> Multiple Imputation</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Course Handouts for Bayesian Data Analysis Class</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="markov-chain-monte-carlo" class="section level1">
+<h1><span class="header-section-number">Chapter 6</span> Markov Chain Monte Carlo</h1>
+<p>So far in this class, we have seen a few examples with Bayesian inferences where
+the posterior distribution concerns only one parameter, like the binomial and
+the Poisson model, and also worked on some group comparison examples. We have
+also discussed different approaches to obtain/approximate the posterior, and
+worked on a few examples where we simulated posterior samples from the
+posterior, including grid approximation and MCMC. In this lecture, we will
+provide a more conceptual discussion on the simulation method, see why we need
+special methods together called <em>Markov Chain Monte Carlo</em>, and extend it to
+multiple parameter problems. We will specifically discuss four MCMC methods that
+you will commonly see in Bayesian literature:</p>
+<ol style="list-style-type: lower-alpha">
+<li>The Metropolis algorithm</li>
+<li>The Metropolis-Hastings algorithm</li>
+<li>The Gibbs sampler</li>
+<li>Hamiltonian Monte Carlo</li>
+<li>No U-turn sampler (and several variants)</li>
+</ol>
+<p>But first, let’s talk about what the Monte Carlo method is.</p>
+<div id="monte-carlo-simulation-with-one-unknown" class="section level2">
+<h2><span class="header-section-number">6.1</span> Monte Carlo Simulation With One Unknown</h2>
+<p>In a previous example, we see that with a conjugate prior (e.g., Beta), the
+posterior distribution is standard (Beta), and with R we can easily draw
+simulation samples from the posterior distribution. The more samples we draw,
+the better we can approximate the posterior distribution based on the simulation
+samples. This is exactly the same reason that if we have a very large sample, we
+can very precisely describe our population; here the true posterior distribution
+is considered the population, and the simulation samples we draw are, well, a
+sample from the population. With 10,000 or 100,000 samples, we can very
+accurately describe our population.</p>
+<p>For example, if using a conjugate prior we know that the posterior is a
+<span class="math inline">\(\mathrm{Beta}(15, 10)\)</span> distribution, consider drawing 10, 100, 10,00, and
+10,000 samples from it using the R function <code>rbeta</code>, and contrast the density
+estimated from the samples (in the histogram) with that of the real
+<span class="math inline">\(\mathrm{Beta}\)</span> distribution (in red).</p>
+<pre><code>&gt;# `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="06_mcmc_files/figure-html/mc-convergence-1.png" width="672" /></p>
+<p>The figure below shows the values when drawing 100 samples in time order:</p>
+<p><img src="06_mcmc_files/figure-html/beta-converge-1.png" width="384" /></p>
+<p>So we can say that when the number of posterior samples is very large, the
+sample distribution <em>converges</em> to the population density. The Monte Carlo
+method will work for many situations. Note, of course, the number of simulation
+samples is controlled by the analysts; it is totally different from sample size,
+which is fixed and is a property of the data.</p>
+<p>In addition, most of the descriptive statistics (e.g., mean, <em>SD</em>) of the sample
+will converge to the corresponding values of the true posterior distribution.
+The graphs below showed how the mean, median, <em>SD</em>, and skewness converge to the
+true value (red dashed lines) when the number of simulation samples increases.</p>
+<p><img src="06_mcmc_files/figure-html/beta-converge-stat-1.png" width="672" /></p>
+</div>
+<div id="markov-chain-monte-carlo-mcmc-with-one-parameter" class="section level2">
+<h2><span class="header-section-number">6.2</span> Markov Chain Monte Carlo (MCMC) With One Parameter</h2>
+<p>However, the above Monte Carlo simulation works in the above example because (a)
+we know exactly that the posterior distribution is a beta distribution, and (b)
+R knows how to draw simulation samples form a beta distribution (with <code>rbeta</code>).
+However, as we progress through the class, it is more of an exception that we
+can use conjugate prior distribution, so in general neither (a) nor (b) would
+hold. For example, if we instead use a normal distribution for the prior of
+<span class="math inline">\(\theta\)</span>, we may get something like</p>
+<p><span class="math display">\[P(\theta | y) = \frac{\mathrm{e}^{-(\theta - 1 / 2)^2} 
+                                     \theta^y (1 - \theta)^{n - y}}
+                       {\int_0^1 \mathrm{e}^{-(t - 1 / 2)^2} 
+                        t^y (1 - t)^{n - y} \; \mathrm{d}t}\]</span></p>
+<p>and it would be very hard, if possible at all, to directly draw simulation
+samples from the posterior. Luckily, we have a clever (sets of) algorithm called
+<em>Markov Chain Monte Carlo</em>, which provides a way to draw samples from the
+posterior distribution without the need to know everything about the posterior
+distribution. Indeed, for some algorithms they only require that we know, for
+every two possible values of <span class="math inline">\(\theta\)</span>, the ratio of their corresponding
+densities.</p>
+<div id="the-metropolis-algorithm" class="section level3">
+<h3><span class="header-section-number">6.2.1</span> The Metropolis algorithm</h3>
+<p>The Metropolis algorithm can generally be used to draw samples from a
+distribution as long as the density ratio of any two points can be computed.
+Remember in Bayesian inference, for two values in the posterior distribution,
+<span class="math inline">\(\theta_1\)</span> and <span class="math inline">\(\theta_2\)</span>,
+<span class="math display">\[\begin{align*}
+  P(\theta = \theta_1 | \boldsymbol{\mathbf{y}}) &amp; = 
+  \frac{P(\boldsymbol{\mathbf{y}} | \theta = \theta_1) P(\theta = \theta_1)}
+       {P(y)} \\
+  P(\theta = \theta_2 | \boldsymbol{\mathbf{y}}) &amp; = 
+  \frac{P(\boldsymbol{\mathbf{y}} | \theta = \theta_2) P(\theta = \theta_2)}
+       {P(y)}
+\end{align*}\]</span>
+Therefore, if we take the ratio of the posterior densities, we have
+<span class="math display">\[\frac{P(\theta = \theta_2 | \boldsymbol{\mathbf{y}})}{P(\theta = \theta_1 | \boldsymbol{\mathbf{y}})} 
+  = \frac{P(\boldsymbol{\mathbf{y}} | \theta = \theta_2) P(\theta = \theta_2)}
+         {P(\boldsymbol{\mathbf{y}} | \theta = \theta_1) P(\theta = \theta_1)},\]</span>
+which does not involve <span class="math inline">\(P(y)\)</span>. Therefore, even though we may not know
+<span class="math inline">\(P(\theta = \theta_1 | \boldsymbol{\mathbf{y}})\)</span> as it involves <span class="math inline">\(P(y)\)</span> as the denominator, we can
+still compute the density ratio.</p>
+<p>In addition, the Metropolis algorithm requires the use of a <u>proposal
+distribution</u>, which can be any symmetric distribution. Common choices are a
+normal distribution or a uniform distribution. For example, let’s assume we will
+be using a <span class="math inline">\(N(0, 1)\)</span> proposal distribution.</p>
+<p>The steps of a Metropolis algorithm are:</p>
+<ol style="list-style-type: decimal">
+<li>Randomly start from a certain point in the parameter space, and call that
+point <span class="math inline">\(\theta_0\)</span></li>
+<li>Randomly generate a sampled value from a <span class="math inline">\(N(\theta_0, 1)\)</span> distribution. Call
+this proposed value <span class="math inline">\(\theta^\text{prop}\)</span></li>
+<li>Compute the density ratio <span class="math inline">\([P(\theta = \theta^\text{prop} | \boldsymbol{\mathbf{y}})] /  [P(\theta = \theta_0 | \boldsymbol{\mathbf{y}})]\)</span></li>
+<li>If the ratio is larger than 1, accept <span class="math inline">\(\theta^\text{prop}\)</span> and include
+this value in the sample</li>
+<li>If the ratio is smaller than 1, accept <span class="math inline">\(\theta^\text{prop}\)</span> with probability
+equal to the density ratio. For example, if the ratio is 0.7, one first
+generated a simulated value, <span class="math inline">\(u\)</span>, from a uniform distribution between 0 and 1
+(i.e., <span class="math inline">\(U(0, 1)\)</span>). If <span class="math inline">\(u\)</span> is smaller than the ratio, accept <span class="math inline">\(\theta^\text{prop}\)</span>
+and include it in the sample. Otherwise, reject the proposed value, and include
+<span class="math inline">\(\theta_0\)</span> (again) in the sample</li>
+<li>After accepting <span class="math inline">\(\theta^\text{prop}\)</span> or <span class="math inline">\(\theta_0\)</span> in the sample, denote
+the accepted value as <span class="math inline">\(\theta_0\)</span>, and repeat steps 2 to 6.</li>
+</ol>
+<p>Under mild conditions, and after the chain runs for a while, the above algorithm
+will generate representative samples from the target posterior distribution.</p>
+<hr />
+<div id="shiny-app" class="section level4">
+<h4><span class="header-section-number">6.2.1.1</span> Shiny App:</h4>
+<p>To see a visual demonstration, you may run the shiny app I created by typing in R</p>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb135-1" data-line-number="1">shiny<span class="op">::</span><span class="kw">runGitHub</span>(<span class="st">&quot;metropolis_demo&quot;</span>, <span class="st">&quot;marklhc&quot;</span>)</a></code></pre></div>
+<hr />
+<p>Each step in MCMC is called an <u>iteration</u>. However, the sampled values are
+not <em>independent</em>, which means they are different from those generated using
+functions like <code>rbeta</code> or <code>rnorm</code>. Instead, the resulting sampled values will
+form a <font color="red">Markov chain</font>, meaning that each sampled value is
+correlated with the previous value. This is because each time we propose a new
+value, the proposal distribution is centered at the previous value. As long as
+the previous value affects which values are likely proposed, the two consecutive
+values are not independent.</p>
+<p>You can see a <u>trace plot</u> below, which is generally the first thing
+you need to check after running an MCMC sampling. You will see that consecutive
+samples tend to be closer or the same. Compare this with the one in a previous
+section using <code>rbeta</code>.</p>
+<p><img src="06_mcmc_files/figure-html/traceplot-1.png" width="576" /></p>
+<p>The graph on the right panel is an autocorrelation plot, which shows the
+correlations between sampled values that are <span class="math inline">\(l\)</span> iterations apart. The table
+below has three columns, the first one is the first 10 sampled values from the
+chain, the second is the lag-1 behind, meaning values in the 2nd to the 11th
+iterations, and the third column is the lag-2 values. A lag-1 autocorrelation is
+the correlation between the first column and the second column, and a lag-2
+autocorrelation is the correlation between the first column and the third
+column. The graph above shows that the correlation between values from two
+consecutive iterations have a correlation of
+0.656.</p>
+<pre><code>&gt;# # A tibble: 10 x 3
+&gt;#     self  lag1  lag2
+&gt;#    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+&gt;#  1 0.2   0.2   0.2  
+&gt;#  2 0.2   0.2   0.194
+&gt;#  3 0.2   0.194 0.194
+&gt;#  4 0.194 0.194 0.194
+&gt;#  5 0.194 0.194 0.194
+&gt;#  6 0.194 0.194 0.328
+&gt;#  7 0.194 0.328 0.328
+&gt;#  8 0.328 0.328 0.415
+&gt;#  9 0.328 0.415 0.515
+&gt;# 10 0.415 0.515 0.515</code></pre>
+</div>
+</div>
+<div id="the-metropolis-hastings-algorithm" class="section level3">
+<h3><span class="header-section-number">6.2.2</span> The Metropolis-Hastings Algorithm</h3>
+<p>The Metropolis-Hastings (MH) algorithm is a generalization of the Metropolis
+algorithm, where it allows a proposal distribution that is not symmetric, with
+some additional adjustment made. The MH algorithm can perform better for some
+cases where the target distribution is bounded and non-symmetric, but this is
+beyond the scope of this course. For multiparameter problems, the Gibbs sampler
+which we will talk about later in this note is actually also a special case of
+the MH algorithm.</p>
+</div>
+</div>
+<div id="markov-chain" class="section level2">
+<h2><span class="header-section-number">6.3</span> Markov Chain</h2>
+<p>A Markov chain is a chain of random samples, where the next sample depends on
+where the previous sample(s) are at. Recall that in the Metropolis algorithm,
+the proposal distribution is centered at the previous sample. This is called
+<em>first order Markov chain</em>, as the current state only depends on just the
+previous 1 state.</p>
+<p>Under a condition called <em>ergodicity</em>, a Markov chain will converge to a
+<em>stationary distribution</em>. This means that, after a certain amount of samples,
+when the chain arrives at the high density region of the posterior distribution,
+all simulated samples after that can be considered a random (but correlated)
+sample of the posterior distribution.</p>
+<p>Like regular simulation, as long as you have enough samples, the sample density
+will converge to the population density. However, it takes thousands or tens of
+thousands Metropolis samples to make the sample density sufficiently close to
+the target posterior distribution, which is much more than what is required with
+Monte Carlo simulation with independent samples. As you can see below, with
+1,000 samples, the summary statistics are still not very close to the true
+values.</p>
+<p><img src="06_mcmc_files/figure-html/mcmc-chains-1.png" width="672" /></p>
+</div>
+<div id="effective-sample-size-n_texteff" class="section level2">
+<h2><span class="header-section-number">6.4</span> Effective Sample Size (<span class="math inline">\(n_\text{eff}\)</span>)</h2>
+<p>The information contained in 1,000 simulated samples using the Metropolis
+algorithm in this example was approximately equivalent to
+207.517 samples if the simulated samples are
+independent. In other words, the <em>effective sample size</em> of the 1,000 simulated
+samples is only 207.517. Therefore, using MCMC
+requires drawing much more samples than using techniques for drawing independent
+samples like the <code>rbeta</code> function.</p>
+<blockquote>
+<p>If the proposal distribution is exactly the same as the posterior, then we
+can accept all proposed value. Why? Because each proposed value is already a
+random sample from the posterior! This will be relevant when we talk about
+Gibbs sampling.</p>
+</blockquote>
+</div>
+<div id="mc-error" class="section level2">
+<h2><span class="header-section-number">6.5</span> MC Error</h2>
+<p>The Monte Carlo error or Monte Carlo standard error tells the margin of error
+when using the MCMC samples to estimate the posterior mean. A simple method
+to estimate the MC error is:
+<span class="math display">\[\mathit{SE}_\mathrm{mc} = \sqrt{\frac{\widehat{\mathrm{Var}}(\theta | \boldsymbol{\mathbf{y}})}{n_\text{eff}}}\]</span>
+In the above example, <span class="math inline">\(\mathit{SE}_\mathrm{mc} = 0.007\)</span>. So if the true
+posterior mean is 0.6, using 1,000 MCMC samples will likely give an estimated
+posterior mean in the range [0.593, 0.607]. Generally, we
+would like to have something more precise, and it’s better to get an
+<span class="math inline">\(n_\text{eff}\)</span> above 1,000.</p>
+</div>
+<div id="burn-inwarmup" class="section level2">
+<h2><span class="header-section-number">6.6</span> Burn-in/Warmup</h2>
+<p>Every Markov chain needs a certain amount of iterations to reach the stationary
+distribution. Whereas in the previous examples, the chain quickly get to the
+regions with relative high density, for some situations, especially for
+multiparameter problems, it usually takes hundreds or thousands of iterations to
+get there, as shown in the graph below (for approximating a <span class="math inline">\(N[15, 2]\)</span>
+distribution).</p>
+<p><img src="06_mcmc_files/figure-html/mcmc-trace-1.png" width="576" /></p>
+<p>Iterations obtained before a Markov chain reaches the stationary distribution
+are called burn-in in WinBUGS and warmup in Stan. As they are not considered
+samples of the posterior distribution, they should not be included when
+approximating the posterior distribution. In Stan, the first half of the samples
+(e.g., 1,000 out of 2,000) are discarded.</p>
+<blockquote>
+<p>When people say they get <span class="math inline">\(8,000\)</span> samples/iterations using MCMC, <span class="math inline">\(8,000\)</span> is
+the number  the burn-in/warmup.</p>
+</blockquote>
+<blockquote>
+<p>Warmup is the term used in STAN to tune the algorithm so it’s not the same as
+burn-in as discussed here. See the chapter by <span class="citation">McElreath (<a href="#ref-mcelreath2016statistical">2016</a>)</span>.</p>
+</blockquote>
+<div id="thinning" class="section level3">
+<h3><span class="header-section-number">6.6.1</span> Thinning</h3>
+<p>You will sometimes hear the term thinning, which means only saving every
+<span class="math inline">\(t\)</span>th sample, where <span class="math inline">\(t\)</span> is the thinning interval. For example, based on the
+autocorrelation plot it appears that the samples are approximated uncorrelated
+when they are 11 lag apart, so instead of using all 1,000 samples, we just
+use the 1st, 12th, 23rd, <span class="math inline">\(\ldots\)</span> samples. However, this is generally not
+recommended unless you have a concern for not having enough storage space,
+which happens when, for example, using <em>multiple imputation</em> to handle
+missing data. Otherwise, it is strongly recommended that you include all
+draws after burn-in/warmup, even if they are correlated.</p>
+</div>
+</div>
+<div id="diagnostics-of-mcmc" class="section level2">
+<h2><span class="header-section-number">6.7</span> Diagnostics of MCMC</h2>
+<div id="mixing" class="section level3">
+<h3><span class="header-section-number">6.7.1</span> Mixing</h3>
+<p>One thing you should look at to diagnose the convergence of a Markov chain is
+the trace plot. Look at the three examples below:</p>
+<p><img src="06_mcmc_files/figure-html/trace-acf-1.png" width="672" /><img src="06_mcmc_files/figure-html/trace-acf-2.png" width="672" /><img src="06_mcmc_files/figure-html/trace-acf-3.png" width="672" /></p>
+<p>When multiple chains were run, each with a different initial value, it was
+recently recommended that researchers examine the rank plot (see <a href="https://arxiv.org/abs/1903.08008">this
+paper</a>) as it is more robust.</p>
+<p>The first graph on the left shows good mixing behavior as it explores the region
+with most of the density (bounded by the blue dashed line) smoothly and bounces
+from one point to another quickly. For the middle graph, this is a chain where,
+although in every iteration it moves to a new place, the jump is relatively
+small, so it takes a long time to get from one end of the distribution to
+another end, and it never explores regions that are just within the blue lines
+and outside of the blue lines. For the bottom graph, you can see it tends to
+stay in one point for quite some time, and at some point it takes almost 100
+iterations for it to move.</p>
+<p>The first graph demonstrates <em>good mixing</em>, which will converge to a stationary
+distribution (the posterior) pretty quickly. The middle and the bottom graph
+demonstrates <em>poor mixing</em>, which takes a lot more iterations to converge; if
+you stop the chain before that, you can get a biased representation of the
+posterior distribution.</p>
+<p>The autocorrelation plots on the right show the corresponding autocorrelations.
+You can see that whereas the autocorrelation dies out for the first chain
+pretty soon (at about the 10th lag), it remains high for the other two cases.</p>
+</div>
+<div id="acceptance-rate" class="section level3">
+<h3><span class="header-section-number">6.7.2</span> Acceptance Rate</h3>
+<p>If you’re using the Metropolis/MH algorithm, you want to monitor the acceptance
+rate and make sure it is within optimal range. If you accept almost every time,
+that tells you that each time the chain only jumps a very small step (so that
+the acceptance ratio is close to 1 every time), which will make the algorithm
+slow in converging to the stationary distribution. On the other hand, if the
+acceptance rate is very low, then that says that the chain got stuck to just a
+few locations and it takes hundreds of iterations for it to make one jump. For
+the Metropolis/MH algorithm, an optimal acceptance rate would be something
+between 10% to 60%. <u>For Hamiltonian Monte Carlo and other newer method</u>,
+which we will discuss later, <u>the optimal acceptance rate would be much
+higher</u>, from 80% to 99%, or even higher.</p>
+</div>
+<div id="diagnostics-using-multiple-chains" class="section level3">
+<h3><span class="header-section-number">6.7.3</span> Diagnostics Using Multiple Chains</h3>
+<p>Another important thing to check is to see the convergence with multiple chains.
+So far we’ve been just talking about one chain, but it is common practice to use
+two or more chains (and 4 chains are generally recommended nowadays), each
+starting at a different, preferably more extreme, place, and see whether they
+explore a similar region.</p>
+<p>The two plots below are called <em>rank plots</em>. The top one shows a relatively
+healthy chains, as the ranks are relatively uniformly distributed (meaning
+that one chain does not have higher values than another for a long period of
+time). The plot below, however, shows an unhealthy chain.</p>
+<pre><code>&gt;# Warning: The following arguments were unrecognized and ignored: n_warmup</code></pre>
+<p><img src="06_mcmc_files/figure-html/rank-plots-1.png" width="672" /></p>
+<pre><code>&gt;# Warning: The following arguments were unrecognized and ignored: n_warmup</code></pre>
+<p><img src="06_mcmc_files/figure-html/rank-plots-2.png" width="672" /></p>
+<div id="hatr-a.k.a-potential-scale-reduction-factor" class="section level4">
+<h4><span class="header-section-number">6.7.3.1</span> <span class="math inline">\(\hat{R}\)</span>, a.k.a Potential Scale Reduction Factor</h4>
+<p>A commonly used numerical index in diagnosing convergence is <span class="math inline">\(\hat{R}\)</span>, also
+called the potential scale reduction factor, proposed by Gelman and Rubin (1992)
+and later an extension for multivariate distributions by Brooks and Gelman
+(1997). <span class="math inline">\(\hat{R}\)</span> measures the ratio of the total variability combining multiple
+chains to the within-chain variability. To understand this, remember in ANOVA,
+the <span class="math inline">\(F\)</span>-ratio is a measure of
+<span class="math display">\[F = \frac{\text{Between-group difference} + \text{error}}{\text{error}}\]</span></p>
+<p><span class="math inline">\(\hat{R}\)</span> has a very similar meaning conceptually, with <code>error</code> meaning the
+within-chain variance. When the Markov chains converge, they reach the
+stationary distribution. As each chain is based on the same posterior
+distribution, they should have the same variance, meaning that after the
+chains converge, there should be no differences between the chains, and so
+<span class="math inline">\(\hat{R}\)</span> should be very close to 1.0. Note that in Stan, <span class="math inline">\(\hat{R}\)</span> is computed
+by splitting each chain into half. So if you have two chains, <span class="math inline">\(\hat{R}\)</span> will
+be based on four groups.</p>
+<p>For the two graphs above, the first one has an <span class="math inline">\(\hat{R}\)</span> of 1.021,
+and the second one has an <span class="math inline">\(\hat{R}\)</span> of 2.93. <span class="citation">Gelman et al. (<a href="#ref-Gelman2013">2013</a>)</span>
+recommended an <span class="math inline">\(\hat{R}\)</span> less than 1.1 for acceptable convergence of the Markov
+chains, but more recently a more stringent cutoff of 1.01 is proposed.</p>
+<p>It should also be pointed out that there are many versions of <span class="math inline">\(\hat R\)</span> being
+used in the literature, but researchers rarely discussed which version they
+used. In STAN, the version was mainly based on <span class="citation">Gelman et al. (<a href="#ref-Gelman2013">2013</a>)</span>, but in future
+upgrade it’s likely going to use a newer and more robust <span class="math inline">\(\hat R\)</span> based on
+<a href="https://arxiv.org/abs/1903.08008">this paper</a>.</p>
+</div>
+</div>
+</div>
+<div id="multiple-parameters" class="section level2">
+<h2><span class="header-section-number">6.8</span> Multiple Parameters</h2>
+<p>If you think about some of the statistical techniques you have learned, there
+are generally more than one parameter. For example, with a linear regression,
+you have at least one parameter for the intercept, <span class="math inline">\(\beta_0\)</span>, and one parameter
+for the slope, <span class="math inline">\(\beta_1\)</span>. With two parameters, when we generate posterior
+samples, we want to get more points in the regions with higher density.</p>
+<p>It’s helpful to understand this with an example. Look at the 3D plot below:</p>
+<p><img src="06_mcmc_files/figure-html/persp-2d-1.png" width="672" /></p>
+<p>Another way to show the joint distribution of two variables is to use a
+<em>contour plot</em> to show the lines at different density levels:</p>
+<p><img src="06_mcmc_files/figure-html/contour-plot-1.png" width="384" /></p>
+<p>With multiple parameters, one can still use the Metropolis/MH algorithm.
+However, one will need a multidimensional proposal distribution, and it is
+usually rather inefficient. Before 2010, a more efficient algorithm is the
+<em>Gibbs sampling</em>, which relies on conditional distributions as proposal
+distributions to sample each dimension the posterior distributions. The two
+popular Bayesian language, BUGS and JAGS, both used Gibbs sampling. You likely
+will still see it in a lot of articles doing Bayesian analyses. However, Gibbs
+sampling is rather restrictive as it relies on conjugate priors, so your choices
+of priors are rather limited. Also, it may run into convergence issues in more
+complex models such as multilevel models. Given that STAN uses different and
+usually more efficient sampling methods, I will not go into detail on Gibbs
+sampling, and will just move on to the ones that STAN uses. To learn more, you
+may see the following Shiny app.</p>
+<hr />
+<div id="shiny-app-1" class="section level4">
+<h4><span class="header-section-number">6.8.0.1</span> Shiny app:</h4>
+<p>Shiny app illustration by Jonah Gabry:</p>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb139-1" data-line-number="1">shiny<span class="op">::</span><span class="kw">runGitHub</span>(<span class="dt">repo =</span> <span class="st">&quot;jgabry/gibbs_shiny&quot;</span>)</a></code></pre></div>
+<hr />
+</div>
+</div>
+<div id="hamiltonian-monte-carlo" class="section level2">
+<h2><span class="header-section-number">6.9</span> Hamiltonian Monte Carlo</h2>
+<p><code>Stan</code> is using something different than the Metropolis-Hastings algorithm or
+the special case that is Gibbs sampling. Although its algorithms have gone
+through multiple revision, and in the next few updates they may have some
+changes as well, their basic algorithm is under the umbrella of <em>Hamiltonian
+Monte Carlo</em> or <em>hybrid Monte Carlo</em> (HMC). The algorithm is a bit complex and I
+will just try to help you develop some intuition of the algorithm, hopefully
+enough to help you diagnose the Markov chains.</p>
+<ol style="list-style-type: decimal">
+<li>It produces simulation samples that are much less correlated, meaning that
+if you get 10,000 samples from Gibbs and 10,000 samples from HMC, HMC generally
+provides a much higher effective sample size.</li>
+<li>When there is a problem in convergence, HMC tends to raise a clear red flag,
+meaning it goes really really wrong.</li>
+</ol>
+<p>So now, how does HMC work? First, consider a two-dimensional posterior below,
+which is based on a real data example of a hierarchical model, with two of the
+parameters <span class="math inline">\((\mu, \tau)\)</span>.</p>
+<p><img src="06_mcmc_files/figure-html/persp-hlm-1.png" width="672" /></p>
+<p>For illustration of HMC, let’s turn it upside down:</p>
+<p><img src="06_mcmc_files/figure-html/persp-hlm-flip-1.png" width="672" /></p>
+<p>HMC requires you to think of the inverted posterior density a park for ice
+skating. Imagine if you stand on a certain point of a slope and does not move
+your body, then you will soon fall down to the bottom point where the posterior
+mode is located. However, if you have some jet engine or device to provide
+thrust for you to resist the gravitational force, you will be able to explore
+the surface of the park. In HMC, you will randomly choose a direction to go,
+and randomly choose an energy level for the engine. When you stop, your
+coordinate will be a sample value from the posterior distribution. It was shown
+that, compared to Gibbs sampling or Metropolis algorithm, HMC is much more
+efficient in getting samples with lower autocorrelations. This means that,
+the effective sample size for HMC is usually much higher than the other methods
+we discussed when they have the same number of iterations. For example, with
+Gibbs sampling researchers usually need 50,000 or 100,000 iterations, whereas
+with STAN something around 2,000 would be enough for regression models.</p>
+<p>See <a href="https://chi-feng.github.io/mcmc-demo/app.html#HamiltonianMC,banana" class="uri">https://chi-feng.github.io/mcmc-demo/app.html#HamiltonianMC,banana</a> for a
+demonstration of HMC sampling.</p>
+<p>HMC will simulate the motion of gliding around the surface of the posterior by
+breaking path into discrete segments, each called a <em>leapfrog step</em>. The
+complexity of HMC lies in determining how many leapfrog steps to use in one
+iteration, as well as how far to go along the trajectory (called <em>stepsize</em>), as
+that varies a lot with different contour shapes, distributions, and dimensions,
+and one needs to tune these effectively for HMC to work well.</p>
+<p>Building on HMC, currently STAN used a modified algorithm called the <em>No-U-Turn
+Sampler (NUTS)</em>. The detail is beyond this note, but you should note the names
+corresponding to the tuning parameters in STAN:</p>
+<ul>
+<li><code>adapt_delta</code>: this parameter controls the target acceptance rate of the
+NUTS algorithm, with a default of .80. Increasing it with reduces the stepsize
+so that the algorithm won’t go two far away in each jump. When the default is
+not enough, you will receive a warning asking you to increase the value, usually
+to .95 or .99 or even higher. It will take longer time to one, but you should
+<em>NEVER</em> ignore such a warning.</li>
+<li><code>max_treedepth</code>: it controls the maximum number of leapfrog steps. When the
+number of steps are too small, NUTS may be too slow in exploring the surface of
+the posterior, especially when <code>adapt_delta</code> is large. Like <code>adapt_delta</code>, you
+should increase it when receiving a warning message in the previous run.</li>
+</ul>
+<p>See <a href="https://mc-stan.org/misc/warnings.html">this page</a> for some of the common
+STAN warning messages.</p>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-Gelman2013">
+<p>Gelman, Andrew, John B. Carlin, Hal S. Stern, David B. Dunson, Aki Vehtari, and Donald Rubin. 2013. <em>Bayesian Data Analysis</em>. 3rd ed. London, UK: CRC Press.</p>
+</div>
+<div id="ref-mcelreath2016statistical">
+<p>McElreath, Richard. 2016. <em>Statistical Rethinking: A Bayesian Course with Examples in R and Stan</em>. Vol. 122. CRC Press.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="group-comparisons.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="linear-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["notes_bookdown.pdf", "notes_bookdown.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

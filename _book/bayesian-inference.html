@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 2 Bayesian Inference | Course Handouts for Bayesian Data Analysis Class</title>
+  <meta name="description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Spring semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
+  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 2 Bayesian Inference | Course Handouts for Bayesian Data Analysis Class" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Spring semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Bayesian Inference | Course Handouts for Bayesian Data Analysis Class" />
+  
+  <meta name="twitter:description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Spring semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
+  
+
+<meta name="author" content="Mark Lai" />
+
+
+<meta name="date" content="2019-12-14" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="introduction.html"/>
+<link rel="next" href="one-parameter-models.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<script src="libs/viz-0.3/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.1/grViz.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">PSYC 621 Course Notes</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#history-of-bayesian-statistics"><i class="fa fa-check"></i><b>1.1</b> History of Bayesian Statistics</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="introduction.html"><a href="introduction.html#thomas-bayes-17011762"><i class="fa fa-check"></i><b>1.1.1</b> Thomas Bayes (1701–1762)</a></li>
+<li class="chapter" data-level="1.1.2" data-path="introduction.html"><a href="introduction.html#pierre-simon-laplace-17491827"><i class="fa fa-check"></i><b>1.1.2</b> Pierre-Simon Laplace (1749–1827)</a></li>
+<li class="chapter" data-level="1.1.3" data-path="introduction.html"><a href="introduction.html#th-century"><i class="fa fa-check"></i><b>1.1.3</b> 20th Century</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#motivations-for-using-bayesian-methods"><i class="fa fa-check"></i><b>1.2</b> Motivations for Using Bayesian Methods</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="introduction.html"><a href="introduction.html#problem-with-classical-frequentist-statistics"><i class="fa fa-check"></i><b>1.2.1</b> Problem with classical (frequentist) statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#probability"><i class="fa fa-check"></i><b>1.3</b> Probability</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="introduction.html"><a href="introduction.html#classical-interpretation"><i class="fa fa-check"></i><b>1.3.1</b> Classical Interpretation</a></li>
+<li class="chapter" data-level="1.3.2" data-path="introduction.html"><a href="introduction.html#frequentist-interpretation"><i class="fa fa-check"></i><b>1.3.2</b> Frequentist Interpretation</a></li>
+<li class="chapter" data-level="1.3.3" data-path="introduction.html"><a href="introduction.html#problem-of-the-single-case"><i class="fa fa-check"></i><b>1.3.3</b> Problem of the single case</a></li>
+<li class="chapter" data-level="1.3.4" data-path="introduction.html"><a href="introduction.html#subjectivist-interpretation"><i class="fa fa-check"></i><b>1.3.4</b> Subjectivist Interpretation</a></li>
+<li class="chapter" data-level="1.3.5" data-path="introduction.html"><a href="introduction.html#basics-of-probability"><i class="fa fa-check"></i><b>1.3.5</b> Basics of Probability</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#bayess-theorem"><i class="fa fa-check"></i><b>1.4</b> Bayes’s Theorem</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="introduction.html"><a href="introduction.html#example-1-base-rate-fallacy-from-wikipedia"><i class="fa fa-check"></i><b>1.4.1</b> Example 1: Base rate fallacy (From Wikipedia)</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="introduction.html"><a href="introduction.html#bayesian-statistics"><i class="fa fa-check"></i><b>1.5</b> Bayesian Statistics</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="introduction.html"><a href="introduction.html#example-2-locating-a-plane"><i class="fa fa-check"></i><b>1.5.1</b> Example 2: Locating a Plane</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="introduction.html"><a href="introduction.html#comparing-bayesian-and-frequentist-statistics"><i class="fa fa-check"></i><b>1.6</b> Comparing Bayesian and Frequentist Statistics</a></li>
+<li class="chapter" data-level="1.7" data-path="introduction.html"><a href="introduction.html#software-for-bayesian-statistics"><i class="fa fa-check"></i><b>1.7</b> Software for Bayesian Statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="bayesian-inference.html"><a href="bayesian-inference.html"><i class="fa fa-check"></i><b>2</b> Bayesian Inference</a><ul>
+<li class="chapter" data-level="2.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#steps-of-bayesian-data-analysis"><i class="fa fa-check"></i><b>2.1</b> Steps of Bayesian Data Analysis</a></li>
+<li class="chapter" data-level="2.2" data-path="bayesian-inference.html"><a href="bayesian-inference.html#real-data-example"><i class="fa fa-check"></i><b>2.2</b> Real Data Example</a></li>
+<li class="chapter" data-level="2.3" data-path="bayesian-inference.html"><a href="bayesian-inference.html#choosing-a-model"><i class="fa fa-check"></i><b>2.3</b> Choosing a Model</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#exchangeability"><i class="fa fa-check"></i><b>2.3.1</b> Exchangeability*</a></li>
+<li class="chapter" data-level="2.3.2" data-path="bayesian-inference.html"><a href="bayesian-inference.html#probability-distributions"><i class="fa fa-check"></i><b>2.3.2</b> Probability Distributions</a></li>
+<li class="chapter" data-level="2.3.3" data-path="bayesian-inference.html"><a href="bayesian-inference.html#the-likelihood"><i class="fa fa-check"></i><b>2.3.3</b> The Likelihood</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="bayesian-inference.html"><a href="bayesian-inference.html#specifying-priors"><i class="fa fa-check"></i><b>2.4</b> Specifying Priors</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#beta-distribution"><i class="fa fa-check"></i><b>2.4.1</b> Beta Distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="bayesian-inference.html"><a href="bayesian-inference.html#obtain-the-posterior-distributions"><i class="fa fa-check"></i><b>2.5</b> Obtain the Posterior Distributions</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#grid-approximation"><i class="fa fa-check"></i><b>2.5.1</b> Grid Approximation</a></li>
+<li class="chapter" data-level="2.5.2" data-path="bayesian-inference.html"><a href="bayesian-inference.html#using-conjugate-priors"><i class="fa fa-check"></i><b>2.5.2</b> Using Conjugate Priors</a></li>
+<li class="chapter" data-level="2.5.3" data-path="bayesian-inference.html"><a href="bayesian-inference.html#laplace-approximation-with-maximum-a-posteriori-estimation"><i class="fa fa-check"></i><b>2.5.3</b> Laplace Approximation with Maximum A Posteriori Estimation</a></li>
+<li class="chapter" data-level="2.5.4" data-path="bayesian-inference.html"><a href="bayesian-inference.html#markov-chain-monte-carlo-mcmc"><i class="fa fa-check"></i><b>2.5.4</b> Markov Chain Monte Carlo (MCMC)</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="bayesian-inference.html"><a href="bayesian-inference.html#summarizing-the-posterior-distribution"><i class="fa fa-check"></i><b>2.6</b> Summarizing the Posterior Distribution</a><ul>
+<li class="chapter" data-level="2.6.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#posterior-mean-median-and-mode"><i class="fa fa-check"></i><b>2.6.1</b> Posterior Mean, Median, and Mode</a></li>
+<li class="chapter" data-level="2.6.2" data-path="bayesian-inference.html"><a href="bayesian-inference.html#uncertainty-estimates"><i class="fa fa-check"></i><b>2.6.2</b> Uncertainty Estimates</a></li>
+<li class="chapter" data-level="2.6.3" data-path="bayesian-inference.html"><a href="bayesian-inference.html#credible-intervals"><i class="fa fa-check"></i><b>2.6.3</b> Credible Intervals</a></li>
+<li class="chapter" data-level="2.6.4" data-path="bayesian-inference.html"><a href="bayesian-inference.html#probability-of-theta-higherlower-than-a-certain-value"><i class="fa fa-check"></i><b>2.6.4</b> Probability of <span class="math inline">\(\theta\)</span> Higher/Lower Than a Certain Value</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="bayesian-inference.html"><a href="bayesian-inference.html#model-checking"><i class="fa fa-check"></i><b>2.7</b> Model Checking</a><ul>
+<li class="chapter" data-level="2.7.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#posterior-predictive-distribution"><i class="fa fa-check"></i><b>2.7.1</b> Posterior Predictive Distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="bayesian-inference.html"><a href="bayesian-inference.html#posterior-predictive-check"><i class="fa fa-check"></i><b>2.8</b> Posterior Predictive Check</a></li>
+<li class="chapter" data-level="2.9" data-path="bayesian-inference.html"><a href="bayesian-inference.html#summary"><i class="fa fa-check"></i><b>2.9</b> Summary</a><ul>
+<li class="chapter" data-level="2.9.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#key-concepts"><i class="fa fa-check"></i><b>2.9.1</b> Key Concepts</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="one-parameter-models.html"><a href="one-parameter-models.html"><i class="fa fa-check"></i><b>3</b> One-Parameter Models</a><ul>
+<li class="chapter" data-level="3.1" data-path="one-parameter-models.html"><a href="one-parameter-models.html#binomialbernoulli-data"><i class="fa fa-check"></i><b>3.1</b> Binomial/Bernoulli data</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="one-parameter-models.html"><a href="one-parameter-models.html#reparameterization"><i class="fa fa-check"></i><b>3.1.1</b> Reparameterization*</a></li>
+<li class="chapter" data-level="3.1.2" data-path="one-parameter-models.html"><a href="one-parameter-models.html#posterior-predictive-check-1"><i class="fa fa-check"></i><b>3.1.2</b> Posterior Predictive Check</a></li>
+<li class="chapter" data-level="3.1.3" data-path="one-parameter-models.html"><a href="one-parameter-models.html#comparison-to-frequentist-results"><i class="fa fa-check"></i><b>3.1.3</b> Comparison to frequentist results</a></li>
+<li class="chapter" data-level="3.1.4" data-path="one-parameter-models.html"><a href="one-parameter-models.html#sensitivity-to-different-priors"><i class="fa fa-check"></i><b>3.1.4</b> Sensitivity to different priors</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="one-parameter-models.html"><a href="one-parameter-models.html#poisson-data"><i class="fa fa-check"></i><b>3.2</b> Poisson Data</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="one-parameter-models.html"><a href="one-parameter-models.html#example-2"><i class="fa fa-check"></i><b>3.2.1</b> Example 2</a></li>
+<li class="chapter" data-level="3.2.2" data-path="one-parameter-models.html"><a href="one-parameter-models.html#choosing-a-model-1"><i class="fa fa-check"></i><b>3.2.2</b> Choosing a model</a></li>
+<li class="chapter" data-level="3.2.3" data-path="one-parameter-models.html"><a href="one-parameter-models.html#choosing-a-prior"><i class="fa fa-check"></i><b>3.2.3</b> Choosing a prior</a></li>
+<li class="chapter" data-level="3.2.4" data-path="one-parameter-models.html"><a href="one-parameter-models.html#model-equations-and-diagram"><i class="fa fa-check"></i><b>3.2.4</b> Model Equations and Diagram</a></li>
+<li class="chapter" data-level="3.2.5" data-path="one-parameter-models.html"><a href="one-parameter-models.html#getting-the-posterior"><i class="fa fa-check"></i><b>3.2.5</b> Getting the posterior</a></li>
+<li class="chapter" data-level="3.2.6" data-path="one-parameter-models.html"><a href="one-parameter-models.html#posterior-predictive-check-2"><i class="fa fa-check"></i><b>3.2.6</b> Posterior Predictive Check</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html"><i class="fa fa-check"></i><b>4</b> Brief Introduction to STAN</a><ul>
+<li class="chapter" data-level="4.1" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#stan"><i class="fa fa-check"></i><b>4.1</b> <code>STAN</code></a><ul>
+<li class="chapter" data-level="4.1.1" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#stan-code"><i class="fa fa-check"></i><b>4.1.1</b> <code>STAN</code> code</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#rstan"><i class="fa fa-check"></i><b>4.2</b> <code>RStan</code></a><ul>
+<li class="chapter" data-level="4.2.1" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#assembling-data-list-in-r"><i class="fa fa-check"></i><b>4.2.1</b> Assembling data list in R</a></li>
+<li class="chapter" data-level="4.2.2" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#call-rstan"><i class="fa fa-check"></i><b>4.2.2</b> Call <code>rstan</code></a></li>
+<li class="chapter" data-level="4.2.3" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#summarize-the-results"><i class="fa fa-check"></i><b>4.2.3</b> Summarize the results</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#resources"><i class="fa fa-check"></i><b>4.3</b> Resources</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="group-comparisons.html"><a href="group-comparisons.html"><i class="fa fa-check"></i><b>5</b> Group Comparisons</a><ul>
+<li class="chapter" data-level="5.1" data-path="group-comparisons.html"><a href="group-comparisons.html#data"><i class="fa fa-check"></i><b>5.1</b> Data</a></li>
+<li class="chapter" data-level="5.2" data-path="group-comparisons.html"><a href="group-comparisons.html#between-subject-comparisons"><i class="fa fa-check"></i><b>5.2</b> Between-Subject Comparisons</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="group-comparisons.html"><a href="group-comparisons.html#plots"><i class="fa fa-check"></i><b>5.2.1</b> Plots</a></li>
+<li class="chapter" data-level="5.2.2" data-path="group-comparisons.html"><a href="group-comparisons.html#independent-sample-t-test"><i class="fa fa-check"></i><b>5.2.2</b> Independent sample t-test</a></li>
+<li class="chapter" data-level="5.2.3" data-path="group-comparisons.html"><a href="group-comparisons.html#bayesian-normal-model"><i class="fa fa-check"></i><b>5.2.3</b> Bayesian Normal Model</a></li>
+<li class="chapter" data-level="5.2.4" data-path="group-comparisons.html"><a href="group-comparisons.html#robust-model"><i class="fa fa-check"></i><b>5.2.4</b> Robust Model</a></li>
+<li class="chapter" data-level="5.2.5" data-path="group-comparisons.html"><a href="group-comparisons.html#shifted-lognormal-model"><i class="fa fa-check"></i><b>5.2.5</b> Shifted Lognormal Model*</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="group-comparisons.html"><a href="group-comparisons.html#notes-on-model-comparison"><i class="fa fa-check"></i><b>5.3</b> Notes on Model Comparison</a></li>
+<li class="chapter" data-level="5.4" data-path="group-comparisons.html"><a href="group-comparisons.html#within-subject-comparisons"><i class="fa fa-check"></i><b>5.4</b> Within-Subject Comparisons</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="group-comparisons.html"><a href="group-comparisons.html#plots-1"><i class="fa fa-check"></i><b>5.4.1</b> Plots</a></li>
+<li class="chapter" data-level="5.4.2" data-path="group-comparisons.html"><a href="group-comparisons.html#independent-sample-t-test-1"><i class="fa fa-check"></i><b>5.4.2</b> Independent sample <span class="math inline">\(t\)</span>-test</a></li>
+<li class="chapter" data-level="5.4.3" data-path="group-comparisons.html"><a href="group-comparisons.html#bayesian-normal-model-1"><i class="fa fa-check"></i><b>5.4.3</b> Bayesian Normal Model</a></li>
+<li class="chapter" data-level="5.4.4" data-path="group-comparisons.html"><a href="group-comparisons.html#using-brms"><i class="fa fa-check"></i><b>5.4.4</b> Using <code>brms</code>*</a></li>
+<li class="chapter" data-level="5.4.5" data-path="group-comparisons.html"><a href="group-comparisons.html#region-of-practical-equivalence-rope"><i class="fa fa-check"></i><b>5.4.5</b> Region of Practical Equivalence (ROPE)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html"><i class="fa fa-check"></i><b>6</b> Markov Chain Monte Carlo</a><ul>
+<li class="chapter" data-level="6.1" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#monte-carlo-simulation-with-one-unknown"><i class="fa fa-check"></i><b>6.1</b> Monte Carlo Simulation With One Unknown</a></li>
+<li class="chapter" data-level="6.2" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#markov-chain-monte-carlo-mcmc-with-one-parameter"><i class="fa fa-check"></i><b>6.2</b> Markov Chain Monte Carlo (MCMC) With One Parameter</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#the-metropolis-algorithm"><i class="fa fa-check"></i><b>6.2.1</b> The Metropolis algorithm</a></li>
+<li class="chapter" data-level="6.2.2" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#the-metropolis-hastings-algorithm"><i class="fa fa-check"></i><b>6.2.2</b> The Metropolis-Hastings Algorithm</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#markov-chain"><i class="fa fa-check"></i><b>6.3</b> Markov Chain</a></li>
+<li class="chapter" data-level="6.4" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#effective-sample-size-n_texteff"><i class="fa fa-check"></i><b>6.4</b> Effective Sample Size (<span class="math inline">\(n_\text{eff}\)</span>)</a></li>
+<li class="chapter" data-level="6.5" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#mc-error"><i class="fa fa-check"></i><b>6.5</b> MC Error</a></li>
+<li class="chapter" data-level="6.6" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#burn-inwarmup"><i class="fa fa-check"></i><b>6.6</b> Burn-in/Warmup</a><ul>
+<li class="chapter" data-level="6.6.1" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#thinning"><i class="fa fa-check"></i><b>6.6.1</b> Thinning</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#diagnostics-of-mcmc"><i class="fa fa-check"></i><b>6.7</b> Diagnostics of MCMC</a><ul>
+<li class="chapter" data-level="6.7.1" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#mixing"><i class="fa fa-check"></i><b>6.7.1</b> Mixing</a></li>
+<li class="chapter" data-level="6.7.2" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#acceptance-rate"><i class="fa fa-check"></i><b>6.7.2</b> Acceptance Rate</a></li>
+<li class="chapter" data-level="6.7.3" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#diagnostics-using-multiple-chains"><i class="fa fa-check"></i><b>6.7.3</b> Diagnostics Using Multiple Chains</a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#multiple-parameters"><i class="fa fa-check"></i><b>6.8</b> Multiple Parameters</a></li>
+<li class="chapter" data-level="6.9" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#hamiltonian-monte-carlo"><i class="fa fa-check"></i><b>6.9</b> Hamiltonian Monte Carlo</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="linear-models.html"><a href="linear-models.html"><i class="fa fa-check"></i><b>7</b> Linear Models</a><ul>
+<li class="chapter" data-level="7.1" data-path="linear-models.html"><a href="linear-models.html#what-is-regression"><i class="fa fa-check"></i><b>7.1</b> What is Regression?</a></li>
+<li class="chapter" data-level="7.2" data-path="linear-models.html"><a href="linear-models.html#one-predictor"><i class="fa fa-check"></i><b>7.2</b> One Predictor</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="linear-models.html"><a href="linear-models.html#a-continuous-predictor"><i class="fa fa-check"></i><b>7.2.1</b> A continuous predictor</a></li>
+<li class="chapter" data-level="7.2.2" data-path="linear-models.html"><a href="linear-models.html#centering"><i class="fa fa-check"></i><b>7.2.2</b> Centering</a></li>
+<li class="chapter" data-level="7.2.3" data-path="linear-models.html"><a href="linear-models.html#a-categorical-predictor"><i class="fa fa-check"></i><b>7.2.3</b> A categorical predictor</a></li>
+<li class="chapter" data-level="7.2.4" data-path="linear-models.html"><a href="linear-models.html#predictors-with-multiple-categories"><i class="fa fa-check"></i><b>7.2.4</b> Predictors with multiple categories</a></li>
+<li class="chapter" data-level="7.2.5" data-path="linear-models.html"><a href="linear-models.html#stan-4"><i class="fa fa-check"></i><b>7.2.5</b> STAN</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="linear-models.html"><a href="linear-models.html#multiple-regression"><i class="fa fa-check"></i><b>7.3</b> Multiple Regression</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="linear-models.html"><a href="linear-models.html#two-predictor-example"><i class="fa fa-check"></i><b>7.3.1</b> Two Predictor Example</a></li>
+<li class="chapter" data-level="7.3.2" data-path="linear-models.html"><a href="linear-models.html#interactions"><i class="fa fa-check"></i><b>7.3.2</b> Interactions</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="linear-models.html"><a href="linear-models.html#tabulating-the-models"><i class="fa fa-check"></i><b>7.4</b> Tabulating the Models</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="model-diagnostics.html"><a href="model-diagnostics.html"><i class="fa fa-check"></i><b>8</b> Model Diagnostics</a><ul>
+<li class="chapter" data-level="8.1" data-path="model-diagnostics.html"><a href="model-diagnostics.html#assumptions-of-linear-models"><i class="fa fa-check"></i><b>8.1</b> Assumptions of Linear Models</a></li>
+<li class="chapter" data-level="8.2" data-path="model-diagnostics.html"><a href="model-diagnostics.html#diagnostic-tools"><i class="fa fa-check"></i><b>8.2</b> Diagnostic Tools</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="model-diagnostics.html"><a href="model-diagnostics.html#posterior-predictive-check-7"><i class="fa fa-check"></i><b>8.2.1</b> Posterior Predictive Check</a></li>
+<li class="chapter" data-level="8.2.2" data-path="model-diagnostics.html"><a href="model-diagnostics.html#marginal-model-plots"><i class="fa fa-check"></i><b>8.2.2</b> Marginal model plots</a></li>
+<li class="chapter" data-level="8.2.3" data-path="model-diagnostics.html"><a href="model-diagnostics.html#residual-plots"><i class="fa fa-check"></i><b>8.2.3</b> Residual plots</a></li>
+<li class="chapter" data-level="8.2.4" data-path="model-diagnostics.html"><a href="model-diagnostics.html#multicollinearity"><i class="fa fa-check"></i><b>8.2.4</b> Multicollinearity</a></li>
+<li class="chapter" data-level="8.2.5" data-path="model-diagnostics.html"><a href="model-diagnostics.html#robust-models"><i class="fa fa-check"></i><b>8.2.5</b> Robust Models</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="model-diagnostics.html"><a href="model-diagnostics.html#other-topics"><i class="fa fa-check"></i><b>8.3</b> Other Topics</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html"><i class="fa fa-check"></i><b>9</b> Model Comparison and Regularization</a><ul>
+<li class="chapter" data-level="9.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#overfitting-and-underfitting"><i class="fa fa-check"></i><b>9.1</b> Overfitting and Underfitting</a></li>
+<li class="chapter" data-level="9.2" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#kullback-leibler-divergence"><i class="fa fa-check"></i><b>9.2</b> Kullback-Leibler Divergence</a></li>
+<li class="chapter" data-level="9.3" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#information-criteria"><i class="fa fa-check"></i><b>9.3</b> Information Criteria</a><ul>
+<li class="chapter" data-level="9.3.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#experiment-on-deviance"><i class="fa fa-check"></i><b>9.3.1</b> Experiment on Deviance</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#information-criteria-1"><i class="fa fa-check"></i><b>9.4</b> Information Criteria</a><ul>
+<li class="chapter" data-level="9.4.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#akaike-information-criteria-aic"><i class="fa fa-check"></i><b>9.4.1</b> Akaike Information Criteria (AIC)</a></li>
+<li class="chapter" data-level="9.4.2" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#deviance-information-criteria-dic"><i class="fa fa-check"></i><b>9.4.2</b> Deviance Information Criteria (DIC)</a></li>
+<li class="chapter" data-level="9.4.3" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#watanabe-akaike-information-criteria-waic"><i class="fa fa-check"></i><b>9.4.3</b> Watanabe-Akaike Information Criteria (WAIC)</a></li>
+<li class="chapter" data-level="9.4.4" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#leave-one-out-cross-validation"><i class="fa fa-check"></i><b>9.4.4</b> Leave-One-Out Cross Validation</a></li>
+<li class="chapter" data-level="9.4.5" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#example"><i class="fa fa-check"></i><b>9.4.5</b> Example</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#stackingmodel-averaging"><i class="fa fa-check"></i><b>9.5</b> Stacking/Model Averaging</a><ul>
+<li class="chapter" data-level="9.5.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#model-weights"><i class="fa fa-check"></i><b>9.5.1</b> Model Weights</a></li>
+<li class="chapter" data-level="9.5.2" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#model-averaging"><i class="fa fa-check"></i><b>9.5.2</b> Model Averaging</a></li>
+<li class="chapter" data-level="9.5.3" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#stacking"><i class="fa fa-check"></i><b>9.5.3</b> Stacking</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#shrinkage-priors"><i class="fa fa-check"></i><b>9.6</b> Shrinkage Priors</a><ul>
+<li class="chapter" data-level="9.6.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#number-of-parameters"><i class="fa fa-check"></i><b>9.6.1</b> Number of parameters</a></li>
+<li class="chapter" data-level="9.6.2" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#sparsity-inducing-priors"><i class="fa fa-check"></i><b>9.6.2</b> Sparsity-Inducing Priors</a></li>
+<li class="chapter" data-level="9.6.3" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#finnish-horseshoe"><i class="fa fa-check"></i><b>9.6.3</b> Finnish Horseshoe</a></li>
+</ul></li>
+<li class="chapter" data-level="9.7" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#variable-selection"><i class="fa fa-check"></i><b>9.7</b> Variable Selection</a><ul>
+<li class="chapter" data-level="9.7.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#projection-based-method"><i class="fa fa-check"></i><b>9.7.1</b> Projection-Based Method</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html"><i class="fa fa-check"></i><b>10</b> Hierarchical &amp; Multilevel Models</a><ul>
+<li class="chapter" data-level="10.1" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#anova"><i class="fa fa-check"></i><b>10.1</b> ANOVA</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#frequentist-anova"><i class="fa fa-check"></i><b>10.1.1</b> “Frequentist” ANOVA</a></li>
+<li class="chapter" data-level="10.1.2" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#bayesian-anova"><i class="fa fa-check"></i><b>10.1.2</b> Bayesian ANOVA</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#multilevel-modeling-mlm"><i class="fa fa-check"></i><b>10.2</b> Multilevel Modeling (MLM)</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#examples-of-clustering"><i class="fa fa-check"></i><b>10.2.1</b> Examples of clustering</a></li>
+<li class="chapter" data-level="10.2.2" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#data-1"><i class="fa fa-check"></i><b>10.2.2</b> Data</a></li>
+<li class="chapter" data-level="10.2.3" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#intraclass-correlation"><i class="fa fa-check"></i><b>10.2.3</b> Intraclass correlation</a></li>
+<li class="chapter" data-level="10.2.4" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#is-mlm-needed"><i class="fa fa-check"></i><b>10.2.4</b> Is MLM needed?</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#varying-coefficients"><i class="fa fa-check"></i><b>10.3</b> Varying Coefficients</a><ul>
+<li class="chapter" data-level="10.3.1" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#varying-intercepts"><i class="fa fa-check"></i><b>10.3.1</b> Varying Intercepts</a></li>
+<li class="chapter" data-level="10.3.2" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#varying-slopes"><i class="fa fa-check"></i><b>10.3.2</b> Varying Slopes</a></li>
+<li class="chapter" data-level="10.3.3" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#varying-sigma"><i class="fa fa-check"></i><b>10.3.3</b> Varying <span class="math inline">\(\sigma\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#model-comparisons"><i class="fa fa-check"></i><b>10.4</b> Model Comparisons</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>11</b> Generalized Linear Models</a><ul>
+<li class="chapter" data-level="11.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#basics-of-generalized-linear-models"><i class="fa fa-check"></i><b>11.1</b> Basics of Generalized Linear Models</a></li>
+<li class="chapter" data-level="11.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#binary-logistic-regression"><i class="fa fa-check"></i><b>11.2</b> Binary Logistic Regression</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#the-logit-link"><i class="fa fa-check"></i><b>11.2.1</b> The logit link</a></li>
+<li class="chapter" data-level="11.2.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#choice-of-priors"><i class="fa fa-check"></i><b>11.2.2</b> Choice of Priors</a></li>
+<li class="chapter" data-level="11.2.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#interpreting-the-coefficients"><i class="fa fa-check"></i><b>11.2.3</b> Interpreting the coefficients</a></li>
+<li class="chapter" data-level="11.2.4" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#model-checking-1"><i class="fa fa-check"></i><b>11.2.4</b> Model Checking</a></li>
+<li class="chapter" data-level="11.2.5" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#complete-separation"><i class="fa fa-check"></i><b>11.2.5</b> Complete Separation</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#binomial-logistic-regression"><i class="fa fa-check"></i><b>11.3</b> Binomial Logistic Regression</a></li>
+<li class="chapter" data-level="11.4" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#probit-regression"><i class="fa fa-check"></i><b>11.4</b> Probit Regression</a></li>
+<li class="chapter" data-level="11.5" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#poisson-regression"><i class="fa fa-check"></i><b>11.5</b> Poisson Regression</a><ul>
+<li class="chapter" data-level="11.5.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#interpretations-2"><i class="fa fa-check"></i><b>11.5.1</b> Interpretations</a></li>
+<li class="chapter" data-level="11.5.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#model-checking-2"><i class="fa fa-check"></i><b>11.5.2</b> Model Checking</a></li>
+<li class="chapter" data-level="11.5.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#other-models-in-glm"><i class="fa fa-check"></i><b>11.5.3</b> Other models in GLM</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="missing-data.html"><a href="missing-data.html"><i class="fa fa-check"></i><b>12</b> Missing Data</a><ul>
+<li class="chapter" data-level="12.1" data-path="missing-data.html"><a href="missing-data.html#missing-data-mechanisms"><i class="fa fa-check"></i><b>12.1</b> Missing Data Mechanisms</a><ul>
+<li class="chapter" data-level="12.1.1" data-path="missing-data.html"><a href="missing-data.html#mcar-missing-completely-at-random"><i class="fa fa-check"></i><b>12.1.1</b> MCAR (Missing Completely at Random)</a></li>
+<li class="chapter" data-level="12.1.2" data-path="missing-data.html"><a href="missing-data.html#mar-missing-at-random"><i class="fa fa-check"></i><b>12.1.2</b> MAR (Missing At Random)</a></li>
+<li class="chapter" data-level="12.1.3" data-path="missing-data.html"><a href="missing-data.html#nmar-not-missing-at-random"><i class="fa fa-check"></i><b>12.1.3</b> NMAR (Not Missing At Random)</a></li>
+<li class="chapter" data-level="12.1.4" data-path="missing-data.html"><a href="missing-data.html#ignorable-missingness"><i class="fa fa-check"></i><b>12.1.4</b> Ignorable Missingness*</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="missing-data.html"><a href="missing-data.html#bayesian-approaches-for-missing-data"><i class="fa fa-check"></i><b>12.2</b> Bayesian Approaches for Missing Data</a><ul>
+<li class="chapter" data-level="12.2.1" data-path="missing-data.html"><a href="missing-data.html#complete-case-analysislistwise-deletion"><i class="fa fa-check"></i><b>12.2.1</b> Complete Case Analysis/Listwise Deletion</a></li>
+<li class="chapter" data-level="12.2.2" data-path="missing-data.html"><a href="missing-data.html#treat-missing-data-as-parameters"><i class="fa fa-check"></i><b>12.2.2</b> Treat Missing Data as Parameters</a></li>
+<li class="chapter" data-level="12.2.3" data-path="missing-data.html"><a href="missing-data.html#multiple-imputation"><i class="fa fa-check"></i><b>12.2.3</b> Multiple Imputation</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Course Handouts for Bayesian Data Analysis Class</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="bayesian-inference" class="section level1">
+<h1><span class="header-section-number">Chapter 2</span> Bayesian Inference</h1>
+<p>This lecture describes the steps to perform Bayesian data analysis. Some authors
+described the process as “turning the Bayesian Crank,” as the same work flow
+basically applies to every research questions, so unlike frequentist which
+requires different procedures for different kinds of questions and data,
+Bayesian represents a generic approach for data analysis, and development in
+the area mainly involves development of new models (but still under the
+same work flow), invention of faster algorithms for bigger data sets, and
+evaluations of different choices of priors.</p>
+<div id="steps-of-bayesian-data-analysis" class="section level2">
+<h2><span class="header-section-number">2.1</span> Steps of Bayesian Data Analysis</h2>
+<p>Adapted from <span class="citation">Kruschke (<a href="#ref-Kruschke2015">2015</a>, 25)</span>, I conceptualize Bayesian data analysis as
+the following steps:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Identify/Collect the data</strong> required to answer the research questions.
+<ol start="2" style="list-style-type: lower-alpha">
+<li>As a general recommendation, it is helpful to <strong>visualize</strong> the data to
+get a sense of how the data look, as well as to inspect for any potential
+anomalies in the data collection.</li>
+</ol></li>
+<li><strong>Choose a statistical model</strong> for the data in relation to the research
+questions. The model should have good theoretical justification and have
+parameters that are meaningful for the research questions.</li>
+<li><strong>Specify prior distributions</strong> for the model parameters. Although this is
+a subjective endeavor, the priors chosen should be at least sensible to
+audience who are skeptical.</li>
+<li><strong>Obtain the posterior distributions</strong> for the model parameters. As
+described below, this can be obtained by analytical or various mathematical
+approximations.
+<ol start="2" style="list-style-type: lower-alpha">
+<li>For mathematical approximations, one should check the algorithms for
+<strong>convergence</strong> to make sure the results closely mimic the target posterior
+distributions</li>
+</ol></li>
+<li>Conduct a <strong>posterior predictive check</strong> to examine the fit between the model
+and the data, i.e., whether the chosen model with the estimated parameters
+generate predictions that deviate form the data being analyzed on important
+features.
+<ol start="2" style="list-style-type: lower-alpha">
+<li>If the model does not fit the data, one should go back to step 2 to
+specify a different model</li>
+</ol></li>
+<li>If the fit between the model and the data is deemed satisfactory, one can
+proceed to <strong>interpret the results</strong> in the context of the research questions.
+It is also important to <strong>visualize the results</strong> in ways that are meaningful
+for the analysis.</li>
+</ol>
+</div>
+<div id="real-data-example" class="section level2">
+<h2><span class="header-section-number">2.2</span> Real Data Example</h2>
+<p>We will be using a built-in data set in R about patients diagnosed with AIDS in
+Australia before 1 July 1991. For this week we will only look at a tiny
+subsample of 10 people. Here is a description of the variables (from the R
+documentation):</p>
+<ul>
+<li><code>state</code>: Grouped state of origin: “NSW”includes ACT and “other” is WA, SA, NT
+and TAS.</li>
+<li><code>sex</code>: Sex of patient.</li>
+<li><code>diag</code>:(Julian) date of diagnosis.</li>
+<li><code>death</code>: (Julian) date of death or end of observation.</li>
+<li><code>status</code>: “A” (alive) or “D” (dead) at end of observation.</li>
+<li><code>T.categ</code>: Reported transmission category.</li>
+<li><code>age</code>: Age (years) at diagnosis.</li>
+</ul>
+<p>You should always first plot your data and get some summary statistics:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">data</span>(<span class="st">&quot;Aids2&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;MASS&quot;</span>)</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw">set.seed</span>(<span class="dv">15</span>)</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3">Aids2_sub &lt;-<span class="st"> </span>Aids2 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_n</span>(<span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4">Aids2_sub</a></code></pre></div>
+<pre><code>&gt;#    state sex  diag death status T.categ age
+&gt;# 1    VIC   M 11386 11504      A      hs  36
+&gt;# 2    NSW   M 10103 10297      D      hs  25
+&gt;# 3    QLD   M 10874 11191      D      hs  36
+&gt;# 4    NSW   M 11398 11504      A      hs  42
+&gt;# 5    NSW   M  9598 10623      D      hs  40
+&gt;# 6    NSW   M  9768  9945      D      hs  69
+&gt;# 7    NSW   M 10828 11504      A      hs  37
+&gt;# 8  Other   F 10519 11504      A      id  30
+&gt;# 9    NSW   M 11054 11343      D      hs  30
+&gt;# 10   NSW   M 10345 11054      D      hs  41</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="co"># install.packages(&quot;psych&quot;)  # uncomment to install the `psych` package</span></a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw">library</span>(psych)</a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="kw">pairs.panels</span>(Aids2_sub, <span class="dt">ellipses =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<p><img src="02_bayes_inference_files/figure-html/Aids2_sub-1.png" width="720" /></p>
+</div>
+<div id="choosing-a-model" class="section level2">
+<h2><span class="header-section-number">2.3</span> Choosing a Model</h2>
+<!-- Consider the following yellow candy example,  -->
+<!-- <span class="example"> -->
+<!-- The instructor brings a large bag of candy, and each pieces of them are wrapped -->
+<!-- in one of five different colors: <span style="color:red">`red`</span>, `black`, -->
+<!-- <span style="color:brown">`yellow`</span>, <span -->
+<!-- style="color:green">`green`</span>, and <span style="color:blue">`blue`</span>. -->
+<!-- It is known that "yellow" candy is seen less often than other colors, although -->
+<!-- the proportion is different across different bags. Let $\theta$ be the -->
+<!-- proportion of "yellow" candy in this bag. On drawing 10 pieces of candy, one  -->
+<!-- of them is yellow.  -->
+<!-- </span> -->
+<!-- The data is simple, but I will still plot the data to remind you that you should -->
+<!-- do it for your analyses.  -->
+<!-- ```{r plot_y, fig.align='center', fig.width=3.5, fig.height=3.5} -->
+<!-- y <- factor(c("yellow", rep("others", 9)),  -->
+<!--             levels = c("yellow", "others")) -->
+<!-- ggplot(tibble(y), aes(x = y, fill = y)) +  -->
+<!--   geom_bar() +  -->
+<!--   guides(fill = FALSE) +  -->
+<!--   scale_fill_manual(values = c("gold", "grey")) -->
+<!-- ``` -->
+<p>We will be using the <code>status</code> variable, specifically the death rate of AIDS in
+this data set. Our simple research question is:</p>
+<pre><code>What is the death rate of AIDS in Australia when the data were collected?</code></pre>
+<p>Now let’s go through the Bayesian Crank.</p>
+<p>If we assume that the outcome of the observations are exchangeable, meaning that
+the observations can be reordered in any way and still gives the same inference,
+then one can choose a model: <span class="math display">\[y \sim \text{Bin}(n, \theta)\]</span></p>
+<ul>
+<li><span class="math inline">\(y\)</span> = number of “D” in the observed data</li>
+<li><span class="math inline">\(n\)</span> = number of patients in the data set</li>
+<li><span class="math inline">\(\theta\)</span> = probability of “D”</li>
+</ul>
+<p>The model states that: the sample <span class="math inline">\(y\)</span> is distributed as a binomial
+distribution with <span class="math inline">\(n\)</span> observations and with a rate parameter <span class="math inline">\(\theta\)</span>.</p>
+<div id="exchangeability" class="section level3">
+<h3><span class="header-section-number">2.3.1</span> Exchangeability*</h3>
+<p>Exchangeability is an important concept in Bayesian statistics, but for the
+purpose of this class it may be a bit beyond the scope. Instead of looking at
+its mathematical definition, I will illustrate it in an example. Say we take
+6 rows in our data set:</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="left">state</th>
+<th align="left">sex</th>
+<th align="right">diag</th>
+<th align="right">death</th>
+<th align="left">status</th>
+<th align="left">T.categ</th>
+<th align="right">age</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td align="left">NSW</td>
+<td align="left">M</td>
+<td align="right">10905</td>
+<td align="right">11081</td>
+<td align="left">D</td>
+<td align="left">hs</td>
+<td align="right">35</td>
+</tr>
+<tr class="even">
+<td>31</td>
+<td align="left">NSW</td>
+<td align="left">F</td>
+<td align="right">10961</td>
+<td align="right">11504</td>
+<td align="left">A</td>
+<td align="left">id</td>
+<td align="right">30</td>
+</tr>
+<tr class="odd">
+<td>1802</td>
+<td align="left">QLD</td>
+<td align="left">F</td>
+<td align="right">9495</td>
+<td align="right">9753</td>
+<td align="left">D</td>
+<td align="left">blood</td>
+<td align="right">66</td>
+</tr>
+<tr class="even">
+<td>1811</td>
+<td align="left">QLD</td>
+<td align="left">M</td>
+<td align="right">10770</td>
+<td align="right">11504</td>
+<td align="left">A</td>
+<td align="left">hsid</td>
+<td align="right">29</td>
+</tr>
+<tr class="odd">
+<td>2129</td>
+<td align="left">VIC</td>
+<td align="left">M</td>
+<td align="right">8499</td>
+<td align="right">8568</td>
+<td align="left">D</td>
+<td align="left">hs</td>
+<td align="right">43</td>
+</tr>
+<tr class="even">
+<td>2137</td>
+<td align="left">VIC</td>
+<td align="left">M</td>
+<td align="right">9055</td>
+<td align="right">9394</td>
+<td align="left">D</td>
+<td align="left">hs</td>
+<td align="right">29</td>
+</tr>
+</tbody>
+</table>
+<p>Now, when we reorder the column <code>status</code> to something like:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">state</th>
+<th align="left">sex</th>
+<th align="right">diag</th>
+<th align="right">death</th>
+<th align="left">status</th>
+<th align="left">T.categ</th>
+<th align="right">age</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">NSW</td>
+<td align="left">M</td>
+<td align="right">10905</td>
+<td align="right">11081</td>
+<td align="left">D</td>
+<td align="left">hs</td>
+<td align="right">35</td>
+</tr>
+<tr class="even">
+<td align="left">NSW</td>
+<td align="left">F</td>
+<td align="right">10961</td>
+<td align="right">11504</td>
+<td align="left">D</td>
+<td align="left">id</td>
+<td align="right">30</td>
+</tr>
+<tr class="odd">
+<td align="left">QLD</td>
+<td align="left">F</td>
+<td align="right">9495</td>
+<td align="right">9753</td>
+<td align="left">A</td>
+<td align="left">blood</td>
+<td align="right">66</td>
+</tr>
+<tr class="even">
+<td align="left">QLD</td>
+<td align="left">M</td>
+<td align="right">10770</td>
+<td align="right">11504</td>
+<td align="left">D</td>
+<td align="left">hsid</td>
+<td align="right">29</td>
+</tr>
+<tr class="odd">
+<td align="left">VIC</td>
+<td align="left">M</td>
+<td align="right">8499</td>
+<td align="right">8568</td>
+<td align="left">D</td>
+<td align="left">hs</td>
+<td align="right">43</td>
+</tr>
+<tr class="even">
+<td align="left">VIC</td>
+<td align="left">M</td>
+<td align="right">9055</td>
+<td align="right">9394</td>
+<td align="left">A</td>
+<td align="left">hs</td>
+<td align="right">29</td>
+</tr>
+</tbody>
+</table>
+<p>if the results are expect to be the same then we say that the observations are
+assumed exchangeable. This happens when we assume that all observations have
+one common mean. However, if we think that there is a mean for females and a
+different mean for males, we cannot reorder the outcome randomly because they
+are no longer exchangeable (i.e., you cannot exchange a female score for a
+male score and expect to get the same results).</p>
+<blockquote>
+<p>Exchangeability: A set of observations are said to be exchangeable if their
+joint probability distribution stays the same under all permutations. Roughly
+speaking, it means that the observations can be reordered and still provide the
+same inferences.</p>
+</blockquote>
+</div>
+<div id="probability-distributions" class="section level3">
+<h3><span class="header-section-number">2.3.2</span> Probability Distributions</h3>
+<p>Probability distributions are central in statistical modeling. You should’ve at
+least hear about the normal distribution, where a variable follows a bell shape.
+There are two groups of distributions, depending on whether the variable of
+interest is discrete or continuous. For this example, the variable concerns the
+count of death, so it is discrete. Each probability distribution has a
+mathematical form called a <em>probability mass function (pmf)</em> for a discrete
+variable, and a <em>probability density function (pdf)</em> for a continuous variable.
+The pmf specifies the probability for each possible value.</p>
+<div id="binomial-distribution" class="section level4">
+<h4><span class="header-section-number">2.3.2.1</span> Binomial Distribution</h4>
+<p>For a binomial variable, the pmf is
+<span class="math display">\[\begin{align}
+  P(y) &amp; = \binom{n}{y} \theta^y (1 - \theta)^{n - y} \\
+\end{align}\]</span>
+The term <span class="math inline">\(\binom{n}{y}\)</span> is called a binomial coefficient. The mathematical form
+is not the most important thing for this class as it is usually handled by
+the software. Here is a plot for a binomial distribution with <span class="math inline">\(n = 10\)</span> and
+different values of <span class="math inline">\(\theta\)</span></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="co"># par(mfrow = c(2, 2), mar = c(4, 4, 2, 0) + 0.1)</span></a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="co"># for (th in c(0.1, 0.2, 0.5, 0.8)) {</span></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="co">#   plot(0:10, dbinom(0:10, 10, th), type = &quot;h&quot;, xlab = &quot;y&quot;, </span></a>
+<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="co">#        ylab = expression(italic(P)(Y == y)), bty = &quot;L&quot;, </span></a>
+<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="co">#        lwd = 2)</span></a>
+<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="co">#   pos &lt;- &quot;topright&quot;</span></a>
+<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="co">#   if (th &gt; 0.6) pos &lt;- &quot;topleft&quot;</span></a>
+<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="co">#   legend(pos, legend = bquote(theta == .(th)))</span></a>
+<a class="sourceLine" id="cb12-9" data-line-number="9"><span class="co"># }</span></a>
+<a class="sourceLine" id="cb12-10" data-line-number="10">th &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="fl">0.8</span>)</a>
+<a class="sourceLine" id="cb12-11" data-line-number="11">plist &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;list&quot;</span>, <span class="dt">length =</span> <span class="kw">length</span>(th))</a>
+<a class="sourceLine" id="cb12-12" data-line-number="12"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>) {</a>
+<a class="sourceLine" id="cb12-13" data-line-number="13">  label_xpos &lt;-<span class="st"> </span><span class="cf">if</span> (th[i] <span class="op">&gt;</span><span class="st"> </span><span class="fl">.6</span>) <span class="dv">2</span> <span class="cf">else</span> <span class="dv">8</span></a>
+<a class="sourceLine" id="cb12-14" data-line-number="14">  plist[[i]] &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">tibble</span>(<span class="dt">y =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">10</span>, </a>
+<a class="sourceLine" id="cb12-15" data-line-number="15">                              <span class="dt">prob =</span> <span class="kw">dbinom</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">10</span>, th[i])), </a>
+<a class="sourceLine" id="cb12-16" data-line-number="16">       <span class="kw">aes</span>(<span class="dt">x =</span> y, <span class="dt">y =</span> prob)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb12-17" data-line-number="17"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">width =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb12-18" data-line-number="18"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">y =</span> <span class="kw">expression</span>(<span class="kw">italic</span>(P)(Y <span class="op">==</span><span class="st"> </span>y)), </a>
+<a class="sourceLine" id="cb12-19" data-line-number="19">       <span class="dt">x =</span> <span class="kw">expression</span>(y)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb12-20" data-line-number="20"><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">10</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb12-21" data-line-number="21"><span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">x =</span> label_xpos, <span class="dt">y =</span> <span class="ot">Inf</span>, <span class="dt">vjust =</span> <span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb12-22" data-line-number="22">           <span class="dt">label =</span> <span class="kw">list</span>(<span class="kw">bquote</span>(theta <span class="op">==</span><span class="st"> </span>.(th[i]))), </a>
+<a class="sourceLine" id="cb12-23" data-line-number="23">           <span class="dt">parse =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb12-24" data-line-number="24">}</a>
+<a class="sourceLine" id="cb12-25" data-line-number="25">gridExtra<span class="op">::</span><span class="kw">grid.arrange</span>(<span class="dt">grobs =</span> plist, <span class="dt">nrow =</span> <span class="dv">2</span>)</a></code></pre></div>
+<p><img src="02_bayes_inference_files/figure-html/fig_binom-1.png" width="672" /></p>
+<p>Note in the above that the possible values of <span class="math inline">\(y\)</span> are <span class="math inline">\(\{0, 1, \ldots, 10\}\)</span>,
+and one can get the probability of each value.</p>
+<p>You will see many other probability distributions in this class, for both
+discrete and continuous variables.</p>
+</div>
+</div>
+<div id="the-likelihood" class="section level3">
+<h3><span class="header-section-number">2.3.3</span> The Likelihood</h3>
+<p>After observing the data <span class="math inline">\(y\)</span>, we can obtain the likelihood for each value
+of <span class="math inline">\(\theta\)</span>, <span class="math inline">\(P(y | \theta)\)</span>. For example, for <span class="math inline">\(\theta = 0.5\)</span>, I get
+<span class="math display">\[P(y | \theta = 0.5) = 0.205\]</span>
+This can be obtained in R using the following line:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="co"># Probability of y = 6 for 10 trials, with theta = 0.5</span></a>
+<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="kw">dbinom</span>(<span class="dv">6</span>, <span class="dv">10</span>, <span class="fl">0.5</span>)</a></code></pre></div>
+<pre><code>&gt;# [1] 0.205</code></pre>
+<p>As there are infinitely many possible <span class="math inline">\(\theta\)</span> values in the range <span class="math inline">\([0, 1]\)</span>,
+we cannot get <span class="math inline">\(P(y | \theta)\)</span> for every one of them. Here is a few typical
+values:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">th &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">by =</span> <span class="fl">0.1</span>)</a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="kw">tibble</span>(<span class="dt">theta =</span> th, </a>
+<a class="sourceLine" id="cb15-3" data-line-number="3">       <span class="dt">likelihood =</span> <span class="kw">dbinom</span>(<span class="dv">6</span>, <span class="dv">10</span>, <span class="dt">prob =</span> th))</a></code></pre></div>
+<pre><code>&gt;# # A tibble: 11 x 2
+&gt;#    theta likelihood
+&gt;#    &lt;dbl&gt;      &lt;dbl&gt;
+&gt;#  1   0     0       
+&gt;#  2   0.1   0.000138
+&gt;#  3   0.2   0.00551 
+&gt;#  4   0.3   0.0368  
+&gt;#  5   0.4   0.111   
+&gt;#  6   0.5   0.205   
+&gt;#  7   0.6   0.251   
+&gt;#  8   0.7   0.200   
+&gt;#  9   0.8   0.0881  
+&gt;# 10   0.9   0.0112  
+&gt;# 11   1     0</code></pre>
+<p>And you can plot the likelihood function:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="kw">tibble</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)), </a>
+<a class="sourceLine" id="cb17-2" data-line-number="2">       <span class="kw">aes</span>(<span class="dt">x =</span> x)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> dbinom, <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">x =</span> <span class="dv">6</span>, <span class="dt">size =</span> <span class="dv">10</span>), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb17-4" data-line-number="4"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="kw">expression</span>(theta), </a>
+<a class="sourceLine" id="cb17-5" data-line-number="5">       <span class="dt">y =</span> <span class="st">&quot;likelihood&quot;</span>)</a></code></pre></div>
+<p><img src="02_bayes_inference_files/figure-html/likelihood-1.png" width="384" /></p>
+</div>
+</div>
+<div id="specifying-priors" class="section level2">
+<h2><span class="header-section-number">2.4</span> Specifying Priors</h2>
+<p>The previous model has one parameter, <span class="math inline">\(\theta\)</span>, which is the probability of
+getting a target outcome (i.e., “D”) in each observation. Because <span class="math inline">\(\theta\)</span> is
+a probability, its support is <span class="math inline">\([0, 1]\)</span>, meaning that it is continuous and can
+take any value from 0 to 1. For a continuous parameter there are infinitely
+many possible values, and it is impossible to specify our beliefs for each
+value. We can specify something like:</p>
+<p><img src="02_bayes_inference_files/figure-html/step_prior-1.png" width="384" /></p>
+<p>to express a belief that <span class="math inline">\(\theta\)</span> is most likely to be in the range <span class="math inline">\([.40, .60)\)</span>
+and is 5 times more likely than any values outside of that range. Bayesian
+analyses can handle such priors, although in general we prefer a prior
+distribution that has a known form and is smooth.</p>
+<p>One thing to remember is:</p>
+<blockquote>
+<p>A good prior should give a non-zero probability/density for all possible
+values of a parameter</p>
+</blockquote>
+<div id="beta-distribution" class="section level3">
+<h3><span class="header-section-number">2.4.1</span> Beta Distribution</h3>
+<p>A commonly used family of prior distribution for a binomial model is the <em>beta
+distribution</em>, which has two parameters. We can write the prior as
+<span class="math display">\[P(\theta) \sim \text{Beta}(a, b)\]</span></p>
+<p><span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are the two parameters. Here are a few examples:</p>
+<p><img src="02_bayes_inference_files/figure-html/plot_beta-1.png" width="672" /></p>
+<p>You will notice that when <span class="math inline">\(a &gt; b\)</span>, there will be more density closer to the
+right region (i.e., larger <span class="math inline">\(\theta\)</span>), and vice versa. Also, when <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>
+become larger, the variance decreases.</p>
+<p>A nice interpretation of <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> in a beta prior distribution is to consider</p>
+<ul>
+<li><span class="math inline">\(a - 1\)</span> = number of prior ‘successes’ (e.g., “D”)</li>
+<li><span class="math inline">\(b - 1\)</span> = number of prior ‘failures’ (e.g., “A”)</li>
+</ul>
+<p>Therefore, with <span class="math inline">\(\text{Beta}(1, 1)\)</span> one has seen 0 prior success and 0 failure,
+meaning that there are no prior information (i.e., <em>noninformative</em>). Therefore,
+it makes sense that all <span class="math inline">\(\theta\)</span> values are equally likely. On the other hand,
+if one chooses <span class="math inline">\(\text{Beta}(10, 20)\)</span>, one has seen 9 prior successes and 19
+prior failures, so one has quite a lot of prior information (indeed more than
+the data with only 10 observations), so this is a <em>strong</em> prior.</p>
+<blockquote>
+<p>The smaller the variance of the prior distribution, the stronger one’s
+belief before looking at the data, the more prior information</p>
+</blockquote>
+<p>So by manipulating the parameters you can control the shape of the prior
+distribution as well as its strength, so it is quite flexible. Another
+advantage of using a beta prior is that it is a <em>conjugate prior</em> of the
+binomial model, which means that the posterior distribution of <span class="math inline">\(P(\theta | y)\)</span>
+is also a beta distribution, the same as the prior distribution, although
+with different parameter values.</p>
+<blockquote>
+<p>Conjugate Prior: For a specific model, conjugate priors yield posterior
+distributions in the same distribution family as the priors</p>
+</blockquote>
+<p>This greatly simplifies the computational burden for Bayesian analyses, so
+conjugate priors are almost the only ones used in earlier literature. However,
+this limited the applications of Bayesian methods, as for many problems no
+conjugate priors can provide a realistic representation of one’s belief.
+Modern Bayesian analysis instead relies on <em>simulation-based</em> methods to
+approximate the posterior distribution, which can accommodate almost any kind of
+prior distributions. Aside from a few examples in this note and the next, mainly
+for pedagogical purposes, we will be using simulation-based methods and will
+discuss it in Week 4.</p>
+<p>Now, I will formulate my prior based on the information provided by the CDC
+in the US (<a href="https://www.cdc.gov/mmwr/preview/mmwrhtml/mm5021a2.htm" class="uri">https://www.cdc.gov/mmwr/preview/mmwrhtml/mm5021a2.htm</a>), which says
+that</p>
+<pre><code>As of December 31, 2000, 774,467 persons had been reported with AIDS in the
+United States; 448,060 of these had died.</code></pre>
+<p>If I believe this also applies to Australia in 1991, then I will use a
+<span class="math inline">\(\text{Beta}(448,061, 326,408)\)</span> prior. However, because the time and location is
+different, I don’t want to use a prior that strong. Instead, I will divide the
+information by 10,000 times (an arbitrary number; in practice you usually don’t
+scale by that much) so that the prior is <span class="math display">\[P(\theta) = \text{Beta}(46, 34)\]</span>
+which is much weaker but still pretty strong. The prior represents an amount of
+information equaled to 78 observations.</p>
+<!-- because I have prior information that $\theta$ should be somewhat smaller -->
+<!-- than 0.2 (remember than yellow candy is rarer than others), but I don't want to -->
+<!-- put too much weight for this prior, I will use a $\text{Beta}(1.1., 2)$ prior,  -->
+<!-- which corresponds to having observed 0.1 success and 1 failure (so the  -->
+<!-- prior success rate is 0.1 / 1.1 = 0.091), with an amount of information  -->
+<!-- being equal to 1.1 data points.  -->
+<p><img src="02_bayes_inference_files/figure-html/weak_beta_prior-1.png" width="432" /></p>
+<p>The business of choosing a suitable prior distribution is not trivial. Luckily,
+with more and more researchers and methodologists using Bayesian analyses, there
+have been more and more recommendations for suitable prior distributions for
+different commonly used models. Also, when the prior contains relatively few
+information as compared to the data, different choices of prior hardly make a
+difference in the posterior distributions. On the other hand, one can perform
+<em>sensitivity analyses</em>, meaning that one can experiment with a few sensible
+priors to see how the Bayesian inferences change; in the results stay pretty
+much the same, one can be more confident that the results are mainly driven by
+the data rather than the “subjectively chosen” priors.</p>
+<blockquote>
+<p>In general, one would worry more about choosing a model that does not fit
+the data than about misspecifying a prior.</p>
+</blockquote>
+</div>
+</div>
+<div id="obtain-the-posterior-distributions" class="section level2">
+<h2><span class="header-section-number">2.5</span> Obtain the Posterior Distributions</h2>
+<p>Remember again the relationship between the prior and the posterior:
+<span class="math display">\[P(\theta | y) \propto P(y | \theta) P(\theta)\]</span></p>
+<p>The posterior distributions are mathematically determined once the priors and
+the likelihood are set. However, the mathematical form of the posterior is
+sometimes very difficult to deal with. Here are a few methods to make
+sense of the posterior, with all of them sharing the goal of knowing the
+shape and some important properties of the posterior.</p>
+<div id="grid-approximation" class="section level3">
+<h3><span class="header-section-number">2.5.1</span> Grid Approximation</h3>
+<p>One straight forward, brute-force method is to compute the posterior density
+for a large number of values of the parameters. For example, by taking
+<span class="math inline">\(\theta\)</span> = 0, 0.01, 0.02, . . . , 0.98, 0.99, 1.00, which corresponds a grid of
+101 points, I can evaluate the posterior at these 21 points.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="co"># Define a grid for the parameter</span></a>
+<a class="sourceLine" id="cb19-2" data-line-number="2">th_grid &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">by =</span> <span class="fl">0.01</span>)</a>
+<a class="sourceLine" id="cb19-3" data-line-number="3"><span class="co"># Get the prior density for each value on the grid</span></a>
+<a class="sourceLine" id="cb19-4" data-line-number="4">prior &lt;-<span class="st"> </span><span class="kw">dbeta</span>(th_grid, <span class="dv">46</span>, <span class="dv">34</span>)</a>
+<a class="sourceLine" id="cb19-5" data-line-number="5"><span class="co"># Get the likelihood for each value on the grid</span></a>
+<a class="sourceLine" id="cb19-6" data-line-number="6">lik &lt;-<span class="st"> </span><span class="kw">dbinom</span>(<span class="dv">6</span>, <span class="dv">10</span>, <span class="dt">prob =</span> th_grid)</a>
+<a class="sourceLine" id="cb19-7" data-line-number="7"><span class="co"># Multiply to get the posterior</span></a>
+<a class="sourceLine" id="cb19-8" data-line-number="8">post_raw &lt;-<span class="st"> </span>prior <span class="op">*</span><span class="st"> </span>lik</a>
+<a class="sourceLine" id="cb19-9" data-line-number="9"><span class="co"># Scale it back to density so that the sum is 1</span></a>
+<a class="sourceLine" id="cb19-10" data-line-number="10">post_dens &lt;-<span class="st"> </span>post_raw <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(post_raw <span class="op">*</span><span class="st"> </span><span class="fl">0.01</span>)</a>
+<a class="sourceLine" id="cb19-11" data-line-number="11"><span class="co"># Print a table for a few values</span></a>
+<a class="sourceLine" id="cb19-12" data-line-number="12">grid_dat &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">theta =</span> th_grid, </a>
+<a class="sourceLine" id="cb19-13" data-line-number="13">                   <span class="dt">prior =</span> prior, </a>
+<a class="sourceLine" id="cb19-14" data-line-number="14">                   <span class="dt">likelihood =</span> lik, </a>
+<a class="sourceLine" id="cb19-15" data-line-number="15">                   <span class="st">`</span><span class="dt">prior x likelihood</span><span class="st">`</span> =<span class="st"> </span>post_raw, </a>
+<a class="sourceLine" id="cb19-16" data-line-number="16">                   <span class="dt">posterior =</span> post_dens) </a>
+<a class="sourceLine" id="cb19-17" data-line-number="17">grid_dat[<span class="dv">51</span><span class="op">:</span><span class="dv">60</span>, ]</a></code></pre></div>
+<pre><code>&gt;# # A tibble: 10 x 5
+&gt;#    theta prior likelihood `prior x likelihood` posterior
+&gt;#    &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;                &lt;dbl&gt;     &lt;dbl&gt;
+&gt;#  1 0.5    2.85      0.205                0.584      2.50
+&gt;#  2 0.51   3.57      0.213                0.760      3.25
+&gt;#  3 0.52   4.33      0.220                0.954      4.08
+&gt;#  4 0.53   5.09      0.227                1.16       4.94
+&gt;#  5 0.54   5.81      0.233                1.35       5.79
+&gt;#  6 0.55   6.42      0.238                1.53       6.54
+&gt;#  7 0.56   6.88      0.243                1.67       7.14
+&gt;#  8 0.57   7.14      0.246                1.76       7.52
+&gt;#  9 0.580  7.19      0.249                1.79       7.64
+&gt;# 10 0.59   7.00      0.250                1.75       7.49</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="co"># par(mfrow = c(1, 2), mar = c(4, 4, 2, 0) + 0.1)</span></a>
+<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="co"># # Plot the prior</span></a>
+<a class="sourceLine" id="cb21-3" data-line-number="3"><span class="co"># plot(th_grid, prior, type = &quot;o&quot;, col = &quot;green3&quot;, ylim = c(0, 5), </span></a>
+<a class="sourceLine" id="cb21-4" data-line-number="4"><span class="co">#      ylab = &quot;density&quot;, cex = 0.7, xlab = expression(theta))</span></a>
+<a class="sourceLine" id="cb21-5" data-line-number="5"><span class="co"># # Plot the likelihood (need to scale it)</span></a>
+<a class="sourceLine" id="cb21-6" data-line-number="6"><span class="co"># lines(th_grid, lik / sum(lik) / 0.05, type = &quot;o&quot;, col = &quot;red&quot;, cex = 0.7)</span></a>
+<a class="sourceLine" id="cb21-7" data-line-number="7"><span class="co"># # Plot the post raw (need to scale it)</span></a>
+<a class="sourceLine" id="cb21-8" data-line-number="8"><span class="co"># lines(th_grid, post_dens, type = &quot;o&quot;, col = &quot;blue&quot;, cex = 0.7)</span></a>
+<a class="sourceLine" id="cb21-9" data-line-number="9"><span class="co"># legend(&quot;topright&quot;, c(&quot;Prior&quot;, &quot;Likelihood&quot;, &quot;Posterior&quot;), </span></a>
+<a class="sourceLine" id="cb21-10" data-line-number="10"><span class="co">#        lwd = 1, </span></a>
+<a class="sourceLine" id="cb21-11" data-line-number="11"><span class="co">#        col = c(&quot;green3&quot;, &quot;red&quot;, &quot;blue&quot;), cex = 0.7)</span></a>
+<a class="sourceLine" id="cb21-12" data-line-number="12"><span class="co"># curve(dbeta(x, 52, 38), ylim = c(0, 5), </span></a>
+<a class="sourceLine" id="cb21-13" data-line-number="13"><span class="co">#       ylab = &quot;density&quot;, xlab = expression(theta), col = &quot;blue&quot;)</span></a>
+<a class="sourceLine" id="cb21-14" data-line-number="14"><span class="co"># text(0.6, 4, &quot;Beta(52, 38)&quot;)</span></a>
+<a class="sourceLine" id="cb21-15" data-line-number="15">p1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(grid_dat, <span class="kw">aes</span>(<span class="dt">x =</span> theta)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb21-16" data-line-number="16"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">y =</span> prior, <span class="dt">col =</span> <span class="st">&quot;Prior&quot;</span>)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb21-17" data-line-number="17"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">y =</span> prior, <span class="dt">col =</span> <span class="st">&quot;Prior&quot;</span>)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb21-18" data-line-number="18"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">y =</span> likelihood <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(likelihood) <span class="op">/</span><span class="st"> </span><span class="fl">0.01</span>, <span class="dt">col =</span> <span class="st">&quot;Likelihood&quot;</span>)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb21-19" data-line-number="19"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">y =</span> likelihood <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(likelihood) <span class="op">/</span><span class="st"> </span><span class="fl">0.01</span>, <span class="dt">col =</span> <span class="st">&quot;Likelihood&quot;</span>)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb21-20" data-line-number="20"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">y =</span> posterior, <span class="dt">col =</span> <span class="st">&quot;Posterior&quot;</span>)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb21-21" data-line-number="21"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">y =</span> posterior, <span class="dt">col =</span> <span class="st">&quot;Posterior&quot;</span>)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb21-22" data-line-number="22"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="kw">expression</span>(theta), <span class="dt">y =</span> <span class="st">&quot;Density&quot;</span>, </a>
+<a class="sourceLine" id="cb21-23" data-line-number="23">       <span class="dt">col =</span> <span class="st">&quot;&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb21-24" data-line-number="24"><span class="st">  </span><span class="kw">ylim</span>(<span class="dv">0</span>, <span class="dv">8</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb21-25" data-line-number="25"><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="st">&quot;&quot;</span>, <span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;green3&quot;</span>)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb21-26" data-line-number="26"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="kw">c</span>(<span class="fl">0.80</span>, <span class="fl">0.80</span>))</a>
+<a class="sourceLine" id="cb21-27" data-line-number="27">p2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(grid_dat, <span class="kw">aes</span>(<span class="dt">x =</span> theta)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb21-28" data-line-number="28"><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> dbeta, <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">shape1 =</span> <span class="dv">52</span>, <span class="dt">shape2 =</span> <span class="dv">38</span>), </a>
+<a class="sourceLine" id="cb21-29" data-line-number="29">                <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb21-30" data-line-number="30"><span class="st">  </span><span class="kw">geom_text</span>(<span class="dt">x =</span> <span class="fl">0.2</span>, <span class="dt">y =</span> <span class="dv">7</span>, <span class="dt">label =</span> <span class="st">&quot;Beta(52, 38)&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb21-31" data-line-number="31"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="kw">expression</span>(theta), <span class="dt">y =</span> <span class="st">&quot;Density&quot;</span>, </a>
+<a class="sourceLine" id="cb21-32" data-line-number="32">       <span class="dt">col =</span> <span class="st">&quot;&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb21-33" data-line-number="33"><span class="st">  </span><span class="kw">ylim</span>(<span class="dv">0</span>, <span class="dv">8</span>)</a>
+<a class="sourceLine" id="cb21-34" data-line-number="34">gridExtra<span class="op">::</span><span class="kw">grid.arrange</span>(p1, p2, <span class="dt">nrow =</span> <span class="dv">1</span>)</a></code></pre></div>
+<p><img src="02_bayes_inference_files/figure-html/plot_grid_approx-1.png" width="864" /></p>
+<p>The blue line above on the left graph shows an approximation of the posterior
+distribution.</p>
+</div>
+<div id="using-conjugate-priors" class="section level3">
+<h3><span class="header-section-number">2.5.2</span> Using Conjugate Priors</h3>
+<p>As we’re using a conjugate prior, the posterior is also a beta distribution.
+It has been mathematically proven that
+<span class="math display">\[P(\theta | y) \sim \text{Beta}(a + y, b + n - y),\]</span>
+which is a distribution for <span class="math inline">\(a + y - 1\)</span> successes and <span class="math inline">\(b + n - y\)</span> failures.
+This makes perfect sense as our prior information as <span class="math inline">\(a - 1\)</span> successes and
+<span class="math inline">\(b - 1\)</span> failures, and from our data we have <span class="math inline">\(y\)</span> successes and <span class="math inline">\(n - y\)</span>
+failures, so that our updated belief is based on adding up those successes and
+failures.</p>
+<p>With <span class="math inline">\(a = 46\)</span>, <span class="math inline">\(b = 34\)</span>, we know that the posterior distribution will be
+a <span class="math inline">\(\text{Beta}(52, 38)\)</span> distribution, as shown in the graph above in the right
+panel. The one obtained by grid approximation is quite close to the true
+posterior distribution, and can be improved by increasing the number of
+points in the grid.</p>
+<hr />
+<div id="proof-of-conjugacy" class="section level4">
+<h4><span class="header-section-number">2.5.2.1</span> Proof of Conjugacy*</h4>
+<p>To derive the form of the posterior, first recognize that the beta
+distribution has the form:</p>
+<p><span class="math display">\[\begin{align}
+  P(\theta) &amp; = \mathrm{B}^{-1}(a, b) \theta^{a - 1} (1 - \theta)^{b - 1} \\
+  &amp; \propto \theta^{a - 1} (1 - \theta)^{b - 1}
+\end{align}\]</span></p>
+<p>Where <span class="math inline">\(\mathrm{B}(\cdot)\)</span> is the beta function which is not very important
+for the class. As the density function is a function of <span class="math inline">\(\theta\)</span>, it suffices
+to write only the terms that involve <span class="math inline">\(\theta\)</span>.</p>
+<p>Similarly,</p>
+<p><span class="math display">\[P(y | \theta) \propto \theta^y (1 - \theta)^{n - y}\]</span></p>
+<p>with the binomial coefficient, which does not involve <span class="math inline">\(\theta\)</span>, dropped.
+Therefore,</p>
+<p><span class="math display">\[\begin{align}
+  P(\theta | y) &amp; \propto P(y | \theta) P(\theta)  \\
+                &amp; \propto \theta^y (1 - \theta)^{n - y} 
+                          \theta^{a - 1} (1 - \theta)^{b - 1}  \\
+                &amp; = \theta^{a + y - 1} (1 - \theta)^{b + n - y - 1}.
+\end{align}\]</span></p>
+<p>If we let <span class="math inline">\(a^* = a + y\)</span>, <span class="math inline">\(b^* = b + n - y\)</span>, we can see that <span class="math inline">\(P(\theta | y)\)</span> is
+in the same form as the prior with <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> replaced by <span class="math inline">\(a^*\)</span> and <span class="math inline">\(b^*\)</span>.
+Therefore, the posterior is also a beta distribution. So the beta distribution
+is a conjugate prior for the binomial model.</p>
+<hr />
+</div>
+</div>
+<div id="laplace-approximation-with-maximum-a-posteriori-estimation" class="section level3">
+<h3><span class="header-section-number">2.5.3</span> Laplace Approximation with Maximum A Posteriori Estimation</h3>
+<p>The Laplace approximation is like the Bayesian version of the Central Limit
+Theorem, where a normal distribution is used to approximate the posterior
+distribution. Because the normal distribution is symmetric with the mean being
+the point with highest density, with Laplace approximation the goal is to find
+the maximum point in the posterior distribution, which is called the <em>maximum a
+posteriori (MAP)</em> estimate. Generally, finding the MAP is much easier then
+deriving the whole posterior distribution. The following R code finds the MAP
+of the posterior distribution using the <code>optim()</code> function.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">log_prior &lt;-<span class="st"> </span><span class="cf">function</span>(th) <span class="kw">dbeta</span>(th, <span class="dv">46</span>, <span class="dv">34</span>, <span class="dt">log =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb22-2" data-line-number="2">log_lik &lt;-<span class="st"> </span><span class="cf">function</span>(th) <span class="kw">dbinom</span>(<span class="dv">6</span>, <span class="dv">10</span>, th, <span class="dt">log =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb22-3" data-line-number="3">log_posterior &lt;-<span class="st"> </span><span class="cf">function</span>(th) <span class="kw">log_prior</span>(th) <span class="op">+</span><span class="st"> </span><span class="kw">log_lik</span>(th)</a>
+<a class="sourceLine" id="cb22-4" data-line-number="4"><span class="co"># Find the MAP estimate with the Hessian</span></a>
+<a class="sourceLine" id="cb22-5" data-line-number="5">fit &lt;-<span class="st"> </span><span class="kw">optim</span>(<span class="kw">runif</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>), log_posterior, <span class="dt">method =</span> <span class="st">&quot;L-BFGS-B&quot;</span>, </a>
+<a class="sourceLine" id="cb22-6" data-line-number="6">             <span class="dt">lower =</span> <span class="fl">1e-5</span>, <span class="dt">upper =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="fl">1e-5</span>, </a>
+<a class="sourceLine" id="cb22-7" data-line-number="7">             <span class="dt">control =</span> <span class="kw">list</span>(<span class="dt">fnscale =</span> <span class="dv">-1</span>), </a>
+<a class="sourceLine" id="cb22-8" data-line-number="8">             <span class="dt">hessian =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb22-9" data-line-number="9">fit<span class="op">$</span>par  <span class="co"># MAP</span></a></code></pre></div>
+<pre><code>&gt;# [1] 0.58</code></pre>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="dv">1</span> <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="op">-</span>fit<span class="op">$</span>hessian[<span class="dv">1</span>])  <span class="co"># estimate of posterior standard deviation</span></a></code></pre></div>
+<pre><code>&gt;# [1] 0.0526</code></pre>
+<p>The graph below shows the normal approximation of the posterior distribution in
+our AIDS example.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="co"># par(mar = c(4, 4, 2, 0) + 0.1)</span></a>
+<a class="sourceLine" id="cb26-2" data-line-number="2"><span class="co"># curve(dbeta(x, 52, 38), xlab = expression(theta), ylab = &quot;density&quot;)</span></a>
+<a class="sourceLine" id="cb26-3" data-line-number="3"><span class="co"># curve(dnorm(x, fit$par, 1 / sqrt(-fit$hessian)), add = TRUE, </span></a>
+<a class="sourceLine" id="cb26-4" data-line-number="4"><span class="co">#       col = &quot;blue&quot;, lty = &quot;dashed&quot;)</span></a>
+<a class="sourceLine" id="cb26-5" data-line-number="5"><span class="co"># legend(&quot;topright&quot;, c(&quot;Beta(52, 38)&quot;, &quot;Normal approximation&quot;), </span></a>
+<a class="sourceLine" id="cb26-6" data-line-number="6"><span class="co">#        lty = c(&quot;solid&quot;, &quot;dashed&quot;), col = c(&quot;black&quot;, &quot;blue&quot;))</span></a>
+<a class="sourceLine" id="cb26-7" data-line-number="7"><span class="kw">ggplot</span>(<span class="kw">tibble</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)), <span class="kw">aes</span>(<span class="dt">x =</span> x)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb26-8" data-line-number="8"><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> dbeta, <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">shape1 =</span> <span class="dv">52</span>, <span class="dt">shape2 =</span> <span class="dv">38</span>), </a>
+<a class="sourceLine" id="cb26-9" data-line-number="9">                <span class="kw">aes</span>(<span class="dt">col =</span> <span class="st">&quot;Beta(52, 38)&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;Beta(52, 38)&quot;</span>), </a>
+<a class="sourceLine" id="cb26-10" data-line-number="10">                <span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb26-11" data-line-number="11"><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> dnorm, <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">mean =</span> fit<span class="op">$</span>par, </a>
+<a class="sourceLine" id="cb26-12" data-line-number="12">                                         <span class="dt">sd =</span> <span class="dv">1</span> <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="op">-</span>fit<span class="op">$</span>hessian[<span class="dv">1</span>])), </a>
+<a class="sourceLine" id="cb26-13" data-line-number="13">                <span class="kw">aes</span>(<span class="dt">col =</span> <span class="st">&quot;Normal approximation&quot;</span>, </a>
+<a class="sourceLine" id="cb26-14" data-line-number="14">                    <span class="dt">linetype =</span> <span class="st">&quot;Normal approximation&quot;</span>)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb26-15" data-line-number="15"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="kw">expression</span>(theta), <span class="dt">y =</span> <span class="st">&quot;Density&quot;</span>, </a>
+<a class="sourceLine" id="cb26-16" data-line-number="16">       <span class="dt">col =</span> <span class="st">&quot;&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb26-17" data-line-number="17"><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="st">&quot;&quot;</span>, <span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;skyblue&quot;</span>, <span class="st">&quot;blue&quot;</span>)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb26-18" data-line-number="18"><span class="st">  </span><span class="kw">scale_linetype_manual</span>(<span class="st">&quot;&quot;</span>, <span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;dashed&quot;</span>, <span class="st">&quot;solid&quot;</span>))</a></code></pre></div>
+<p><img src="02_bayes_inference_files/figure-html/plot_Laplace-1.png" width="528" /></p>
+<p>The advantage of using Laplace approximation is mainly computational, as it is
+generally much easier to obtain the maximum point of a function than to get the
+whole shape.</p>
+</div>
+<div id="markov-chain-monte-carlo-mcmc" class="section level3">
+<h3><span class="header-section-number">2.5.4</span> Markov Chain Monte Carlo (MCMC)</h3>
+<p>The <em>Markov Chain Monte Carlo (MCMC)</em> simulation method is the modern way of
+approximating complex forms of the posterior distribution. The idea is analogous
+to treating the posterior distribution as the population, and then repeatedly
+draw samples from it. As you’ve learned in basic statistics, when you draw a
+large enough sample (say 1,000), the sample distribution should be very close
+to the population distribution.</p>
+<p>One tweak of MCMC from the above analogy is that the samples drawn are
+<em>correlated</em>, so that if the first sample is high, the next one is more likely
+to be high too. This is needed because we don’t have a direct way to draw
+samples from the posterior distribution, which usually has a very complex form;
+instead we have some algorithms that can indirectly get us to the posterior.
+The correlation among samples usually is not a big problem, except that we need
+to draw more samples to compensate for it. We will devote a whole week for MCMC
+in this course.</p>
+<p>Below is an example. The left panel is a <em>trace plot</em> showing how the value of
+<span class="math inline">\(\theta\)</span> changed for each sample (up to 500), and the right panel shows the
+sample distribution of 8,000 samples using MCMC. As you can see, the shape of
+the MCMC sample distribution closely approximates the true beta posterior
+distribution.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="co"># This is called the Metropolis algorithm</span></a>
+<a class="sourceLine" id="cb27-2" data-line-number="2">log_prior_kernel &lt;-<span class="st"> </span><span class="cf">function</span>(th) (<span class="dv">46</span> <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span><span class="kw">log</span>(th) <span class="op">+</span><span class="st"> </span>(<span class="dv">34</span> <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span><span class="kw">log</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>th)</a>
+<a class="sourceLine" id="cb27-3" data-line-number="3">log_lik_kernel &lt;-<span class="st"> </span><span class="cf">function</span>(th, <span class="dt">y =</span> <span class="dv">6</span>, <span class="dt">n =</span> <span class="dv">10</span>) y <span class="op">*</span><span class="st"> </span><span class="kw">log</span>(th) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb27-4" data-line-number="4"><span class="st">  </span>(n <span class="op">-</span><span class="st"> </span>y) <span class="op">*</span><span class="st"> </span><span class="kw">log</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>th)</a>
+<a class="sourceLine" id="cb27-5" data-line-number="5">log_posterior_kernel &lt;-<span class="st"> </span><span class="cf">function</span>(th, <span class="dt">y =</span> <span class="dv">6</span>, <span class="dt">n =</span> <span class="dv">10</span>) {</a>
+<a class="sourceLine" id="cb27-6" data-line-number="6">  <span class="kw">log_prior_kernel</span>(th) <span class="op">+</span><span class="st"> </span><span class="kw">log_lik_kernel</span>(th, y, n)</a>
+<a class="sourceLine" id="cb27-7" data-line-number="7">}</a>
+<a class="sourceLine" id="cb27-8" data-line-number="8">post &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="ot">NA</span>, <span class="fl">1e4</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb27-9" data-line-number="9">post[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb27-10" data-line-number="10"><span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">seq_len</span>(<span class="kw">length</span>(post) <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)) {</a>
+<a class="sourceLine" id="cb27-11" data-line-number="11">  proposal &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1</span>, post[i], <span class="fl">0.1</span>)</a>
+<a class="sourceLine" id="cb27-12" data-line-number="12">  <span class="cf">if</span> (proposal <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span> <span class="op">|</span><span class="st"> </span>proposal <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>) {</a>
+<a class="sourceLine" id="cb27-13" data-line-number="13">    post[i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>] &lt;-<span class="st"> </span>post[i]</a>
+<a class="sourceLine" id="cb27-14" data-line-number="14">    <span class="cf">next</span></a>
+<a class="sourceLine" id="cb27-15" data-line-number="15">  }</a>
+<a class="sourceLine" id="cb27-16" data-line-number="16">  p_accept &lt;-<span class="st"> </span><span class="kw">exp</span>(<span class="kw">log_posterior_kernel</span>(proposal) <span class="op">-</span><span class="st"> </span><span class="kw">log_posterior_kernel</span>(post[i]))</a>
+<a class="sourceLine" id="cb27-17" data-line-number="17">  post[i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">runif</span>(<span class="dv">1</span>) <span class="op">&lt;</span><span class="st"> </span>p_accept, proposal, post[i])</a>
+<a class="sourceLine" id="cb27-18" data-line-number="18">}</a>
+<a class="sourceLine" id="cb27-19" data-line-number="19"><span class="co"># Discard the burn-in</span></a>
+<a class="sourceLine" id="cb27-20" data-line-number="20">post &lt;-<span class="st"> </span>post[<span class="op">-</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2000</span>)]</a>
+<a class="sourceLine" id="cb27-21" data-line-number="21"><span class="co"># # Plot the posterior samples</span></a>
+<a class="sourceLine" id="cb27-22" data-line-number="22"><span class="co"># par(mfrow = c(1, 2), mar = c(4, 4, 2, 0) + 0.1)</span></a>
+<a class="sourceLine" id="cb27-23" data-line-number="23"><span class="co"># plot.ts(post[1:500], xlab = &quot;iterations&quot;, ylab = expression(theta))</span></a>
+<a class="sourceLine" id="cb27-24" data-line-number="24"><span class="co"># plot(density(post, bw = &quot;SJ&quot;), xlab = expression(theta), main = &quot;&quot;)</span></a>
+<a class="sourceLine" id="cb27-25" data-line-number="25">p1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">tibble</span>(<span class="dt">iter =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">500</span>, <span class="dt">th =</span> post[<span class="dv">1</span><span class="op">:</span><span class="dv">500</span>]), </a>
+<a class="sourceLine" id="cb27-26" data-line-number="26">       <span class="kw">aes</span>(<span class="dt">x =</span> iter, <span class="dt">y =</span> th)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb27-27" data-line-number="27"><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb27-28" data-line-number="28"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;iterations&quot;</span>, <span class="dt">y =</span> <span class="kw">expression</span>(theta))</a>
+<a class="sourceLine" id="cb27-29" data-line-number="29">p2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">tibble</span>(<span class="dt">th =</span> post), <span class="kw">aes</span>(<span class="dt">x =</span> th)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb27-30" data-line-number="30"><span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">bw =</span> <span class="st">&quot;SJ&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb27-31" data-line-number="31"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="kw">expression</span>(theta)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb27-32" data-line-number="32"><span class="st">  </span><span class="kw">xlim</span>(<span class="dv">0</span>, <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb27-33" data-line-number="33">gridExtra<span class="op">::</span><span class="kw">grid.arrange</span>(p1, p2, <span class="dt">nrow =</span> <span class="dv">1</span>)</a></code></pre></div>
+<p><img src="02_bayes_inference_files/figure-html/sample_mcmc-1.png" width="672" /></p>
+<p>With MCMC, one needs to check for <em>convergence</em> to make sure that the samples
+approximates the posterior well enough. We will discuss this in a later lecture.</p>
+</div>
+</div>
+<div id="summarizing-the-posterior-distribution" class="section level2">
+<h2><span class="header-section-number">2.6</span> Summarizing the Posterior Distribution</h2>
+<p>Although the plot of the posterior is very useful and you should always plot it
+for any Bayesian analyses, it would also help to have some concise ways to
+summarize the posterior distribution, just like we tend to report the central
+tendency and the dispersion of a distribution. Here I will list the most common
+ways to summarize the posterior in research reports using Bayesian analyses.</p>
+<div id="posterior-mean-median-and-mode" class="section level3">
+<h3><span class="header-section-number">2.6.1</span> Posterior Mean, Median, and Mode</h3>
+<p>The first thing one can do to summarize the posterior distribution is to
+report some form of central tendency:</p>
+<ul>
+<li><code>Posterior Mean</code>: also called Bayesian estimate or expected a posteriori (EAP),
+is probably the most commonly used point estimate.</li>
+<li><code>Posterior Median</code>: Generally similar to the posterior mean as the posterior
+distribution tends to be symmetric for the problems discussed in this course.
+It is, however, more robust to outliers and may be a better summary when the
+posterior is highly skewed.</li>
+<li><code>Posterior Mode</code>: also called maximum a posteriori (MAP), is the point with
+the highest posterior probability. It will be very similar to the maximum
+likelihood estimates in frequentist statistics when the prior is non-informative.
+However, it can be far away from the center when the distribution is skewed, or
+when it is not unimodal.</li>
+</ul>
+<p><img src="02_bayes_inference_files/figure-html/post-mean-median-mode-1.png" width="720" /></p>
+<p>As you can see, when the distribution is highly skewed, the three central
+tendency measures can be quite different. In general, <em>it is recommended to
+use the posterior mean, unless the posterior distribution is clearly skewed
+where the posterior median would be more appropriate.</em></p>
+<p>The code below shows the posterior point estimates using grid approximation,
+conjugate prior, Laplace approximation, and MCMC.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="co"># Grid approximation:</span></a>
+<a class="sourceLine" id="cb28-2" data-line-number="2">median_llpt &lt;-<span class="st"> </span><span class="kw">max</span>(<span class="kw">which</span>(<span class="kw">cumsum</span>(post_dens) <span class="op">&lt;</span><span class="st"> </span><span class="kw">sum</span>(post_dens) <span class="op">/</span><span class="st"> </span><span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb28-3" data-line-number="3">median_interplolate &lt;-<span class="st"> </span>(<span class="kw">sum</span>(post_dens) <span class="op">/</span><span class="st"> </span><span class="dv">2</span> <span class="op">-</span><span class="st"> </span><span class="kw">cumsum</span>(post_dens)[median_llpt]) <span class="op">/</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb28-4" data-line-number="4"><span class="st">  </span>(<span class="kw">diff</span>(<span class="kw">cumsum</span>(post_dens)[median_llpt <span class="op">+</span><span class="st"> </span><span class="dv">0</span><span class="op">:</span><span class="dv">1</span>]))</a>
+<a class="sourceLine" id="cb28-5" data-line-number="5">bayes_est_grid &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(post_dens <span class="op">*</span><span class="st"> </span>th_grid), </a>
+<a class="sourceLine" id="cb28-6" data-line-number="6">                    <span class="dt">median =</span> median_interplolate <span class="op">*</span><span class="st"> </span><span class="fl">0.01</span> <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb28-7" data-line-number="7"><span class="st">                      </span>th_grid[median_llpt], </a>
+<a class="sourceLine" id="cb28-8" data-line-number="8">                    <span class="dt">mode =</span> th_grid[<span class="kw">which.max</span>(post_dens)])</a>
+<a class="sourceLine" id="cb28-9" data-line-number="9"><span class="co"># Conjugate prior</span></a>
+<a class="sourceLine" id="cb28-10" data-line-number="10">bayes_est_conj &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">mean =</span> <span class="dv">52</span> <span class="op">/</span><span class="st"> </span>(<span class="dv">52</span> <span class="op">+</span><span class="st"> </span><span class="dv">38</span>), </a>
+<a class="sourceLine" id="cb28-11" data-line-number="11">                    <span class="dt">median =</span> <span class="kw">qbeta</span>(.<span class="dv">50</span>, <span class="dv">52</span>, <span class="dv">38</span>), </a>
+<a class="sourceLine" id="cb28-12" data-line-number="12">                    <span class="dt">mode =</span> (<span class="dv">52</span> <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">/</span><span class="st"> </span>(<span class="dv">52</span> <span class="op">+</span><span class="st"> </span><span class="dv">38</span> <span class="op">-</span><span class="st"> </span><span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb28-13" data-line-number="13"><span class="co"># Laplace approximation</span></a>
+<a class="sourceLine" id="cb28-14" data-line-number="14">bayes_est_laplace &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">mean =</span> fit<span class="op">$</span>par, </a>
+<a class="sourceLine" id="cb28-15" data-line-number="15">                       <span class="dt">median =</span> fit<span class="op">$</span>par, </a>
+<a class="sourceLine" id="cb28-16" data-line-number="16">                       <span class="dt">mode =</span> fit<span class="op">$</span>par)</a>
+<a class="sourceLine" id="cb28-17" data-line-number="17"><span class="co"># MCMC</span></a>
+<a class="sourceLine" id="cb28-18" data-line-number="18">mcmc_dens &lt;-<span class="st"> </span><span class="kw">density</span>(post, <span class="dt">bw =</span> <span class="st">&quot;SJ&quot;</span>)</a>
+<a class="sourceLine" id="cb28-19" data-line-number="19">bayes_est_mcmc &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(post), </a>
+<a class="sourceLine" id="cb28-20" data-line-number="20">                    <span class="dt">median =</span> <span class="kw">median</span>(post), </a>
+<a class="sourceLine" id="cb28-21" data-line-number="21">                    <span class="dt">mode =</span> mcmc_dens<span class="op">$</span>x[<span class="kw">which.max</span>(mcmc_dens<span class="op">$</span>y)])</a>
+<a class="sourceLine" id="cb28-22" data-line-number="22"><span class="co"># Assemble the results to a table</span></a>
+<a class="sourceLine" id="cb28-23" data-line-number="23"><span class="kw">tibble</span>(<span class="dt">grid =</span> bayes_est_grid, <span class="dt">conjugate =</span> bayes_est_conj, </a>
+<a class="sourceLine" id="cb28-24" data-line-number="24">       <span class="dt">Laplace =</span> bayes_est_laplace, <span class="dt">MCMC =</span> bayes_est_mcmc)</a></code></pre></div>
+<pre><code>&gt;# # A tibble: 3 x 4
+&gt;#    grid conjugate Laplace  MCMC
+&gt;#   &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+&gt;# 1 0.572     0.578   0.580 0.579
+&gt;# 2 0.573     0.578   0.580 0.580
+&gt;# 3 0.580     0.580   0.580 0.589</code></pre>
+</div>
+<div id="uncertainty-estimates" class="section level3">
+<h3><span class="header-section-number">2.6.2</span> Uncertainty Estimates</h3>
+<p>One should never report just a point estimate as representing the whole
+posterior distribution, just like you need a standard error for an estimated
+regression coefficient in frequentist statistics. The simplest and most
+common ways to obtain an uncertainty estimate is to get the standard deviation
+of the posterior distribution, or the <em>posterior SD</em>. You can see in our
+example, the posterior mean of <span class="math inline">\(\theta\)</span> is 0.578, and the
+posterior <em>SD</em> is 0.052.</p>
+<p>Another uncertainty estimate is the mean absolute deviation from the median
+(<em>MAD</em>) of the posterior distribution, which is more robust than the posterior
+<em>SD</em> when the distribution is long-tailed. It is, however, generally smaller
+than the posterior <em>SD</em>, and for a normal distribution, <em>MAD</em> = 0.8
+<span class="math inline">\(\times\)</span> <em>SD</em>.</p>
+<p>The code below shows the posterior SD estimates using grid approximation,
+conjugate prior, Laplace approximation, and MCMC.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="kw">tibble</span>(<span class="dt">grid =</span> <span class="kw">sqrt</span>(<span class="kw">sum</span>((th_grid <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(post_dens <span class="op">*</span><span class="st"> </span>th_grid))<span class="op">^</span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>post_dens) <span class="op">/</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb30-2" data-line-number="2"><span class="st">                     </span><span class="kw">sum</span>(post_dens)), </a>
+<a class="sourceLine" id="cb30-3" data-line-number="3">       <span class="dt">conjugate =</span> <span class="kw">sqrt</span>(<span class="dv">52</span> <span class="op">*</span><span class="st"> </span><span class="dv">38</span> <span class="op">/</span><span class="st"> </span>(<span class="dv">52</span> <span class="op">+</span><span class="st"> </span><span class="dv">38</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)) <span class="op">/</span><span class="st"> </span>(<span class="dv">52</span> <span class="op">+</span><span class="st"> </span><span class="dv">38</span>), </a>
+<a class="sourceLine" id="cb30-4" data-line-number="4">       <span class="dt">Laplace =</span> <span class="dv">1</span> <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="op">-</span>fit<span class="op">$</span>hessian), </a>
+<a class="sourceLine" id="cb30-5" data-line-number="5">       <span class="dt">MCMC =</span> <span class="kw">sd</span>(post))</a></code></pre></div>
+<pre><code>&gt;# # A tibble: 1 x 4
+&gt;#     grid conjugate Laplace[,1]   MCMC
+&gt;#    &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;  &lt;dbl&gt;
+&gt;# 1 0.0521    0.0518      0.0526 0.0512</code></pre>
+</div>
+<div id="credible-intervals" class="section level3">
+<h3><span class="header-section-number">2.6.3</span> Credible Intervals</h3>
+<p>The credible interval is analogous to the confidence interval in frequentist
+statistics, but with very different interpretations. For example, a 90% credible
+interval is the interval that has 90% probability of containing the true value
+of the parameter, an interpretation that is commonly and mistakenly associated
+with the confidence interval. For frequentist, as the population parameter is
+fixed, one cannot use probability for the parameter; instead, only the sample is
+probabilistic, and one has to interpret a 90% confidence interval in the sense
+that 90% of the intervals constructed with repeated sampling will contain the
+true parameter. On the hand, for Bayesian one can directly say that there is a
+90% probability for the true value to be in the credible interval, without any
+reference to samples that could have been observed and were not.</p>
+<p>For any given posterior distribution, there are infinitely many intervals that
+have a C% (e.g., 90% or 95%) probability of containing the true parameter value.
+For example, the blue region in both graphs below are 50% credible intervals of
+the <span class="math inline">\(\mathrm{Beta}(52, 38)\)</span> distribution.</p>
+<p><img src="02_bayes_inference_files/figure-html/cred-int-1.png" width="672" /></p>
+<p>However, there are some principles to help us choose which interval to use. The
+first one is to choose a interval such that every value included in the interval
+have a posterior probability that is at least as high as those for the values
+outside of the interval. There generally will only be one such interval for a
+given posterior distribution, and such interval is called a <em>highest posterior
+density interval (HPDI)</em>. The graph on the left below is the 50% HPDI for a
+<span class="math inline">\(\mathrm{Beta}(52, 38)\)</span> distribution.</p>
+<p><img src="02_bayes_inference_files/figure-html/cred-int-2-1.png" width="672" /></p>
+<p>Because the posterior distribution is close to symmetric in the above example,
+the HPDI and the equal-tailed CI are very similar. They can be quite different,
+however, when the posterior distribution is skewed, like the following:</p>
+<p><img src="02_bayes_inference_files/figure-html/cred-int-3-1.png" width="672" /></p>
+<p>Another advantage of the HPDI is that among all credible intervals, it will
+have the shortest length. On the other hand, the computation of HPDI is usually
+not easy, making it not very commonly used in real Bayesian research.</p>
+<p>Another approach is to compute what is called an <em>equal-tailed credible
+interval</em>. The idea is to have an interval such that the probability on the
+left tail outside of the interval is equal to the probability on the right tail
+outside of the interval. For example, for a 50% equal-tailed interval, the
+lower limit will be the 25th percentile of the posterior distribution, whereas
+the upper limit will be the 75th percentile, as shown in the graph on the right.</p>
+<blockquote>
+<p>Although ideally an HPDI should be preferred, in practice the posterior
+distribution is usually quite symmetric and so the HPDI and the equal-tailed
+credible interval are similar. Also, the HPDI tends to be less stable for
+simulation-based methods to approximate the posterior distribution. So in
+general, you should use the equal-tailed credible interval to summarize the
+results.</p>
+</blockquote>
+</div>
+<div id="probability-of-theta-higherlower-than-a-certain-value" class="section level3">
+<h3><span class="header-section-number">2.6.4</span> Probability of <span class="math inline">\(\theta\)</span> Higher/Lower Than a Certain Value</h3>
+<p>Besides point and interval estimates and uncertainty estimates, one can answer
+questions such as “What is the probability that <span class="math inline">\(\theta &lt; 0.5\)</span>?” In our example,
+we can find the posterior probability that <span class="math inline">\(\theta &lt; 0.5\)</span> as</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="kw">pbeta</span>(<span class="fl">0.5</span>, <span class="dv">52</span>, <span class="dv">38</span>)</a></code></pre></div>
+<pre><code>&gt;# [1] 0.0687</code></pre>
+<p>In mathematical notation, <span class="math inline">\(P(\theta &lt; 0.5 | y) \approx 0.069\)</span>. So <span class="math inline">\(\theta = 0.58\)</span>
+is the most likely value, and it’s unlikely that <span class="math inline">\(\theta &lt; 0.5\)</span>.</p>
+</div>
+</div>
+<div id="model-checking" class="section level2">
+<h2><span class="header-section-number">2.7</span> Model Checking</h2>
+<p>In Bayesian statistics, a common way to check your model is to perform what is
+called the <em>posterior predictive check</em> <span class="citation">(Gelman, Meng, and Stern <a href="#ref-gelman1996">1996</a>)</span>. To understand this, we
+need to discuss the <em>posterior predictive distribution</em> first.</p>
+<div id="posterior-predictive-distribution" class="section level3">
+<h3><span class="header-section-number">2.7.1</span> Posterior Predictive Distribution</h3>
+<p>A purpose of statistical model is to to make future observations. For example,
+with our binomial model and with an estimated <span class="math inline">\(\theta\)</span> of 0.578, if
+we were to obtain 10 more observations, we expect the number of deaths to have
+the following probability distribution:</p>
+<p><img src="02_bayes_inference_files/figure-html/ppd-1.png" width="240" /></p>
+<p>Notation-wise, we can write this distribution as <span class="math inline">\(P(\tilde y | \theta = \theta_1)\)</span>, where <span class="math inline">\(\tilde y\)</span> represents a new data point that is different from
+the current data <span class="math inline">\(y\)</span>, <span class="math inline">\(\theta_1\)</span> is the posterior mean. However, one thing
+that is strongly emphasized in Bayesian statistics is to incorporate all the
+uncertainty in the results. Therefore, as <span class="math inline">\(\theta_1\)</span> is nothing but one
+possible value for <span class="math inline">\(\theta\)</span>, we should include every value of <span class="math inline">\(\theta\)</span> for our
+prediction. The following are a few more examples:</p>
+<p><img src="02_bayes_inference_files/figure-html/pred-possibility-1.png" width="720" /></p>
+<p>So to get the best prediction, we can “average” across the predictions across
+different values of <span class="math inline">\(\theta\)</span>. However, we should not be treating each value of
+<span class="math inline">\(\theta\)</span> as equally credible; instead, the posterior distribution of <span class="math inline">\(\theta\)</span>
+tells us which values are more likely to be true. Therefore, in getting the best
+prediction, we should weight the prediction for each value of <span class="math inline">\(\theta\)</span> by the
+corresponding posterior probability. The resulting distribution is the posterior
+predictive distribution. In mathematical notation, it is</p>
+<p><span class="math display">\[P(\tilde y | y) = \int_\theta p(\tilde y | \theta, y) p(\theta | y) \; \mathrm{d}\theta\]</span>
+(See a video at <a href="https://www.youtube.com/watch?v=R9NQY2Hyl14" class="uri">https://www.youtube.com/watch?v=R9NQY2Hyl14</a>)</p>
+<p>The formula is for your reference only, as we will not be using the formula to
+obtain posterior prediction in this course. Instead, we will be using
+simulations to approximate the posterior predictive distribution of <span class="math inline">\(\tilde y\)</span>,
+which is just a straight-forward extension of the approximation of the posterior
+distribution of <span class="math inline">\(\theta\)</span>. We will discuss more in later chapters; for now,
+note that the posterior predictive distribution for our example is:</p>
+<p><img src="02_bayes_inference_files/figure-html/ppd-ex-1.png" width="384" /></p>
+<p>The bar in blue highlights the observed sample.</p>
+</div>
+</div>
+<div id="posterior-predictive-check" class="section level2">
+<h2><span class="header-section-number">2.8</span> Posterior Predictive Check</h2>
+<p>After obtaining the posterior predictive distribution, the posterior predictive
+check simply compares the observed data with the prediction from the model,
+both graphically and mathematically. The above graph shows that <span class="math inline">\(\tilde y = 6\)</span>
+is the most likely among all options, which says that our model fits the data
+well in that regard. Another common check is to plot a few simulated samples
+of the predicted data, and compared those to the data observed:</p>
+<p><img src="02_bayes_inference_files/figure-html/ppc-graphs-1.png" width="672" /></p>
+<p>The example is overly simple so there is not much to tell aside from checking
+whether the graphs look similar, and in this case we don’t see systematic
+differences between the observed data and the predicted ones.</p>
+<p>We will talk more about posterior predictive check in later weeks in the context
+of different models.</p>
+</div>
+<div id="summary" class="section level2">
+<h2><span class="header-section-number">2.9</span> Summary</h2>
+<p>In this chapter we were introduced the work flow for conducting Bayesian data
+analysis, with an example using the subsample of the AIDS data set. We talked
+about choosing a statistical model that is assumed to have generated the
+observed data, specifying a prior for the model parameter, and four ways to
+obtain the posterior distributions. We also talked about ways to summarize the
+posterior distribution, and the use of posterior predictive check to assess the
+fit of the model to the observed data. You will see the same work flow and
+concepts again and again for the remaining lectures; indeed, most of the
+remaining lectures are merely some commonly used models for common problems in
+the social sciences. That’s why people describe the act of doing Bayesian
+analyses as “turning the Bayesian crank.”</p>
+<div id="key-concepts" class="section level3">
+<h3><span class="header-section-number">2.9.1</span> Key Concepts</h3>
+<table>
+<tbody>
+<tr class="odd">
+<td>Model</td>
+<td>Laplace approximation</td>
+<td>credible interval</td>
+</tr>
+<tr class="even">
+<td>Likelihood</td>
+<td>posterior mean (EAP)</td>
+<td>highest posterior density interval</td>
+</tr>
+<tr class="odd">
+<td>binomial distribution  </td>
+<td>posterior median</td>
+<td>posterior predictive distribution</td>
+</tr>
+<tr class="even">
+<td>conjugate prior</td>
+<td>posterior mode (MAP)</td>
+<td>posterior predictive check</td>
+</tr>
+<tr class="odd">
+<td>approximation</td>
+<td>posterior standard deviation  </td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-gelman1996">
+<p>Gelman, Andrew, Xiao-Li Meng, and Hal Stern. 1996. “Posterior Predictive Assessment of Model Fitness via Realized Discrepancies.” <em>Statistica Sinica</em>, 733–60.</p>
+</div>
+<div id="ref-Kruschke2015">
+<p>Kruschke, John K. 2015. <em>Doing Bayesian Data Analysis: Tutorial with R, JAGS, and Stan</em>. 2nd ed. London, UK: Academic Press.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="introduction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="one-parameter-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["notes_bookdown.pdf", "notes_bookdown.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

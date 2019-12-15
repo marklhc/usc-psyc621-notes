@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 5 Group Comparisons | Course Handouts for Bayesian Data Analysis Class</title>
+  <meta name="description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Spring semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
+  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 5 Group Comparisons | Course Handouts for Bayesian Data Analysis Class" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Spring semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 Group Comparisons | Course Handouts for Bayesian Data Analysis Class" />
+  
+  <meta name="twitter:description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Spring semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
+  
+
+<meta name="author" content="Mark Lai" />
+
+
+<meta name="date" content="2019-12-14" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="brief-introduction-to-stan.html"/>
+<link rel="next" href="markov-chain-monte-carlo.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<script src="libs/viz-0.3/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.1/grViz.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">PSYC 621 Course Notes</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#history-of-bayesian-statistics"><i class="fa fa-check"></i><b>1.1</b> History of Bayesian Statistics</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="introduction.html"><a href="introduction.html#thomas-bayes-17011762"><i class="fa fa-check"></i><b>1.1.1</b> Thomas Bayes (1701–1762)</a></li>
+<li class="chapter" data-level="1.1.2" data-path="introduction.html"><a href="introduction.html#pierre-simon-laplace-17491827"><i class="fa fa-check"></i><b>1.1.2</b> Pierre-Simon Laplace (1749–1827)</a></li>
+<li class="chapter" data-level="1.1.3" data-path="introduction.html"><a href="introduction.html#th-century"><i class="fa fa-check"></i><b>1.1.3</b> 20th Century</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#motivations-for-using-bayesian-methods"><i class="fa fa-check"></i><b>1.2</b> Motivations for Using Bayesian Methods</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="introduction.html"><a href="introduction.html#problem-with-classical-frequentist-statistics"><i class="fa fa-check"></i><b>1.2.1</b> Problem with classical (frequentist) statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#probability"><i class="fa fa-check"></i><b>1.3</b> Probability</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="introduction.html"><a href="introduction.html#classical-interpretation"><i class="fa fa-check"></i><b>1.3.1</b> Classical Interpretation</a></li>
+<li class="chapter" data-level="1.3.2" data-path="introduction.html"><a href="introduction.html#frequentist-interpretation"><i class="fa fa-check"></i><b>1.3.2</b> Frequentist Interpretation</a></li>
+<li class="chapter" data-level="1.3.3" data-path="introduction.html"><a href="introduction.html#problem-of-the-single-case"><i class="fa fa-check"></i><b>1.3.3</b> Problem of the single case</a></li>
+<li class="chapter" data-level="1.3.4" data-path="introduction.html"><a href="introduction.html#subjectivist-interpretation"><i class="fa fa-check"></i><b>1.3.4</b> Subjectivist Interpretation</a></li>
+<li class="chapter" data-level="1.3.5" data-path="introduction.html"><a href="introduction.html#basics-of-probability"><i class="fa fa-check"></i><b>1.3.5</b> Basics of Probability</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#bayess-theorem"><i class="fa fa-check"></i><b>1.4</b> Bayes’s Theorem</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="introduction.html"><a href="introduction.html#example-1-base-rate-fallacy-from-wikipedia"><i class="fa fa-check"></i><b>1.4.1</b> Example 1: Base rate fallacy (From Wikipedia)</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="introduction.html"><a href="introduction.html#bayesian-statistics"><i class="fa fa-check"></i><b>1.5</b> Bayesian Statistics</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="introduction.html"><a href="introduction.html#example-2-locating-a-plane"><i class="fa fa-check"></i><b>1.5.1</b> Example 2: Locating a Plane</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="introduction.html"><a href="introduction.html#comparing-bayesian-and-frequentist-statistics"><i class="fa fa-check"></i><b>1.6</b> Comparing Bayesian and Frequentist Statistics</a></li>
+<li class="chapter" data-level="1.7" data-path="introduction.html"><a href="introduction.html#software-for-bayesian-statistics"><i class="fa fa-check"></i><b>1.7</b> Software for Bayesian Statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="bayesian-inference.html"><a href="bayesian-inference.html"><i class="fa fa-check"></i><b>2</b> Bayesian Inference</a><ul>
+<li class="chapter" data-level="2.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#steps-of-bayesian-data-analysis"><i class="fa fa-check"></i><b>2.1</b> Steps of Bayesian Data Analysis</a></li>
+<li class="chapter" data-level="2.2" data-path="bayesian-inference.html"><a href="bayesian-inference.html#real-data-example"><i class="fa fa-check"></i><b>2.2</b> Real Data Example</a></li>
+<li class="chapter" data-level="2.3" data-path="bayesian-inference.html"><a href="bayesian-inference.html#choosing-a-model"><i class="fa fa-check"></i><b>2.3</b> Choosing a Model</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#exchangeability"><i class="fa fa-check"></i><b>2.3.1</b> Exchangeability*</a></li>
+<li class="chapter" data-level="2.3.2" data-path="bayesian-inference.html"><a href="bayesian-inference.html#probability-distributions"><i class="fa fa-check"></i><b>2.3.2</b> Probability Distributions</a></li>
+<li class="chapter" data-level="2.3.3" data-path="bayesian-inference.html"><a href="bayesian-inference.html#the-likelihood"><i class="fa fa-check"></i><b>2.3.3</b> The Likelihood</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="bayesian-inference.html"><a href="bayesian-inference.html#specifying-priors"><i class="fa fa-check"></i><b>2.4</b> Specifying Priors</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#beta-distribution"><i class="fa fa-check"></i><b>2.4.1</b> Beta Distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="bayesian-inference.html"><a href="bayesian-inference.html#obtain-the-posterior-distributions"><i class="fa fa-check"></i><b>2.5</b> Obtain the Posterior Distributions</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#grid-approximation"><i class="fa fa-check"></i><b>2.5.1</b> Grid Approximation</a></li>
+<li class="chapter" data-level="2.5.2" data-path="bayesian-inference.html"><a href="bayesian-inference.html#using-conjugate-priors"><i class="fa fa-check"></i><b>2.5.2</b> Using Conjugate Priors</a></li>
+<li class="chapter" data-level="2.5.3" data-path="bayesian-inference.html"><a href="bayesian-inference.html#laplace-approximation-with-maximum-a-posteriori-estimation"><i class="fa fa-check"></i><b>2.5.3</b> Laplace Approximation with Maximum A Posteriori Estimation</a></li>
+<li class="chapter" data-level="2.5.4" data-path="bayesian-inference.html"><a href="bayesian-inference.html#markov-chain-monte-carlo-mcmc"><i class="fa fa-check"></i><b>2.5.4</b> Markov Chain Monte Carlo (MCMC)</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="bayesian-inference.html"><a href="bayesian-inference.html#summarizing-the-posterior-distribution"><i class="fa fa-check"></i><b>2.6</b> Summarizing the Posterior Distribution</a><ul>
+<li class="chapter" data-level="2.6.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#posterior-mean-median-and-mode"><i class="fa fa-check"></i><b>2.6.1</b> Posterior Mean, Median, and Mode</a></li>
+<li class="chapter" data-level="2.6.2" data-path="bayesian-inference.html"><a href="bayesian-inference.html#uncertainty-estimates"><i class="fa fa-check"></i><b>2.6.2</b> Uncertainty Estimates</a></li>
+<li class="chapter" data-level="2.6.3" data-path="bayesian-inference.html"><a href="bayesian-inference.html#credible-intervals"><i class="fa fa-check"></i><b>2.6.3</b> Credible Intervals</a></li>
+<li class="chapter" data-level="2.6.4" data-path="bayesian-inference.html"><a href="bayesian-inference.html#probability-of-theta-higherlower-than-a-certain-value"><i class="fa fa-check"></i><b>2.6.4</b> Probability of <span class="math inline">\(\theta\)</span> Higher/Lower Than a Certain Value</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="bayesian-inference.html"><a href="bayesian-inference.html#model-checking"><i class="fa fa-check"></i><b>2.7</b> Model Checking</a><ul>
+<li class="chapter" data-level="2.7.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#posterior-predictive-distribution"><i class="fa fa-check"></i><b>2.7.1</b> Posterior Predictive Distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="bayesian-inference.html"><a href="bayesian-inference.html#posterior-predictive-check"><i class="fa fa-check"></i><b>2.8</b> Posterior Predictive Check</a></li>
+<li class="chapter" data-level="2.9" data-path="bayesian-inference.html"><a href="bayesian-inference.html#summary"><i class="fa fa-check"></i><b>2.9</b> Summary</a><ul>
+<li class="chapter" data-level="2.9.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#key-concepts"><i class="fa fa-check"></i><b>2.9.1</b> Key Concepts</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="one-parameter-models.html"><a href="one-parameter-models.html"><i class="fa fa-check"></i><b>3</b> One-Parameter Models</a><ul>
+<li class="chapter" data-level="3.1" data-path="one-parameter-models.html"><a href="one-parameter-models.html#binomialbernoulli-data"><i class="fa fa-check"></i><b>3.1</b> Binomial/Bernoulli data</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="one-parameter-models.html"><a href="one-parameter-models.html#reparameterization"><i class="fa fa-check"></i><b>3.1.1</b> Reparameterization*</a></li>
+<li class="chapter" data-level="3.1.2" data-path="one-parameter-models.html"><a href="one-parameter-models.html#posterior-predictive-check-1"><i class="fa fa-check"></i><b>3.1.2</b> Posterior Predictive Check</a></li>
+<li class="chapter" data-level="3.1.3" data-path="one-parameter-models.html"><a href="one-parameter-models.html#comparison-to-frequentist-results"><i class="fa fa-check"></i><b>3.1.3</b> Comparison to frequentist results</a></li>
+<li class="chapter" data-level="3.1.4" data-path="one-parameter-models.html"><a href="one-parameter-models.html#sensitivity-to-different-priors"><i class="fa fa-check"></i><b>3.1.4</b> Sensitivity to different priors</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="one-parameter-models.html"><a href="one-parameter-models.html#poisson-data"><i class="fa fa-check"></i><b>3.2</b> Poisson Data</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="one-parameter-models.html"><a href="one-parameter-models.html#example-2"><i class="fa fa-check"></i><b>3.2.1</b> Example 2</a></li>
+<li class="chapter" data-level="3.2.2" data-path="one-parameter-models.html"><a href="one-parameter-models.html#choosing-a-model-1"><i class="fa fa-check"></i><b>3.2.2</b> Choosing a model</a></li>
+<li class="chapter" data-level="3.2.3" data-path="one-parameter-models.html"><a href="one-parameter-models.html#choosing-a-prior"><i class="fa fa-check"></i><b>3.2.3</b> Choosing a prior</a></li>
+<li class="chapter" data-level="3.2.4" data-path="one-parameter-models.html"><a href="one-parameter-models.html#model-equations-and-diagram"><i class="fa fa-check"></i><b>3.2.4</b> Model Equations and Diagram</a></li>
+<li class="chapter" data-level="3.2.5" data-path="one-parameter-models.html"><a href="one-parameter-models.html#getting-the-posterior"><i class="fa fa-check"></i><b>3.2.5</b> Getting the posterior</a></li>
+<li class="chapter" data-level="3.2.6" data-path="one-parameter-models.html"><a href="one-parameter-models.html#posterior-predictive-check-2"><i class="fa fa-check"></i><b>3.2.6</b> Posterior Predictive Check</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html"><i class="fa fa-check"></i><b>4</b> Brief Introduction to STAN</a><ul>
+<li class="chapter" data-level="4.1" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#stan"><i class="fa fa-check"></i><b>4.1</b> <code>STAN</code></a><ul>
+<li class="chapter" data-level="4.1.1" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#stan-code"><i class="fa fa-check"></i><b>4.1.1</b> <code>STAN</code> code</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#rstan"><i class="fa fa-check"></i><b>4.2</b> <code>RStan</code></a><ul>
+<li class="chapter" data-level="4.2.1" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#assembling-data-list-in-r"><i class="fa fa-check"></i><b>4.2.1</b> Assembling data list in R</a></li>
+<li class="chapter" data-level="4.2.2" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#call-rstan"><i class="fa fa-check"></i><b>4.2.2</b> Call <code>rstan</code></a></li>
+<li class="chapter" data-level="4.2.3" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#summarize-the-results"><i class="fa fa-check"></i><b>4.2.3</b> Summarize the results</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#resources"><i class="fa fa-check"></i><b>4.3</b> Resources</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="group-comparisons.html"><a href="group-comparisons.html"><i class="fa fa-check"></i><b>5</b> Group Comparisons</a><ul>
+<li class="chapter" data-level="5.1" data-path="group-comparisons.html"><a href="group-comparisons.html#data"><i class="fa fa-check"></i><b>5.1</b> Data</a></li>
+<li class="chapter" data-level="5.2" data-path="group-comparisons.html"><a href="group-comparisons.html#between-subject-comparisons"><i class="fa fa-check"></i><b>5.2</b> Between-Subject Comparisons</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="group-comparisons.html"><a href="group-comparisons.html#plots"><i class="fa fa-check"></i><b>5.2.1</b> Plots</a></li>
+<li class="chapter" data-level="5.2.2" data-path="group-comparisons.html"><a href="group-comparisons.html#independent-sample-t-test"><i class="fa fa-check"></i><b>5.2.2</b> Independent sample t-test</a></li>
+<li class="chapter" data-level="5.2.3" data-path="group-comparisons.html"><a href="group-comparisons.html#bayesian-normal-model"><i class="fa fa-check"></i><b>5.2.3</b> Bayesian Normal Model</a></li>
+<li class="chapter" data-level="5.2.4" data-path="group-comparisons.html"><a href="group-comparisons.html#robust-model"><i class="fa fa-check"></i><b>5.2.4</b> Robust Model</a></li>
+<li class="chapter" data-level="5.2.5" data-path="group-comparisons.html"><a href="group-comparisons.html#shifted-lognormal-model"><i class="fa fa-check"></i><b>5.2.5</b> Shifted Lognormal Model*</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="group-comparisons.html"><a href="group-comparisons.html#notes-on-model-comparison"><i class="fa fa-check"></i><b>5.3</b> Notes on Model Comparison</a></li>
+<li class="chapter" data-level="5.4" data-path="group-comparisons.html"><a href="group-comparisons.html#within-subject-comparisons"><i class="fa fa-check"></i><b>5.4</b> Within-Subject Comparisons</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="group-comparisons.html"><a href="group-comparisons.html#plots-1"><i class="fa fa-check"></i><b>5.4.1</b> Plots</a></li>
+<li class="chapter" data-level="5.4.2" data-path="group-comparisons.html"><a href="group-comparisons.html#independent-sample-t-test-1"><i class="fa fa-check"></i><b>5.4.2</b> Independent sample <span class="math inline">\(t\)</span>-test</a></li>
+<li class="chapter" data-level="5.4.3" data-path="group-comparisons.html"><a href="group-comparisons.html#bayesian-normal-model-1"><i class="fa fa-check"></i><b>5.4.3</b> Bayesian Normal Model</a></li>
+<li class="chapter" data-level="5.4.4" data-path="group-comparisons.html"><a href="group-comparisons.html#using-brms"><i class="fa fa-check"></i><b>5.4.4</b> Using <code>brms</code>*</a></li>
+<li class="chapter" data-level="5.4.5" data-path="group-comparisons.html"><a href="group-comparisons.html#region-of-practical-equivalence-rope"><i class="fa fa-check"></i><b>5.4.5</b> Region of Practical Equivalence (ROPE)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html"><i class="fa fa-check"></i><b>6</b> Markov Chain Monte Carlo</a><ul>
+<li class="chapter" data-level="6.1" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#monte-carlo-simulation-with-one-unknown"><i class="fa fa-check"></i><b>6.1</b> Monte Carlo Simulation With One Unknown</a></li>
+<li class="chapter" data-level="6.2" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#markov-chain-monte-carlo-mcmc-with-one-parameter"><i class="fa fa-check"></i><b>6.2</b> Markov Chain Monte Carlo (MCMC) With One Parameter</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#the-metropolis-algorithm"><i class="fa fa-check"></i><b>6.2.1</b> The Metropolis algorithm</a></li>
+<li class="chapter" data-level="6.2.2" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#the-metropolis-hastings-algorithm"><i class="fa fa-check"></i><b>6.2.2</b> The Metropolis-Hastings Algorithm</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#markov-chain"><i class="fa fa-check"></i><b>6.3</b> Markov Chain</a></li>
+<li class="chapter" data-level="6.4" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#effective-sample-size-n_texteff"><i class="fa fa-check"></i><b>6.4</b> Effective Sample Size (<span class="math inline">\(n_\text{eff}\)</span>)</a></li>
+<li class="chapter" data-level="6.5" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#mc-error"><i class="fa fa-check"></i><b>6.5</b> MC Error</a></li>
+<li class="chapter" data-level="6.6" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#burn-inwarmup"><i class="fa fa-check"></i><b>6.6</b> Burn-in/Warmup</a><ul>
+<li class="chapter" data-level="6.6.1" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#thinning"><i class="fa fa-check"></i><b>6.6.1</b> Thinning</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#diagnostics-of-mcmc"><i class="fa fa-check"></i><b>6.7</b> Diagnostics of MCMC</a><ul>
+<li class="chapter" data-level="6.7.1" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#mixing"><i class="fa fa-check"></i><b>6.7.1</b> Mixing</a></li>
+<li class="chapter" data-level="6.7.2" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#acceptance-rate"><i class="fa fa-check"></i><b>6.7.2</b> Acceptance Rate</a></li>
+<li class="chapter" data-level="6.7.3" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#diagnostics-using-multiple-chains"><i class="fa fa-check"></i><b>6.7.3</b> Diagnostics Using Multiple Chains</a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#multiple-parameters"><i class="fa fa-check"></i><b>6.8</b> Multiple Parameters</a></li>
+<li class="chapter" data-level="6.9" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#hamiltonian-monte-carlo"><i class="fa fa-check"></i><b>6.9</b> Hamiltonian Monte Carlo</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="linear-models.html"><a href="linear-models.html"><i class="fa fa-check"></i><b>7</b> Linear Models</a><ul>
+<li class="chapter" data-level="7.1" data-path="linear-models.html"><a href="linear-models.html#what-is-regression"><i class="fa fa-check"></i><b>7.1</b> What is Regression?</a></li>
+<li class="chapter" data-level="7.2" data-path="linear-models.html"><a href="linear-models.html#one-predictor"><i class="fa fa-check"></i><b>7.2</b> One Predictor</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="linear-models.html"><a href="linear-models.html#a-continuous-predictor"><i class="fa fa-check"></i><b>7.2.1</b> A continuous predictor</a></li>
+<li class="chapter" data-level="7.2.2" data-path="linear-models.html"><a href="linear-models.html#centering"><i class="fa fa-check"></i><b>7.2.2</b> Centering</a></li>
+<li class="chapter" data-level="7.2.3" data-path="linear-models.html"><a href="linear-models.html#a-categorical-predictor"><i class="fa fa-check"></i><b>7.2.3</b> A categorical predictor</a></li>
+<li class="chapter" data-level="7.2.4" data-path="linear-models.html"><a href="linear-models.html#predictors-with-multiple-categories"><i class="fa fa-check"></i><b>7.2.4</b> Predictors with multiple categories</a></li>
+<li class="chapter" data-level="7.2.5" data-path="linear-models.html"><a href="linear-models.html#stan-4"><i class="fa fa-check"></i><b>7.2.5</b> STAN</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="linear-models.html"><a href="linear-models.html#multiple-regression"><i class="fa fa-check"></i><b>7.3</b> Multiple Regression</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="linear-models.html"><a href="linear-models.html#two-predictor-example"><i class="fa fa-check"></i><b>7.3.1</b> Two Predictor Example</a></li>
+<li class="chapter" data-level="7.3.2" data-path="linear-models.html"><a href="linear-models.html#interactions"><i class="fa fa-check"></i><b>7.3.2</b> Interactions</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="linear-models.html"><a href="linear-models.html#tabulating-the-models"><i class="fa fa-check"></i><b>7.4</b> Tabulating the Models</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="model-diagnostics.html"><a href="model-diagnostics.html"><i class="fa fa-check"></i><b>8</b> Model Diagnostics</a><ul>
+<li class="chapter" data-level="8.1" data-path="model-diagnostics.html"><a href="model-diagnostics.html#assumptions-of-linear-models"><i class="fa fa-check"></i><b>8.1</b> Assumptions of Linear Models</a></li>
+<li class="chapter" data-level="8.2" data-path="model-diagnostics.html"><a href="model-diagnostics.html#diagnostic-tools"><i class="fa fa-check"></i><b>8.2</b> Diagnostic Tools</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="model-diagnostics.html"><a href="model-diagnostics.html#posterior-predictive-check-7"><i class="fa fa-check"></i><b>8.2.1</b> Posterior Predictive Check</a></li>
+<li class="chapter" data-level="8.2.2" data-path="model-diagnostics.html"><a href="model-diagnostics.html#marginal-model-plots"><i class="fa fa-check"></i><b>8.2.2</b> Marginal model plots</a></li>
+<li class="chapter" data-level="8.2.3" data-path="model-diagnostics.html"><a href="model-diagnostics.html#residual-plots"><i class="fa fa-check"></i><b>8.2.3</b> Residual plots</a></li>
+<li class="chapter" data-level="8.2.4" data-path="model-diagnostics.html"><a href="model-diagnostics.html#multicollinearity"><i class="fa fa-check"></i><b>8.2.4</b> Multicollinearity</a></li>
+<li class="chapter" data-level="8.2.5" data-path="model-diagnostics.html"><a href="model-diagnostics.html#robust-models"><i class="fa fa-check"></i><b>8.2.5</b> Robust Models</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="model-diagnostics.html"><a href="model-diagnostics.html#other-topics"><i class="fa fa-check"></i><b>8.3</b> Other Topics</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html"><i class="fa fa-check"></i><b>9</b> Model Comparison and Regularization</a><ul>
+<li class="chapter" data-level="9.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#overfitting-and-underfitting"><i class="fa fa-check"></i><b>9.1</b> Overfitting and Underfitting</a></li>
+<li class="chapter" data-level="9.2" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#kullback-leibler-divergence"><i class="fa fa-check"></i><b>9.2</b> Kullback-Leibler Divergence</a></li>
+<li class="chapter" data-level="9.3" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#information-criteria"><i class="fa fa-check"></i><b>9.3</b> Information Criteria</a><ul>
+<li class="chapter" data-level="9.3.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#experiment-on-deviance"><i class="fa fa-check"></i><b>9.3.1</b> Experiment on Deviance</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#information-criteria-1"><i class="fa fa-check"></i><b>9.4</b> Information Criteria</a><ul>
+<li class="chapter" data-level="9.4.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#akaike-information-criteria-aic"><i class="fa fa-check"></i><b>9.4.1</b> Akaike Information Criteria (AIC)</a></li>
+<li class="chapter" data-level="9.4.2" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#deviance-information-criteria-dic"><i class="fa fa-check"></i><b>9.4.2</b> Deviance Information Criteria (DIC)</a></li>
+<li class="chapter" data-level="9.4.3" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#watanabe-akaike-information-criteria-waic"><i class="fa fa-check"></i><b>9.4.3</b> Watanabe-Akaike Information Criteria (WAIC)</a></li>
+<li class="chapter" data-level="9.4.4" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#leave-one-out-cross-validation"><i class="fa fa-check"></i><b>9.4.4</b> Leave-One-Out Cross Validation</a></li>
+<li class="chapter" data-level="9.4.5" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#example"><i class="fa fa-check"></i><b>9.4.5</b> Example</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#stackingmodel-averaging"><i class="fa fa-check"></i><b>9.5</b> Stacking/Model Averaging</a><ul>
+<li class="chapter" data-level="9.5.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#model-weights"><i class="fa fa-check"></i><b>9.5.1</b> Model Weights</a></li>
+<li class="chapter" data-level="9.5.2" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#model-averaging"><i class="fa fa-check"></i><b>9.5.2</b> Model Averaging</a></li>
+<li class="chapter" data-level="9.5.3" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#stacking"><i class="fa fa-check"></i><b>9.5.3</b> Stacking</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#shrinkage-priors"><i class="fa fa-check"></i><b>9.6</b> Shrinkage Priors</a><ul>
+<li class="chapter" data-level="9.6.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#number-of-parameters"><i class="fa fa-check"></i><b>9.6.1</b> Number of parameters</a></li>
+<li class="chapter" data-level="9.6.2" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#sparsity-inducing-priors"><i class="fa fa-check"></i><b>9.6.2</b> Sparsity-Inducing Priors</a></li>
+<li class="chapter" data-level="9.6.3" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#finnish-horseshoe"><i class="fa fa-check"></i><b>9.6.3</b> Finnish Horseshoe</a></li>
+</ul></li>
+<li class="chapter" data-level="9.7" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#variable-selection"><i class="fa fa-check"></i><b>9.7</b> Variable Selection</a><ul>
+<li class="chapter" data-level="9.7.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#projection-based-method"><i class="fa fa-check"></i><b>9.7.1</b> Projection-Based Method</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html"><i class="fa fa-check"></i><b>10</b> Hierarchical &amp; Multilevel Models</a><ul>
+<li class="chapter" data-level="10.1" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#anova"><i class="fa fa-check"></i><b>10.1</b> ANOVA</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#frequentist-anova"><i class="fa fa-check"></i><b>10.1.1</b> “Frequentist” ANOVA</a></li>
+<li class="chapter" data-level="10.1.2" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#bayesian-anova"><i class="fa fa-check"></i><b>10.1.2</b> Bayesian ANOVA</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#multilevel-modeling-mlm"><i class="fa fa-check"></i><b>10.2</b> Multilevel Modeling (MLM)</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#examples-of-clustering"><i class="fa fa-check"></i><b>10.2.1</b> Examples of clustering</a></li>
+<li class="chapter" data-level="10.2.2" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#data-1"><i class="fa fa-check"></i><b>10.2.2</b> Data</a></li>
+<li class="chapter" data-level="10.2.3" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#intraclass-correlation"><i class="fa fa-check"></i><b>10.2.3</b> Intraclass correlation</a></li>
+<li class="chapter" data-level="10.2.4" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#is-mlm-needed"><i class="fa fa-check"></i><b>10.2.4</b> Is MLM needed?</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#varying-coefficients"><i class="fa fa-check"></i><b>10.3</b> Varying Coefficients</a><ul>
+<li class="chapter" data-level="10.3.1" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#varying-intercepts"><i class="fa fa-check"></i><b>10.3.1</b> Varying Intercepts</a></li>
+<li class="chapter" data-level="10.3.2" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#varying-slopes"><i class="fa fa-check"></i><b>10.3.2</b> Varying Slopes</a></li>
+<li class="chapter" data-level="10.3.3" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#varying-sigma"><i class="fa fa-check"></i><b>10.3.3</b> Varying <span class="math inline">\(\sigma\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#model-comparisons"><i class="fa fa-check"></i><b>10.4</b> Model Comparisons</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>11</b> Generalized Linear Models</a><ul>
+<li class="chapter" data-level="11.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#basics-of-generalized-linear-models"><i class="fa fa-check"></i><b>11.1</b> Basics of Generalized Linear Models</a></li>
+<li class="chapter" data-level="11.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#binary-logistic-regression"><i class="fa fa-check"></i><b>11.2</b> Binary Logistic Regression</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#the-logit-link"><i class="fa fa-check"></i><b>11.2.1</b> The logit link</a></li>
+<li class="chapter" data-level="11.2.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#choice-of-priors"><i class="fa fa-check"></i><b>11.2.2</b> Choice of Priors</a></li>
+<li class="chapter" data-level="11.2.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#interpreting-the-coefficients"><i class="fa fa-check"></i><b>11.2.3</b> Interpreting the coefficients</a></li>
+<li class="chapter" data-level="11.2.4" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#model-checking-1"><i class="fa fa-check"></i><b>11.2.4</b> Model Checking</a></li>
+<li class="chapter" data-level="11.2.5" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#complete-separation"><i class="fa fa-check"></i><b>11.2.5</b> Complete Separation</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#binomial-logistic-regression"><i class="fa fa-check"></i><b>11.3</b> Binomial Logistic Regression</a></li>
+<li class="chapter" data-level="11.4" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#probit-regression"><i class="fa fa-check"></i><b>11.4</b> Probit Regression</a></li>
+<li class="chapter" data-level="11.5" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#poisson-regression"><i class="fa fa-check"></i><b>11.5</b> Poisson Regression</a><ul>
+<li class="chapter" data-level="11.5.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#interpretations-2"><i class="fa fa-check"></i><b>11.5.1</b> Interpretations</a></li>
+<li class="chapter" data-level="11.5.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#model-checking-2"><i class="fa fa-check"></i><b>11.5.2</b> Model Checking</a></li>
+<li class="chapter" data-level="11.5.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#other-models-in-glm"><i class="fa fa-check"></i><b>11.5.3</b> Other models in GLM</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="missing-data.html"><a href="missing-data.html"><i class="fa fa-check"></i><b>12</b> Missing Data</a><ul>
+<li class="chapter" data-level="12.1" data-path="missing-data.html"><a href="missing-data.html#missing-data-mechanisms"><i class="fa fa-check"></i><b>12.1</b> Missing Data Mechanisms</a><ul>
+<li class="chapter" data-level="12.1.1" data-path="missing-data.html"><a href="missing-data.html#mcar-missing-completely-at-random"><i class="fa fa-check"></i><b>12.1.1</b> MCAR (Missing Completely at Random)</a></li>
+<li class="chapter" data-level="12.1.2" data-path="missing-data.html"><a href="missing-data.html#mar-missing-at-random"><i class="fa fa-check"></i><b>12.1.2</b> MAR (Missing At Random)</a></li>
+<li class="chapter" data-level="12.1.3" data-path="missing-data.html"><a href="missing-data.html#nmar-not-missing-at-random"><i class="fa fa-check"></i><b>12.1.3</b> NMAR (Not Missing At Random)</a></li>
+<li class="chapter" data-level="12.1.4" data-path="missing-data.html"><a href="missing-data.html#ignorable-missingness"><i class="fa fa-check"></i><b>12.1.4</b> Ignorable Missingness*</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="missing-data.html"><a href="missing-data.html#bayesian-approaches-for-missing-data"><i class="fa fa-check"></i><b>12.2</b> Bayesian Approaches for Missing Data</a><ul>
+<li class="chapter" data-level="12.2.1" data-path="missing-data.html"><a href="missing-data.html#complete-case-analysislistwise-deletion"><i class="fa fa-check"></i><b>12.2.1</b> Complete Case Analysis/Listwise Deletion</a></li>
+<li class="chapter" data-level="12.2.2" data-path="missing-data.html"><a href="missing-data.html#treat-missing-data-as-parameters"><i class="fa fa-check"></i><b>12.2.2</b> Treat Missing Data as Parameters</a></li>
+<li class="chapter" data-level="12.2.3" data-path="missing-data.html"><a href="missing-data.html#multiple-imputation"><i class="fa fa-check"></i><b>12.2.3</b> Multiple Imputation</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Course Handouts for Bayesian Data Analysis Class</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="group-comparisons" class="section level1">
+<h1><span class="header-section-number">Chapter 5</span> Group Comparisons</h1>
+<p>Last week we discussed the binomial and the Poisson model, both of which are
+models with only one parameters. In most research, however, there are at least
+two parameters, and sometimes one is talking about tens or hundreds of
+parameters. For this week we will be looking at group comparisons done in a
+Bayesian way. We will start with between-group comparisons, extend it to
+multiple groups, and then move on to comparisons for repeated measures.</p>
+<div id="data" class="section level2">
+<h2><span class="header-section-number">5.1</span> Data</h2>
+<p>We will use the data in <span class="citation">Frank, Biberci, and Verschuere (<a href="#ref-Frank2019">2019</a>)</span>, with is a replication study examining the
+response time (RT) for lying and whether RT is shorter or longer when lying in
+native language. In the original study, the researchers found that the
+difference between telling a lie and a truth (lie-truth difference) is smaller
+in English than in German for native German speakers. In the replication study,
+the same design was used to see whether the findings can be replicated on
+Dutch speakers. The data can be found at <a href="https://osf.io/x4rfk/" class="uri">https://osf.io/x4rfk/</a>.</p>
+<p>Instead of looking at lie-truth difference across languages, we will start off
+by comparing difference in RT for telling a lie in Dutch between males (man) and
+females (vrouw), as the model is easier to understand for independent sample
+comparisons, and the model can be applied generally for between-subject
+experimental designs.</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" data-line-number="1">lies &lt;-<span class="st"> </span>readxl<span class="op">::</span><span class="kw">read_excel</span>(<span class="st">&quot;../data/ENDFILE.xlsx&quot;</span>)</a>
+<a class="sourceLine" id="cb68-2" data-line-number="2"><span class="co"># Rescale response time from ms to sec</span></a>
+<a class="sourceLine" id="cb68-3" data-line-number="3">lies &lt;-<span class="st"> </span>lies <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb68-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate_at</span>(<span class="kw">vars</span>(LDMRT<span class="op">:</span>TEMRT), <span class="op">~</span><span class="st"> </span>. <span class="op">/</span><span class="st"> </span><span class="dv">1000</span>)</a>
+<a class="sourceLine" id="cb68-5" data-line-number="5"><span class="co"># Describe the data</span></a>
+<a class="sourceLine" id="cb68-6" data-line-number="6">psych<span class="op">::</span><span class="kw">describe</span>(lies <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(Age, LDMRT<span class="op">:</span>TEMRT))</a></code></pre></div>
+<pre><code>&gt;#       vars  n  mean   sd median trimmed  mad   min   max range skew kurtosis
+&gt;# Age      1 66 23.15 7.18  21.00   21.61 2.97 18.00 61.00 43.00 2.98    10.79
+&gt;# LDMRT    2 63  1.47 0.51   1.41    1.42 0.47  0.53  3.26  2.73 0.97     1.41
+&gt;# TDMRT    3 63  1.16 0.43   1.09    1.10 0.35  0.51  2.94  2.43 1.54     3.27
+&gt;# LEMRT    4 63  1.45 0.46   1.41    1.43 0.50  0.49  2.42  1.93 0.29    -0.80
+&gt;# TEMRT    5 63  1.29 0.41   1.28    1.26 0.42  0.57  2.60  2.02 0.86     0.69
+&gt;#         se
+&gt;# Age   0.88
+&gt;# LDMRT 0.06
+&gt;# TDMRT 0.05
+&gt;# LEMRT 0.06
+&gt;# TEMRT 0.05</code></pre>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" data-line-number="1"><span class="co"># Plot the data</span></a>
+<a class="sourceLine" id="cb70-2" data-line-number="2">psych<span class="op">::</span><span class="kw">pairs.panels</span>(lies <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb70-3" data-line-number="3"><span class="st">                      </span><span class="kw">select</span>(Age, Gender, LDMRT<span class="op">:</span>TEMRT))</a></code></pre></div>
+<p><img src="05_group_comparisons_files/figure-html/lies-1.png" width="672" /></p>
+</div>
+<div id="between-subject-comparisons" class="section level2">
+<h2><span class="header-section-number">5.2</span> Between-Subject Comparisons</h2>
+<div id="plots" class="section level3">
+<h3><span class="header-section-number">5.2.1</span> Plots</h3>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" data-line-number="1">lies <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb71-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(PP, Gender, LDMRT, TDMRT) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb71-3" data-line-number="3"><span class="st">  </span><span class="kw">gather</span>(<span class="dt">key =</span> <span class="st">&quot;veracity&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;RT&quot;</span>, LDMRT<span class="op">:</span>TDMRT) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb71-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> RT, <span class="dt">col =</span> veracity)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb71-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">bw =</span> <span class="st">&quot;SJ&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb71-6" data-line-number="6"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>Gender)</a></code></pre></div>
+<pre><code>&gt;# Warning: Removed 6 rows containing non-finite values (stat_density).</code></pre>
+<p><img src="05_group_comparisons_files/figure-html/plot-lies-1.png" width="672" /></p>
+</div>
+<div id="independent-sample-t-test" class="section level3">
+<h3><span class="header-section-number">5.2.2</span> Independent sample t-test</h3>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" data-line-number="1"><span class="co"># independent t-test</span></a>
+<a class="sourceLine" id="cb73-2" data-line-number="2"><span class="kw">t.test</span>(lies<span class="op">$</span>LDMRT[<span class="kw">which</span>(lies<span class="op">$</span>Gender <span class="op">==</span><span class="st"> &quot;man&quot;</span>)], </a>
+<a class="sourceLine" id="cb73-3" data-line-number="3">       lies<span class="op">$</span>LDMRT[<span class="kw">which</span>(lies<span class="op">$</span>Gender <span class="op">==</span><span class="st"> &quot;vrouw&quot;</span>)])</a></code></pre></div>
+<pre><code>&gt;# 
+&gt;#  Welch Two Sample t-test
+&gt;# 
+&gt;# data:  lies$LDMRT[which(lies$Gender == &quot;man&quot;)] and lies$LDMRT[which(lies$Gender == &quot;vrouw&quot;)]
+&gt;# t = 4, df = 34, p-value = 3e-04
+&gt;# alternative hypothesis: true difference in means is not equal to 0
+&gt;# 95 percent confidence interval:
+&gt;#  0.255 0.778
+&gt;# sample estimates:
+&gt;# mean of x mean of y 
+&gt;#      1.81      1.30</code></pre>
+</div>
+<div id="bayesian-normal-model" class="section level3">
+<h3><span class="header-section-number">5.2.3</span> Bayesian Normal Model</h3>
+<p>The <span class="math inline">\(t\)</span>-test above does not directly show the underlying model. In fully
+Bayesian analyses, this has to be made explicit. A statistical model states the
+underlying assumptions of the statistical procedure. And to say more directly, a
+model is mostly a set of distributional assumptions. Below is the one for the
+<span class="math inline">\(t\)</span>-test, including some prior choices.</p>
+<p><span class="math display">\[\begin{align}
+  \texttt{LDMRT}_{ij} &amp; \sim \mathcal{N}^+(\mu_j, \sigma) \\
+  \mu_j &amp; = \begin{cases}
+              \mu_1, &amp; j = 1 \\
+              \mu_1 + \beta, &amp; j = 2
+            \end{cases} \\
+  \mu_1 &amp; \sim \mathcal{N}^+(0.5, 2.5) \\
+  \beta &amp; \sim \mathcal{N}(0, 2.5) \\
+  \sigma &amp; \sim t^+(4, 0, 1) 
+\end{align}\]</span></p>
+<p>Parameters:</p>
+<ul>
+<li><span class="math inline">\(\mu_j\)</span>: mean parameter for the <span class="math inline">\(j\)</span>th group where <span class="math inline">\(j\)</span> = 1 for man and <span class="math inline">\(j\)</span>
+= 2 for vrouw</li>
+<li><span class="math inline">\(\sigma\)</span>: standard deviation parameter that’s assumed the same across the two
+gender groups</li>
+<li><span class="math inline">\(\beta\)</span>: mean difference between the two genders</li>
+</ul>
+<p>Transformed parameters:</p>
+<ul>
+<li><span class="math inline">\(\mu_2\)</span></li>
+</ul>
+<p>The above prior distributions are called <em>weakly informative</em>. They are
+informative because it does give some informative on what the most likely
+value is for each parameter prior to looking at the data, such as 0.5 for
+<span class="math inline">\(\mu_1\)</span>. On the other hand, it is weak because the most likely values are
+basically covering all values that are reasonable. For example, a normal
+prior with a mean 0 and an <em>SD</em> of 2.5 for <span class="math inline">\(\beta\)</span> represents a belief that the
+difference in RT between males and females has a 68% chance to be no more than
+2.5 seconds. Given that most people took just no more than two seconds to
+respond, this is a pretty weak prior.</p>
+<p>For <span class="math inline">\(\sigma\)</span>, its lower bound is 0. The prior used here is a half-<span class="math inline">\(t\)</span>
+distribution based on <span class="citation">Gelman (<a href="#ref-Gelman2006">2006</a>)</span>. You may find this guide:
+<a href="https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations" class="uri">https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations</a> to be useful
+when choosing priors for a lot of the models we will discuss in this course.</p>
+<p>Below are the graphs for the three priors:</p>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" data-line-number="1">p1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">tibble</span>(<span class="dt">mu =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">5</span>)), <span class="kw">aes</span>(<span class="dt">x =</span> mu)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb75-2" data-line-number="2"><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> <span class="cf">function</span>(x) <span class="kw">dnorm</span>(x, <span class="dt">mean =</span> <span class="fl">0.5</span>, <span class="dt">sd =</span> <span class="fl">2.5</span>) <span class="op">/</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb75-3" data-line-number="3"><span class="st">                  </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">pnorm</span>(<span class="dv">0</span>, <span class="fl">0.5</span>, <span class="dt">sd =</span> <span class="fl">2.5</span>))) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb75-4" data-line-number="4"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="kw">expression</span>(mu), <span class="dt">y =</span> <span class="st">&quot;Density&quot;</span>)</a>
+<a class="sourceLine" id="cb75-5" data-line-number="5">p2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">tibble</span>(<span class="dt">beta =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>)), <span class="kw">aes</span>(<span class="dt">x =</span> beta)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb75-6" data-line-number="6"><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> dnorm, <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="fl">2.5</span>)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb75-7" data-line-number="7"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="kw">expression</span>(beta), <span class="dt">y =</span> <span class="st">&quot;Density&quot;</span>)</a>
+<a class="sourceLine" id="cb75-8" data-line-number="8">p3 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">tibble</span>(<span class="dt">sig =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">5</span>)), <span class="kw">aes</span>(<span class="dt">x =</span> sig)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb75-9" data-line-number="9"><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> <span class="cf">function</span>(x) <span class="kw">dt</span>(x, <span class="dt">df =</span> <span class="dv">2</span>) <span class="op">*</span><span class="st"> </span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb75-10" data-line-number="10"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="kw">expression</span>(sigma), <span class="dt">y =</span> <span class="st">&quot;Density&quot;</span>)</a>
+<a class="sourceLine" id="cb75-11" data-line-number="11">gridExtra<span class="op">::</span><span class="kw">grid.arrange</span>(p1, p2, p3, <span class="dt">nrow =</span> <span class="dv">2</span>)</a></code></pre></div>
+<p><img src="05_group_comparisons_files/figure-html/plot-priors-1.png" width="672" /></p>
+<div id="model-diagram" class="section level4">
+<h4><span class="header-section-number">5.2.3.1</span> Model Diagram</h4>
+<div id="htmlwidget-25d9fd4f1cf9d229ad2f" style="width:672px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-25d9fd4f1cf9d229ad2f">{"x":{"diagram":"\ndigraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # data\n  node [shape = box, fixedsize = true]\n  Y1 [label = <y<FONT POINT-SIZE=\"8\"><SUB>i1<\/SUB><\/FONT>>]\n  Y2 [label = <y<FONT POINT-SIZE=\"8\"><SUB>i2<\/SUB><\/FONT>>]\n  \n  # parameters\n  node [shape = circle]\n  mu1 [label = <&mu;<FONT POINT-SIZE=\"8\"><SUB>1<\/SUB><\/FONT>>]\n  beta [label = \"&beta;\"]\n  sigma [label = \"&sigma;\"]\n  \n  # transformed parameters\n  node [shape = circle, peripheries = 2]\n  mu2 [label = <&mu;<FONT POINT-SIZE=\"8\"><SUB>2<\/SUB><\/FONT>>]\n  \n  # fixed values in prior\n  node [shape = circle, peripheries = 1]\n  mu_mu1 [label = <&mu;<FONT POINT-SIZE=\"8\"><SUB>&mu;<FONT POINT-SIZE=\"8\"><SUB>1<\/SUB><\/FONT><\/SUB><\/FONT>>]\n  sigma_mu1 [label = <&sigma;<FONT POINT-SIZE=\"8\"><SUB>&mu;<FONT POINT-SIZE=\"8\"><SUB>1<\/SUB><\/FONT><\/SUB><\/FONT>>]\n  mu_beta [label = <&mu;<FONT POINT-SIZE=\"8\"><SUB>&beta;<\/SUB><\/FONT>>]\n  sigma_beta [label = <&sigma;<FONT POINT-SIZE=\"8\"><SUB>&beta;<\/SUB><\/FONT>>]\n  nu_sigma [label = <&nu;<FONT POINT-SIZE=\"8\"><SUB>&sigma;<\/SUB><\/FONT>>]\n  mu_sigma [label = <&mu;<FONT POINT-SIZE=\"8\"><SUB>&sigma;<\/SUB><\/FONT>>];\n  sigma_sigma [label = <&sigma;<FONT POINT-SIZE=\"8\"><SUB>&sigma;<\/SUB><\/FONT>>]\n\n  # paths\n  nu_sigma -> sigma;\n  mu_sigma -> sigma;\n  sigma_sigma -> sigma;\n  mu_mu1 -> mu1;\n  sigma_mu1 -> mu1;\n  mu_beta -> beta;\n  sigma_beta -> beta;\n  mu1 -> mu2;\n  beta -> mu2;\n  mu1 -> Y1;\n  mu2 -> Y2;\n  sigma -> Y1;\n  sigma -> Y2;\n  \n  # fine tuning\n  {rank = same; Y1; Y2;}\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="stan-1" class="section level4">
+<h4><span class="header-section-number">5.2.3.2</span> STAN</h4>
+<p>Below is the STAN code for the model:</p>
+<pre class="stan"><code>data {
+  int&lt;lower=0&gt; N1;  // number of observations (group 1)
+  int&lt;lower=0&gt; N2;  // number of observations (group 2)
+  vector[N1] y1;  // response time (group 1);
+  vector[N2] y2;  // response time (group 2);
+}
+parameters {
+  real&lt;lower=0&gt; mu_1;  // mean of group 1
+  real beta;  // difference in means
+  real&lt;lower=0&gt; sigma;  // pooled standard deviation
+}
+transformed parameters {
+  real&lt;lower=0&gt; mu_2 = mu_1 + beta; 
+}
+model {
+  y1 ~ normal(mu_1, sigma);
+  y2 ~ normal(mu_2, sigma);
+  // prior
+  mu_1 ~ normal(0.5, 2.5);
+  beta ~ normal(0, 2.5);
+  sigma ~ student_t(4, 0, 1);
+}
+generated quantities {
+  real y1rep[N1];
+  real y2rep[N2];
+  for (i in 1:N1) {
+    y1rep[i] = normal_rng(mu_1, sigma);
+  }
+  for (i in 1:N2) {
+    y2rep[i] = normal_rng(mu_2, sigma);
+  }
+}</code></pre>
+<p>And let’s fit the model with <code>rstan</code>.</p>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" data-line-number="1"><span class="kw">library</span>(rstan)</a>
+<a class="sourceLine" id="cb77-2" data-line-number="2"><span class="kw">rstan_options</span>(<span class="dt">auto_write =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb77-3" data-line-number="3"><span class="co"># Exclude missing values</span></a>
+<a class="sourceLine" id="cb77-4" data-line-number="4">lies_cc &lt;-<span class="st"> </span><span class="kw">drop_na</span>(lies, LDMRT)</a></code></pre></div>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" data-line-number="1">m1 &lt;-<span class="st"> </span><span class="kw">stan</span>(<span class="st">&quot;../codes/group_comparison.stan&quot;</span>, </a>
+<a class="sourceLine" id="cb78-2" data-line-number="2">           <span class="dt">data =</span> <span class="kw">list</span>(<span class="dt">N1 =</span> <span class="kw">sum</span>(lies_cc<span class="op">$</span>Gender <span class="op">==</span><span class="st"> &quot;man&quot;</span>), </a>
+<a class="sourceLine" id="cb78-3" data-line-number="3">                       <span class="dt">N2 =</span> <span class="kw">sum</span>(lies_cc<span class="op">$</span>Gender <span class="op">==</span><span class="st"> &quot;vrouw&quot;</span>), </a>
+<a class="sourceLine" id="cb78-4" data-line-number="4">                       <span class="dt">y1 =</span> lies_cc<span class="op">$</span>LDMRT[<span class="kw">which</span>(lies_cc<span class="op">$</span>Gender <span class="op">==</span><span class="st"> &quot;man&quot;</span>)], </a>
+<a class="sourceLine" id="cb78-5" data-line-number="5">                       <span class="dt">y2 =</span> lies_cc<span class="op">$</span>LDMRT[<span class="kw">which</span>(lies_cc<span class="op">$</span>Gender <span class="op">==</span><span class="st"> &quot;vrouw&quot;</span>)]))</a></code></pre></div>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" data-line-number="1"><span class="co"># Use the `broom` package to generate nicely formatted table</span></a>
+<a class="sourceLine" id="cb79-2" data-line-number="2">broom<span class="op">::</span><span class="kw">tidy</span>(m1, <span class="dt">pars =</span> <span class="kw">c</span>(<span class="st">&quot;mu_1&quot;</span>, <span class="st">&quot;mu_2&quot;</span>, <span class="st">&quot;beta&quot;</span>, <span class="st">&quot;sigma&quot;</span>), </a>
+<a class="sourceLine" id="cb79-3" data-line-number="3">            <span class="dt">conf.int =</span> <span class="ot">TRUE</span>, <span class="dt">conf.method =</span> <span class="st">&quot;quantile&quot;</span>)</a></code></pre></div>
+<pre><code>&gt;# # A tibble: 4 x 5
+&gt;#   term  estimate std.error conf.low conf.high
+&gt;#   &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+&gt;# 1 mu_1     1.81     0.104     1.60      2.01 
+&gt;# 2 mu_2     1.30     0.0714    1.15      1.43 
+&gt;# 3 beta    -0.511    0.128    -0.760    -0.261
+&gt;# 4 sigma    0.461    0.0437    0.385     0.557</code></pre>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb81-1" data-line-number="1"><span class="kw">plot</span>(m1, <span class="dt">pars =</span> <span class="kw">c</span>(<span class="st">&quot;mu_1&quot;</span>, <span class="st">&quot;mu_2&quot;</span>, <span class="st">&quot;beta&quot;</span>, <span class="st">&quot;sigma&quot;</span>))</a></code></pre></div>
+<pre><code>&gt;# ci_level: 0.8 (80% intervals)</code></pre>
+<pre><code>&gt;# outer_level: 0.95 (95% intervals)</code></pre>
+<p><img src="05_group_comparisons_files/figure-html/plot-m1-1.png" width="672" /></p>
+</div>
+<div id="effect-size" class="section level4">
+<h4><span class="header-section-number">5.2.3.3</span> Effect size</h4>
+<p>For mean comparisons, it is also common to report a standardized effect size.
+For example, Cohen’s <span class="math inline">\(d\)</span> was defined as:
+<span class="math display">\[d = \frac{\mu_2 - \mu_1}{\sigma}\]</span></p>
+<p>We can directly put that in the STAN code for generated quantities,
+such as</p>
+<pre class="stan"><code>generated quantities {
+  real cohen_d = (mu_2 - mu_1) / sigma;
+}</code></pre>
+<p>However, if you have already run STAN, like what we did here, we can easily
+compute the effect size using the posterior samples of <code>beta</code> and <code>sigma</code>, as
+explained in the code below:</p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb85-1" data-line-number="1"><span class="co"># Extract posterior samples of the beta and the sigma parameters</span></a>
+<a class="sourceLine" id="cb85-2" data-line-number="2">post_sam &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(m1, <span class="dt">pars =</span> <span class="kw">c</span>(<span class="st">&quot;beta&quot;</span>, <span class="st">&quot;sigma&quot;</span>))</a>
+<a class="sourceLine" id="cb85-3" data-line-number="3"><span class="co"># Compute Cohen&#39;s d for each iteration</span></a>
+<a class="sourceLine" id="cb85-4" data-line-number="4">post_sam<span class="op">$</span>cohen_d &lt;-<span class="st"> </span>post_sam<span class="op">$</span>beta <span class="op">/</span><span class="st"> </span>post_sam<span class="op">$</span>sigma</a>
+<a class="sourceLine" id="cb85-5" data-line-number="5"><span class="co"># Posterior density</span></a>
+<a class="sourceLine" id="cb85-6" data-line-number="6">bayesplot<span class="op">::</span><span class="kw">mcmc_areas</span>(post_sam, <span class="dt">pars =</span> <span class="st">&quot;cohen_d&quot;</span>, </a>
+<a class="sourceLine" id="cb85-7" data-line-number="7">                      <span class="dt">prob =</span> <span class="fl">.90</span>)</a></code></pre></div>
+<p><img src="05_group_comparisons_files/figure-html/post_sam-1.png" width="336" /></p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb86-1" data-line-number="1"><span class="co"># HPDI</span></a>
+<a class="sourceLine" id="cb86-2" data-line-number="2"><span class="kw">library</span>(coda)</a>
+<a class="sourceLine" id="cb86-3" data-line-number="3"><span class="kw">HPDinterval</span>(<span class="kw">as.mcmc</span>(post_sam))</a></code></pre></div>
+<pre><code>&gt;#          lower  upper
+&gt;# beta    -0.763 -0.266
+&gt;# sigma    0.379  0.549
+&gt;# cohen_d -1.684 -0.522
+&gt;# attr(,&quot;Probability&quot;)
+&gt;# [1] 0.95</code></pre>
+<blockquote>
+<p>From the normal model, it was estimated that the mean RT for man was
+1.806 seconds, 95% CI [1.603, 2.011].
+On average women had faster RT when asked to tell lies in Dutch than man, with
+an estimated difference of -0.511 seconds, 95% CI
+[-0.760, -0.261], <em>d</em> = -1.118, 95% CI
+[-1.714, -0.543].</p>
+</blockquote>
+</div>
+<div id="posterior-predictive-check-3" class="section level4">
+<h4><span class="header-section-number">5.2.3.4</span> Posterior Predictive Check</h4>
+<p>Let’s check whether the model works well. First look at the shape of the data:</p>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb88-1" data-line-number="1"><span class="kw">library</span>(bayesplot)</a>
+<a class="sourceLine" id="cb88-2" data-line-number="2"><span class="co"># Observed data</span></a>
+<a class="sourceLine" id="cb88-3" data-line-number="3">y1 &lt;-<span class="st"> </span>lies_cc<span class="op">$</span>LDMRT[<span class="kw">which</span>(lies_cc<span class="op">$</span>Gender <span class="op">==</span><span class="st"> &quot;man&quot;</span>)]</a>
+<a class="sourceLine" id="cb88-4" data-line-number="4">y2 &lt;-<span class="st"> </span>lies_cc<span class="op">$</span>LDMRT[<span class="kw">which</span>(lies_cc<span class="op">$</span>Gender <span class="op">==</span><span class="st"> &quot;vrouw&quot;</span>)]</a>
+<a class="sourceLine" id="cb88-5" data-line-number="5"><span class="co"># Replicated data (randomly sampling 100)</span></a>
+<a class="sourceLine" id="cb88-6" data-line-number="6">y1rep &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(m1, <span class="dt">pars =</span> <span class="st">&quot;y1rep&quot;</span>)[<span class="kw">sample.int</span>(<span class="dv">2000</span>, <span class="dv">100</span>), ]</a>
+<a class="sourceLine" id="cb88-7" data-line-number="7">y2rep &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(m1, <span class="dt">pars =</span> <span class="st">&quot;y2rep&quot;</span>)[<span class="kw">sample.int</span>(<span class="dv">2000</span>, <span class="dv">100</span>), ]</a>
+<a class="sourceLine" id="cb88-8" data-line-number="8"><span class="kw">ppc_dens_overlay</span>(y1, <span class="dt">yrep =</span> y1rep)</a></code></pre></div>
+<p><img src="05_group_comparisons_files/figure-html/dens-y1-y2-1.png" width="336" /></p>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" data-line-number="1"><span class="kw">ppc_dens_overlay</span>(y2, <span class="dt">yrep =</span> y2rep)</a></code></pre></div>
+<p><img src="05_group_comparisons_files/figure-html/dens-y1-y2-2.png" width="336" /></p>
+<p>The main problem is that the predictions can be negative, which isn’t possible
+for response time. Below is a check for outliers:</p>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb90-1" data-line-number="1"><span class="kw">ppc_intervals</span>(y1, <span class="dt">yrep =</span> y1rep)</a></code></pre></div>
+<p><img src="05_group_comparisons_files/figure-html/ppc-intervals-y1-y2-1.png" width="336" /></p>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb91-1" data-line-number="1"><span class="kw">ppc_intervals</span>(y2, <span class="dt">yrep =</span> y2rep)</a></code></pre></div>
+<p><img src="05_group_comparisons_files/figure-html/ppc-intervals-y1-y2-2.png" width="336" /></p>
+<p>When the dark blue dots were outside of the intervals (which were the intervals
+of predicted value), it indicates that the model didn’t account for those values
+well. The intervals were 90% predictive intervals, so you should expect less
+than 10% of data points to be outside of the intervals. There were not a lot of
+unfitted data points to the model in this example.</p>
+</div>
+</div>
+<div id="robust-model" class="section level3">
+<h3><span class="header-section-number">5.2.4</span> Robust Model</h3>
+<p>A robust Bayesian version of the <span class="math inline">\(t\)</span> test can accommodate unequal standard
+deviations as well as outliers, by replacing the normal likelihood with a
+Student’s <span class="math inline">\(t\)</span> likelihood. See homework instruction. We will talk more about
+this in a later week after we discuss regression.</p>
+<pre class="stan"><code>data {
+  int&lt;lower=0&gt; N1;  // number of observations (group 1)
+  int&lt;lower=0&gt; N2;  // number of observations (group 2)
+  vector[N1] y1;  // response time (group 1);
+  vector[N2] y2;  // response time (group 2);
+}
+parameters {
+  real&lt;lower=0&gt; mu_1;  // mean of group 1
+  real beta;  // difference in means
+  real lsigma_1;  // log of scale parameter for group 1
+  real beta_lsigma;  // difference in log standard deviation
+  real&lt;lower=1&gt; nu;  // degrees of freedom of student&#39;s t distribution
+}
+transformed parameters {
+  real&lt;lower=0&gt; mu_2 = mu_1 + beta; 
+  real&lt;lower=0&gt; sigma_1 = exp(lsigma_1);
+  real&lt;lower=0&gt; sigma_2 = exp(lsigma_1 + beta_lsigma);
+}
+model {
+  y1 ~ student_t(nu, mu_1, sigma_1);
+  y2 ~ student_t(nu, mu_2, sigma_2);
+  // prior
+  mu_1 ~ normal(0.5, 2.5);
+  beta ~ normal(0, 2.5);
+  lsigma_1 ~ student_t(4, 0, 1);
+  beta_lsigma ~ std_normal();
+  nu ~ gamma(2, 0.1);
+}
+generated quantities {
+  real sigma_ratio = sigma_2 / sigma_1;
+  real y1rep[N1];
+  real y2rep[N2];
+  for (i in 1:N1) {
+    y1rep[i] = student_t_rng(nu, mu_1, sigma_1);
+  }
+  for (i in 1:N2) {
+    y2rep[i] = student_t_rng(nu, mu_2, sigma_2);
+  }
+}</code></pre>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb93-1" data-line-number="1">m2 &lt;-<span class="st"> </span><span class="kw">stan</span>(<span class="st">&quot;../codes/group_comparison_robust.stan&quot;</span>,</a>
+<a class="sourceLine" id="cb93-2" data-line-number="2">           <span class="dt">data =</span> <span class="kw">list</span>(<span class="dt">N1 =</span> <span class="kw">sum</span>(lies_cc<span class="op">$</span>Gender <span class="op">==</span><span class="st"> &quot;man&quot;</span>),</a>
+<a class="sourceLine" id="cb93-3" data-line-number="3">                       <span class="dt">N2 =</span> <span class="kw">sum</span>(lies_cc<span class="op">$</span>Gender <span class="op">==</span><span class="st"> &quot;vrouw&quot;</span>),</a>
+<a class="sourceLine" id="cb93-4" data-line-number="4">                       <span class="dt">y1 =</span> lies_cc<span class="op">$</span>LDMRT[<span class="kw">which</span>(lies_cc<span class="op">$</span>Gender <span class="op">==</span><span class="st"> &quot;man&quot;</span>)],</a>
+<a class="sourceLine" id="cb93-5" data-line-number="5">                       <span class="dt">y2 =</span> lies_cc<span class="op">$</span>LDMRT[<span class="kw">which</span>(lies_cc<span class="op">$</span>Gender <span class="op">==</span><span class="st"> &quot;vrouw&quot;</span>)]))</a></code></pre></div>
+</div>
+<div id="shifted-lognormal-model" class="section level3">
+<h3><span class="header-section-number">5.2.5</span> Shifted Lognormal Model*</h3>
+<p>With Bayesian analyses, you’re not limited to just the usual <span class="math inline">\(t\)</span>-test, but you
+can potentially extract more information by modeling the distribution of the
+data. One possible choice is the <em>shifted lognormal</em> model <span class="citation">(see Heathcote, Brown, and Cousineau <a href="#ref-heathcote2004">2004</a>)</span>,
+which assumes that there are two components in the response time: (a) decision
+time component that follows a log-normal distribution, and (b) non-decision time
+component due to processing of stimuli. I won’t get into the detail of the model,
+but instead wanted to show you several shifted lognormal distributions and the
+codes for running it on our example.</p>
+<div id="shifted-lognormal-distributions" class="section level4">
+<h4><span class="header-section-number">5.2.5.1</span> Shifted Lognormal Distributions</h4>
+<pre><code>&gt;# Registered S3 method overwritten by &#39;xts&#39;:
+&gt;#   method     from
+&gt;#   as.zoo.xts zoo</code></pre>
+<p><img src="05_group_comparisons_files/figure-html/shifted-lognormal-1.png" width="432" /></p>
+</div>
+<div id="stan-2" class="section level4">
+<h4><span class="header-section-number">5.2.5.2</span> STAN</h4>
+<pre class="stan"><code>data {
+  int&lt;lower=0&gt; N1;  // number of observations (group 1)
+  int&lt;lower=0&gt; N2;  // number of observations (group 2)
+  vector&lt;lower=0&gt;[N1] y1;  // response time (group 1);
+  vector&lt;lower=0&gt;[N2] y2;  // response time (group 2);
+}
+parameters {
+  real mu_1;  // mean of group 1 for the Gaussian component
+  real beta_mu;  // difference in means for the Gaussian component
+  real&lt;lower=0&gt; sigma;  // pooled standard deviation
+  real lndt_1;  // log of non-decision time for group 1
+  real beta_lndt;  // difference in ndt
+}
+transformed parameters {
+  real mu_2 = mu_1 + beta_mu; 
+  real&lt;lower=0&gt; ndt_1 = exp(lndt_1);
+  real&lt;lower=0&gt; ndt_2 = exp(lndt_1 + beta_lndt);
+}
+model {
+  target += lognormal_lpdf(y1 - ndt_1 | mu_1, sigma);
+  target += lognormal_lpdf(y2 - ndt_2 | mu_2, sigma);
+  target += std_normal_lpdf(mu_1);
+  target += std_normal_lpdf(beta_mu);
+  target += student_t_lpdf(sigma | 4, 0, 1) - 
+            student_t_lccdf(0 | 4, 0, 1);
+  target += std_normal_lpdf(lndt_1);
+  target += std_normal_lpdf(beta_lndt);
+}
+generated quantities {
+  real&lt;lower=0&gt; y1rep[N1];
+  real&lt;lower=0&gt; y2rep[N2];
+  for (i in 1:N1) {
+    y1rep[i] = lognormal_rng(mu_1, sigma) + ndt_1;
+  }
+  for (i in 1:N2) {
+    y2rep[i] = lognormal_rng(mu_2, sigma) + ndt_2;
+  }
+}</code></pre>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb96-1" data-line-number="1">m3 &lt;-<span class="st"> </span><span class="kw">stan</span>(<span class="st">&quot;../codes/group_comparison_shifted_lognormal.stan&quot;</span>,</a>
+<a class="sourceLine" id="cb96-2" data-line-number="2">           <span class="dt">data =</span> <span class="kw">list</span>(<span class="dt">N1 =</span> <span class="kw">sum</span>(lies_cc<span class="op">$</span>Gender <span class="op">==</span><span class="st"> &quot;man&quot;</span>),</a>
+<a class="sourceLine" id="cb96-3" data-line-number="3">                       <span class="dt">N2 =</span> <span class="kw">sum</span>(lies_cc<span class="op">$</span>Gender <span class="op">==</span><span class="st"> &quot;vrouw&quot;</span>),</a>
+<a class="sourceLine" id="cb96-4" data-line-number="4">                       <span class="dt">y1 =</span> lies_cc<span class="op">$</span>LDMRT[<span class="kw">which</span>(lies_cc<span class="op">$</span>Gender <span class="op">==</span><span class="st"> &quot;man&quot;</span>)],</a>
+<a class="sourceLine" id="cb96-5" data-line-number="5">                       <span class="dt">y2 =</span> lies_cc<span class="op">$</span>LDMRT[<span class="kw">which</span>(lies_cc<span class="op">$</span>Gender <span class="op">==</span><span class="st"> &quot;vrouw&quot;</span>)]), </a>
+<a class="sourceLine" id="cb96-6" data-line-number="6">           <span class="dt">control =</span> <span class="kw">list</span>(<span class="dt">adapt_delta =</span> <span class="fl">.999</span>, </a>
+<a class="sourceLine" id="cb96-7" data-line-number="7">                          <span class="dt">max_treedepth =</span> <span class="dv">12</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb97-1" data-line-number="1">broom<span class="op">::</span><span class="kw">tidy</span>(m3, <span class="dt">pars =</span> <span class="kw">c</span>(<span class="st">&quot;mu_1&quot;</span>, <span class="st">&quot;mu_2&quot;</span>, <span class="st">&quot;beta_mu&quot;</span>, <span class="st">&quot;sigma&quot;</span>, </a>
+<a class="sourceLine" id="cb97-2" data-line-number="2">                         <span class="st">&quot;ndt_1&quot;</span>, <span class="st">&quot;ndt_2&quot;</span>), </a>
+<a class="sourceLine" id="cb97-3" data-line-number="3">            <span class="dt">conf.int =</span> <span class="ot">TRUE</span>, </a>
+<a class="sourceLine" id="cb97-4" data-line-number="4">            <span class="dt">conf.method =</span> <span class="st">&quot;HPDinterval&quot;</span>) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># Just to demonstrate HPDI</span></a>
+<a class="sourceLine" id="cb97-5" data-line-number="5"><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">2</span>)  <span class="co"># round to two digits</span></a></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">conf.low</th>
+<th align="right">conf.high</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">mu_1</td>
+<td align="right">0.15</td>
+<td align="right">0.21</td>
+<td align="right">-0.25</td>
+<td align="right">0.53</td>
+</tr>
+<tr class="even">
+<td align="left">mu_2</td>
+<td align="right">0.03</td>
+<td align="right">0.12</td>
+<td align="right">-0.20</td>
+<td align="right">0.24</td>
+</tr>
+<tr class="odd">
+<td align="left">beta_mu</td>
+<td align="right">-0.12</td>
+<td align="right">0.19</td>
+<td align="right">-0.47</td>
+<td align="right">0.27</td>
+</tr>
+<tr class="even">
+<td align="left">sigma</td>
+<td align="right">0.40</td>
+<td align="right">0.06</td>
+<td align="right">0.29</td>
+<td align="right">0.52</td>
+</tr>
+<tr class="odd">
+<td align="left">ndt_1</td>
+<td align="right">0.55</td>
+<td align="right">0.21</td>
+<td align="right">0.13</td>
+<td align="right">0.90</td>
+</tr>
+<tr class="even">
+<td align="left">ndt_2</td>
+<td align="right">0.18</td>
+<td align="right">0.09</td>
+<td align="right">0.02</td>
+<td align="right">0.36</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="difference-in-mu-and-in-ndt" class="section level4">
+<h4><span class="header-section-number">5.2.5.3</span> Difference in <span class="math inline">\(\mu\)</span> and in <code>ndt</code></h4>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb98-1" data-line-number="1"><span class="co"># Extract posterior samples of the mu, sigma, and ndt parameters</span></a>
+<a class="sourceLine" id="cb98-2" data-line-number="2">post_sam &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(m3, </a>
+<a class="sourceLine" id="cb98-3" data-line-number="3">                          <span class="dt">pars =</span> <span class="kw">c</span>(<span class="st">&quot;mu_1&quot;</span>, <span class="st">&quot;mu_2&quot;</span>, <span class="st">&quot;sigma&quot;</span>, <span class="st">&quot;ndt_1&quot;</span>, <span class="st">&quot;ndt_2&quot;</span>))</a>
+<a class="sourceLine" id="cb98-4" data-line-number="4"><span class="co"># Compute means of decision components for each iteration</span></a>
+<a class="sourceLine" id="cb98-5" data-line-number="5">post_sam<span class="op">$</span>dt_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">exp</span>(post_sam<span class="op">$</span>mu_<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>post_sam<span class="op">$</span>sigma<span class="op">^</span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb98-6" data-line-number="6">post_sam<span class="op">$</span>dt_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">exp</span>(post_sam<span class="op">$</span>mu_<span class="dv">2</span> <span class="op">+</span><span class="st"> </span>post_sam<span class="op">$</span>sigma<span class="op">^</span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb98-7" data-line-number="7">post_sam<span class="op">$</span>dt_diff &lt;-<span class="st"> </span>post_sam<span class="op">$</span>dt_<span class="dv">2</span> <span class="op">-</span><span class="st"> </span>post_sam<span class="op">$</span>dt_<span class="dv">1</span></a>
+<a class="sourceLine" id="cb98-8" data-line-number="8"><span class="co"># Compute difference for ndt</span></a>
+<a class="sourceLine" id="cb98-9" data-line-number="9">post_sam<span class="op">$</span>ndt_diff &lt;-<span class="st"> </span>post_sam<span class="op">$</span>ndt_<span class="dv">2</span> <span class="op">-</span><span class="st"> </span>post_sam<span class="op">$</span>ndt_<span class="dv">1</span></a>
+<a class="sourceLine" id="cb98-10" data-line-number="10"><span class="co"># Posterior density</span></a>
+<a class="sourceLine" id="cb98-11" data-line-number="11">bayesplot<span class="op">::</span><span class="kw">mcmc_areas</span>(post_sam, <span class="dt">pars =</span> <span class="kw">c</span>(<span class="st">&quot;dt_diff&quot;</span>, <span class="st">&quot;ndt_diff&quot;</span>), </a>
+<a class="sourceLine" id="cb98-12" data-line-number="12">                      <span class="dt">prob =</span> <span class="fl">.90</span>)</a></code></pre></div>
+<p><img src="05_group_comparisons_files/figure-html/post_sam-ndt-1.png" width="336" /></p>
+</div>
+<div id="posterior-predictive-check-4" class="section level4">
+<h4><span class="header-section-number">5.2.5.4</span> Posterior Predictive Check</h4>
+<p>Let’s check whether the model works well. First look at the shape of the data:</p>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb99-1" data-line-number="1"><span class="co"># Replicated data (randomly sampling 100)</span></a>
+<a class="sourceLine" id="cb99-2" data-line-number="2">y1rep &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(m3, <span class="dt">pars =</span> <span class="st">&quot;y1rep&quot;</span>)[<span class="kw">sample.int</span>(<span class="dv">2000</span>, <span class="dv">100</span>), ]</a>
+<a class="sourceLine" id="cb99-3" data-line-number="3">y2rep &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(m3, <span class="dt">pars =</span> <span class="st">&quot;y2rep&quot;</span>)[<span class="kw">sample.int</span>(<span class="dv">2000</span>, <span class="dv">100</span>), ]</a>
+<a class="sourceLine" id="cb99-4" data-line-number="4"><span class="kw">ppc_dens_overlay</span>(y1, <span class="dt">yrep =</span> y1rep)</a></code></pre></div>
+<p><img src="05_group_comparisons_files/figure-html/ppc-dens-m3-1.png" width="336" /></p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb100-1" data-line-number="1"><span class="kw">ppc_dens_overlay</span>(y2, <span class="dt">yrep =</span> y2rep)</a></code></pre></div>
+<p><img src="05_group_comparisons_files/figure-html/ppc-dens-m3-2.png" width="336" /></p>
+<p>The above looks pretty good.</p>
+<p>Below is a check for outliers:</p>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb101-1" data-line-number="1"><span class="kw">ppc_intervals</span>(y1, <span class="dt">yrep =</span> y1rep)</a></code></pre></div>
+<p><img src="05_group_comparisons_files/figure-html/ppc-int-m3-1.png" width="336" /></p>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb102-1" data-line-number="1"><span class="kw">ppc_intervals</span>(y2, <span class="dt">yrep =</span> y2rep)</a></code></pre></div>
+<p><img src="05_group_comparisons_files/figure-html/ppc-int-m3-2.png" width="336" /></p>
+<p>There are still quite a handful of outliers.</p>
+</div>
+</div>
+</div>
+<div id="notes-on-model-comparison" class="section level2">
+<h2><span class="header-section-number">5.3</span> Notes on Model Comparison</h2>
+<p>In this note there are three models presented. Each of them have different
+interpretations. The big question is, of course, which one is better. It’s not
+an easy question to answer, but the choice should be ideally driven by
+substantive theories on how the data are generated. The posterior predictive
+check should also be use to see whether the models would yield data that are
+similar to the observed ones. Finally, There are also some useful statistical
+tools we can use to compare the different models, which we will discuss when we
+get to model comparisons.</p>
+</div>
+<div id="within-subject-comparisons" class="section level2">
+<h2><span class="header-section-number">5.4</span> Within-Subject Comparisons</h2>
+<p>Our research question this time is whether RT is longer for lies than for
+truth in Dutch (native language)</p>
+<div id="plots-1" class="section level3">
+<h3><span class="header-section-number">5.4.1</span> Plots</h3>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb103-1" data-line-number="1">lies <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb103-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(PP, Gender, LDMRT, TDMRT) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb103-3" data-line-number="3"><span class="st">  </span><span class="kw">gather</span>(<span class="dt">key =</span> <span class="st">&quot;veracity&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;RT&quot;</span>, LDMRT<span class="op">:</span>TDMRT) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb103-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> RT, <span class="dt">col =</span> veracity)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb103-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">bw =</span> <span class="st">&quot;SJ&quot;</span>)</a></code></pre></div>
+<pre><code>&gt;# Warning: Removed 6 rows containing non-finite values (stat_density).</code></pre>
+<p><img src="05_group_comparisons_files/figure-html/plot-lies-2-1.png" width="672" /></p>
+</div>
+<div id="independent-sample-t-test-1" class="section level3">
+<h3><span class="header-section-number">5.4.2</span> Independent sample <span class="math inline">\(t\)</span>-test</h3>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb105-1" data-line-number="1"><span class="co"># paired t-test</span></a>
+<a class="sourceLine" id="cb105-2" data-line-number="2"><span class="kw">t.test</span>(lies<span class="op">$</span>TDMRT, lies<span class="op">$</span>LDMRT, <span class="dt">paired =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<pre><code>&gt;# 
+&gt;#  Paired t-test
+&gt;# 
+&gt;# data:  lies$TDMRT and lies$LDMRT
+&gt;# t = -9, df = 62, p-value = 5e-13
+&gt;# alternative hypothesis: true difference in means is not equal to 0
+&gt;# 95 percent confidence interval:
+&gt;#  -0.376 -0.240
+&gt;# sample estimates:
+&gt;# mean of the differences 
+&gt;#                  -0.308</code></pre>
+</div>
+<div id="bayesian-normal-model-1" class="section level3">
+<h3><span class="header-section-number">5.4.3</span> Bayesian Normal Model</h3>
+<p><span class="math display">\[\begin{align}
+  \mathtt{TDMRT}_{i} &amp; \sim \mathcal{N}^+(\mu_1 + u_i, \sigma) \\
+  \mathtt{LDMRT}_{i} &amp; \sim \mathcal{N}^+(\mu_2 + u_i, \sigma) \\
+  \mu_2 &amp; = \mu_1 + \beta \\
+  \mu_1 &amp; \sim \mathcal{N}^+(0.5, 2.5) \\
+  \beta &amp; \sim \mathcal{N}(0, 2.5) \\
+  \sigma &amp; \sim t^+(4, 0, 2.5) \\
+  u_i &amp; \sim \mathcal{N}(0, \tau) \\
+  \tau &amp; \sim t^+(4, 0, 2.5)
+\end{align}\]</span></p>
+<p>Parameters:</p>
+<ul>
+<li><span class="math inline">\(\mu_1\)</span>: mean parameter for RT for truth</li>
+<li><span class="math inline">\(\beta\)</span>: mean difference between the two genders</li>
+<li><span class="math inline">\(\log(\sigma_1)\)</span>: natural logarithm of the standard deviation parameter for RT
+for truth</li>
+<li><span class="math inline">\(\beta_{\log(\sigma)}\)</span>: difference in log(<em>SD</em>) for RT between truth and lies</li>
+<li><span class="math inline">\(u_1\)</span>, <span class="math inline">\(\ldots\)</span>, <span class="math inline">\(u_{63}\)</span>: individual difference nuisance parameters</li>
+<li><span class="math inline">\(\tau\)</span>: standard deviation of individual differences</li>
+</ul>
+<p>Transformed parameters:</p>
+<ul>
+<li><span class="math inline">\(\sigma\)</span>, <span class="math inline">\(\sigma_2\)</span></li>
+<li><span class="math inline">\(\mu_2\)</span></li>
+</ul>
+<p>This is an example of a hierarchical model. Note that the priors for the <span class="math inline">\(u\)</span>s
+are <span class="math inline">\(\mathcal{N}(0, \tau)\)</span>, which has another parameter on it. In this case,
+we’re letting the data to update our belief on how much individual difference
+there is. The parameter here, <span class="math inline">\(\tau\)</span>, is called a <em>hyperparameter</em>, and this
+kind of prior is called a <em>hierarchical prior</em>.</p>
+<div id="stan-3" class="section level4">
+<h4><span class="header-section-number">5.4.3.1</span> STAN</h4>
+<p>Below is the STAN code for the model:</p>
+<pre class="stan"><code>data {
+  int&lt;lower=0&gt; N;  // number of observations
+  vector[N] y1;  // response time (repeated measure 1);
+  vector[N] y2;  // response time (repeated measure 2);
+}
+parameters {
+  real&lt;lower=0&gt; mu_1;  // mean of group 1
+  real beta;  // difference in means
+  real&lt;lower=0&gt; sigma;  // residual SD
+  vector[N] zu;  // individual difference parameters (scaled)
+  real&lt;lower=0&gt; tau;  // standard deviation of indivdiual difference
+}
+transformed parameters {
+  real&lt;lower=0&gt; mu_2 = mu_1 + beta; 
+  vector[N] u = zu * tau;
+}
+model {
+  y1 ~ normal(mu_1 + u, sigma);
+  y2 ~ normal(mu_2 + u, sigma);
+  // prior
+  mu_1 ~ normal(0.5, 2.5);
+  beta ~ normal(0, 2.5);
+  sigma ~ student_t(4, 0, 2.5);
+  zu ~ std_normal();
+  // hyperprior
+  tau ~ student_t(4, 0, 2.5);
+}
+generated quantities {
+  real y1rep[N];
+  real y2rep[N];
+  real cohen_d = (mu_2 - mu_1) / sqrt(sigma^2 + tau^2);
+  for (i in 1:N) {
+    y1rep[i] = normal_rng(mu_1 + u[i], sigma);
+    y2rep[i] = normal_rng(mu_2 + u[i], sigma);
+  }
+}</code></pre>
+<p>And let’s fit the model with <code>rstan</code>.</p>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb108-1" data-line-number="1">m4 &lt;-<span class="st"> </span><span class="kw">stan</span>(<span class="st">&quot;../codes/group_comparison_paired.stan&quot;</span>, </a>
+<a class="sourceLine" id="cb108-2" data-line-number="2">           <span class="dt">data =</span> <span class="kw">list</span>(<span class="dt">N =</span> <span class="dv">63</span>, </a>
+<a class="sourceLine" id="cb108-3" data-line-number="3">                       <span class="dt">y1 =</span> lies_cc<span class="op">$</span>TDMRT, </a>
+<a class="sourceLine" id="cb108-4" data-line-number="4">                       <span class="dt">y2 =</span> lies_cc<span class="op">$</span>LDMRT), </a>
+<a class="sourceLine" id="cb108-5" data-line-number="5">           <span class="dt">pars =</span> <span class="st">&quot;zu&quot;</span>, <span class="dt">include =</span> <span class="ot">FALSE</span>, <span class="dt">seed =</span> <span class="dv">104134</span>)</a></code></pre></div>
+<p>You might receive a warning from <code>rstan</code> from the above code. Don’t ignore
+those. Generally, when STAN shows a warning it usually indicates that the
+results are not trustworthy.</p>
+</div>
+<div id="effect-size-1" class="section level4">
+<h4><span class="header-section-number">5.4.3.2</span> Effect size</h4>
+<p>For repeated measures, there were several different ways to define effect size.
+To make it consistent with the between-subject comparison, Cohen’s <span class="math inline">\(d\)</span> was
+defined as: <span class="math display">\[d = \frac{\mu_2 - \mu_1}{\sqrt{\sigma^2 + \tau^2}}\]</span></p>
+<p>This time we directly put that in the STAN code for generated quantities.</p>
+<pre class="stan"><code>generated quantities {
+  real cohen_d = (mu_2 - mu_1) / sqrt(sigma^2 + tau^2);
+}</code></pre>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb110-1" data-line-number="1"><span class="co"># Use the `broom` package to generate nicely formatted table</span></a>
+<a class="sourceLine" id="cb110-2" data-line-number="2">broom<span class="op">::</span><span class="kw">tidy</span>(m4, <span class="dt">pars =</span> <span class="kw">c</span>(<span class="st">&quot;mu_1&quot;</span>, <span class="st">&quot;mu_2&quot;</span>, <span class="st">&quot;beta&quot;</span>, <span class="st">&quot;sigma&quot;</span>, <span class="st">&quot;tau&quot;</span>, <span class="st">&quot;cohen_d&quot;</span>), </a>
+<a class="sourceLine" id="cb110-3" data-line-number="3">            <span class="dt">conf.int =</span> <span class="ot">TRUE</span>, <span class="dt">conf.method =</span> <span class="st">&quot;quantile&quot;</span>)</a></code></pre></div>
+<pre><code>&gt;# # A tibble: 6 x 5
+&gt;#   term    estimate std.error conf.low conf.high
+&gt;#   &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+&gt;# 1 mu_1       1.16     0.0635    1.04      1.29 
+&gt;# 2 mu_2       1.47     0.0632    1.35      1.60 
+&gt;# 3 beta       0.308    0.0344    0.242     0.377
+&gt;# 4 sigma      0.195    0.0184    0.162     0.234
+&gt;# 5 tau        0.443    0.0454    0.362     0.540
+&gt;# 6 cohen_d    0.640    0.0880    0.476     0.828</code></pre>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb112-1" data-line-number="1"><span class="kw">plot</span>(m4, <span class="dt">pars =</span> <span class="kw">c</span>(<span class="st">&quot;mu_1&quot;</span>, <span class="st">&quot;mu_2&quot;</span>, <span class="st">&quot;beta&quot;</span>, <span class="st">&quot;sigma&quot;</span>, <span class="st">&quot;tau&quot;</span>, <span class="st">&quot;cohen_d&quot;</span>))</a></code></pre></div>
+<pre><code>&gt;# ci_level: 0.8 (80% intervals)</code></pre>
+<pre><code>&gt;# outer_level: 0.95 (95% intervals)</code></pre>
+<p><img src="05_group_comparisons_files/figure-html/plot-m4-1.png" width="672" /></p>
+<blockquote>
+<p>From the normal model, it was estimated that the mean RT for truth was
+1.161 seconds, 95% CI [1.038, 1.289].
+On average women had faster RT when asked to tell lies in Dutch than man, with
+an estimated difference of 0.308 seconds, 95% CI
+[0.242, 0.377], <em>d</em> = 0.64, 95% CI
+[0.476, 0.828].</p>
+</blockquote>
+</div>
+<div id="posterior-predictive-check-5" class="section level4">
+<h4><span class="header-section-number">5.4.3.3</span> Posterior Predictive Check</h4>
+<p>Let’s check whether the model works well. First look at the shape of the data:</p>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb115-1" data-line-number="1"><span class="kw">library</span>(bayesplot)</a>
+<a class="sourceLine" id="cb115-2" data-line-number="2"><span class="co"># Observed data</span></a>
+<a class="sourceLine" id="cb115-3" data-line-number="3">y1 &lt;-<span class="st"> </span>lies_cc<span class="op">$</span>TDMRT</a>
+<a class="sourceLine" id="cb115-4" data-line-number="4">y2 &lt;-<span class="st"> </span>lies_cc<span class="op">$</span>LDMRT</a>
+<a class="sourceLine" id="cb115-5" data-line-number="5"><span class="co"># Replicated data (randomly sampling 100)</span></a>
+<a class="sourceLine" id="cb115-6" data-line-number="6">y1rep &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(m4, <span class="dt">pars =</span> <span class="st">&quot;y1rep&quot;</span>)[<span class="kw">sample.int</span>(<span class="dv">2000</span>, <span class="dv">100</span>), ]</a>
+<a class="sourceLine" id="cb115-7" data-line-number="7">y2rep &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(m4, <span class="dt">pars =</span> <span class="st">&quot;y2rep&quot;</span>)[<span class="kw">sample.int</span>(<span class="dv">2000</span>, <span class="dv">100</span>), ]</a>
+<a class="sourceLine" id="cb115-8" data-line-number="8"><span class="kw">ppc_dens_overlay</span>(y1, <span class="dt">yrep =</span> y1rep)</a></code></pre></div>
+<p><img src="05_group_comparisons_files/figure-html/ppc-dens-m4-1.png" width="336" /></p>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb116-1" data-line-number="1"><span class="kw">ppc_dens_overlay</span>(y2, <span class="dt">yrep =</span> y2rep)</a></code></pre></div>
+<p><img src="05_group_comparisons_files/figure-html/ppc-dens-m4-2.png" width="336" /></p>
+<p>The fit was good for lies but not for truth. Below is a check for outliers:</p>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb117-1" data-line-number="1"><span class="kw">ppc_intervals</span>(y1, <span class="dt">yrep =</span> y1rep)</a></code></pre></div>
+<p><img src="05_group_comparisons_files/figure-html/ppc-int-m4-1.png" width="336" /></p>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb118-1" data-line-number="1"><span class="kw">ppc_intervals</span>(y2, <span class="dt">yrep =</span> y2rep)</a></code></pre></div>
+<p><img src="05_group_comparisons_files/figure-html/ppc-int-m4-2.png" width="336" /></p>
+<p>As discussed in the previous note, you may want to consider some alternative
+models, maybe the Student’s <span class="math inline">\(t\)</span> likelihood that accommodate outliers, or some
+response time models like the shifted lognormal model. I encourage you to
+modify the STAN code and try things out!</p>
+</div>
+</div>
+<div id="using-brms" class="section level3">
+<h3><span class="header-section-number">5.4.4</span> Using <code>brms</code>*</h3>
+<p>Finally, one thing to mention is that many of the commonly used models have been
+implemented in the R package <code>brms</code>. I decided to talk about STAN first because
+it is the underlying engine and can fit almost any parametric models, but in
+practice I do use <code>brms</code> a lot. I will show you the <code>brms</code> code for a majority
+of the models moving forward. For example, here is one for the repeated
+measure comparison above, with a Student’s <span class="math inline">\(t\)</span> likelihood. It does require
+restructuring the data first.</p>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb119-1" data-line-number="1"><span class="kw">library</span>(brms)</a>
+<a class="sourceLine" id="cb119-2" data-line-number="2">lies_long &lt;-<span class="st"> </span>lies <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb119-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(PP, Gender, LDMRT, TDMRT) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb119-4" data-line-number="4"><span class="st">  </span><span class="kw">gather</span>(<span class="dt">key =</span> <span class="st">&quot;veracity&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;RT&quot;</span>, LDMRT<span class="op">:</span>TDMRT)</a>
+<a class="sourceLine" id="cb119-5" data-line-number="5">m2_brm &lt;-<span class="st"> </span><span class="kw">brm</span>(RT <span class="op">~</span><span class="st"> </span>veracity <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>PP), <span class="dt">data =</span> lies_long, </a>
+<a class="sourceLine" id="cb119-6" data-line-number="6">              <span class="dt">family =</span> <span class="kw">student</span>(), </a>
+<a class="sourceLine" id="cb119-7" data-line-number="7">              <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>), </a>
+<a class="sourceLine" id="cb119-8" data-line-number="8">                        <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="fl">2.5</span>), <span class="dt">class =</span> <span class="st">&quot;sd&quot;</span>), </a>
+<a class="sourceLine" id="cb119-9" data-line-number="9">                        <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="fl">2.5</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)))</a></code></pre></div>
+<pre><code>&gt;# Warning: Rows containing NAs were excluded from the model.</code></pre>
+<pre><code>&gt;# Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.
+&gt;# Running the chains for more iterations may help. See
+&gt;# http://mc-stan.org/misc/warnings.html#bulk-ess</code></pre>
+<p>And there are some nice functions you can use to summarize models fitted by
+<code>brms</code></p>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb122-1" data-line-number="1">m2_brm</a></code></pre></div>
+<pre><code>&gt;#  Family: student 
+&gt;#   Links: mu = identity; sigma = identity; nu = identity 
+&gt;# Formula: RT ~ veracity + (1 | PP) 
+&gt;#    Data: lies_long (Number of observations: 126) 
+&gt;# Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+&gt;#          total post-warmup samples = 4000
+&gt;# 
+&gt;# Group-Level Effects: 
+&gt;# ~PP (Number of levels: 63) 
+&gt;#               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+&gt;# sd(Intercept)     0.41      0.04     0.34     0.51 1.01      678     1230
+&gt;# 
+&gt;# Population-Level Effects: 
+&gt;#               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+&gt;# Intercept         1.45      0.06     1.33     1.57 1.02      312      738
+&gt;# veracityTDMRT    -0.30      0.03    -0.37    -0.24 1.00     4141     3015
+&gt;# 
+&gt;# Family Specific Parameters: 
+&gt;#       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+&gt;# sigma     0.14      0.02     0.10     0.19 1.00     1100     1943
+&gt;# nu        6.00      5.14     2.06    20.34 1.00     1300     1649
+&gt;# 
+&gt;# Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
+&gt;# is a crude measure of effective sample size, and Rhat is the potential 
+&gt;# scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb124-1" data-line-number="1"><span class="co"># sjPlot::tab_model(m2_brm, show.ci50 = FALSE)  # broken in newest version of `brms`</span></a>
+<a class="sourceLine" id="cb124-2" data-line-number="2"><span class="kw">plot</span>(m2_brm)</a></code></pre></div>
+<p><img src="05_group_comparisons_files/figure-html/plot-m2_brm-1.png" width="672" /></p>
+<p>From above, as the estimate of <span class="math inline">\(\nu\)</span> was quite small, it was pretty clear that
+there are outliers that need to be handled (and was handled somewhat by the
+robust Student’s <span class="math inline">\(t\)</span> model). Let’s look at some posterior predictive checks:</p>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb125-1" data-line-number="1"><span class="kw">pp_check</span>(m2_brm, <span class="dt">nsamples =</span> <span class="dv">100</span>)</a></code></pre></div>
+<p><img src="05_group_comparisons_files/figure-html/ppc-m2_brm-1.png" width="336" /></p>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb126-1" data-line-number="1"><span class="kw">pp_check</span>(m2_brm, <span class="dt">type =</span> <span class="st">&quot;intervals_grouped&quot;</span>, <span class="dt">group =</span> <span class="st">&quot;veracity&quot;</span>)</a></code></pre></div>
+<pre><code>&gt;# Using all posterior samples for ppc type &#39;intervals_grouped&#39; by default.</code></pre>
+<p><img src="05_group_comparisons_files/figure-html/ppc-int-m2_brm-1.png" width="672" /></p>
+</div>
+<div id="region-of-practical-equivalence-rope" class="section level3">
+<h3><span class="header-section-number">5.4.5</span> Region of Practical Equivalence (ROPE)</h3>
+<p>One thing that is often of interest in research is to establish equivalence
+between two values. For example, we may wonder, for example,</p>
+<ul>
+<li>whether an experimental manipulation has an effect size of zero (<span class="math inline">\(d\)</span> = 0),</li>
+<li>whether two variables are truly uncorrelated (<span class="math inline">\(r\)</span> = 0),</li>
+<li>whether the blood type distribution is the same across countires (see some
+examples here)</li>
+<li>whether two parallel forms of a test have the same difficulty level</li>
+</ul>
+<p>In this example, we can investigate, for example,</p>
+<blockquote>
+<p>Whether lying in native and in second languages requires the same response
+time.</p>
+</blockquote>
+<p>In all these above scenarios, we are interested in “confirming” whether a
+quantity is equal to another quantity. The traditional null hypothesis
+significance testing (NHST), however, won’t allow us to do that. That’s because
+NHST is set up to reject the null hypothesis, but failure to reject <span class="math inline">\(d\)</span> = 0 does
+not confirm that <span class="math inline">\(d\)</span> = 0; it just means that we don’t have enough evidence for
+that. In addition, we know in advance, with high degree of certainty, that
+<span class="math inline">\(d\)</span> <span class="math inline">\(\neq\)</span> 0. Do we truly believe that the treatment group and the control
+group will perform exactly the same on an IQ test? Even when one group got 100
+and the other group 100.0000001, the null hypothesis is false.</p>
+<p>Therefore, what we really meant when saying whether two things are equal is not
+that whether two quantities are exactly the same, which is basically impossible,
+but instead whether two quantities are <em>close enough</em>, or <em>practically
+equivalent</em>. In the IQ test example, most of us would agree that the two groups
+are practically equivalent.</p>
+<p>So what we actually want to test, in mathematically notation, is
+<span class="math display">\[|\beta - \beta_0| &lt; \epsilon,\]</span>
+where <span class="math inline">\(\beta\)</span> is the parameter of interest (in this case the difference in RT
+between lying in Dutch and lying in English), <span class="math inline">\(\beta_0\)</span> is the value we wanted
+to compare <span class="math inline">\(\beta\)</span> to (in this case 0), and <span class="math inline">\(\epsilon\)</span> is some small value of a
+difference by which <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\beta_0\)</span> are deemed practically equivalent. For
+example, in our analysis we may think that if the difference is less than .05
+seconds (or 50ms), we may say that there are no difference in RT. In other
+words, if there is a high probability (in a Bayesian sense) that
+<span class="math display">\[-\epsilon &lt; \beta &lt; \epsilon\]</span>
+than we considered there is sufficient evident that <span class="math inline">\(\beta\)</span> = <span class="math inline">\(\beta_0\)</span> in a
+practical sense. The interval (<span class="math inline">\(-\epsilon\)</span>, <span class="math inline">\(\epsilon\)</span>) is what <span class="citation">Kruschke (<a href="#ref-Kruschke2013">2013</a>)</span>
+referred to as the <em>region of practical equivalence</em>, or ROPE.</p>
+<p>Using <code>brms</code>, we run a model comparing the means of <code>LDMRT</code> and <code>LEMRT</code>:</p>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb128-1" data-line-number="1"><span class="kw">library</span>(brms)</a>
+<a class="sourceLine" id="cb128-2" data-line-number="2">lies_long &lt;-<span class="st"> </span>lies <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb128-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(PP, Gender, LDMRT, LEMRT) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb128-4" data-line-number="4"><span class="st">  </span><span class="kw">gather</span>(<span class="dt">key =</span> <span class="st">&quot;language&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;RT&quot;</span>, LDMRT, LEMRT)</a>
+<a class="sourceLine" id="cb128-5" data-line-number="5">m3_brm &lt;-<span class="st"> </span><span class="kw">brm</span>(RT <span class="op">~</span><span class="st"> </span>language <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>PP), <span class="dt">data =</span> lies_long, </a>
+<a class="sourceLine" id="cb128-6" data-line-number="6">              <span class="dt">family =</span> <span class="kw">student</span>(), </a>
+<a class="sourceLine" id="cb128-7" data-line-number="7">              <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>), </a>
+<a class="sourceLine" id="cb128-8" data-line-number="8">                        <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="fl">2.5</span>), <span class="dt">class =</span> <span class="st">&quot;sd&quot;</span>), </a>
+<a class="sourceLine" id="cb128-9" data-line-number="9">                        <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="fl">2.5</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </a>
+<a class="sourceLine" id="cb128-10" data-line-number="10">              <span class="dt">iter =</span> <span class="dv">4000</span>)</a></code></pre></div>
+<pre><code>&gt;# Warning: Rows containing NAs were excluded from the model.</code></pre>
+<p>As you can see, the 95% CI of <span class="math inline">\(\beta\)</span> is</p>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb130-1" data-line-number="1">brms<span class="op">::</span><span class="kw">posterior_interval</span>(m3_brm, <span class="dt">pars =</span> <span class="st">&quot;b_languageLEMRT&quot;</span>)</a></code></pre></div>
+<pre><code>&gt;#                    2.5%  97.5%
+&gt;# b_languageLEMRT -0.0398 0.0409</code></pre>
+<p>So we can see that the 95% CI is completely inside the ROPE. Therefore, we would
+say:</p>
+<blockquote>
+<p>There is &gt; 95% chance that the mean RT of lying is practically the same in
+Dutch and in English</p>
+</blockquote>
+<p>You can also check the probability that <span class="math inline">\(\beta\)</span> is inside the ROPE:</p>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb132-1" data-line-number="1"><span class="co"># Extract posterior samples</span></a>
+<a class="sourceLine" id="cb132-2" data-line-number="2">beta_sam &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(m3_brm, <span class="dt">pars =</span> <span class="st">&quot;b_languageLEMRT&quot;</span>)</a>
+<a class="sourceLine" id="cb132-3" data-line-number="3"><span class="co"># Probability in the ROPE</span></a>
+<a class="sourceLine" id="cb132-4" data-line-number="4"><span class="kw">mean</span>(beta_sam <span class="op">&lt;</span><span class="st"> </span><span class="fl">.05</span> <span class="op">&amp;</span><span class="st"> </span>beta_sam <span class="op">&gt;</span><span class="st"> </span><span class="fl">-.05</span>)</a></code></pre></div>
+<pre><code>&gt;# [1] 0.985</code></pre>
+<p>which shows that there is a <code>mean(beta_sam &lt; .05 &amp; beta_sam &gt; -.05) * 100</code>%
+chance that the mean RT of lying is practically the same in Dutch and in
+English.</p>
+<p>You can do the same in frequentist with <em>equivalence testing</em> (see <a href="https://daniellakens.blogspot.com/2017/02/rope-and-equivalence-testing.html" class="uri">https://daniellakens.blogspot.com/2017/02/rope-and-equivalence-testing.html</a>),
+but I found ROPE to be more scalable to other types of models, plus you’ll
+obtain a posterior interval anyway with Bayesian analyses.</p>
+
+</div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-Frank2019">
+<p>Frank, Avi, Sena Biberci, and Bruno Verschuere. 2019. “The language of lies: a preregistered direct replication of Suchotzki and Gamer (2018; Experiment 2).” <em>Cognition and Emotion</em> 33 (6): 1310–5. <a href="https://doi.org/10.1080/02699931.2018.1553148">https://doi.org/10.1080/02699931.2018.1553148</a>.</p>
+</div>
+<div id="ref-Gelman2006">
+<p>Gelman, Andrew. 2006. “Prior distributions for variance parameters in hierarchical models (Comment on Article by Browne and Draper).” <em>Bayesian Analysis</em> 1 (3): 515–34. <a href="https://doi.org/10.1214/06-BA117A">https://doi.org/10.1214/06-BA117A</a>.</p>
+</div>
+<div id="ref-heathcote2004">
+<p>Heathcote, Andrew, Scott Brown, and Denis Cousineau. 2004. “QMPE: Estimating Lognormal, Wald, and Weibull Rt Distributions with a Parameter-Dependent Lower Bound.” <em>Behavior Research Methods, Instruments, &amp; Computers</em> 36 (2). Springer: 277–90.</p>
+</div>
+<div id="ref-Kruschke2013">
+<p>Kruschke, John K. 2013. “Bayesian estimation supersedes the t test.” <em>Journal of Experimental Psychology: General</em> 142 (2): 573–603. <a href="https://doi.org/10.1037/a0029146">https://doi.org/10.1037/a0029146</a>.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="brief-introduction-to-stan.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="markov-chain-monte-carlo.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["notes_bookdown.pdf", "notes_bookdown.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

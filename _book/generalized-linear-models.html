@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 11 Generalized Linear Models | Course Handouts for Bayesian Data Analysis Class</title>
+  <meta name="description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Spring semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
+  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 11 Generalized Linear Models | Course Handouts for Bayesian Data Analysis Class" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Spring semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 11 Generalized Linear Models | Course Handouts for Bayesian Data Analysis Class" />
+  
+  <meta name="twitter:description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Spring semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
+  
+
+<meta name="author" content="Mark Lai" />
+
+
+<meta name="date" content="2019-12-14" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="hierarchical-multilevel-models.html"/>
+<link rel="next" href="missing-data.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<script src="libs/viz-0.3/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.1/grViz.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">PSYC 621 Course Notes</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#history-of-bayesian-statistics"><i class="fa fa-check"></i><b>1.1</b> History of Bayesian Statistics</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="introduction.html"><a href="introduction.html#thomas-bayes-17011762"><i class="fa fa-check"></i><b>1.1.1</b> Thomas Bayes (1701–1762)</a></li>
+<li class="chapter" data-level="1.1.2" data-path="introduction.html"><a href="introduction.html#pierre-simon-laplace-17491827"><i class="fa fa-check"></i><b>1.1.2</b> Pierre-Simon Laplace (1749–1827)</a></li>
+<li class="chapter" data-level="1.1.3" data-path="introduction.html"><a href="introduction.html#th-century"><i class="fa fa-check"></i><b>1.1.3</b> 20th Century</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#motivations-for-using-bayesian-methods"><i class="fa fa-check"></i><b>1.2</b> Motivations for Using Bayesian Methods</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="introduction.html"><a href="introduction.html#problem-with-classical-frequentist-statistics"><i class="fa fa-check"></i><b>1.2.1</b> Problem with classical (frequentist) statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#probability"><i class="fa fa-check"></i><b>1.3</b> Probability</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="introduction.html"><a href="introduction.html#classical-interpretation"><i class="fa fa-check"></i><b>1.3.1</b> Classical Interpretation</a></li>
+<li class="chapter" data-level="1.3.2" data-path="introduction.html"><a href="introduction.html#frequentist-interpretation"><i class="fa fa-check"></i><b>1.3.2</b> Frequentist Interpretation</a></li>
+<li class="chapter" data-level="1.3.3" data-path="introduction.html"><a href="introduction.html#problem-of-the-single-case"><i class="fa fa-check"></i><b>1.3.3</b> Problem of the single case</a></li>
+<li class="chapter" data-level="1.3.4" data-path="introduction.html"><a href="introduction.html#subjectivist-interpretation"><i class="fa fa-check"></i><b>1.3.4</b> Subjectivist Interpretation</a></li>
+<li class="chapter" data-level="1.3.5" data-path="introduction.html"><a href="introduction.html#basics-of-probability"><i class="fa fa-check"></i><b>1.3.5</b> Basics of Probability</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#bayess-theorem"><i class="fa fa-check"></i><b>1.4</b> Bayes’s Theorem</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="introduction.html"><a href="introduction.html#example-1-base-rate-fallacy-from-wikipedia"><i class="fa fa-check"></i><b>1.4.1</b> Example 1: Base rate fallacy (From Wikipedia)</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="introduction.html"><a href="introduction.html#bayesian-statistics"><i class="fa fa-check"></i><b>1.5</b> Bayesian Statistics</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="introduction.html"><a href="introduction.html#example-2-locating-a-plane"><i class="fa fa-check"></i><b>1.5.1</b> Example 2: Locating a Plane</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="introduction.html"><a href="introduction.html#comparing-bayesian-and-frequentist-statistics"><i class="fa fa-check"></i><b>1.6</b> Comparing Bayesian and Frequentist Statistics</a></li>
+<li class="chapter" data-level="1.7" data-path="introduction.html"><a href="introduction.html#software-for-bayesian-statistics"><i class="fa fa-check"></i><b>1.7</b> Software for Bayesian Statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="bayesian-inference.html"><a href="bayesian-inference.html"><i class="fa fa-check"></i><b>2</b> Bayesian Inference</a><ul>
+<li class="chapter" data-level="2.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#steps-of-bayesian-data-analysis"><i class="fa fa-check"></i><b>2.1</b> Steps of Bayesian Data Analysis</a></li>
+<li class="chapter" data-level="2.2" data-path="bayesian-inference.html"><a href="bayesian-inference.html#real-data-example"><i class="fa fa-check"></i><b>2.2</b> Real Data Example</a></li>
+<li class="chapter" data-level="2.3" data-path="bayesian-inference.html"><a href="bayesian-inference.html#choosing-a-model"><i class="fa fa-check"></i><b>2.3</b> Choosing a Model</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#exchangeability"><i class="fa fa-check"></i><b>2.3.1</b> Exchangeability*</a></li>
+<li class="chapter" data-level="2.3.2" data-path="bayesian-inference.html"><a href="bayesian-inference.html#probability-distributions"><i class="fa fa-check"></i><b>2.3.2</b> Probability Distributions</a></li>
+<li class="chapter" data-level="2.3.3" data-path="bayesian-inference.html"><a href="bayesian-inference.html#the-likelihood"><i class="fa fa-check"></i><b>2.3.3</b> The Likelihood</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="bayesian-inference.html"><a href="bayesian-inference.html#specifying-priors"><i class="fa fa-check"></i><b>2.4</b> Specifying Priors</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#beta-distribution"><i class="fa fa-check"></i><b>2.4.1</b> Beta Distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="bayesian-inference.html"><a href="bayesian-inference.html#obtain-the-posterior-distributions"><i class="fa fa-check"></i><b>2.5</b> Obtain the Posterior Distributions</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#grid-approximation"><i class="fa fa-check"></i><b>2.5.1</b> Grid Approximation</a></li>
+<li class="chapter" data-level="2.5.2" data-path="bayesian-inference.html"><a href="bayesian-inference.html#using-conjugate-priors"><i class="fa fa-check"></i><b>2.5.2</b> Using Conjugate Priors</a></li>
+<li class="chapter" data-level="2.5.3" data-path="bayesian-inference.html"><a href="bayesian-inference.html#laplace-approximation-with-maximum-a-posteriori-estimation"><i class="fa fa-check"></i><b>2.5.3</b> Laplace Approximation with Maximum A Posteriori Estimation</a></li>
+<li class="chapter" data-level="2.5.4" data-path="bayesian-inference.html"><a href="bayesian-inference.html#markov-chain-monte-carlo-mcmc"><i class="fa fa-check"></i><b>2.5.4</b> Markov Chain Monte Carlo (MCMC)</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="bayesian-inference.html"><a href="bayesian-inference.html#summarizing-the-posterior-distribution"><i class="fa fa-check"></i><b>2.6</b> Summarizing the Posterior Distribution</a><ul>
+<li class="chapter" data-level="2.6.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#posterior-mean-median-and-mode"><i class="fa fa-check"></i><b>2.6.1</b> Posterior Mean, Median, and Mode</a></li>
+<li class="chapter" data-level="2.6.2" data-path="bayesian-inference.html"><a href="bayesian-inference.html#uncertainty-estimates"><i class="fa fa-check"></i><b>2.6.2</b> Uncertainty Estimates</a></li>
+<li class="chapter" data-level="2.6.3" data-path="bayesian-inference.html"><a href="bayesian-inference.html#credible-intervals"><i class="fa fa-check"></i><b>2.6.3</b> Credible Intervals</a></li>
+<li class="chapter" data-level="2.6.4" data-path="bayesian-inference.html"><a href="bayesian-inference.html#probability-of-theta-higherlower-than-a-certain-value"><i class="fa fa-check"></i><b>2.6.4</b> Probability of <span class="math inline">\(\theta\)</span> Higher/Lower Than a Certain Value</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="bayesian-inference.html"><a href="bayesian-inference.html#model-checking"><i class="fa fa-check"></i><b>2.7</b> Model Checking</a><ul>
+<li class="chapter" data-level="2.7.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#posterior-predictive-distribution"><i class="fa fa-check"></i><b>2.7.1</b> Posterior Predictive Distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="bayesian-inference.html"><a href="bayesian-inference.html#posterior-predictive-check"><i class="fa fa-check"></i><b>2.8</b> Posterior Predictive Check</a></li>
+<li class="chapter" data-level="2.9" data-path="bayesian-inference.html"><a href="bayesian-inference.html#summary"><i class="fa fa-check"></i><b>2.9</b> Summary</a><ul>
+<li class="chapter" data-level="2.9.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#key-concepts"><i class="fa fa-check"></i><b>2.9.1</b> Key Concepts</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="one-parameter-models.html"><a href="one-parameter-models.html"><i class="fa fa-check"></i><b>3</b> One-Parameter Models</a><ul>
+<li class="chapter" data-level="3.1" data-path="one-parameter-models.html"><a href="one-parameter-models.html#binomialbernoulli-data"><i class="fa fa-check"></i><b>3.1</b> Binomial/Bernoulli data</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="one-parameter-models.html"><a href="one-parameter-models.html#reparameterization"><i class="fa fa-check"></i><b>3.1.1</b> Reparameterization*</a></li>
+<li class="chapter" data-level="3.1.2" data-path="one-parameter-models.html"><a href="one-parameter-models.html#posterior-predictive-check-1"><i class="fa fa-check"></i><b>3.1.2</b> Posterior Predictive Check</a></li>
+<li class="chapter" data-level="3.1.3" data-path="one-parameter-models.html"><a href="one-parameter-models.html#comparison-to-frequentist-results"><i class="fa fa-check"></i><b>3.1.3</b> Comparison to frequentist results</a></li>
+<li class="chapter" data-level="3.1.4" data-path="one-parameter-models.html"><a href="one-parameter-models.html#sensitivity-to-different-priors"><i class="fa fa-check"></i><b>3.1.4</b> Sensitivity to different priors</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="one-parameter-models.html"><a href="one-parameter-models.html#poisson-data"><i class="fa fa-check"></i><b>3.2</b> Poisson Data</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="one-parameter-models.html"><a href="one-parameter-models.html#example-2"><i class="fa fa-check"></i><b>3.2.1</b> Example 2</a></li>
+<li class="chapter" data-level="3.2.2" data-path="one-parameter-models.html"><a href="one-parameter-models.html#choosing-a-model-1"><i class="fa fa-check"></i><b>3.2.2</b> Choosing a model</a></li>
+<li class="chapter" data-level="3.2.3" data-path="one-parameter-models.html"><a href="one-parameter-models.html#choosing-a-prior"><i class="fa fa-check"></i><b>3.2.3</b> Choosing a prior</a></li>
+<li class="chapter" data-level="3.2.4" data-path="one-parameter-models.html"><a href="one-parameter-models.html#model-equations-and-diagram"><i class="fa fa-check"></i><b>3.2.4</b> Model Equations and Diagram</a></li>
+<li class="chapter" data-level="3.2.5" data-path="one-parameter-models.html"><a href="one-parameter-models.html#getting-the-posterior"><i class="fa fa-check"></i><b>3.2.5</b> Getting the posterior</a></li>
+<li class="chapter" data-level="3.2.6" data-path="one-parameter-models.html"><a href="one-parameter-models.html#posterior-predictive-check-2"><i class="fa fa-check"></i><b>3.2.6</b> Posterior Predictive Check</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html"><i class="fa fa-check"></i><b>4</b> Brief Introduction to STAN</a><ul>
+<li class="chapter" data-level="4.1" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#stan"><i class="fa fa-check"></i><b>4.1</b> <code>STAN</code></a><ul>
+<li class="chapter" data-level="4.1.1" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#stan-code"><i class="fa fa-check"></i><b>4.1.1</b> <code>STAN</code> code</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#rstan"><i class="fa fa-check"></i><b>4.2</b> <code>RStan</code></a><ul>
+<li class="chapter" data-level="4.2.1" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#assembling-data-list-in-r"><i class="fa fa-check"></i><b>4.2.1</b> Assembling data list in R</a></li>
+<li class="chapter" data-level="4.2.2" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#call-rstan"><i class="fa fa-check"></i><b>4.2.2</b> Call <code>rstan</code></a></li>
+<li class="chapter" data-level="4.2.3" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#summarize-the-results"><i class="fa fa-check"></i><b>4.2.3</b> Summarize the results</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#resources"><i class="fa fa-check"></i><b>4.3</b> Resources</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="group-comparisons.html"><a href="group-comparisons.html"><i class="fa fa-check"></i><b>5</b> Group Comparisons</a><ul>
+<li class="chapter" data-level="5.1" data-path="group-comparisons.html"><a href="group-comparisons.html#data"><i class="fa fa-check"></i><b>5.1</b> Data</a></li>
+<li class="chapter" data-level="5.2" data-path="group-comparisons.html"><a href="group-comparisons.html#between-subject-comparisons"><i class="fa fa-check"></i><b>5.2</b> Between-Subject Comparisons</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="group-comparisons.html"><a href="group-comparisons.html#plots"><i class="fa fa-check"></i><b>5.2.1</b> Plots</a></li>
+<li class="chapter" data-level="5.2.2" data-path="group-comparisons.html"><a href="group-comparisons.html#independent-sample-t-test"><i class="fa fa-check"></i><b>5.2.2</b> Independent sample t-test</a></li>
+<li class="chapter" data-level="5.2.3" data-path="group-comparisons.html"><a href="group-comparisons.html#bayesian-normal-model"><i class="fa fa-check"></i><b>5.2.3</b> Bayesian Normal Model</a></li>
+<li class="chapter" data-level="5.2.4" data-path="group-comparisons.html"><a href="group-comparisons.html#robust-model"><i class="fa fa-check"></i><b>5.2.4</b> Robust Model</a></li>
+<li class="chapter" data-level="5.2.5" data-path="group-comparisons.html"><a href="group-comparisons.html#shifted-lognormal-model"><i class="fa fa-check"></i><b>5.2.5</b> Shifted Lognormal Model*</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="group-comparisons.html"><a href="group-comparisons.html#notes-on-model-comparison"><i class="fa fa-check"></i><b>5.3</b> Notes on Model Comparison</a></li>
+<li class="chapter" data-level="5.4" data-path="group-comparisons.html"><a href="group-comparisons.html#within-subject-comparisons"><i class="fa fa-check"></i><b>5.4</b> Within-Subject Comparisons</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="group-comparisons.html"><a href="group-comparisons.html#plots-1"><i class="fa fa-check"></i><b>5.4.1</b> Plots</a></li>
+<li class="chapter" data-level="5.4.2" data-path="group-comparisons.html"><a href="group-comparisons.html#independent-sample-t-test-1"><i class="fa fa-check"></i><b>5.4.2</b> Independent sample <span class="math inline">\(t\)</span>-test</a></li>
+<li class="chapter" data-level="5.4.3" data-path="group-comparisons.html"><a href="group-comparisons.html#bayesian-normal-model-1"><i class="fa fa-check"></i><b>5.4.3</b> Bayesian Normal Model</a></li>
+<li class="chapter" data-level="5.4.4" data-path="group-comparisons.html"><a href="group-comparisons.html#using-brms"><i class="fa fa-check"></i><b>5.4.4</b> Using <code>brms</code>*</a></li>
+<li class="chapter" data-level="5.4.5" data-path="group-comparisons.html"><a href="group-comparisons.html#region-of-practical-equivalence-rope"><i class="fa fa-check"></i><b>5.4.5</b> Region of Practical Equivalence (ROPE)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html"><i class="fa fa-check"></i><b>6</b> Markov Chain Monte Carlo</a><ul>
+<li class="chapter" data-level="6.1" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#monte-carlo-simulation-with-one-unknown"><i class="fa fa-check"></i><b>6.1</b> Monte Carlo Simulation With One Unknown</a></li>
+<li class="chapter" data-level="6.2" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#markov-chain-monte-carlo-mcmc-with-one-parameter"><i class="fa fa-check"></i><b>6.2</b> Markov Chain Monte Carlo (MCMC) With One Parameter</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#the-metropolis-algorithm"><i class="fa fa-check"></i><b>6.2.1</b> The Metropolis algorithm</a></li>
+<li class="chapter" data-level="6.2.2" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#the-metropolis-hastings-algorithm"><i class="fa fa-check"></i><b>6.2.2</b> The Metropolis-Hastings Algorithm</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#markov-chain"><i class="fa fa-check"></i><b>6.3</b> Markov Chain</a></li>
+<li class="chapter" data-level="6.4" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#effective-sample-size-n_texteff"><i class="fa fa-check"></i><b>6.4</b> Effective Sample Size (<span class="math inline">\(n_\text{eff}\)</span>)</a></li>
+<li class="chapter" data-level="6.5" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#mc-error"><i class="fa fa-check"></i><b>6.5</b> MC Error</a></li>
+<li class="chapter" data-level="6.6" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#burn-inwarmup"><i class="fa fa-check"></i><b>6.6</b> Burn-in/Warmup</a><ul>
+<li class="chapter" data-level="6.6.1" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#thinning"><i class="fa fa-check"></i><b>6.6.1</b> Thinning</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#diagnostics-of-mcmc"><i class="fa fa-check"></i><b>6.7</b> Diagnostics of MCMC</a><ul>
+<li class="chapter" data-level="6.7.1" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#mixing"><i class="fa fa-check"></i><b>6.7.1</b> Mixing</a></li>
+<li class="chapter" data-level="6.7.2" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#acceptance-rate"><i class="fa fa-check"></i><b>6.7.2</b> Acceptance Rate</a></li>
+<li class="chapter" data-level="6.7.3" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#diagnostics-using-multiple-chains"><i class="fa fa-check"></i><b>6.7.3</b> Diagnostics Using Multiple Chains</a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#multiple-parameters"><i class="fa fa-check"></i><b>6.8</b> Multiple Parameters</a></li>
+<li class="chapter" data-level="6.9" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#hamiltonian-monte-carlo"><i class="fa fa-check"></i><b>6.9</b> Hamiltonian Monte Carlo</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="linear-models.html"><a href="linear-models.html"><i class="fa fa-check"></i><b>7</b> Linear Models</a><ul>
+<li class="chapter" data-level="7.1" data-path="linear-models.html"><a href="linear-models.html#what-is-regression"><i class="fa fa-check"></i><b>7.1</b> What is Regression?</a></li>
+<li class="chapter" data-level="7.2" data-path="linear-models.html"><a href="linear-models.html#one-predictor"><i class="fa fa-check"></i><b>7.2</b> One Predictor</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="linear-models.html"><a href="linear-models.html#a-continuous-predictor"><i class="fa fa-check"></i><b>7.2.1</b> A continuous predictor</a></li>
+<li class="chapter" data-level="7.2.2" data-path="linear-models.html"><a href="linear-models.html#centering"><i class="fa fa-check"></i><b>7.2.2</b> Centering</a></li>
+<li class="chapter" data-level="7.2.3" data-path="linear-models.html"><a href="linear-models.html#a-categorical-predictor"><i class="fa fa-check"></i><b>7.2.3</b> A categorical predictor</a></li>
+<li class="chapter" data-level="7.2.4" data-path="linear-models.html"><a href="linear-models.html#predictors-with-multiple-categories"><i class="fa fa-check"></i><b>7.2.4</b> Predictors with multiple categories</a></li>
+<li class="chapter" data-level="7.2.5" data-path="linear-models.html"><a href="linear-models.html#stan-4"><i class="fa fa-check"></i><b>7.2.5</b> STAN</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="linear-models.html"><a href="linear-models.html#multiple-regression"><i class="fa fa-check"></i><b>7.3</b> Multiple Regression</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="linear-models.html"><a href="linear-models.html#two-predictor-example"><i class="fa fa-check"></i><b>7.3.1</b> Two Predictor Example</a></li>
+<li class="chapter" data-level="7.3.2" data-path="linear-models.html"><a href="linear-models.html#interactions"><i class="fa fa-check"></i><b>7.3.2</b> Interactions</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="linear-models.html"><a href="linear-models.html#tabulating-the-models"><i class="fa fa-check"></i><b>7.4</b> Tabulating the Models</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="model-diagnostics.html"><a href="model-diagnostics.html"><i class="fa fa-check"></i><b>8</b> Model Diagnostics</a><ul>
+<li class="chapter" data-level="8.1" data-path="model-diagnostics.html"><a href="model-diagnostics.html#assumptions-of-linear-models"><i class="fa fa-check"></i><b>8.1</b> Assumptions of Linear Models</a></li>
+<li class="chapter" data-level="8.2" data-path="model-diagnostics.html"><a href="model-diagnostics.html#diagnostic-tools"><i class="fa fa-check"></i><b>8.2</b> Diagnostic Tools</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="model-diagnostics.html"><a href="model-diagnostics.html#posterior-predictive-check-7"><i class="fa fa-check"></i><b>8.2.1</b> Posterior Predictive Check</a></li>
+<li class="chapter" data-level="8.2.2" data-path="model-diagnostics.html"><a href="model-diagnostics.html#marginal-model-plots"><i class="fa fa-check"></i><b>8.2.2</b> Marginal model plots</a></li>
+<li class="chapter" data-level="8.2.3" data-path="model-diagnostics.html"><a href="model-diagnostics.html#residual-plots"><i class="fa fa-check"></i><b>8.2.3</b> Residual plots</a></li>
+<li class="chapter" data-level="8.2.4" data-path="model-diagnostics.html"><a href="model-diagnostics.html#multicollinearity"><i class="fa fa-check"></i><b>8.2.4</b> Multicollinearity</a></li>
+<li class="chapter" data-level="8.2.5" data-path="model-diagnostics.html"><a href="model-diagnostics.html#robust-models"><i class="fa fa-check"></i><b>8.2.5</b> Robust Models</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="model-diagnostics.html"><a href="model-diagnostics.html#other-topics"><i class="fa fa-check"></i><b>8.3</b> Other Topics</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html"><i class="fa fa-check"></i><b>9</b> Model Comparison and Regularization</a><ul>
+<li class="chapter" data-level="9.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#overfitting-and-underfitting"><i class="fa fa-check"></i><b>9.1</b> Overfitting and Underfitting</a></li>
+<li class="chapter" data-level="9.2" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#kullback-leibler-divergence"><i class="fa fa-check"></i><b>9.2</b> Kullback-Leibler Divergence</a></li>
+<li class="chapter" data-level="9.3" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#information-criteria"><i class="fa fa-check"></i><b>9.3</b> Information Criteria</a><ul>
+<li class="chapter" data-level="9.3.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#experiment-on-deviance"><i class="fa fa-check"></i><b>9.3.1</b> Experiment on Deviance</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#information-criteria-1"><i class="fa fa-check"></i><b>9.4</b> Information Criteria</a><ul>
+<li class="chapter" data-level="9.4.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#akaike-information-criteria-aic"><i class="fa fa-check"></i><b>9.4.1</b> Akaike Information Criteria (AIC)</a></li>
+<li class="chapter" data-level="9.4.2" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#deviance-information-criteria-dic"><i class="fa fa-check"></i><b>9.4.2</b> Deviance Information Criteria (DIC)</a></li>
+<li class="chapter" data-level="9.4.3" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#watanabe-akaike-information-criteria-waic"><i class="fa fa-check"></i><b>9.4.3</b> Watanabe-Akaike Information Criteria (WAIC)</a></li>
+<li class="chapter" data-level="9.4.4" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#leave-one-out-cross-validation"><i class="fa fa-check"></i><b>9.4.4</b> Leave-One-Out Cross Validation</a></li>
+<li class="chapter" data-level="9.4.5" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#example"><i class="fa fa-check"></i><b>9.4.5</b> Example</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#stackingmodel-averaging"><i class="fa fa-check"></i><b>9.5</b> Stacking/Model Averaging</a><ul>
+<li class="chapter" data-level="9.5.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#model-weights"><i class="fa fa-check"></i><b>9.5.1</b> Model Weights</a></li>
+<li class="chapter" data-level="9.5.2" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#model-averaging"><i class="fa fa-check"></i><b>9.5.2</b> Model Averaging</a></li>
+<li class="chapter" data-level="9.5.3" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#stacking"><i class="fa fa-check"></i><b>9.5.3</b> Stacking</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#shrinkage-priors"><i class="fa fa-check"></i><b>9.6</b> Shrinkage Priors</a><ul>
+<li class="chapter" data-level="9.6.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#number-of-parameters"><i class="fa fa-check"></i><b>9.6.1</b> Number of parameters</a></li>
+<li class="chapter" data-level="9.6.2" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#sparsity-inducing-priors"><i class="fa fa-check"></i><b>9.6.2</b> Sparsity-Inducing Priors</a></li>
+<li class="chapter" data-level="9.6.3" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#finnish-horseshoe"><i class="fa fa-check"></i><b>9.6.3</b> Finnish Horseshoe</a></li>
+</ul></li>
+<li class="chapter" data-level="9.7" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#variable-selection"><i class="fa fa-check"></i><b>9.7</b> Variable Selection</a><ul>
+<li class="chapter" data-level="9.7.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#projection-based-method"><i class="fa fa-check"></i><b>9.7.1</b> Projection-Based Method</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html"><i class="fa fa-check"></i><b>10</b> Hierarchical &amp; Multilevel Models</a><ul>
+<li class="chapter" data-level="10.1" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#anova"><i class="fa fa-check"></i><b>10.1</b> ANOVA</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#frequentist-anova"><i class="fa fa-check"></i><b>10.1.1</b> “Frequentist” ANOVA</a></li>
+<li class="chapter" data-level="10.1.2" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#bayesian-anova"><i class="fa fa-check"></i><b>10.1.2</b> Bayesian ANOVA</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#multilevel-modeling-mlm"><i class="fa fa-check"></i><b>10.2</b> Multilevel Modeling (MLM)</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#examples-of-clustering"><i class="fa fa-check"></i><b>10.2.1</b> Examples of clustering</a></li>
+<li class="chapter" data-level="10.2.2" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#data-1"><i class="fa fa-check"></i><b>10.2.2</b> Data</a></li>
+<li class="chapter" data-level="10.2.3" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#intraclass-correlation"><i class="fa fa-check"></i><b>10.2.3</b> Intraclass correlation</a></li>
+<li class="chapter" data-level="10.2.4" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#is-mlm-needed"><i class="fa fa-check"></i><b>10.2.4</b> Is MLM needed?</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#varying-coefficients"><i class="fa fa-check"></i><b>10.3</b> Varying Coefficients</a><ul>
+<li class="chapter" data-level="10.3.1" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#varying-intercepts"><i class="fa fa-check"></i><b>10.3.1</b> Varying Intercepts</a></li>
+<li class="chapter" data-level="10.3.2" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#varying-slopes"><i class="fa fa-check"></i><b>10.3.2</b> Varying Slopes</a></li>
+<li class="chapter" data-level="10.3.3" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#varying-sigma"><i class="fa fa-check"></i><b>10.3.3</b> Varying <span class="math inline">\(\sigma\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#model-comparisons"><i class="fa fa-check"></i><b>10.4</b> Model Comparisons</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>11</b> Generalized Linear Models</a><ul>
+<li class="chapter" data-level="11.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#basics-of-generalized-linear-models"><i class="fa fa-check"></i><b>11.1</b> Basics of Generalized Linear Models</a></li>
+<li class="chapter" data-level="11.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#binary-logistic-regression"><i class="fa fa-check"></i><b>11.2</b> Binary Logistic Regression</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#the-logit-link"><i class="fa fa-check"></i><b>11.2.1</b> The logit link</a></li>
+<li class="chapter" data-level="11.2.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#choice-of-priors"><i class="fa fa-check"></i><b>11.2.2</b> Choice of Priors</a></li>
+<li class="chapter" data-level="11.2.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#interpreting-the-coefficients"><i class="fa fa-check"></i><b>11.2.3</b> Interpreting the coefficients</a></li>
+<li class="chapter" data-level="11.2.4" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#model-checking-1"><i class="fa fa-check"></i><b>11.2.4</b> Model Checking</a></li>
+<li class="chapter" data-level="11.2.5" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#complete-separation"><i class="fa fa-check"></i><b>11.2.5</b> Complete Separation</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#binomial-logistic-regression"><i class="fa fa-check"></i><b>11.3</b> Binomial Logistic Regression</a></li>
+<li class="chapter" data-level="11.4" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#probit-regression"><i class="fa fa-check"></i><b>11.4</b> Probit Regression</a></li>
+<li class="chapter" data-level="11.5" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#poisson-regression"><i class="fa fa-check"></i><b>11.5</b> Poisson Regression</a><ul>
+<li class="chapter" data-level="11.5.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#interpretations-2"><i class="fa fa-check"></i><b>11.5.1</b> Interpretations</a></li>
+<li class="chapter" data-level="11.5.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#model-checking-2"><i class="fa fa-check"></i><b>11.5.2</b> Model Checking</a></li>
+<li class="chapter" data-level="11.5.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#other-models-in-glm"><i class="fa fa-check"></i><b>11.5.3</b> Other models in GLM</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="missing-data.html"><a href="missing-data.html"><i class="fa fa-check"></i><b>12</b> Missing Data</a><ul>
+<li class="chapter" data-level="12.1" data-path="missing-data.html"><a href="missing-data.html#missing-data-mechanisms"><i class="fa fa-check"></i><b>12.1</b> Missing Data Mechanisms</a><ul>
+<li class="chapter" data-level="12.1.1" data-path="missing-data.html"><a href="missing-data.html#mcar-missing-completely-at-random"><i class="fa fa-check"></i><b>12.1.1</b> MCAR (Missing Completely at Random)</a></li>
+<li class="chapter" data-level="12.1.2" data-path="missing-data.html"><a href="missing-data.html#mar-missing-at-random"><i class="fa fa-check"></i><b>12.1.2</b> MAR (Missing At Random)</a></li>
+<li class="chapter" data-level="12.1.3" data-path="missing-data.html"><a href="missing-data.html#nmar-not-missing-at-random"><i class="fa fa-check"></i><b>12.1.3</b> NMAR (Not Missing At Random)</a></li>
+<li class="chapter" data-level="12.1.4" data-path="missing-data.html"><a href="missing-data.html#ignorable-missingness"><i class="fa fa-check"></i><b>12.1.4</b> Ignorable Missingness*</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="missing-data.html"><a href="missing-data.html#bayesian-approaches-for-missing-data"><i class="fa fa-check"></i><b>12.2</b> Bayesian Approaches for Missing Data</a><ul>
+<li class="chapter" data-level="12.2.1" data-path="missing-data.html"><a href="missing-data.html#complete-case-analysislistwise-deletion"><i class="fa fa-check"></i><b>12.2.1</b> Complete Case Analysis/Listwise Deletion</a></li>
+<li class="chapter" data-level="12.2.2" data-path="missing-data.html"><a href="missing-data.html#treat-missing-data-as-parameters"><i class="fa fa-check"></i><b>12.2.2</b> Treat Missing Data as Parameters</a></li>
+<li class="chapter" data-level="12.2.3" data-path="missing-data.html"><a href="missing-data.html#multiple-imputation"><i class="fa fa-check"></i><b>12.2.3</b> Multiple Imputation</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Course Handouts for Bayesian Data Analysis Class</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="generalized-linear-models" class="section level1">
+<h1><span class="header-section-number">Chapter 11</span> Generalized Linear Models</h1>
+<p>GLM (generalized linear model) is a generalization of the linear model (e.g.,
+multiple regression) we discussed a few weeks ago. Just to be careful, some
+scholars also use the abbreviation GLM to mean the <em>general</em> linear model,
+which is actually the same as the linear model we discussed and not the one we
+will discuss here. Here we discuss GLM (the generalized one) that is especially
+popular for modeling binary and count outcomes.</p>
+<p>Like the linear model, the generalized linear model is concerned about the
+conditional mean of an outcome variable <span class="math inline">\(Y\)</span>; the conditional mean is usually
+denoted as <span class="math inline">\(\mu\)</span>. Indeed, the linear model we have discussed is a special
+case of GLM. To see what’s different in other GLMs, let’s apply the normal
+regression model to categorical outcomes, and see what problems there are.</p>
+<p>We will use an example from <span class="citation">Pritschet, Powell, and Horne (<a href="#ref-pritschet2016marginally">2016</a>)</span>, which examines how common
+it was for researchers to report marginal <span class="math inline">\(p\)</span> values (i.e., .05 &lt; <span class="math inline">\(p\)</span> <span class="math inline">\(\leq\)</span>
+.10). The outcome is whether a study reported one or more marginal <span class="math inline">\(p\)</span> values
+(1 = Yes, 0 = No). The researchers also categorized the studies into three
+subfields (Cognitive Psychology, Developmental Psychology, Social Psychology),
+and there were a total of 1,535 studies examined from 1970 to 2010.</p>
+<p>Let’s read in the data and plot the proportions:</p>
+<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb344-1" data-line-number="1"><span class="co"># readxl package can be used to import excel files</span></a>
+<a class="sourceLine" id="cb344-2" data-line-number="2">marginalp &lt;-<span class="st"> </span>readxl<span class="op">::</span><span class="kw">read_excel</span>(<span class="st">&quot;../data/marginals psych science revision_corrections.xlsx&quot;</span>)</a>
+<a class="sourceLine" id="cb344-3" data-line-number="3"><span class="co"># Recode `Field` into a factor</span></a>
+<a class="sourceLine" id="cb344-4" data-line-number="4">marginalp &lt;-<span class="st"> </span>marginalp <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb344-5" data-line-number="5"><span class="st">  </span><span class="co"># Filter out studies without any experiments</span></a>
+<a class="sourceLine" id="cb344-6" data-line-number="6"><span class="st">  </span><span class="kw">filter</span>(<span class="st">`</span><span class="dt">Number of Experiments</span><span class="st">`</span> <span class="op">&gt;=</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb344-7" data-line-number="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Field =</span> <span class="kw">factor</span>(Field, </a>
+<a class="sourceLine" id="cb344-8" data-line-number="8">                        <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Cognitive Psychology&quot;</span>, </a>
+<a class="sourceLine" id="cb344-9" data-line-number="9">                                   <span class="st">&quot;Developmental Psychology&quot;</span>, </a>
+<a class="sourceLine" id="cb344-10" data-line-number="10">                                   <span class="st">&quot;Social Psychology&quot;</span>))) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb344-11" data-line-number="11"><span class="st">  </span><span class="co"># Rename the outcome</span></a>
+<a class="sourceLine" id="cb344-12" data-line-number="12"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">marginal_p =</span> <span class="st">`</span><span class="dt">Marginals Yes/No</span><span class="st">`</span>)</a>
+<a class="sourceLine" id="cb344-13" data-line-number="13"><span class="co"># Proportion of marginal p in each subfield across Years</span></a>
+<a class="sourceLine" id="cb344-14" data-line-number="14">marginalp <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb344-15" data-line-number="15"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Year, <span class="dt">y =</span> marginal_p)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb344-16" data-line-number="16"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> Field), <span class="dt">geom =</span> <span class="st">&quot;ribbon&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.3</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb344-17" data-line-number="17"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="kw">aes</span>(<span class="dt">col =</span> Field), <span class="dt">geom =</span> <span class="st">&quot;line&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb344-18" data-line-number="18"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="kw">aes</span>(<span class="dt">col =</span> Field), <span class="dt">geom =</span> <span class="st">&quot;point&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb344-19" data-line-number="19"><span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.7</span>)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb344-20" data-line-number="20"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>Field)</a></code></pre></div>
+<pre><code>&gt;# No summary function supplied, defaulting to `mean_se()
+&gt;# No summary function supplied, defaulting to `mean_se()
+&gt;# No summary function supplied, defaulting to `mean_se()
+&gt;# No summary function supplied, defaulting to `mean_se()
+&gt;# No summary function supplied, defaulting to `mean_se()
+&gt;# No summary function supplied, defaulting to `mean_se()
+&gt;# No summary function supplied, defaulting to `mean_se()
+&gt;# No summary function supplied, defaulting to `mean_se()
+&gt;# No summary function supplied, defaulting to `mean_se()</code></pre>
+<p><img src="11_generalized_linear_models_files/figure-html/marginalp_describe-1.png" width="720" /></p>
+<p>The error bar is pretty high for Cognitive Psychology, because only
+5.922% of the articles in
+the data set were from that field.</p>
+<p>We can first try a normal linear model to use <code>Year</code> to predict <code>marginal_p</code>.
+First recode year into 0 to 4 so that every unit corresponds to 10 years, and
+0 means 1970:</p>
+<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb346-1" data-line-number="1">marginalp &lt;-<span class="st"> </span>marginalp <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb346-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Year10 =</span> (Year <span class="op">-</span><span class="st"> </span><span class="dv">1970</span>) <span class="op">/</span><span class="st"> </span><span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb346-3" data-line-number="3"><span class="co"># Check the recode</span></a>
+<a class="sourceLine" id="cb346-4" data-line-number="4"><span class="kw">distinct</span>(marginalp, Year, Year10)</a></code></pre></div>
+<pre><code>&gt;# # A tibble: 5 x 2
+&gt;#    Year Year10
+&gt;#   &lt;dbl&gt;  &lt;dbl&gt;
+&gt;# 1  1980      1
+&gt;# 2  1970      0
+&gt;# 3  2000      3
+&gt;# 4  1990      2
+&gt;# 5  2010      4</code></pre>
+<p>Now fit a normal linear model:</p>
+<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb348-1" data-line-number="1">m1_norm &lt;-<span class="st"> </span><span class="kw">brm</span>(marginal_p <span class="op">~</span><span class="st"> </span>Year10, </a>
+<a class="sourceLine" id="cb348-2" data-line-number="2">               <span class="dt">data =</span> marginalp, </a>
+<a class="sourceLine" id="cb348-3" data-line-number="3">               <span class="dt">prior =</span> <span class="kw">c</span>(<span class="co"># for intercept </span></a>
+<a class="sourceLine" id="cb348-4" data-line-number="4">                 <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </a>
+<a class="sourceLine" id="cb348-5" data-line-number="5">                 <span class="co"># for slope</span></a>
+<a class="sourceLine" id="cb348-6" data-line-number="6">                 <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>), </a>
+<a class="sourceLine" id="cb348-7" data-line-number="7">                 <span class="co"># for sigma</span></a>
+<a class="sourceLine" id="cb348-8" data-line-number="8">                 <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </a>
+<a class="sourceLine" id="cb348-9" data-line-number="9">               <span class="dt">seed =</span> <span class="dv">1340</span>)</a></code></pre></div>
+<p>Now let’s check the model. First a posterior predictive check:</p>
+<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb349-1" data-line-number="1"><span class="kw">pp_check</span>(m1_norm, <span class="dt">nsamples =</span> <span class="dv">100</span>)</a></code></pre></div>
+<div class="figure">
+<img src="11_generalized_linear_models_files/figure-html/ppc_normal_hist-1.png" alt="Posterior predictive graphical check with the normal regression model of Year predicting whether a marginal $p$ value was reported." width="672" />
+<p class="caption">
+(#fig:ppc_normal_hist)Posterior predictive graphical check with the normal regression model of Year predicting whether a marginal <span class="math inline">\(p\)</span> value was reported.
+</p>
+</div>
+<p>Then the marginal model plot:</p>
+<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb350-1" data-line-number="1"><span class="kw">mmp_brm</span>(m1_norm, <span class="dt">x =</span> <span class="st">&quot;Year10&quot;</span>, <span class="dt">plot_pi =</span> <span class="ot">TRUE</span>, <span class="dt">jitter =</span> <span class="ot">TRUE</span>, </a>
+<a class="sourceLine" id="cb350-2" data-line-number="2">        <span class="dt">smooth_method =</span> <span class="st">&quot;loess&quot;</span>)</a></code></pre></div>
+<div class="figure">
+<img src="11_generalized_linear_models_files/figure-html/pi_m1-1.png" alt="Marginal model plot of the normal regression model of Year predicting whether a marginal $p$ value was reported." width="672" />
+<p class="caption">
+(#fig:pi_m1)Marginal model plot of the normal regression model of Year predicting whether a marginal <span class="math inline">\(p\)</span> value was reported.
+</p>
+</div>
+<p>There are two problems with a normal regression model for a binary outcome.
+First, clearly the outcome cannot be normally distributed as it can only take
+two values. Second, the predicted regression line is <em>unbounded</em>, meaning that
+it can go from <span class="math inline">\(-\infty\)</span> to <span class="math inline">\(\infty\)</span>. It is probably not a problem for this
+example, as the fitted line is not too way off from the non-parametric smoother,
+and the predicted mean is still positive. However, it is easy to imagine
+situations where the predicted mean is smaller than 0 or greater than 1, which
+is clearly undesirable and leads to insensible predictions.</p>
+<div id="basics-of-generalized-linear-models" class="section level2">
+<h2><span class="header-section-number">11.1</span> Basics of Generalized Linear Models</h2>
+<p>Now, consider how we can fix the two problems previously identified concerning
+fitting a normal regression model to a binary outcome. First, we want to allow
+for the possibility of conditional distributions other than normal for <span class="math inline">\(Y\)</span>.
+As you recall, for binary outcome we may consider the Bernoulli distribution.
+Second, we want to model <span class="math inline">\(\mu\)</span> as a non-linear function of the predictors,
+as modeling <span class="math inline">\(\mu\)</span> as a linear function of the predictors will imply that <span class="math inline">\(\mu\)</span>
+can go from <span class="math inline">\(-\infty\)</span> to <span class="math inline">\(\infty\)</span>, which does not work for categorical outcomes.</p>
+<p>Note, however, even when the outcome can only take two values, 0 and 1, the mean
+across multiple observations can be a fraction. In a Bernoulli model, <span class="math inline">\(\mu\)</span> is
+the probability of getting a “1”. Similar discrepancy (i.e., mean can be
+continuous even though the outcome is discrete) is also present in some other
+GLMs.</p>
+<p>Under the GLM framework, we have models in the form
+<span class="math display">\[\begin{align*}
+  Y_i &amp; \sim \mathrm{Dist}(\mu_i, \tau)  \\
+  g(\mu_i) &amp; = \eta_i \\
+  \eta_i &amp; = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \ldots
+\end{align*}\]</span>
+where one can choose distributions like Dist = Normal, Poisson, Binomial,
+Bernoulli, etc. Strictly speaking, GLM requires distributions that are in the
+<em>exponential family</em>, which will not include distributions like the <span class="math inline">\(t\)</span>
+distribution. However, this is relatively minor detail as the exponential family
+is broad and subsumes most of the commonly used models. The distributions will
+have a mean parameter <span class="math inline">\(\mu_i\)</span> and may have a dispersion parameter, <span class="math inline">\(\tau\)</span>.</p>
+<p>An intermediate step in GLM is to transform <span class="math inline">\(\mu_i\)</span> to <span class="math inline">\(\eta_i\)</span>. <span class="math inline">\(\eta_i\)</span>
+is called the <em>linear predictor</em>, which is the linear function of the
+predictors. In linear models we directly models the conditional mean, <span class="math inline">\(\mu_i\)</span> as
+the same as <span class="math inline">\(\eta_i\)</span>. However, to allow for the possibility of <span class="math inline">\(\mu_i\)</span> being a
+non-linear function of the predictors, in GLM we transform <span class="math inline">\(\mu_i\)</span> by applying a
+<em>link function</em>, <span class="math inline">\(g(\cdot)\)</span>, so that, even though we <span class="math inline">\(\eta_i\)</span> to be linear in
+the coefficients, <span class="math inline">\(\mu_i = g^{-1}(\eta_i)\)</span> will be a non-linear function of the
+coefficients as long as the link function is not linear. This step is
+needed to make sure that the predicted values will not be out of range.</p>
+</div>
+<div id="binary-logistic-regression" class="section level2">
+<h2><span class="header-section-number">11.2</span> Binary Logistic Regression</h2>
+<p>To make things more concrete, consider a binary logistic regression example for
+our example of predicting marginal <span class="math inline">\(p\)</span> being reported using Year of publication.
+First, we need a model equation of the conditional mean of <span class="math inline">\(Y\)</span>, which will be
+<span class="math display">\[\texttt{marginal_p}_i \sim \mathrm{Bernoulli}(\mu_i).\]</span></p>
+<p>As you should know, the mean of a Bernoulli distribution is also the
+probability of a “success” (e.g., if one flips a coin 100 times, and gets
+50 heads, the mean of the data is 50 / 100 = 0.5, which is also the probability
+of getting a head).</p>
+<div id="the-logit-link" class="section level3">
+<h3><span class="header-section-number">11.2.1</span> The logit link</h3>
+<p>With <code>Year10</code> being the predictor, we have a linear equation <span class="math inline">\(\eta_i = \beta_0 + \beta_1 \texttt{Year10}_i\)</span>. Now, we will need to specify the link function to
+map <span class="math inline">\(\mu_i\)</span> to <span class="math inline">\(\eta_i\)</span>. There are many possible choices, but for binary
+outcomes a common choice is the <em>logit link</em>, meaning <span class="math inline">\(\eta_i = g(\mu_i) = \operatorname{logit}(\mu_i) = \log [\mu_i / (1 - \mu_i)]\)</span>. The logit link convert
+probabilities to log odds. You can see the logit link in the left figure below:</p>
+<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb351-1" data-line-number="1">p1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)), <span class="kw">aes</span>(x)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb351-2" data-line-number="2"><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> qlogis, <span class="dt">n =</span> <span class="dv">501</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb351-3" data-line-number="3"><span class="st">  </span><span class="kw">xlab</span>(<span class="kw">expression</span>(mu)) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="kw">expression</span>(eta))</a>
+<a class="sourceLine" id="cb351-4" data-line-number="4">p2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">6</span>, <span class="dv">6</span>)), <span class="kw">aes</span>(x)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb351-5" data-line-number="5"><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> plogis, <span class="dt">n =</span> <span class="dv">501</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb351-6" data-line-number="6"><span class="st">  </span><span class="kw">ylab</span>(<span class="kw">expression</span>(mu)) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="kw">expression</span>(eta))</a>
+<a class="sourceLine" id="cb351-7" data-line-number="7"><span class="kw">grid.arrange</span>(p1, p2, <span class="dt">nrow =</span> <span class="dv">1</span>)</a></code></pre></div>
+<div class="figure">
+<img src="11_generalized_linear_models_files/figure-html/logit_link-1.png" alt="(Left) Logit link of $\eta = \logit(\mu)$; (Right) inverse logit link of $\mu = \logit^{-1}(\eta)$." width="576" />
+<p class="caption">
+(#fig:logit_link)(Left) Logit link of <span class="math inline">\(\eta = \operatorname{logit}(\mu)\)</span>; (Right) inverse logit link of <span class="math inline">\(\mu = \operatorname{logit}^{-1}(\eta)\)</span>.
+</p>
+</div>
+<p>For example, when <span class="math inline">\(\mu = .50\)</span>, <span class="math inline">\(\eta = 0\)</span>; when <span class="math inline">\(\mu = 0.9\)</span>, <span class="math inline">\(\eta = 2.197\)</span>. Therefore, even when the predicted value for <span class="math inline">\(\eta\)</span> is very
+large or small, one can always ensure that <span class="math inline">\(\mu\)</span> is between 0 and 1.</p>
+<p>The right hand side shows the same relationship, but with <span class="math inline">\(\eta\)</span> in the x-axis
+and <span class="math inline">\(\mu\)</span> in the y-axis, so that we are plotting <span class="math inline">\(\mu_i = g^{-1}(\eta_i)\)</span>.
+<span class="math inline">\(g^{-1}(\cdot)\)</span> is called the <em>inverse link function</em>. For a logit link, the
+inverse link function is called the standard <em>logistic</em> function, and thus the
+name logistic regression. The logistic function is defined as
+<span class="math display">\[ \mu_i = g^{-1}(\eta_i) = \frac{\exp(\eta_i)}{1 + \exp(\eta_i)}. \]</span>
+Generally, people either present the model using the link function or the
+inverse link function. For our example I can also write
+<span class="math display">\[\begin{align*}
+  \texttt{marginal_p}_i &amp; \sim \mathrm{Bernoulli}(\mu_i)  \\
+  \mu_i &amp; = \mathrm{logistic}(\beta_0 + \beta_1 \texttt{Year10}_i).
+\end{align*}\]</span></p>
+</div>
+<div id="choice-of-priors" class="section level3">
+<h3><span class="header-section-number">11.2.2</span> Choice of Priors</h3>
+<p>There has been previous literature on what choices of prior on the <span class="math inline">\(\beta\)</span>
+coefficients for logistic regressions would be appropriate <span class="citation">(see Gelman et al. <a href="#ref-gelman2008weakly">2008</a>)</span>. <span class="math inline">\(\beta\)</span> coefficients in logistic regression can be
+relatively large, unlike in normal regression. Therefore, it’s pointed out that
+a heavy tail distribution, like Cauchy and <span class="math inline">\(t\)</span>, would be more appropriate.
+Recent discussions have settled on priors such as <span class="math inline">\(t\)</span> distributions with a small
+degrees of freedom as a good balance between heavy tails and efficiency for MCMC
+sampling, so I will use <span class="math inline">\(t(4, 0, .875)\)</span>, where .875 is chosen to be the 1.25
+divided by the standard deviation of the predictor, for the priors for logistic
+regression.</p>
+<p>To run this model, we can specify the <code>family</code> argument in <code>stan_glm</code>:</p>
+<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb352-1" data-line-number="1">m1_bern &lt;-<span class="st"> </span><span class="kw">brm</span>(marginal_p <span class="op">~</span><span class="st"> </span>Year10, </a>
+<a class="sourceLine" id="cb352-2" data-line-number="2">               <span class="dt">data =</span> marginalp, </a>
+<a class="sourceLine" id="cb352-3" data-line-number="3">               <span class="dt">family =</span> <span class="kw">bernoulli</span>(<span class="dt">link =</span> <span class="st">&quot;logit&quot;</span>), </a>
+<a class="sourceLine" id="cb352-4" data-line-number="4">               <span class="dt">prior =</span> <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="fl">.875</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>), </a>
+<a class="sourceLine" id="cb352-5" data-line-number="5">               <span class="co"># Note: no sigma </span></a>
+<a class="sourceLine" id="cb352-6" data-line-number="6">               <span class="dt">seed =</span> <span class="dv">1340</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb353-1" data-line-number="1"><span class="kw">plot</span>(m1_bern)</a></code></pre></div>
+<p><img src="11_generalized_linear_models_files/figure-html/plot_m1_bern-1.png" width="528" /></p>
+<p>Note that in <code>brms</code> we used <code>family = bernoulli()</code>. In other R functions, such
+as <code>glm</code>, they do not distinguish between bernoulli and Binomial and only
+recognize <code>family = binomial()</code>, as a Bernoulli variable is a binomial variable
+with <span class="math inline">\(n = 1\)</span>.</p>
+</div>
+<div id="interpreting-the-coefficients" class="section level3">
+<h3><span class="header-section-number">11.2.3</span> Interpreting the coefficients</h3>
+<p>Any non-linear relationships will involve more work in interpretations, and
+the coefficients in logistic regressions are no exceptions.</p>
+<div id="intercept" class="section level4">
+<h4><span class="header-section-number">11.2.3.1</span> Intercept</h4>
+<p>From the equation, when all predictors are zero, we have
+<span class="math display">\[\operatorname{logit}(\mu_i) = \beta_0.\]</span>
+Therefore, the intercept is the log odds that a study reported a marginally
+significant <span class="math inline">\(p\)</span> value when <code>Year10</code> = 0 (i.e, in 1970), which was estimated to
+be -1.350 , 95% CI [-1.551, -1.149]. As log odds are not as
+intuitive as probability, it is common to instead interpret <span class="math inline">\(\hat{\mu} = \operatorname{logistic}(\beta_0)\)</span>, which is the conditional probability of being <code>marginal_p</code>
+= 1 in 1970. For Bayesian, that means obtaining the posterior distribution of
+<span class="math inline">\(\operatorname{logistic}(\beta_0)\)</span>, which can be done by</p>
+<div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb354-1" data-line-number="1">draws_beta0 &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(m1_bern, <span class="dt">pars =</span> <span class="st">&quot;b_Intercept&quot;</span>)</a>
+<a class="sourceLine" id="cb354-2" data-line-number="2">logistic_beta0 &lt;-<span class="st"> </span><span class="kw">plogis</span>(draws_beta0)</a>
+<a class="sourceLine" id="cb354-3" data-line-number="3"><span class="co"># Summarize the posterior distribution</span></a>
+<a class="sourceLine" id="cb354-4" data-line-number="4">psych<span class="op">::</span><span class="kw">describe</span>(logistic_beta0)</a></code></pre></div>
+<pre><code>&gt;#    vars    n mean   sd median trimmed  mad  min  max range skew kurtosis se
+&gt;# X1    1 4000 0.21 0.02   0.21    0.21 0.02 0.16 0.27  0.11 0.15     -0.2  0</code></pre>
+<p>The <code>bayesplot</code> package allow you to plot transformed parameters quickly:</p>
+<div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb356-1" data-line-number="1"><span class="kw">mcmc_areas</span>(m1_bern, <span class="dt">pars =</span> <span class="st">&quot;b_Intercept&quot;</span>, </a>
+<a class="sourceLine" id="cb356-2" data-line-number="2">           <span class="dt">transformations =</span> <span class="kw">list</span>(<span class="st">&quot;b_Intercept&quot;</span> =<span class="st"> &quot;plogis&quot;</span>), <span class="dt">bw =</span> <span class="st">&quot;SJ&quot;</span>)</a></code></pre></div>
+<p><img src="11_generalized_linear_models_files/figure-html/areas_logistic_beta0-1.png" width="672" /></p>
+<p>A simpler but not precise method is to directly obtain an estimate of
+<span class="math inline">\(\operatorname{logistic}(\beta_0)\)</span> as <span class="math inline">\(\operatorname{logistic}(-1.35) = 0.206\)</span> by directly transforming the posterior
+mean and the credible interval of <span class="math inline">\(\beta_0\)</span>. This usually is okay for large
+sample sizes and probability close to 0.5, but can give big discrepancies
+otherwise. Generally I recommend directly obtaining the posterior distribution
+of <span class="math inline">\(\operatorname{logistic}(\beta_0)\)</span> instead.</p>
+<p>Below illustrates the discrepancy:</p>
+<div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb357-1" data-line-number="1"><span class="co"># Directly from the posterior of logistic(beta0):</span></a>
+<a class="sourceLine" id="cb357-2" data-line-number="2"><span class="kw">quantile</span>(logistic_beta0, <span class="dt">probs =</span> <span class="kw">c</span>(.<span class="dv">05</span>, <span class="fl">.95</span>))</a></code></pre></div>
+<pre><code>&gt;#    5%   95% 
+&gt;# 0.180 0.234</code></pre>
+<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb359-1" data-line-number="1"><span class="co"># Transform the credible interval limits of beta0:</span></a>
+<a class="sourceLine" id="cb359-2" data-line-number="2"><span class="kw">plogis</span>(<span class="kw">posterior_interval</span>(m1_bern, <span class="dt">pars =</span> <span class="st">&quot;Intercept&quot;</span>))</a></code></pre></div>
+<pre><code>&gt;#              2.5% 97.5%
+&gt;# b_Intercept 0.175 0.241</code></pre>
+</div>
+<div id="interpreting-expbeta_1-as-odds-ratio" class="section level4">
+<h4><span class="header-section-number">11.2.3.2</span> Interpreting <span class="math inline">\(\exp(\beta_1)\)</span> As Odds Ratio</h4>
+<p>The slope, <span class="math inline">\(\beta_1\)</span>, represents the difference in the predicted log odds
+between two observations with 1 unit difference in the predictor of interest,
+while having matching values on all other predictors. For example, for
+two individuals with 1 unit difference in <code>Year10</code> (i.e., 10 years), we have
+<span class="math display">\[\operatorname{logit}(\mu_{\textrm{marginal_p} = 1}) - 
+  \operatorname{logit}(\mu_{\textrm{marginal_p} = 0}) = \beta_1.\]</span></p>
+<p>Again, difference in log odds are hard to interpret, and so we will exponentiate
+to get</p>
+<p><span class="math display">\[\frac{\mathrm{odds}_{\textrm{marginal_p} = 1}}
+       {\mathrm{odds}_{\textrm{marginal_p} = 0}} = \exp(\beta_1).\]</span></p>
+<p>The fraction on the left hand side is the <em>odds ratio</em> of reporting a marginal
+<span class="math inline">\(p\)</span> value associated with a one unit difference in <code>Year10</code> (i.e., 10 years). An
+odds of 1.0 means that the probability of success and failure is equal; an odds
+<span class="math inline">\(&gt; 1\)</span> means success is more likely than failures; and an odds <span class="math inline">\(&lt; 1\)</span> means
+success is less likely than failures. Again, for Bayesian, we need to obtain the
+posterior distribution of <span class="math inline">\(\exp(\beta_1)\)</span> by</p>
+<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb361-1" data-line-number="1">draws_beta1 &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(m1_bern, <span class="dt">pars =</span> <span class="st">&quot;b_Year10&quot;</span>)</a>
+<a class="sourceLine" id="cb361-2" data-line-number="2">exp_beta1 &lt;-<span class="st"> </span><span class="kw">exp</span>(draws_beta1)</a>
+<a class="sourceLine" id="cb361-3" data-line-number="3"><span class="co"># Summarize the posterior distribution</span></a>
+<a class="sourceLine" id="cb361-4" data-line-number="4">psych<span class="op">::</span><span class="kw">describe</span>(exp_beta1)</a></code></pre></div>
+<pre><code>&gt;#    vars    n mean   sd median trimmed  mad  min  max range skew kurtosis se
+&gt;# X1    1 4000 1.43 0.06   1.43    1.43 0.06 1.24 1.62  0.38 0.08    -0.05  0</code></pre>
+<p>Using the posterior mean, we predict that the odds of reporting a marginal <span class="math inline">\(p\)</span>
+value for a study that is 10 years later is multiplied by
+1.429 times.</p>
+<p>And we can again compute a 90% credible interval by:</p>
+<div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb363-1" data-line-number="1"><span class="co"># Directly from the posterior of exp(beta):</span></a>
+<a class="sourceLine" id="cb363-2" data-line-number="2"><span class="kw">quantile</span>(exp_beta1, <span class="dt">probs =</span> <span class="kw">c</span>(.<span class="dv">05</span>, <span class="fl">.95</span>))</a></code></pre></div>
+<pre><code>&gt;#   5%  95% 
+&gt;# 1.33 1.53</code></pre>
+<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb365-1" data-line-number="1"><span class="co"># Or you can exponentiate the credible interval of beta:</span></a>
+<a class="sourceLine" id="cb365-2" data-line-number="2"><span class="kw">exp</span>(<span class="kw">posterior_interval</span>(m1_bern, <span class="dt">pars =</span> <span class="st">&quot;Year10&quot;</span>))</a></code></pre></div>
+<pre><code>&gt;#          2.5% 97.5%
+&gt;# b_Year10 1.32  1.55</code></pre>
+<p>Odds ratio (OR) is popular as the multiplicative effect is constant, thus making
+interpretations easier. Also, in medical research and some other research areas,
+OR can be an excellent approximation of the relative risk, which is the
+probability ratio of two groups, of some rare disease or events. However, odds
+and odds ratio are never intuitive metrics for people, and in many situations a
+large odds ratio may be misleading as it corresponds to a very small effect.
+Therefore, in general I would recommend you to interpret coefficients in
+probability unit, even though that means more work.</p>
+</div>
+<div id="interpreting-coefficients-in-probability-units" class="section level4">
+<h4><span class="header-section-number">11.2.3.3</span> Interpreting Coefficients in Probability Units</h4>
+<p>Another way to interpret the results of logistic regression that requires more
+work but is more intuitive is to examine the change in probability. Because the
+predicted probability is a non-linear function of the predictors, a one unit
+difference in the predictor has different meanings depending on the values on
+<span class="math inline">\(X\)</span> you chose for interpretations. Take a look on the predicted values based on
+our model below:</p>
+<div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb367-1" data-line-number="1"><span class="kw">mmp_brm</span>(m1_bern, <span class="dt">x =</span> <span class="st">&quot;Year10&quot;</span>, <span class="dt">plot_pi =</span> <span class="ot">FALSE</span>, <span class="dt">jitter =</span> <span class="ot">TRUE</span>, <span class="dt">smooth_method =</span> <span class="st">&quot;loess&quot;</span>)</a></code></pre></div>
+<div class="figure">
+<img src="11_generalized_linear_models_files/figure-html/pi_m1_bern-1.png" alt="Marginal model plot of the binary logistic regression model of Year predicting whether a marginal $p$ value was reported." width="672" />
+<p class="caption">
+(#fig:pi_m1_bern)Marginal model plot of the binary logistic regression model of Year predicting whether a marginal <span class="math inline">\(p\)</span> value was reported.
+</p>
+</div>
+<p>Now, consider the change in the predicted probability of reporting a marginal
+<span class="math inline">\(p\)</span> value with <code>Year10</code> = 0 (1970) and <code>Year10</code> = 1 (1980) respectively:</p>
+<ul>
+<li>When <code>Year10</code> = 0, <span class="math inline">\(P\)</span>(<code>marginal_p</code> = 1) = <span class="math inline">\(\operatorname{logistic}(\beta_0)\)</span>,
+posterior mean = 0.206.</li>
+<li>When <code>Year10</code> = 1, <span class="math inline">\(P\)</span>(<code>marginal_p</code> = 1) = <span class="math inline">\(\operatorname{logistic}(\beta_0 + \beta_1)\)</span>,
+posterior mean = 0.27.</li>
+</ul>
+<p>So between 1970 to 1980, 10 years of time is associated with an increase in the
+predicted probability of reporting marginal <span class="math inline">\(p\)</span> by
+0.064.</p>
+<p>On the other hand, if we look at the change in predicted probability for
+<code>Year10</code> = <span class="math inline">\(3\)</span> and <code>Year10</code> = <span class="math inline">\(4\)</span>,</p>
+<ul>
+<li>When <code>Year10</code> = <span class="math inline">\(3\)</span>, <span class="math inline">\(P\)</span>(<code>marginal_p</code> = 1) = <span class="math inline">\(logistic(\beta_0 + 3 \beta_1)\)</span>,
+posterior mean = 0.43.</li>
+<li>When <code>Year10</code> = <span class="math inline">\(4\)</span>, <span class="math inline">\(P\)</span>(<code>marginal_p</code> = 1) = <span class="math inline">\(\operatorname{logistic}(\beta_0 + 4 \beta_1)\)</span>,
+posterior mean = 0.518.</li>
+</ul>
+<p>So for higher values of , one unit increase in <code>Year10</code> is
+associated with an increase in the predicted probability of reporting marginal
+<span class="math inline">\(p\)</span> by
+0.088.</p>
+<div id="the-divide-by-4-rule" class="section level5">
+<h5><span class="header-section-number">11.2.3.3.1</span> The “divide by 4 rule”</h5>
+<p>A quick approximation is to divide the coefficient by 4 to get an upper bound
+on the change in probability associated with a one unit change in the
+predictor. In our example, this corresponds to 0.356 / 4 =
+0.089, which is very close to the predicted increase in
+probability from <code>Year10</code> = 3 to <code>Year10</code> = 4 (i.e.,
+0.088.</p>
+</div>
+</div>
+<div id="model-comparison" class="section level4">
+<h4><span class="header-section-number">11.2.3.4</span> Model Comparison</h4>
+<div id="identity-link" class="section level5">
+<h5><span class="header-section-number">11.2.3.4.1</span> Identity Link</h5>
+<p>Although logistic regression is popular, it is generally hard to interpret.
+Also, the logit link is not the only link function that is available. There is
+also the probit link which is commonly used in some areas, which works mostly
+similar to the logit link. Another possibility is to use the <em>identity link</em>,
+which just means that
+<span class="math display">\[\eta_i = g(\mu_i) = \mu_i,\]</span>
+so that the probability is directly a linear function of the predictor(s). This
+will be problematic because it may lead to out of bound probabilities, but when
+the probabilities are mostly within 20% to 80%, it is generally a pretty good
+approximation. The nice thing is it gives direct interpretation on probability
+unit. Without going into details of the priors, below is how it’s fitted:</p>
+<div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb368-1" data-line-number="1">m1_bern_id &lt;-<span class="st"> </span><span class="kw">brm</span>(marginal_p <span class="op">~</span><span class="st"> </span>Year10, </a>
+<a class="sourceLine" id="cb368-2" data-line-number="2">                  <span class="dt">data =</span> marginalp, </a>
+<a class="sourceLine" id="cb368-3" data-line-number="3">                  <span class="dt">family =</span> <span class="kw">bernoulli</span>(<span class="dt">link =</span> <span class="st">&quot;identity&quot;</span>), </a>
+<a class="sourceLine" id="cb368-4" data-line-number="4">                  <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="fl">0.5</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>, </a>
+<a class="sourceLine" id="cb368-5" data-line-number="5">                                  <span class="dt">lb =</span> <span class="dv">-1</span>, <span class="dt">ub =</span> <span class="dv">1</span>), </a>
+<a class="sourceLine" id="cb368-6" data-line-number="6">                            <span class="kw">prior</span>(<span class="kw">uniform</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>)), </a>
+<a class="sourceLine" id="cb368-7" data-line-number="7">                  <span class="co"># Note: no sigma </span></a>
+<a class="sourceLine" id="cb368-8" data-line-number="8">                  <span class="dt">seed =</span> <span class="dv">1340</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb369-1" data-line-number="1"><span class="kw">loo</span>(m1_bern, m1_bern_id)</a></code></pre></div>
+<pre><code>&gt;# Output of model &#39;m1_bern&#39;:
+&gt;# 
+&gt;# Computed from 4000 by 1469 log-likelihood matrix
+&gt;# 
+&gt;#          Estimate   SE
+&gt;# elpd_loo   -910.1 13.8
+&gt;# p_loo         2.0  0.1
+&gt;# looic      1820.1 27.6
+&gt;# ------
+&gt;# Monte Carlo SE of elpd_loo is 0.0.
+&gt;# 
+&gt;# All Pareto k estimates are good (k &lt; 0.5).
+&gt;# See help(&#39;pareto-k-diagnostic&#39;) for details.
+&gt;# 
+&gt;# Output of model &#39;m1_bern_id&#39;:
+&gt;# 
+&gt;# Computed from 4000 by 1469 log-likelihood matrix
+&gt;# 
+&gt;#          Estimate   SE
+&gt;# elpd_loo   -908.2 14.1
+&gt;# p_loo         2.1  0.1
+&gt;# looic      1816.5 28.2
+&gt;# ------
+&gt;# Monte Carlo SE of elpd_loo is 0.0.
+&gt;# 
+&gt;# All Pareto k estimates are good (k &lt; 0.5).
+&gt;# See help(&#39;pareto-k-diagnostic&#39;) for details.
+&gt;# 
+&gt;# Model comparisons:
+&gt;#            elpd_diff se_diff
+&gt;# m1_bern_id  0.0       0.0   
+&gt;# m1_bern    -1.8       0.7</code></pre>
+<p>As you can see, the identity link actually fits better. The model estimates are</p>
+<div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb371-1" data-line-number="1"><span class="kw">summary</span>(m1_bern_id)</a></code></pre></div>
+<pre><code>&gt;#  Family: bernoulli 
+&gt;#   Links: mu = identity 
+&gt;# Formula: marginal_p ~ Year10 
+&gt;#    Data: marginalp (Number of observations: 1469) 
+&gt;# Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+&gt;#          total post-warmup samples = 4000
+&gt;# 
+&gt;# Population-Level Effects: 
+&gt;#           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+&gt;# Intercept     0.19      0.02     0.16     0.23 1.00     3542     2573
+&gt;# Year10        0.08      0.01     0.06     0.10 1.00     2999     2355
+&gt;# 
+&gt;# Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
+&gt;# is a crude measure of effective sample size, and Rhat is the potential 
+&gt;# scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+<p>So it suggested that every 10 years, the proportion of studies reporting
+marginal <span class="math inline">\(p\)</span> values increases by 8.068%. If this model
+fits close to or better than the logistic model, it may be useful for
+interepretation as opposed to odds ratio or non-linear effects.</p>
+<p>Here is the model implied relationship:</p>
+<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb373-1" data-line-number="1"><span class="kw">mmp_brm</span>(m1_bern_id, <span class="dt">x =</span> <span class="st">&quot;Year10&quot;</span>, <span class="dt">plot_pi =</span> <span class="ot">FALSE</span>, <span class="dt">jitter =</span> <span class="ot">TRUE</span>, <span class="dt">smooth_method =</span> <span class="st">&quot;loess&quot;</span>)</a></code></pre></div>
+<div class="figure">
+<img src="11_generalized_linear_models_files/figure-html/pi_m1_id-1.png" alt="Marginal model plot of the Bernoulli regression model with identity link of Year predicting whether a marginal $p$ value was reported." width="672" />
+<p class="caption">
+(#fig:pi_m1_id)Marginal model plot of the Bernoulli regression model with identity link of Year predicting whether a marginal <span class="math inline">\(p\)</span> value was reported.
+</p>
+</div>
+<p>Also using marginal effects in <code>brms</code>:</p>
+<div class="sourceCode" id="cb374"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb374-1" data-line-number="1"><span class="kw">marginal_effects</span>(m1_bern_id)</a></code></pre></div>
+<pre><code>&gt;# Warning: Method &#39;marginal_effects&#39; is deprecated. Please use
+&gt;# &#39;conditional_effects&#39; instead.</code></pre>
+<p><img src="11_generalized_linear_models_files/figure-html/marg_eff_m1_bern_id-1.png" width="672" /></p>
+<p>It should be pointed out that, whereas you can compare Bernoulli models with
+different link functions, you CANNOT compare the normal model with the logistic
+model using AIC/WAIC/LOO-IC. Even though they use the same outcome, they treat
+the outcome variables differently: a normal model treats it as an unbounded
+continous variable, whereas logistic model treats it a binary discrete variable.
+In mathematical term, they have densitites with respect to different dominating
+measures. Generally, you cannot use ICs to compare models with respect to
+different families, except for some special cases.</p>
+</div>
+</div>
+</div>
+<div id="model-checking-1" class="section level3">
+<h3><span class="header-section-number">11.2.4</span> Model Checking</h3>
+<p>The assumptions of GLM is similar to the normal GLM, with correct
+specification (of the predictors and <span class="math inline">\(\eta\)</span>), linearity (on the <span class="math inline">\(\eta\)</span>
+scale), independence, and correct specification of the distribution of the
+outcome. For normal GLM, the last one involves equal error variance, which
+is not needed for logistic regression, because error variance is not a parameter
+for the Bernoulli distribution. Instead, logistic regression assumes constant
+probability (<span class="math inline">\(\mu\)</span>) given the same predictor values.</p>
+<p>To check for the correct specification and linearity assumptions, one can
+look at the marginal model plots above.</p>
+<p>For logistic regression, there are a few specific diagnostics one should
+examine. The following shows three binned residual plots, with each point
+showing <span class="math inline">\(\tilde y - y\)</span>, where <span class="math inline">\(\tilde y\)</span> is based on simulated data from the
+posterior predictive distributions, and <span class="math inline">\(y\)</span> is the observed data. Note that we
+need the binned residuals or predictive errors, as the prediction error is
+either 0 or 1, as shown in the Figure below.</p>
+<div class="sourceCode" id="cb376"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb376-1" data-line-number="1"><span class="kw">pp_check</span>(m1_bern_id, <span class="dt">type =</span> <span class="st">&quot;error_binned&quot;</span>, <span class="dt">nsamples =</span> <span class="dv">9</span>)</a></code></pre></div>
+<div class="figure">
+<img src="11_generalized_linear_models_files/figure-html/ppc_m1_bern_id-1.png" alt="Binned residual plots in replicated data of $\tilde y - y$." width="624" />
+<p class="caption">
+(#fig:ppc_m1_bern_id)Binned residual plots in replicated data of <span class="math inline">\(\tilde y - y\)</span>.
+</p>
+</div>
+<p>In the above, the binned margins were based on the observed data, whereas the
+dots were predictive errors from replicated data. As can be seen, with the
+replicated data, it generally had an underestimate of the proportions in Year
+2000 but an oeverestimate of the proportions in Year 2010. It might be
+reasonable to consider non-linear models of including Year.</p>
+<div id="classification-error" class="section level4">
+<h4><span class="header-section-number">11.2.4.1</span> Classification Error</h4>
+<p>Another way to evaluate a logistic regression model is to look at classification
+error, which is analogous to <span class="math inline">\(R^2\)</span> for normal regression. (Note: there are also
+other pseudo <span class="math inline">\(R^2\)</span> measures that can be computed with Bayesian logistic
+regression, which I will leave for your own study on other sources.) The
+simplest measure is to assign observations with predicted probabilities larger
+than <span class="math inline">\(\pi_0\)</span> to have a value of 1, and to assign observations with predicted
+probabilities smaller than <span class="math inline">\(\pi_0\)</span> to have a value of 0, where <span class="math inline">\(\pi_0\)</span> is some
+chosen cutoff, and is usually chosen as the proportion of 1s in the sample. For
+example, for our model,</p>
+<div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb377-1" data-line-number="1">m1_pred &lt;-<span class="st"> </span><span class="kw">predict</span>(m1_bern_id, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>)[ , <span class="st">&quot;Estimate&quot;</span>]</a>
+<a class="sourceLine" id="cb377-2" data-line-number="2">m1_pred &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(m1_pred <span class="op">&gt;</span><span class="st"> </span><span class="kw">mean</span>(marginalp<span class="op">$</span>marginal_p))</a>
+<a class="sourceLine" id="cb377-3" data-line-number="3"><span class="co"># Classification table</span></a>
+<a class="sourceLine" id="cb377-4" data-line-number="4">(classtab_m1 &lt;-<span class="st"> </span><span class="kw">table</span>(<span class="dt">predicted =</span> m1_pred, <span class="dt">observed =</span> marginalp<span class="op">$</span>marginal_p))</a></code></pre></div>
+<pre><code>&gt;#          observed
+&gt;# predicted   0   1
+&gt;#         0 535 164
+&gt;#         1 423 347</code></pre>
+<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb379-1" data-line-number="1"><span class="co"># Average classification accuracy</span></a>
+<a class="sourceLine" id="cb379-2" data-line-number="2">(acc_m1 &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">diag</span>(classtab_m1)) <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(classtab_m1))</a></code></pre></div>
+<pre><code>&gt;# [1] 0.6</code></pre>
+<div class="sourceCode" id="cb381"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb381-1" data-line-number="1"><span class="co"># so the classification is not particularly impressive.</span></a></code></pre></div>
+<p>So from a <span class="math inline">\(2 \times 2\)</span> contingency table, the prediction is correct when the
+predicted and the observed values are the same (i.e., the two cells in
+the diagonal), and the prediction is incorrect otherwise. In this example, the
+classification accuracy is 60.041%.
+We can consider adding more predictors and re-evaluate the classification error
+again:</p>
+<div class="sourceCode" id="cb382"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb382-1" data-line-number="1"><span class="co"># We can add more predictors (interaction with Field), and use a hierarchical </span></a>
+<a class="sourceLine" id="cb382-2" data-line-number="2"><span class="co"># model:</span></a>
+<a class="sourceLine" id="cb382-3" data-line-number="3">m2_bern &lt;-<span class="st"> </span><span class="kw">brm</span>(marginal_p <span class="op">~</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Field) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Year10), </a>
+<a class="sourceLine" id="cb382-4" data-line-number="4">               <span class="dt">data =</span> marginalp, </a>
+<a class="sourceLine" id="cb382-5" data-line-number="5">               <span class="dt">family =</span> <span class="kw">bernoulli</span>(<span class="dt">link =</span> <span class="st">&quot;logit&quot;</span>), </a>
+<a class="sourceLine" id="cb382-6" data-line-number="6">               <span class="co"># Just default priors for quickness</span></a>
+<a class="sourceLine" id="cb382-7" data-line-number="7">               <span class="dt">control =</span> <span class="kw">list</span>(<span class="dt">adapt_delta =</span> <span class="fl">.995</span>, <span class="dt">max_treedepth =</span> <span class="dv">12</span>), </a>
+<a class="sourceLine" id="cb382-8" data-line-number="8">               <span class="dt">seed =</span> <span class="dv">1340</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb383"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb383-1" data-line-number="1">m2_pred &lt;-<span class="st"> </span><span class="kw">predict</span>(m2_bern, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>)[ , <span class="st">&quot;Estimate&quot;</span>]</a>
+<a class="sourceLine" id="cb383-2" data-line-number="2">m2_pred &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(m2_pred <span class="op">&gt;</span><span class="st"> </span><span class="kw">mean</span>(marginalp<span class="op">$</span>marginal_p))</a>
+<a class="sourceLine" id="cb383-3" data-line-number="3"><span class="co"># Classification table</span></a>
+<a class="sourceLine" id="cb383-4" data-line-number="4">(classtab_m2 &lt;-<span class="st"> </span><span class="kw">table</span>(<span class="dt">predicted =</span> m2_pred, <span class="dt">observed =</span> marginalp<span class="op">$</span>marginal_p))</a></code></pre></div>
+<pre><code>&gt;#          observed
+&gt;# predicted   0   1
+&gt;#         0 594 177
+&gt;#         1 364 334</code></pre>
+<div class="sourceCode" id="cb385"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb385-1" data-line-number="1"><span class="co"># Average classification accuracy</span></a>
+<a class="sourceLine" id="cb385-2" data-line-number="2">(acc_m2 &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">diag</span>(classtab_m2)) <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(classtab_m2))</a></code></pre></div>
+<pre><code>&gt;# [1] 0.632</code></pre>
+<p>Note that unlike information criteria, as the classification error is evaluated
+on the same sample, you should not be choosing models based on which model has
+the smallest classification error, as that would generally choose the most
+complex one that is most prone to overfitting (just like using <span class="math inline">\(R^2\)</span> to choose
+models in normal regression). One should use information criteria to compare
+models instead:</p>
+<div class="sourceCode" id="cb387"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb387-1" data-line-number="1"><span class="co"># Classification now improves; however, one should be interested in </span></a>
+<a class="sourceLine" id="cb387-2" data-line-number="2"><span class="co"># out-of-sample prediction. Let&#39;s check the LOO-IC too:</span></a>
+<a class="sourceLine" id="cb387-3" data-line-number="3"><span class="kw">loo</span>(m2_bern)</a></code></pre></div>
+<pre><code>&gt;# 
+&gt;# Computed from 4000 by 1469 log-likelihood matrix
+&gt;# 
+&gt;#          Estimate   SE
+&gt;# elpd_loo   -885.7 15.1
+&gt;# p_loo         6.9  0.2
+&gt;# looic      1771.4 30.2
+&gt;# ------
+&gt;# Monte Carlo SE of elpd_loo is 0.0.
+&gt;# 
+&gt;# All Pareto k estimates are good (k &lt; 0.5).
+&gt;# See help(&#39;pareto-k-diagnostic&#39;) for details.</code></pre>
+<div class="sourceCode" id="cb389"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb389-1" data-line-number="1"><span class="co"># So adding predictors helps</span></a></code></pre></div>
+<p>Finally, one can consider varying the cutoff <span class="math inline">\(\pi_0\)</span>, and plots the true
+positive and true negative rates to obtain an ROC curve. This is beyond the
+scope of this note, but see, for example,
+<a href="https://www.r-bloggers.com/roc-curves-in-two-lines-of-r-code/" class="uri">https://www.r-bloggers.com/roc-curves-in-two-lines-of-r-code/</a>. Below I will
+show you the code for getting the ROC curve:</p>
+<div class="sourceCode" id="cb390"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb390-1" data-line-number="1"><span class="co"># Using the pROC package</span></a>
+<a class="sourceLine" id="cb390-2" data-line-number="2">pROC<span class="op">::</span><span class="kw">roc</span>(<span class="dt">response =</span> marginalp<span class="op">$</span>marginal_p, </a>
+<a class="sourceLine" id="cb390-3" data-line-number="3">          <span class="dt">predictor =</span> <span class="kw">predict</span>(m2_bern, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>)[ , <span class="st">&quot;Estimate&quot;</span>], </a>
+<a class="sourceLine" id="cb390-4" data-line-number="4">          <span class="dt">plot =</span> <span class="ot">TRUE</span>, <span class="dt">print.auc =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<pre><code>&gt;# Setting levels: control = 0, case = 1</code></pre>
+<pre><code>&gt;# Setting direction: controls &lt; cases</code></pre>
+<p><img src="11_generalized_linear_models_files/figure-html/roc_m2-1.png" width="432" /></p>
+<pre><code>&gt;# 
+&gt;# Call:
+&gt;# roc.default(response = marginalp$marginal_p, predictor = predict(m2_bern,     type = &quot;response&quot;)[, &quot;Estimate&quot;], plot = TRUE, print.auc = TRUE)
+&gt;# 
+&gt;# Data: predict(m2_bern, type = &quot;response&quot;)[, &quot;Estimate&quot;] in 958 controls (marginalp$marginal_p 0) &lt; 511 cases (marginalp$marginal_p 1).
+&gt;# Area under the curve: 0.679</code></pre>
+</div>
+</div>
+<div id="complete-separation" class="section level3">
+<h3><span class="header-section-number">11.2.5</span> Complete Separation</h3>
+<p>Another issue in logistic regression is separation, i.e., when all cases with <span class="math inline">\(y = 1\)</span> have certain <span class="math inline">\(X\)</span> values that do not overlap with those <span class="math inline">\(X\)</span> values when <span class="math inline">\(y = 0\)</span>. In the following example, when <span class="math inline">\(X_1 \geq 4\)</span> or when <span class="math inline">\(X_1 = 3\)</span> and <span class="math inline">\(X_2 = 1\)</span>,
+all of the <span class="math inline">\(Y\)</span> values are 1. If you run frequentist logistic regression, you
+will get warning messages with crazy coefficients and extremely large standard
+errors:</p>
+<div class="sourceCode" id="cb394"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb394-1" data-line-number="1">sep_dat &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">y =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), </a>
+<a class="sourceLine" id="cb394-2" data-line-number="2">                  <span class="dt">x1 =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">10</span>, <span class="dv">11</span>), </a>
+<a class="sourceLine" id="cb394-3" data-line-number="3">                  <span class="dt">x2 =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">-1</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">7</span>, <span class="dv">3</span>, <span class="dv">4</span>))</a>
+<a class="sourceLine" id="cb394-4" data-line-number="4"><span class="co"># Scale the predictors to SD 1</span></a>
+<a class="sourceLine" id="cb394-5" data-line-number="5">sep_dat &lt;-<span class="st"> </span>sep_dat <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb394-6" data-line-number="6"><span class="st">  </span><span class="kw">mutate_at</span>(<span class="kw">vars</span>(x1, x2),  <span class="op">~</span><span class="st"> </span>. <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(.))</a>
+<a class="sourceLine" id="cb394-7" data-line-number="7">m_freq &lt;-<span class="st"> </span><span class="kw">glm</span>(y <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, <span class="dt">data =</span> sep_dat, <span class="dt">family =</span> binomial)</a></code></pre></div>
+<pre><code>&gt;# Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb396-1" data-line-number="1"><span class="kw">summary</span>(m_freq)</a></code></pre></div>
+<pre><code>&gt;# 
+&gt;# Call:
+&gt;# glm(formula = y ~ x1 + x2, family = binomial, data = sep_dat)
+&gt;# 
+&gt;# Deviance Residuals: 
+&gt;#     Min       1Q   Median       3Q      Max  
+&gt;# -1.0042  -0.0001   0.0000   0.0000   1.4689  
+&gt;# 
+&gt;# Coefficients:
+&gt;#             Estimate Std. Error z value Pr(&gt;|z|)
+&gt;# (Intercept)   -58.08   17511.90     0.0     1.00
+&gt;# x1             63.80   19418.72     0.0     1.00
+&gt;# x2             -0.29       1.47    -0.2     0.84
+&gt;# 
+&gt;# (Dispersion parameter for binomial family taken to be 1)
+&gt;# 
+&gt;#     Null deviance: 13.4602  on 9  degrees of freedom
+&gt;# Residual deviance:  3.7792  on 7  degrees of freedom
+&gt;# AIC: 9.779
+&gt;# 
+&gt;# Number of Fisher Scoring iterations: 21</code></pre>
+<p>On the other hand, use of priors, even relatively weak priors, can <em>regularize</em>
+the coefficients so that they are more sensible. See the results below, and note
+the more reasonable coefficients with smaller posterior standard deviations:</p>
+<div class="sourceCode" id="cb398"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb398-1" data-line-number="1"><span class="co"># Weakly informative priors can help in Bayesian</span></a>
+<a class="sourceLine" id="cb398-2" data-line-number="2">m_bayes &lt;-<span class="st"> </span><span class="kw">brm</span>(y <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, <span class="dt">data =</span> sep_dat, </a>
+<a class="sourceLine" id="cb398-3" data-line-number="3">               <span class="dt">family =</span> bernoulli, </a>
+<a class="sourceLine" id="cb398-4" data-line-number="4">               <span class="dt">prior =</span> <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="fl">1.25</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>), </a>
+<a class="sourceLine" id="cb398-5" data-line-number="5">               <span class="dt">seed =</span> <span class="dv">1340</span>)</a></code></pre></div>
+<pre><code>&gt;# Compiling the C++ model</code></pre>
+<pre><code>&gt;# Start sampling</code></pre>
+<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb401-1" data-line-number="1">m_bayes</a></code></pre></div>
+<pre><code>&gt;#  Family: bernoulli 
+&gt;#   Links: mu = logit 
+&gt;# Formula: y ~ x1 + x2 
+&gt;#    Data: sep_dat (Number of observations: 10) 
+&gt;# Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+&gt;#          total post-warmup samples = 4000
+&gt;# 
+&gt;# Population-Level Effects: 
+&gt;#           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+&gt;# Intercept    -3.21      2.77   -10.40     0.39 1.00     1161      570
+&gt;# x1            3.17      2.70     0.24    10.32 1.01      998      515
+&gt;# x2            0.15      0.82    -1.40     1.78 1.00     2168     1938
+&gt;# 
+&gt;# Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
+&gt;# is a crude measure of effective sample size, and Rhat is the potential 
+&gt;# scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+</div>
+</div>
+<div id="binomial-logistic-regression" class="section level2">
+<h2><span class="header-section-number">11.3</span> Binomial Logistic Regression</h2>
+<p>In binary logistic regression, the outcome for each observation is either 0 or
+1. However, if your predictors are discrete so that there are multiple
+observations with each predictor value, then an equivalent but more concise way
+of analyzing the data is to do <em>binomial logistic regression</em>. For example,
+consider using <code>Year10</code> as a predictor for <code>marginal_p</code>. If we keep the original
+data, we have the binary logistic model:</p>
+<p><span class="math display">\[\begin{align*}
+  \texttt{marginal_p}_i &amp; \sim \mathrm{Bernoulli}(\mu_i)  \\
+  \mu_i &amp; = \mathrm{logistic}(\beta_0 + \beta_1 \texttt{Year10}_i).
+\end{align*}\]</span></p>
+<p>However, sometimes the data may come in the form:</p>
+<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb403-1" data-line-number="1">marginalp_agg &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb403-2" data-line-number="2"><span class="st">  </span><span class="kw">summarise</span>(<span class="kw">group_by</span>(marginalp, Year10), </a>
+<a class="sourceLine" id="cb403-3" data-line-number="3">            <span class="dt">marginal_p =</span> <span class="kw">sum</span>(marginal_p), <span class="dt">n =</span> <span class="kw">n</span>())</a>
+<a class="sourceLine" id="cb403-4" data-line-number="4"><span class="kw">head</span>(marginalp_agg)</a></code></pre></div>
+<pre><code>&gt;# # A tibble: 5 x 3
+&gt;#   Year10 marginal_p     n
+&gt;#    &lt;dbl&gt;      &lt;dbl&gt; &lt;int&gt;
+&gt;# 1      0         56   321
+&gt;# 2      1         76   304
+&gt;# 3      2        129   318
+&gt;# 4      3        120   229
+&gt;# 5      4        130   297</code></pre>
+<p>The above data set is grouped. So instead of writing out each observation,
+one actually only has the possible values of each predictor with the
+corresponding counts of “successes.” Such form of data is not uncommon, and you
+may check out built-in data sets like <code>UCBAdmissions</code> for more examples.</p>
+<p>With data in this form, the outcome is no longer 0 or 1, but instead counts
+with a maximum of <span class="math inline">\(n_j\)</span>, where <span class="math inline">\(j\)</span> is the index for the group. Therefore, we
+will be using a binomial distribution for the outcome, instead of Bernoulli:</p>
+<p><span class="math display">\[\begin{align*}
+  \texttt{marginal_p}_j &amp; \sim \mathrm{Bin}(n_j, \mu_j)  \\
+  \mu_j &amp; = \mathrm{logistic}(\beta_0 + \beta_1 \texttt{Year10}_j).
+\end{align*}\]</span></p>
+<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb405-1" data-line-number="1">m1_bin &lt;-<span class="st"> </span><span class="kw">brm</span>(marginal_p <span class="op">|</span><span class="st"> </span><span class="kw">trials</span>(n) <span class="op">~</span><span class="st"> </span>Year10, </a>
+<a class="sourceLine" id="cb405-2" data-line-number="2">              <span class="dt">data =</span> marginalp_agg, </a>
+<a class="sourceLine" id="cb405-3" data-line-number="3">              <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link =</span> <span class="st">&quot;logit&quot;</span>), </a>
+<a class="sourceLine" id="cb405-4" data-line-number="4">              <span class="dt">prior =</span> <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="fl">.875</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>), </a>
+<a class="sourceLine" id="cb405-5" data-line-number="5">              <span class="co"># Note: no sigma </span></a>
+<a class="sourceLine" id="cb405-6" data-line-number="6">              <span class="dt">seed =</span> <span class="dv">1340</span>)</a></code></pre></div>
+<p>The results are essentially the same, as in this case the binomial and the
+Bernoulli model are the same model. And we can look at the good at the
+goodness-of-fit by comparing the predicted and observed counts in groups. Now,
+because there are multiple observations for each level of , we
+can naturally use the five  groups:</p>
+<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb406-1" data-line-number="1"><span class="kw">pp_check</span>(m1_bin, <span class="dt">type =</span> <span class="st">&quot;intervals&quot;</span>)</a></code></pre></div>
+<pre><code>&gt;# Using all posterior samples for ppc type &#39;intervals&#39; by default.</code></pre>
+<div class="figure">
+<img src="11_generalized_linear_models_files/figure-html/ppc-m1_bin-1.png" alt="Posterior predictive check using the predicted and observed counts." width="672" />
+<p class="caption">
+(#fig:ppc-m1_bin)Posterior predictive check using the predicted and observed counts.
+</p>
+</div>
+<p>As can be seen, the fit wasn’t particularly good in this case.</p>
+</div>
+<div id="probit-regression" class="section level2">
+<h2><span class="header-section-number">11.4</span> Probit Regression</h2>
+<p>Just note that the logit link is not the only choice for binary/binomial data.
+You’ve seen the identity link: <span class="math inline">\(g(\mu) = \mu\)</span>. Another popular choice is <span class="math inline">\(g(\mu) = \Phi^{-1}(\mu)\)</span>, where <span class="math inline">\(\Phi^{-1}(\cdot)\)</span> is the normal quantile function (or
+inverse cumulative density function,which can be obtained with <code>qnorm</code> in R).
+You can simply change the link to <code>family = binomial(link = &quot;probit&quot;)</code> in R.
+Practically, using the logit link or the probit gives basically identical
+results, so it’s a matter of ease of interpretations and conventions between the
+two.</p>
+<p>Note that because of the use of different link functions, the coefficients will
+be on different scales that differ by a factor of approximately 1.7. You are
+encouraged to try out the probit link yourself.</p>
+</div>
+<div id="poisson-regression" class="section level2">
+<h2><span class="header-section-number">11.5</span> Poisson Regression</h2>
+<p>The Poisson GLM is used to model count outcomes. Count outcomes are
+non-negative discrete integers. Remember in GLM, we’re modeling the mean of the
+outcome, <span class="math inline">\(\mu\)</span>. Therefore, we need to make sure <span class="math inline">\(\mu\)</span> is non-negative, so we
+need a link function that can map <span class="math inline">\(\eta\)</span> from the whole real line to
+non-negative numbers; by far the most commonly used link function is the
+logarithmic transformation, <span class="math inline">\(g(\mu) = \log(\mu)\)</span> (what’s the inverse
+link function?):</p>
+<div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb408-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">100</span>)), <span class="kw">aes</span>(x)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb408-2" data-line-number="2"><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> log, <span class="dt">n =</span> <span class="dv">501</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb408-3" data-line-number="3"><span class="st">  </span><span class="kw">xlab</span>(<span class="kw">expression</span>(mu)) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="kw">expression</span>(eta))</a></code></pre></div>
+<div class="figure">
+<img src="11_generalized_linear_models_files/figure-html/log_link-1.png" alt="Link of $\eta = \log(\mu)$." width="672" />
+<p class="caption">
+(#fig:log_link)Link of <span class="math inline">\(\eta = \log(\mu)\)</span>.
+</p>
+</div>
+<div class="sourceCode" id="cb409"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb409-1" data-line-number="1">redcard_dat &lt;-<span class="st"> </span>readr<span class="op">::</span><span class="kw">read_csv</span>(<span class="st">&quot;../data/redcard_data.zip&quot;</span>)</a></code></pre></div>
+<p>Let’s use the example you’ve seen on studying the distribution of number of
+red cards, which we first learned the Poisson distribution. Here, however, we’re
+interested in what predicts the number of red cards a referee will give. In the
+data, there are 3147 referees.</p>
+<p>We are interested in whether referees give more or less red cards depending on
+the skin color of the players, and whether the referee’s country of origin makes
+a difference. We aggregated the data to the referee level, with two predictor
+variables: <code>player_dark</code>, which is the average skin rating of the players that
+the referee had in the data (0 = very light skin to 1 = very dark skin), and
+<code>meanExp</code>, the mean explicit bias score (using a racial thermometer task) for
+referee country.</p>
+<div class="sourceCode" id="cb410"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb410-1" data-line-number="1">redcard_ref &lt;-<span class="st"> </span>redcard_dat <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb410-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(refNum) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb410-3" data-line-number="3"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">redCards =</span> <span class="kw">sum</span>(redCards), </a>
+<a class="sourceLine" id="cb410-4" data-line-number="4">            <span class="dt">player_dark =</span> (<span class="kw">weighted.mean</span>(rater1, games) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb410-5" data-line-number="5"><span class="st">                             </span><span class="kw">weighted.mean</span>(rater2, games)) <span class="op">/</span><span class="st"> </span><span class="dv">2</span>, </a>
+<a class="sourceLine" id="cb410-6" data-line-number="6">            <span class="dt">refCountry =</span> refCountry[<span class="dv">1</span>], </a>
+<a class="sourceLine" id="cb410-7" data-line-number="7">            <span class="dt">meanExp =</span> meanExp[<span class="dv">1</span>], </a>
+<a class="sourceLine" id="cb410-8" data-line-number="8">            <span class="dt">games =</span> <span class="kw">sum</span>(games))</a></code></pre></div>
+<p>First check the distribution of the counts:</p>
+<div class="sourceCode" id="cb411"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb411-1" data-line-number="1"><span class="kw">ggplot</span>(redcard_ref, <span class="kw">aes</span>(<span class="dt">x =</span> redCards)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb411-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_bar</span>()</a></code></pre></div>
+<p><img src="11_generalized_linear_models_files/figure-html/bar-redcard_ref-1.png" width="672" /></p>
+<p>You can see a lot of zeros. Below are the scatterplots against the predictors:</p>
+<div class="sourceCode" id="cb412"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb412-1" data-line-number="1"><span class="kw">ggplot</span>(redcard_ref, <span class="kw">aes</span>(<span class="dt">x =</span> player_dark, <span class="dt">y =</span> redCards)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb412-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">width =</span> <span class="fl">0.05</span>, <span class="dt">height =</span> <span class="fl">0.5</span>, <span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb412-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_smooth</span>()</a></code></pre></div>
+<pre><code>&gt;# `geom_smooth()` using method = &#39;gam&#39; and formula &#39;y ~ s(x, bs = &quot;cs&quot;)&#39;</code></pre>
+<pre><code>&gt;# Warning: Removed 1855 rows containing non-finite values (stat_smooth).</code></pre>
+<pre><code>&gt;# Warning: Removed 1855 rows containing missing values (geom_point).</code></pre>
+<p><img src="11_generalized_linear_models_files/figure-html/plot-redcard_ref-1.png" width="672" /></p>
+<div class="sourceCode" id="cb416"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb416-1" data-line-number="1"><span class="kw">ggplot</span>(redcard_ref, <span class="kw">aes</span>(<span class="dt">x =</span> meanExp, <span class="dt">y =</span> redCards)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb416-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">width =</span> <span class="fl">0.05</span>, <span class="dt">height =</span> <span class="fl">0.5</span>, <span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb416-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_smooth</span>()</a></code></pre></div>
+<pre><code>&gt;# `geom_smooth()` using method = &#39;gam&#39; and formula &#39;y ~ s(x, bs = &quot;cs&quot;)&#39;</code></pre>
+<pre><code>&gt;# Warning: Removed 11 rows containing non-finite values (stat_smooth).</code></pre>
+<pre><code>&gt;# Warning: Removed 11 rows containing missing values (geom_point).</code></pre>
+<p><img src="11_generalized_linear_models_files/figure-html/plot-redcard_ref-2.png" width="672" /></p>
+<p>It doesn’t appear that there are strong relationships. Let’s fit a Poisson
+model.</p>
+<p>First, because the referees are nested within countries, we need to account for
+that clustering. Second, the number of red cards depends on how many games a
+referee has called, so we need to adjust for that by including an <em>offset</em> term.
+The following is the equation of the Poisson model:
+<span class="math display">\[\begin{align*}
+  \texttt{redCards}_{ij} &amp; \sim \mathrm{Pois}(\mu_{ij})  \\
+  \log(\mu_{ij}) &amp; = \log(\texttt{games}_{ij}) + \beta_{0j} + \beta_{1j} \texttt{player_dark}_{ij} \\
+  \begin{bmatrix}
+    \beta_{0j} \\
+    \beta_{1j} \\
+  \end{bmatrix} &amp; \sim \mathcal{N}_2\left(
+  \begin{bmatrix} 
+    \mu^{[\beta_0]}_j \\
+    \mu^{[\beta_1]}_j \\
+  \end{bmatrix}, \boldsymbol{\mathbf{T}}
+  \right)  \\
+  \boldsymbol{\mathbf{T}} &amp; = \operatorname{diag}(\boldsymbol{\mathbf{\tau}}) \boldsymbol{\mathbf{\Omega }}\operatorname{diag}(\boldsymbol{\mathbf{\tau}}) \\
+  \mu^{[\beta_0]}_j &amp; = \gamma_{00} + \gamma_{01} \texttt{meanIAT}_j \\
+  \mu^{[\beta_1]}_j &amp; = \gamma_{10} + \gamma_{11} \texttt{meanIAT}_j
+\end{align*}\]</span>
+And I will use these priors:
+<span class="math display">\[\begin{align*}
+  \gamma_{00} &amp; \sim t^+(4, 0, 5) \\
+  \gamma_{10} &amp; \sim t^+(4, 0, 2.5) \\
+  \gamma_{01} &amp; \sim t^(4, 0, 2.5) \\
+  \gamma_{11} &amp; \sim t^(4, 0, 2.5) \\
+  \tau^{[\beta_m]} &amp; \sim \mathrm{Gamma}(2, 0.2), \; m = 0, 1 \\
+  \boldsymbol{\mathbf{\Omega }}&amp; \sim \mathrm{LKJ}(1)
+\end{align*}\]</span></p>
+<div class="sourceCode" id="cb420"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb420-1" data-line-number="1">m4 &lt;-<span class="st"> </span><span class="kw">brm</span>(redCards <span class="op">~</span><span class="st"> </span>player_dark <span class="op">*</span><span class="st"> </span>meanExp <span class="op">+</span><span class="st"> </span><span class="kw">offset</span>(<span class="kw">log</span>(games)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb420-2" data-line-number="2"><span class="st">            </span>(player_dark <span class="op">|</span><span class="st"> </span>refCountry), </a>
+<a class="sourceLine" id="cb420-3" data-line-number="3">          <span class="dt">family =</span> <span class="kw">poisson</span>(), </a>
+<a class="sourceLine" id="cb420-4" data-line-number="4">          <span class="dt">data =</span> redcard_ref, </a>
+<a class="sourceLine" id="cb420-5" data-line-number="5">          <span class="dt">prior =</span> <span class="kw">c</span>(<span class="co"># for intercept</span></a>
+<a class="sourceLine" id="cb420-6" data-line-number="6">            <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">5</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>),</a>
+<a class="sourceLine" id="cb420-7" data-line-number="7">            <span class="co"># for slope</span></a>
+<a class="sourceLine" id="cb420-8" data-line-number="8">            <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="fl">2.5</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>),</a>
+<a class="sourceLine" id="cb420-9" data-line-number="9">            <span class="co"># for tau_beta0</span></a>
+<a class="sourceLine" id="cb420-10" data-line-number="10">            <span class="kw">prior</span>(<span class="kw">gamma</span>(<span class="dv">2</span>, <span class="fl">0.2</span>), <span class="dt">class =</span> <span class="st">&quot;sd&quot;</span>, <span class="dt">group =</span> <span class="st">&quot;refCountry&quot;</span>),</a>
+<a class="sourceLine" id="cb420-11" data-line-number="11">            <span class="co"># for correlation</span></a>
+<a class="sourceLine" id="cb420-12" data-line-number="12">            <span class="kw">prior</span>(<span class="kw">lkj</span>(<span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;cor&quot;</span>)), </a>
+<a class="sourceLine" id="cb420-13" data-line-number="13">          <span class="dt">cores =</span> 2L, </a>
+<a class="sourceLine" id="cb420-14" data-line-number="14">          <span class="dt">control =</span> <span class="kw">list</span>(<span class="dt">adapt_delta =</span> <span class="fl">.95</span>), </a>
+<a class="sourceLine" id="cb420-15" data-line-number="15">          <span class="dt">seed =</span> <span class="dv">1340</span>)</a></code></pre></div>
+<pre><code>&gt;# Warning: Rows containing NAs were excluded from the model.</code></pre>
+<p>The coefficients were shown in the graph below:</p>
+<div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb422-1" data-line-number="1"><span class="kw">stanplot</span>(m4, <span class="dt">type =</span> <span class="st">&quot;areas&quot;</span>, <span class="dt">bw =</span> <span class="st">&quot;SJ&quot;</span>)</a></code></pre></div>
+<p><img src="11_generalized_linear_models_files/figure-html/mcmc-areas-m4-1.png" width="672" /></p>
+<div id="interpretations-2" class="section level3">
+<h3><span class="header-section-number">11.5.1</span> Interpretations</h3>
+<p>Because of the nonlinear link function, one needs to be careful in interpreting
+the coefficients. Consider if there is only one predictor, we have
+<span class="math inline">\(\log(\mu) = \beta_0 + \beta_1 X_1 \Rightarrow \mu = \exp(\beta_0) \exp(\beta_1 X_1)\)</span>, so every unit increase in <span class="math inline">\(X_1\)</span> is associated with the
+predicted mean counts being <strong>multiplied</strong> by <span class="math inline">\(\exp(\beta_1)\)</span> times.</p>
+<p>With the interaction the results are even harder to directly interpret.
+Therefore it is best to plot the associations based on the model:</p>
+<div class="sourceCode" id="cb423"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb423-1" data-line-number="1"><span class="kw">plot</span>(<span class="kw">marginal_effects</span>(m4), <span class="dt">ask =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<pre><code>&gt;# Warning: Method &#39;marginal_effects&#39; is deprecated. Please use
+&gt;# &#39;conditional_effects&#39; instead.</code></pre>
+<p><img src="11_generalized_linear_models_files/figure-html/marginal_effects-m4-1.png" width="672" /><img src="11_generalized_linear_models_files/figure-html/marginal_effects-m4-2.png" width="672" /><img src="11_generalized_linear_models_files/figure-html/marginal_effects-m4-3.png" width="672" /></p>
+<p>As can be seen, there are a lot of uncertainty in the associations, and there
+was not much evidence for a positive association between <code>player_dark</code> and
+number of red cards, even though the association was trending more to the
+positive side for referees coming from a country with higher explicit bias
+score.</p>
+</div>
+<div id="model-checking-2" class="section level3">
+<h3><span class="header-section-number">11.5.2</span> Model Checking</h3>
+<p>One should look at the posterior predictive graphical check, marginal model
+plots, proportion of zeros, maximum values, and the standardized residuals
+against the fitted values. From the plots below, it is obvious that the Poisson
+model does not fit the data, as the variability of the data is much larger
+than what can be predicted by the Poisson model, with excessive zeros. The
+predictive intervals failed to cover a large number of data.</p>
+<div class="sourceCode" id="cb425"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb425-1" data-line-number="1">ppc_dens_pois &lt;-<span class="st"> </span><span class="kw">pp_check</span>(m4)</a></code></pre></div>
+<pre><code>&gt;# Using 10 posterior samples for ppc type &#39;dens_overlay&#39; by default.</code></pre>
+<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb427-1" data-line-number="1">ppc_max_pois &lt;-<span class="st"> </span><span class="kw">pp_check</span>(m4, <span class="dt">type =</span> <span class="st">&quot;stat&quot;</span>, <span class="dt">stat =</span> <span class="st">&quot;max&quot;</span>)</a></code></pre></div>
+<pre><code>&gt;# Using all posterior samples for ppc type &#39;stat&#39; by default.</code></pre>
+<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb429-1" data-line-number="1">var_mean_ratio &lt;-<span class="st"> </span><span class="cf">function</span>(y) <span class="kw">var</span>(y) <span class="op">/</span><span class="st"> </span><span class="kw">mean</span>(y)</a>
+<a class="sourceLine" id="cb429-2" data-line-number="2">ppc_vm_ratio_pois &lt;-<span class="st"> </span><span class="kw">pp_check</span>(m4, <span class="dt">type =</span> <span class="st">&quot;stat&quot;</span>, </a>
+<a class="sourceLine" id="cb429-3" data-line-number="3">                              <span class="dt">stat =</span> <span class="st">&quot;var_mean_ratio&quot;</span>)</a></code></pre></div>
+<pre><code>&gt;# Using all posterior samples for ppc type &#39;stat&#39; by default.</code></pre>
+<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb431-1" data-line-number="1">prop_zero &lt;-<span class="st"> </span><span class="cf">function</span>(y) <span class="kw">mean</span>(y <span class="op">==</span><span class="st"> </span><span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb431-2" data-line-number="2">ppc_pzero_pois &lt;-<span class="st"> </span><span class="kw">pp_check</span>(m4, <span class="dt">type =</span> <span class="st">&quot;stat&quot;</span>, <span class="dt">stat =</span> <span class="st">&quot;prop_zero&quot;</span>)</a></code></pre></div>
+<pre><code>&gt;# Using all posterior samples for ppc type &#39;stat&#39; by default.</code></pre>
+<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb433-1" data-line-number="1"><span class="kw">grid.arrange</span>(ppc_dens_pois, ppc_max_pois, ppc_vm_ratio_pois, ppc_pzero_pois, </a>
+<a class="sourceLine" id="cb433-2" data-line-number="2">             <span class="dt">nrow =</span> <span class="dv">2</span>)</a></code></pre></div>
+<pre><code>&gt;# `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<pre><code>&gt;# `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+&gt;# `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="11_generalized_linear_models_files/figure-html/ppc_pois-1.png" width="672" /></p>
+<p>As shown above, the fit wasn’t terrible but also wasn’t very good for the
+Poisson model. One major problem is that the number of red cards for each
+player is limited to only 1, so the counts are actually bounded to be the
+total number of games. Also we aggregated the data by referees, but because
+many different referees also gave red cards to the same players, the
+player-level clustering hasn’t been accounted for.</p>
+<p>And as we saw in Chapter 3, we can also look at the rootogram:</p>
+<div class="sourceCode" id="cb436"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb436-1" data-line-number="1"><span class="kw">pp_check</span>(m4, <span class="dt">type =</span> <span class="st">&quot;rootogram&quot;</span>, <span class="dt">style =</span> <span class="st">&quot;hanging&quot;</span>)</a></code></pre></div>
+<pre><code>&gt;# Using all posterior samples for ppc type &#39;rootogram&#39; by default.</code></pre>
+<p><img src="11_generalized_linear_models_files/figure-html/ppc-rootogram-m4-1.png" width="672" /></p>
+</div>
+<div id="other-models-in-glm" class="section level3">
+<h3><span class="header-section-number">11.5.3</span> Other models in GLM</h3>
+<p>There are other models that are in GLM or related to GLM. First, there are
+infinitely many possible link functions for each choice of distribution. For
+example, you can use an identity link, <span class="math inline">\(g(\mu) = \mu\)</span>, for logistic and Poisson
+regressions, although such link functions are not conventional. Check
+<code>?brmsfamily</code> in R for available link functions. Also, there are models that
+handle overdispersion, which happened when there are some hidden heterogeneity
+not accounted for by the predictors, which leads to models such as beta-binomial
+for binomial models and negative binomial for Poisson models. There are also
+other types of distributions, such as gamma, multinomial, depending on the types
+of outcomes. A related model is the ordinal regression model, which is available
+in <code>brms</code>. You may refer to this paper: <a href="https://psyarxiv.com/x8swp/" class="uri">https://psyarxiv.com/x8swp/</a> for more
+information.</p>
+
+</div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-gelman2008weakly">
+<p>Gelman, Andrew, Aleks Jakulin, Maria Grazia Pittau, and Yu-Sung Su. 2008. “A Weakly Informative Default Prior Distribution for Logistic and Other Regression Models.” <em>The Annals of Applied Statistics</em>. JSTOR, 1360–83.</p>
+</div>
+<div id="ref-pritschet2016marginally">
+<p>Pritschet, Laura, Derek Powell, and Zachary Horne. 2016. “Marginally Significant Effects as Evidence for Hypotheses: Changing Attitudes over Four Decades.” <em>Psychological Science</em> 27 (7). Sage Publications Sage CA: Los Angeles, CA: 1036–42.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="hierarchical-multilevel-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="missing-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["notes_bookdown.pdf", "notes_bookdown.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
