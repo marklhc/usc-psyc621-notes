@@ -1,30 +1,30 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 9 Model Comparison and Regularization | Course Handouts for Bayesian Data Analysis Class</title>
-  <meta name="description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Spring semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
-  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
+  <meta name="description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Fall semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 9 Model Comparison and Regularization | Course Handouts for Bayesian Data Analysis Class" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Spring semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
+  <meta property="og:description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Fall semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
   
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 9 Model Comparison and Regularization | Course Handouts for Bayesian Data Analysis Class" />
   
-  <meta name="twitter:description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Spring semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
+  <meta name="twitter:description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Fall semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
   
 
 <meta name="author" content="Mark Lai" />
 
 
-<meta name="date" content="2019-12-14" />
+<meta name="date" content="2020-03-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,15 +51,15 @@
 
 
 <script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
-<script src="libs/viz-0.3/viz.js"></script>
+<script src="libs/viz-1.8.2/viz.js"></script>
 <link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
-<script src="libs/grViz-binding-1.0.1/grViz.js"></script>
+<script src="libs/grViz-binding-1.0.5/grViz.js"></script>
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
@@ -68,14 +68,16 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -84,9 +86,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -398,25 +400,25 @@ see, the more complex a model, the more is the risk that it <em>overfit</em> the
 current data such that it does not work for future observations.</p>
 <p>For example, let’s randomly sample 10 cases in the <code>kidiq</code> data set, and build
 some model from it.</p>
-<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb227-1" data-line-number="1">kidiq &lt;-<span class="st"> </span>haven<span class="op">::</span><span class="kw">read_dta</span>(<span class="st">&quot;../data/kidiq.dta&quot;</span>)</a>
-<a class="sourceLine" id="cb227-2" data-line-number="2">kidiq100 &lt;-<span class="st"> </span>kidiq <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb227-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mom_iq =</span> mom_iq <span class="op">/</span><span class="st"> </span><span class="dv">100</span>,  <span class="co"># divid mom_iq by 100</span></a>
-<a class="sourceLine" id="cb227-4" data-line-number="4">         <span class="dt">kid_score =</span> kid_score <span class="op">/</span><span class="st"> </span><span class="dv">100</span>,   <span class="co"># divide kid_score by 100</span></a>
-<a class="sourceLine" id="cb227-5" data-line-number="5">         <span class="dt">mom_iq_c =</span> mom_iq <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, </a>
-<a class="sourceLine" id="cb227-6" data-line-number="6">         <span class="dt">mom_hs =</span> <span class="kw">factor</span>(mom_hs, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>)))</a></code></pre></div>
-<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb228-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">1533</span>)  <span class="co"># set the seed for reproducibility</span></a>
-<a class="sourceLine" id="cb228-2" data-line-number="2"><span class="co"># Sample 10 observations</span></a>
-<a class="sourceLine" id="cb228-3" data-line-number="3">train &lt;-<span class="st"> </span><span class="kw">sample.int</span>(<span class="kw">nrow</span>(kidiq), 10L)</a>
-<a class="sourceLine" id="cb228-4" data-line-number="4">kidiq_sub &lt;-<span class="st"> </span>kidiq[train, ]</a>
-<a class="sourceLine" id="cb228-5" data-line-number="5">base &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> mom_iq, <span class="dt">y =</span> kid_score), </a>
-<a class="sourceLine" id="cb228-6" data-line-number="6">               <span class="dt">data =</span> kidiq_sub) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb228-7" data-line-number="7"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="fl">.9</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb228-8" data-line-number="8"><span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">ylim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">120</span>, <span class="dv">180</span>)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb228-9" data-line-number="9"><span class="st">  </span><span class="kw">xlim</span>(<span class="kw">range</span>(kidiq<span class="op">$</span>mom_iq))</a>
-<a class="sourceLine" id="cb228-10" data-line-number="10"><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> mom_iq, <span class="dt">y =</span> kid_score), <span class="dt">data =</span> kidiq) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb228-11" data-line-number="11"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="fl">.7</span>, <span class="dt">col =</span> <span class="st">&quot;lightblue&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb228-12" data-line-number="12"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="fl">1.1</span>, <span class="dt">data =</span> kidiq_sub, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb228-13" data-line-number="13"><span class="st">  </span><span class="kw">xlim</span>(<span class="kw">range</span>(kidiq<span class="op">$</span>mom_iq))</a></code></pre></div>
+<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="model-comparison-and-regularization.html#cb244-1"></a>kidiq &lt;-<span class="st"> </span>haven<span class="op">::</span><span class="kw">read_dta</span>(<span class="st">&quot;../data/kidiq.dta&quot;</span>)</span>
+<span id="cb244-2"><a href="model-comparison-and-regularization.html#cb244-2"></a>kidiq100 &lt;-<span class="st"> </span>kidiq <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb244-3"><a href="model-comparison-and-regularization.html#cb244-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mom_iq =</span> mom_iq <span class="op">/</span><span class="st"> </span><span class="dv">100</span>,  <span class="co"># divid mom_iq by 100</span></span>
+<span id="cb244-4"><a href="model-comparison-and-regularization.html#cb244-4"></a>         <span class="dt">kid_score =</span> kid_score <span class="op">/</span><span class="st"> </span><span class="dv">100</span>,   <span class="co"># divide kid_score by 100</span></span>
+<span id="cb244-5"><a href="model-comparison-and-regularization.html#cb244-5"></a>         <span class="dt">mom_iq_c =</span> mom_iq <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, </span>
+<span id="cb244-6"><a href="model-comparison-and-regularization.html#cb244-6"></a>         <span class="dt">mom_hs =</span> <span class="kw">factor</span>(mom_hs, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="model-comparison-and-regularization.html#cb245-1"></a><span class="kw">set.seed</span>(<span class="dv">1533</span>)  <span class="co"># set the seed for reproducibility</span></span>
+<span id="cb245-2"><a href="model-comparison-and-regularization.html#cb245-2"></a><span class="co"># Sample 10 observations</span></span>
+<span id="cb245-3"><a href="model-comparison-and-regularization.html#cb245-3"></a>train &lt;-<span class="st"> </span><span class="kw">sample.int</span>(<span class="kw">nrow</span>(kidiq), 10L)</span>
+<span id="cb245-4"><a href="model-comparison-and-regularization.html#cb245-4"></a>kidiq_sub &lt;-<span class="st"> </span>kidiq[train, ]</span>
+<span id="cb245-5"><a href="model-comparison-and-regularization.html#cb245-5"></a>base &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> mom_iq, <span class="dt">y =</span> kid_score), </span>
+<span id="cb245-6"><a href="model-comparison-and-regularization.html#cb245-6"></a>               <span class="dt">data =</span> kidiq_sub) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb245-7"><a href="model-comparison-and-regularization.html#cb245-7"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="fl">.9</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb245-8"><a href="model-comparison-and-regularization.html#cb245-8"></a><span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">ylim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">120</span>, <span class="dv">180</span>)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb245-9"><a href="model-comparison-and-regularization.html#cb245-9"></a><span class="st">  </span><span class="kw">xlim</span>(<span class="kw">range</span>(kidiq<span class="op">$</span>mom_iq))</span>
+<span id="cb245-10"><a href="model-comparison-and-regularization.html#cb245-10"></a><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> mom_iq, <span class="dt">y =</span> kid_score), <span class="dt">data =</span> kidiq) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb245-11"><a href="model-comparison-and-regularization.html#cb245-11"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="fl">.7</span>, <span class="dt">col =</span> <span class="st">&quot;lightblue&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb245-12"><a href="model-comparison-and-regularization.html#cb245-12"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="fl">1.1</span>, <span class="dt">data =</span> kidiq_sub, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb245-13"><a href="model-comparison-and-regularization.html#cb245-13"></a><span class="st">  </span><span class="kw">xlim</span>(<span class="kw">range</span>(kidiq<span class="op">$</span>mom_iq))</span></code></pre></div>
 <p><img src="09_model_comparison_files/figure-html/plot-kidiq-sub-1.png" width="336" /></p>
 <p>When using <code>mom_iq</code> to predict <code>kid_score</code>, we can use beyond a linear
 regression line by using higher order <em>polynomials</em>. For example, a second-order
@@ -427,31 +429,31 @@ polynomial. As you can see, as the model gets more complex, the fitted line
 tries to capture all the 10 points really well, with an increasing <span class="math inline">\(R^2\)</span>.
 However, also note that the standard error around the fitted line gets, meaning
 that there are more uncertainty when the model gets more and more complex.</p>
-<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb229-1" data-line-number="1">r2 &lt;-<span class="st"> </span><span class="cf">function</span>(object) {</a>
-<a class="sourceLine" id="cb229-2" data-line-number="2">  <span class="co"># Function for computing R^2</span></a>
-<a class="sourceLine" id="cb229-3" data-line-number="3">  z &lt;-<span class="st"> </span>object</a>
-<a class="sourceLine" id="cb229-4" data-line-number="4">  f &lt;-<span class="st"> </span>z<span class="op">$</span>fitted.values</a>
-<a class="sourceLine" id="cb229-5" data-line-number="5">  r &lt;-<span class="st"> </span>z<span class="op">$</span>residuals</a>
-<a class="sourceLine" id="cb229-6" data-line-number="6">  mss &lt;-<span class="st"> </span><span class="cf">if</span> (<span class="kw">attr</span>(z<span class="op">$</span>terms, <span class="st">&quot;intercept&quot;</span>)) </a>
-<a class="sourceLine" id="cb229-7" data-line-number="7">    <span class="kw">sum</span>((f <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(f))<span class="op">^</span><span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb229-8" data-line-number="8">  <span class="cf">else</span> <span class="kw">sum</span>(f<span class="op">^</span><span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb229-9" data-line-number="9">  rss &lt;-<span class="st"> </span><span class="kw">sum</span>(r<span class="op">^</span><span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb229-10" data-line-number="10">  mss <span class="op">/</span><span class="st"> </span>(mss <span class="op">+</span><span class="st"> </span>rss)</a>
-<a class="sourceLine" id="cb229-11" data-line-number="11">}</a>
-<a class="sourceLine" id="cb229-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb229-13" data-line-number="13">p_list &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="cf">function</span>(i) {</a>
-<a class="sourceLine" id="cb229-14" data-line-number="14">  mod &lt;-<span class="st"> </span><span class="kw">lm</span>(kid_score <span class="op">~</span><span class="st"> </span><span class="kw">poly</span>(mom_iq, <span class="dt">degree =</span> i), <span class="dt">data =</span> kidiq_sub)</a>
-<a class="sourceLine" id="cb229-15" data-line-number="15">  base <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb229-16" data-line-number="16"><span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">formula =</span> y <span class="op">~</span><span class="st"> </span><span class="kw">poly</span>(x, i), <span class="dt">level =</span> <span class="fl">.80</span>, </a>
-<a class="sourceLine" id="cb229-17" data-line-number="17">                <span class="dt">fullrange =</span> <span class="ot">TRUE</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb229-18" data-line-number="18"><span class="st">    </span><span class="kw">geom_text</span>(<span class="dt">x =</span> <span class="dv">90</span>, <span class="dt">y =</span> <span class="dv">170</span>, </a>
-<a class="sourceLine" id="cb229-19" data-line-number="19">              <span class="dt">label =</span> <span class="kw">paste0</span>(<span class="st">&quot;italic(R)^2 == &quot;</span>, <span class="kw">round</span>(<span class="kw">r2</span>(mod), <span class="dv">1</span>)), </a>
-<a class="sourceLine" id="cb229-20" data-line-number="20">              <span class="dt">parse =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb229-21" data-line-number="21"><span class="st">    </span><span class="kw">geom_text</span>(<span class="dt">x =</span> <span class="dv">100</span>, <span class="dt">y =</span> <span class="dv">-100</span>, </a>
-<a class="sourceLine" id="cb229-22" data-line-number="22">              <span class="dt">label =</span> <span class="kw">paste0</span>(<span class="st">&quot;RMSE == &quot;</span>, <span class="kw">round</span>(<span class="kw">sqrt</span>(<span class="kw">mean</span>(<span class="kw">residuals</span>(mod)<span class="op">^</span><span class="dv">2</span>)), <span class="dv">1</span>)), </a>
-<a class="sourceLine" id="cb229-23" data-line-number="23">              <span class="dt">parse =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb229-24" data-line-number="24">})</a>
-<a class="sourceLine" id="cb229-25" data-line-number="25"><span class="kw">do.call</span>(grid.arrange, <span class="kw">c</span>(p_list, <span class="dt">nrow =</span> <span class="dv">2</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="model-comparison-and-regularization.html#cb246-1"></a>r2 &lt;-<span class="st"> </span><span class="cf">function</span>(object) {</span>
+<span id="cb246-2"><a href="model-comparison-and-regularization.html#cb246-2"></a>  <span class="co"># Function for computing R^2</span></span>
+<span id="cb246-3"><a href="model-comparison-and-regularization.html#cb246-3"></a>  z &lt;-<span class="st"> </span>object</span>
+<span id="cb246-4"><a href="model-comparison-and-regularization.html#cb246-4"></a>  f &lt;-<span class="st"> </span>z<span class="op">$</span>fitted.values</span>
+<span id="cb246-5"><a href="model-comparison-and-regularization.html#cb246-5"></a>  r &lt;-<span class="st"> </span>z<span class="op">$</span>residuals</span>
+<span id="cb246-6"><a href="model-comparison-and-regularization.html#cb246-6"></a>  mss &lt;-<span class="st"> </span><span class="cf">if</span> (<span class="kw">attr</span>(z<span class="op">$</span>terms, <span class="st">&quot;intercept&quot;</span>)) </span>
+<span id="cb246-7"><a href="model-comparison-and-regularization.html#cb246-7"></a>    <span class="kw">sum</span>((f <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(f))<span class="op">^</span><span class="dv">2</span>)</span>
+<span id="cb246-8"><a href="model-comparison-and-regularization.html#cb246-8"></a>  <span class="cf">else</span> <span class="kw">sum</span>(f<span class="op">^</span><span class="dv">2</span>)</span>
+<span id="cb246-9"><a href="model-comparison-and-regularization.html#cb246-9"></a>  rss &lt;-<span class="st"> </span><span class="kw">sum</span>(r<span class="op">^</span><span class="dv">2</span>)</span>
+<span id="cb246-10"><a href="model-comparison-and-regularization.html#cb246-10"></a>  mss <span class="op">/</span><span class="st"> </span>(mss <span class="op">+</span><span class="st"> </span>rss)</span>
+<span id="cb246-11"><a href="model-comparison-and-regularization.html#cb246-11"></a>}</span>
+<span id="cb246-12"><a href="model-comparison-and-regularization.html#cb246-12"></a></span>
+<span id="cb246-13"><a href="model-comparison-and-regularization.html#cb246-13"></a>p_list &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="cf">function</span>(i) {</span>
+<span id="cb246-14"><a href="model-comparison-and-regularization.html#cb246-14"></a>  mod &lt;-<span class="st"> </span><span class="kw">lm</span>(kid_score <span class="op">~</span><span class="st"> </span><span class="kw">poly</span>(mom_iq, <span class="dt">degree =</span> i), <span class="dt">data =</span> kidiq_sub)</span>
+<span id="cb246-15"><a href="model-comparison-and-regularization.html#cb246-15"></a>  base <span class="op">+</span><span class="st"> </span></span>
+<span id="cb246-16"><a href="model-comparison-and-regularization.html#cb246-16"></a><span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">formula =</span> y <span class="op">~</span><span class="st"> </span><span class="kw">poly</span>(x, i), <span class="dt">level =</span> <span class="fl">.80</span>, </span>
+<span id="cb246-17"><a href="model-comparison-and-regularization.html#cb246-17"></a>                <span class="dt">fullrange =</span> <span class="ot">TRUE</span>) <span class="op">+</span></span>
+<span id="cb246-18"><a href="model-comparison-and-regularization.html#cb246-18"></a><span class="st">    </span><span class="kw">geom_text</span>(<span class="dt">x =</span> <span class="dv">90</span>, <span class="dt">y =</span> <span class="dv">170</span>, </span>
+<span id="cb246-19"><a href="model-comparison-and-regularization.html#cb246-19"></a>              <span class="dt">label =</span> <span class="kw">paste0</span>(<span class="st">&quot;italic(R)^2 == &quot;</span>, <span class="kw">round</span>(<span class="kw">r2</span>(mod), <span class="dv">1</span>)), </span>
+<span id="cb246-20"><a href="model-comparison-and-regularization.html#cb246-20"></a>              <span class="dt">parse =</span> <span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb246-21"><a href="model-comparison-and-regularization.html#cb246-21"></a><span class="st">    </span><span class="kw">geom_text</span>(<span class="dt">x =</span> <span class="dv">100</span>, <span class="dt">y =</span> <span class="dv">-100</span>, </span>
+<span id="cb246-22"><a href="model-comparison-and-regularization.html#cb246-22"></a>              <span class="dt">label =</span> <span class="kw">paste0</span>(<span class="st">&quot;RMSE == &quot;</span>, <span class="kw">round</span>(<span class="kw">sqrt</span>(<span class="kw">mean</span>(<span class="kw">residuals</span>(mod)<span class="op">^</span><span class="dv">2</span>)), <span class="dv">1</span>)), </span>
+<span id="cb246-23"><a href="model-comparison-and-regularization.html#cb246-23"></a>              <span class="dt">parse =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb246-24"><a href="model-comparison-and-regularization.html#cb246-24"></a>})</span>
+<span id="cb246-25"><a href="model-comparison-and-regularization.html#cb246-25"></a><span class="kw">do.call</span>(grid.arrange, <span class="kw">c</span>(p_list, <span class="dt">nrow =</span> <span class="dv">2</span>))</span></code></pre></div>
 <div class="figure"><span id="fig:overfit-data"></span>
 <img src="09_model_comparison_files/figure-html/overfit-data-1.png" alt="Fit of models on the 10 random cases. Top panel: linear, quadratic, and cubic; bottom panel: 4th, 5th, and 6th degree polynomials" width="720" />
 <p class="caption">
@@ -475,24 +477,24 @@ in model comparison is to choose a model that is complex enough to capture the
 essence of the data generation process (and thus avoid <em>underfitting</em>), but
 avoid <em>overfitting</em> as to make the model useless for predicting new
 observations.</p>
-<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb230-1" data-line-number="1">base2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> mom_iq, <span class="dt">y =</span> kid_score), <span class="dt">data =</span> kidiq[<span class="op">-</span>train, ]) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb230-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="fl">.6</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb230-3" data-line-number="3"><span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">ylim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">120</span>, <span class="dv">180</span>)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb230-4" data-line-number="4"><span class="st">  </span><span class="kw">xlim</span>(<span class="kw">range</span>(kidiq<span class="op">$</span>mom_iq))</a>
-<a class="sourceLine" id="cb230-5" data-line-number="5">p_list2 &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="cf">function</span>(i) {</a>
-<a class="sourceLine" id="cb230-6" data-line-number="6">  mod &lt;-<span class="st"> </span><span class="kw">lm</span>(kid_score <span class="op">~</span><span class="st"> </span><span class="kw">poly</span>(mom_iq, <span class="dt">degree =</span> i), <span class="dt">data =</span> kidiq_sub)</a>
-<a class="sourceLine" id="cb230-7" data-line-number="7">  f &lt;-<span class="st"> </span><span class="kw">predict</span>(mod, <span class="dt">newdata =</span> kidiq[<span class="op">-</span>train, ])</a>
-<a class="sourceLine" id="cb230-8" data-line-number="8">  y &lt;-<span class="st"> </span>kidiq<span class="op">$</span>kid_score[<span class="op">-</span>train]</a>
-<a class="sourceLine" id="cb230-9" data-line-number="9">  r &lt;-<span class="st"> </span>y <span class="op">-</span><span class="st"> </span>f</a>
-<a class="sourceLine" id="cb230-10" data-line-number="10">  rmse_mod &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">mean</span>(r<span class="op">^</span><span class="dv">2</span>))</a>
-<a class="sourceLine" id="cb230-11" data-line-number="11">  base2 <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb230-12" data-line-number="12"><span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">data =</span> kidiq_sub, <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">formula =</span> y <span class="op">~</span><span class="st"> </span><span class="kw">poly</span>(x, i), </a>
-<a class="sourceLine" id="cb230-13" data-line-number="13">                <span class="dt">fullrange =</span> <span class="ot">TRUE</span>, <span class="dt">level =</span> <span class="fl">.80</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb230-14" data-line-number="14"><span class="st">    </span><span class="kw">geom_text</span>(<span class="dt">x =</span> <span class="dv">100</span>, <span class="dt">y =</span> <span class="dv">-100</span>, </a>
-<a class="sourceLine" id="cb230-15" data-line-number="15">              <span class="dt">label =</span> <span class="kw">paste0</span>(<span class="st">&quot;RMSE == &quot;</span>, <span class="kw">round</span>(rmse_mod, <span class="dv">1</span>)), </a>
-<a class="sourceLine" id="cb230-16" data-line-number="16">              <span class="dt">parse =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb230-17" data-line-number="17">})</a>
-<a class="sourceLine" id="cb230-18" data-line-number="18"><span class="kw">do.call</span>(grid.arrange, <span class="kw">c</span>(p_list2, <span class="dt">nrow =</span> <span class="dv">2</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="model-comparison-and-regularization.html#cb247-1"></a>base2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> mom_iq, <span class="dt">y =</span> kid_score), <span class="dt">data =</span> kidiq[<span class="op">-</span>train, ]) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb247-2"><a href="model-comparison-and-regularization.html#cb247-2"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="fl">.6</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb247-3"><a href="model-comparison-and-regularization.html#cb247-3"></a><span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">ylim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">120</span>, <span class="dv">180</span>)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb247-4"><a href="model-comparison-and-regularization.html#cb247-4"></a><span class="st">  </span><span class="kw">xlim</span>(<span class="kw">range</span>(kidiq<span class="op">$</span>mom_iq))</span>
+<span id="cb247-5"><a href="model-comparison-and-regularization.html#cb247-5"></a>p_list2 &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="cf">function</span>(i) {</span>
+<span id="cb247-6"><a href="model-comparison-and-regularization.html#cb247-6"></a>  mod &lt;-<span class="st"> </span><span class="kw">lm</span>(kid_score <span class="op">~</span><span class="st"> </span><span class="kw">poly</span>(mom_iq, <span class="dt">degree =</span> i), <span class="dt">data =</span> kidiq_sub)</span>
+<span id="cb247-7"><a href="model-comparison-and-regularization.html#cb247-7"></a>  f &lt;-<span class="st"> </span><span class="kw">predict</span>(mod, <span class="dt">newdata =</span> kidiq[<span class="op">-</span>train, ])</span>
+<span id="cb247-8"><a href="model-comparison-and-regularization.html#cb247-8"></a>  y &lt;-<span class="st"> </span>kidiq<span class="op">$</span>kid_score[<span class="op">-</span>train]</span>
+<span id="cb247-9"><a href="model-comparison-and-regularization.html#cb247-9"></a>  r &lt;-<span class="st"> </span>y <span class="op">-</span><span class="st"> </span>f</span>
+<span id="cb247-10"><a href="model-comparison-and-regularization.html#cb247-10"></a>  rmse_mod &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">mean</span>(r<span class="op">^</span><span class="dv">2</span>))</span>
+<span id="cb247-11"><a href="model-comparison-and-regularization.html#cb247-11"></a>  base2 <span class="op">+</span><span class="st"> </span></span>
+<span id="cb247-12"><a href="model-comparison-and-regularization.html#cb247-12"></a><span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">data =</span> kidiq_sub, <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">formula =</span> y <span class="op">~</span><span class="st"> </span><span class="kw">poly</span>(x, i), </span>
+<span id="cb247-13"><a href="model-comparison-and-regularization.html#cb247-13"></a>                <span class="dt">fullrange =</span> <span class="ot">TRUE</span>, <span class="dt">level =</span> <span class="fl">.80</span>) <span class="op">+</span></span>
+<span id="cb247-14"><a href="model-comparison-and-regularization.html#cb247-14"></a><span class="st">    </span><span class="kw">geom_text</span>(<span class="dt">x =</span> <span class="dv">100</span>, <span class="dt">y =</span> <span class="dv">-100</span>, </span>
+<span id="cb247-15"><a href="model-comparison-and-regularization.html#cb247-15"></a>              <span class="dt">label =</span> <span class="kw">paste0</span>(<span class="st">&quot;RMSE == &quot;</span>, <span class="kw">round</span>(rmse_mod, <span class="dv">1</span>)), </span>
+<span id="cb247-16"><a href="model-comparison-and-regularization.html#cb247-16"></a>              <span class="dt">parse =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb247-17"><a href="model-comparison-and-regularization.html#cb247-17"></a>})</span>
+<span id="cb247-18"><a href="model-comparison-and-regularization.html#cb247-18"></a><span class="kw">do.call</span>(grid.arrange, <span class="kw">c</span>(p_list2, <span class="dt">nrow =</span> <span class="dv">2</span>))</span></code></pre></div>
 <div class="figure"><span id="fig:overfit-generalize"></span>
 <img src="09_model_comparison_files/figure-html/overfit-generalize-1.png" alt="Using the regression lines based on 10 random cases to predict the remaining 424 cases. Top panel: linear, quadratic, and cubic; bottom panel: 4th, 5th, and 6th degree polynomials" width="720" />
 <p class="caption">
@@ -554,16 +556,21 @@ two candidate models <span class="math inline">\(M_1\)</span> and <span class="m
 <li><span class="math inline">\(M_1: y \sim \mathcal{N}(3.5, 2.5)\)</span></li>
 <li><span class="math inline">\(M_2: y \sim \mathrm{Cauchy}(3, 2)\)</span></li>
 </ul>
-<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb231-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">3</span>, <span class="dv">9</span>)), <span class="kw">aes</span>(<span class="dt">x =</span> x)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb231-2" data-line-number="2"><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> dnorm, <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">mean =</span> <span class="dv">3</span>, <span class="dt">sd =</span> <span class="dv">2</span>), </a>
-<a class="sourceLine" id="cb231-3" data-line-number="3">                <span class="kw">aes</span>(<span class="dt">col =</span> <span class="st">&quot;M0&quot;</span>), <span class="dt">linetype =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb231-4" data-line-number="4"><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> dnorm, <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">mean =</span> <span class="fl">3.5</span>, <span class="dt">sd =</span> <span class="fl">2.5</span>), </a>
-<a class="sourceLine" id="cb231-5" data-line-number="5">                <span class="kw">aes</span>(<span class="dt">col =</span> <span class="st">&quot;M1&quot;</span>), <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb231-6" data-line-number="6"><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> dcauchy, <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">location =</span> <span class="dv">3</span>, <span class="dt">scale =</span> <span class="dv">2</span>), </a>
-<a class="sourceLine" id="cb231-7" data-line-number="7">                <span class="kw">aes</span>(<span class="dt">col =</span> <span class="st">&quot;M2&quot;</span>), <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb231-8" data-line-number="8"><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="st">&quot;&quot;</span>, <span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;black&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;blue&quot;</span>), </a>
-<a class="sourceLine" id="cb231-9" data-line-number="9">                     <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;M0&quot;</span>, <span class="st">&quot;M1&quot;</span>, <span class="st">&quot;M2&quot;</span>)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb231-10" data-line-number="10"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;y&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;density&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="model-comparison-and-regularization.html#cb248-1"></a><span class="kw">ggplot</span>(<span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">3</span>, <span class="dv">9</span>)), <span class="kw">aes</span>(<span class="dt">x =</span> x)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb248-2"><a href="model-comparison-and-regularization.html#cb248-2"></a><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> dnorm, <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">mean =</span> <span class="dv">3</span>, <span class="dt">sd =</span> <span class="dv">2</span>), </span>
+<span id="cb248-3"><a href="model-comparison-and-regularization.html#cb248-3"></a>                <span class="kw">aes</span>(<span class="dt">col =</span> <span class="st">&quot;M0&quot;</span>), <span class="dt">linetype =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb248-4"><a href="model-comparison-and-regularization.html#cb248-4"></a><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> dnorm, <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">mean =</span> <span class="fl">3.5</span>, <span class="dt">sd =</span> <span class="fl">2.5</span>), </span>
+<span id="cb248-5"><a href="model-comparison-and-regularization.html#cb248-5"></a>                <span class="kw">aes</span>(<span class="dt">col =</span> <span class="st">&quot;M1&quot;</span>), <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb248-6"><a href="model-comparison-and-regularization.html#cb248-6"></a><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> dcauchy, <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">location =</span> <span class="dv">3</span>, <span class="dt">scale =</span> <span class="dv">2</span>), </span>
+<span id="cb248-7"><a href="model-comparison-and-regularization.html#cb248-7"></a>                <span class="kw">aes</span>(<span class="dt">col =</span> <span class="st">&quot;M2&quot;</span>), <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb248-8"><a href="model-comparison-and-regularization.html#cb248-8"></a><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="st">&quot;&quot;</span>, <span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;black&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;blue&quot;</span>), </span>
+<span id="cb248-9"><a href="model-comparison-and-regularization.html#cb248-9"></a>                     <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;M0&quot;</span>, <span class="st">&quot;M1&quot;</span>, <span class="st">&quot;M2&quot;</span>)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb248-10"><a href="model-comparison-and-regularization.html#cb248-10"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;y&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;density&quot;</span>)</span></code></pre></div>
+<pre><code>&gt;# Warning: `mapping` is not used by stat_function()
+
+&gt;# Warning: `mapping` is not used by stat_function()
+
+&gt;# Warning: `mapping` is not used by stat_function()</code></pre>
 <div class="figure"><span id="fig:divergence"></span>
 <img src="09_model_comparison_files/figure-html/divergence-1.png" alt="Density for $M_0$, $M_1$, and $M_2$" width="384" />
 <p class="caption">
@@ -612,13 +619,13 @@ was left out. This is called <em>leave-one-out</em> cross-validation (LOO-CV).</
 <h2><span class="header-section-number">9.3</span> Information Criteria</h2>
 <p>We will illustrate the computation of information criteria with <code>mom_iq</code>
 predicting <code>kid_score</code> (with centering):</p>
-<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb232-1" data-line-number="1"><span class="co"># mom_iq with centering</span></a>
-<a class="sourceLine" id="cb232-2" data-line-number="2">m1 &lt;-<span class="st"> </span><span class="kw">brm</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_iq_c, <span class="dt">data =</span> kidiq100, </a>
-<a class="sourceLine" id="cb232-3" data-line-number="3">          <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </a>
-<a class="sourceLine" id="cb232-4" data-line-number="4">                    <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>, <span class="dt">coef =</span> <span class="st">&quot;mom_iq_c&quot;</span>), </a>
-<a class="sourceLine" id="cb232-5" data-line-number="5">                    <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </a>
-<a class="sourceLine" id="cb232-6" data-line-number="6">          <span class="dt">seed =</span> <span class="dv">2302</span></a>
-<a class="sourceLine" id="cb232-7" data-line-number="7">)</a></code></pre></div>
+<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="model-comparison-and-regularization.html#cb250-1"></a><span class="co"># mom_iq with centering</span></span>
+<span id="cb250-2"><a href="model-comparison-and-regularization.html#cb250-2"></a>m1 &lt;-<span class="st"> </span><span class="kw">brm</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_iq_c, <span class="dt">data =</span> kidiq100, </span>
+<span id="cb250-3"><a href="model-comparison-and-regularization.html#cb250-3"></a>          <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </span>
+<span id="cb250-4"><a href="model-comparison-and-regularization.html#cb250-4"></a>                    <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>, <span class="dt">coef =</span> <span class="st">&quot;mom_iq_c&quot;</span>), </span>
+<span id="cb250-5"><a href="model-comparison-and-regularization.html#cb250-5"></a>                    <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </span>
+<span id="cb250-6"><a href="model-comparison-and-regularization.html#cb250-6"></a>          <span class="dt">seed =</span> <span class="dv">2302</span></span>
+<span id="cb250-7"><a href="model-comparison-and-regularization.html#cb250-7"></a>)</span></code></pre></div>
 <p>Without going too deep into the underlying math, it can be shown that a good
 estimate of elpd is</p>
 <p><span class="math display">\[\sum_{i = 1}^n \log p_{M_1}(y_i) - p,\]</span></p>
@@ -634,44 +641,44 @@ multiplying the log-likelihood by <span class="math inline">\(-2\)</span>, i.e.,
 <code>kidiq</code> data with different polynomial functions. Here is a sample function for
 computing elpd (with frequentist, just for speed purpose) for different degrees
 of polynomial:</p>
-<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb233-1" data-line-number="1"><span class="co"># Function for computing deviance with different polynomial</span></a>
-<a class="sourceLine" id="cb233-2" data-line-number="2">deviance_kidiq &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">degree =</span> <span class="dv">1</span>, </a>
-<a class="sourceLine" id="cb233-3" data-line-number="3">                           <span class="dt">train =</span> <span class="dv">10</span>, </a>
-<a class="sourceLine" id="cb233-4" data-line-number="4">                           <span class="dt">y =</span> kidiq<span class="op">$</span>kid_score, </a>
-<a class="sourceLine" id="cb233-5" data-line-number="5">                           <span class="dt">x =</span> kidiq<span class="op">$</span>mom_iq) {</a>
-<a class="sourceLine" id="cb233-6" data-line-number="6">  N &lt;-<span class="st"> </span><span class="kw">length</span>(y)</a>
-<a class="sourceLine" id="cb233-7" data-line-number="7">  <span class="co"># get training sample</span></a>
-<a class="sourceLine" id="cb233-8" data-line-number="8">  <span class="cf">if</span> (<span class="kw">length</span>(train) <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) {</a>
-<a class="sourceLine" id="cb233-9" data-line-number="9">    train &lt;-<span class="st"> </span><span class="kw">sample.int</span>(N, train)</a>
-<a class="sourceLine" id="cb233-10" data-line-number="10">  }</a>
-<a class="sourceLine" id="cb233-11" data-line-number="11">  ntrain &lt;-<span class="st"> </span><span class="kw">length</span>(train)</a>
-<a class="sourceLine" id="cb233-12" data-line-number="12">  <span class="co"># Obtain design matrix</span></a>
-<a class="sourceLine" id="cb233-13" data-line-number="13">  X &lt;-<span class="st"> </span><span class="kw">cbind</span>(<span class="dv">1</span>, <span class="kw">poly</span>(x, degree, <span class="dt">simple =</span> <span class="ot">TRUE</span>))</a>
-<a class="sourceLine" id="cb233-14" data-line-number="14">  <span class="co"># Get elpd for training sample</span></a>
-<a class="sourceLine" id="cb233-15" data-line-number="15">  Xtrain &lt;-<span class="st"> </span>X[train, ]</a>
-<a class="sourceLine" id="cb233-16" data-line-number="16">  ytrain &lt;-<span class="st"> </span>y[train]</a>
-<a class="sourceLine" id="cb233-17" data-line-number="17">  betahat &lt;-<span class="st"> </span><span class="kw">qr.solve</span>(Xtrain, ytrain)  <span class="co"># estimated betas</span></a>
-<a class="sourceLine" id="cb233-18" data-line-number="18">  res_train &lt;-<span class="st"> </span>ytrain <span class="op">-</span><span class="st"> </span>Xtrain <span class="op">%*%</span><span class="st"> </span>betahat</a>
-<a class="sourceLine" id="cb233-19" data-line-number="19">  sigmahat &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">sum</span>(res_train<span class="op">^</span><span class="dv">2</span>) <span class="op">/</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb233-20" data-line-number="20"><span class="st">                     </span>(ntrain <span class="op">-</span><span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>degree))  <span class="co"># estimated sigma</span></a>
-<a class="sourceLine" id="cb233-21" data-line-number="21">  deviance_train &lt;-<span class="st"> </span><span class="dv">-2</span> <span class="op">*</span><span class="st"> </span><span class="kw">sum</span>(<span class="kw">dnorm</span>(res_train, <span class="dt">sd =</span> sigmahat, <span class="dt">log =</span> <span class="ot">TRUE</span>))</a>
-<a class="sourceLine" id="cb233-22" data-line-number="22">  res_test &lt;-<span class="st"> </span>y[<span class="op">-</span>train] <span class="op">-</span><span class="st"> </span>X[<span class="op">-</span>train, ] <span class="op">%*%</span><span class="st"> </span>betahat</a>
-<a class="sourceLine" id="cb233-23" data-line-number="23">  deviance_test &lt;-<span class="st"> </span><span class="dv">-2</span> <span class="op">*</span><span class="st"> </span><span class="kw">sum</span>(<span class="kw">dnorm</span>(res_test, <span class="dt">sd =</span> sigmahat, <span class="dt">log =</span> <span class="ot">TRUE</span>))</a>
-<a class="sourceLine" id="cb233-24" data-line-number="24">  <span class="kw">tibble</span>(<span class="dt">degree =</span> degree, </a>
-<a class="sourceLine" id="cb233-25" data-line-number="25">         <span class="dt">sample =</span> <span class="kw">c</span>(<span class="st">&#39;in-sample&#39;</span>, <span class="st">&#39;out-of-sample&#39;</span>), </a>
-<a class="sourceLine" id="cb233-26" data-line-number="26">         <span class="dt">deviance =</span> <span class="kw">c</span>(deviance_train <span class="op">/</span><span class="st"> </span>ntrain,</a>
-<a class="sourceLine" id="cb233-27" data-line-number="27">                      deviance_test <span class="op">/</span><span class="st"> </span>(N <span class="op">-</span><span class="st"> </span>ntrain))</a>
-<a class="sourceLine" id="cb233-28" data-line-number="28">  )</a>
-<a class="sourceLine" id="cb233-29" data-line-number="29">}</a></code></pre></div>
+<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="model-comparison-and-regularization.html#cb251-1"></a><span class="co"># Function for computing deviance with different polynomial</span></span>
+<span id="cb251-2"><a href="model-comparison-and-regularization.html#cb251-2"></a>deviance_kidiq &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">degree =</span> <span class="dv">1</span>, </span>
+<span id="cb251-3"><a href="model-comparison-and-regularization.html#cb251-3"></a>                           <span class="dt">train =</span> <span class="dv">10</span>, </span>
+<span id="cb251-4"><a href="model-comparison-and-regularization.html#cb251-4"></a>                           <span class="dt">y =</span> kidiq<span class="op">$</span>kid_score, </span>
+<span id="cb251-5"><a href="model-comparison-and-regularization.html#cb251-5"></a>                           <span class="dt">x =</span> kidiq<span class="op">$</span>mom_iq) {</span>
+<span id="cb251-6"><a href="model-comparison-and-regularization.html#cb251-6"></a>  N &lt;-<span class="st"> </span><span class="kw">length</span>(y)</span>
+<span id="cb251-7"><a href="model-comparison-and-regularization.html#cb251-7"></a>  <span class="co"># get training sample</span></span>
+<span id="cb251-8"><a href="model-comparison-and-regularization.html#cb251-8"></a>  <span class="cf">if</span> (<span class="kw">length</span>(train) <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) {</span>
+<span id="cb251-9"><a href="model-comparison-and-regularization.html#cb251-9"></a>    train &lt;-<span class="st"> </span><span class="kw">sample.int</span>(N, train)</span>
+<span id="cb251-10"><a href="model-comparison-and-regularization.html#cb251-10"></a>  }</span>
+<span id="cb251-11"><a href="model-comparison-and-regularization.html#cb251-11"></a>  ntrain &lt;-<span class="st"> </span><span class="kw">length</span>(train)</span>
+<span id="cb251-12"><a href="model-comparison-and-regularization.html#cb251-12"></a>  <span class="co"># Obtain design matrix</span></span>
+<span id="cb251-13"><a href="model-comparison-and-regularization.html#cb251-13"></a>  X &lt;-<span class="st"> </span><span class="kw">cbind</span>(<span class="dv">1</span>, <span class="kw">poly</span>(x, degree, <span class="dt">simple =</span> <span class="ot">TRUE</span>))</span>
+<span id="cb251-14"><a href="model-comparison-and-regularization.html#cb251-14"></a>  <span class="co"># Get elpd for training sample</span></span>
+<span id="cb251-15"><a href="model-comparison-and-regularization.html#cb251-15"></a>  Xtrain &lt;-<span class="st"> </span>X[train, ]</span>
+<span id="cb251-16"><a href="model-comparison-and-regularization.html#cb251-16"></a>  ytrain &lt;-<span class="st"> </span>y[train]</span>
+<span id="cb251-17"><a href="model-comparison-and-regularization.html#cb251-17"></a>  betahat &lt;-<span class="st"> </span><span class="kw">qr.solve</span>(Xtrain, ytrain)  <span class="co"># estimated betas</span></span>
+<span id="cb251-18"><a href="model-comparison-and-regularization.html#cb251-18"></a>  res_train &lt;-<span class="st"> </span>ytrain <span class="op">-</span><span class="st"> </span>Xtrain <span class="op">%*%</span><span class="st"> </span>betahat</span>
+<span id="cb251-19"><a href="model-comparison-and-regularization.html#cb251-19"></a>  sigmahat &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">sum</span>(res_train<span class="op">^</span><span class="dv">2</span>) <span class="op">/</span><span class="st"> </span></span>
+<span id="cb251-20"><a href="model-comparison-and-regularization.html#cb251-20"></a><span class="st">                     </span>(ntrain <span class="op">-</span><span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>degree))  <span class="co"># estimated sigma</span></span>
+<span id="cb251-21"><a href="model-comparison-and-regularization.html#cb251-21"></a>  deviance_train &lt;-<span class="st"> </span><span class="dv">-2</span> <span class="op">*</span><span class="st"> </span><span class="kw">sum</span>(<span class="kw">dnorm</span>(res_train, <span class="dt">sd =</span> sigmahat, <span class="dt">log =</span> <span class="ot">TRUE</span>))</span>
+<span id="cb251-22"><a href="model-comparison-and-regularization.html#cb251-22"></a>  res_test &lt;-<span class="st"> </span>y[<span class="op">-</span>train] <span class="op">-</span><span class="st"> </span>X[<span class="op">-</span>train, ] <span class="op">%*%</span><span class="st"> </span>betahat</span>
+<span id="cb251-23"><a href="model-comparison-and-regularization.html#cb251-23"></a>  deviance_test &lt;-<span class="st"> </span><span class="dv">-2</span> <span class="op">*</span><span class="st"> </span><span class="kw">sum</span>(<span class="kw">dnorm</span>(res_test, <span class="dt">sd =</span> sigmahat, <span class="dt">log =</span> <span class="ot">TRUE</span>))</span>
+<span id="cb251-24"><a href="model-comparison-and-regularization.html#cb251-24"></a>  <span class="kw">tibble</span>(<span class="dt">degree =</span> degree, </span>
+<span id="cb251-25"><a href="model-comparison-and-regularization.html#cb251-25"></a>         <span class="dt">sample =</span> <span class="kw">c</span>(<span class="st">&#39;in-sample&#39;</span>, <span class="st">&#39;out-of-sample&#39;</span>), </span>
+<span id="cb251-26"><a href="model-comparison-and-regularization.html#cb251-26"></a>         <span class="dt">deviance =</span> <span class="kw">c</span>(deviance_train <span class="op">/</span><span class="st"> </span>ntrain,</span>
+<span id="cb251-27"><a href="model-comparison-and-regularization.html#cb251-27"></a>                      deviance_test <span class="op">/</span><span class="st"> </span>(N <span class="op">-</span><span class="st"> </span>ntrain))</span>
+<span id="cb251-28"><a href="model-comparison-and-regularization.html#cb251-28"></a>  )</span>
+<span id="cb251-29"><a href="model-comparison-and-regularization.html#cb251-29"></a>}</span></code></pre></div>
 <p>Below shows the in-sample and out-of-sample elpd for linear model:</p>
-<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb234-1" data-line-number="1"><span class="kw">deviance_kidiq</span>(<span class="dt">degree =</span> <span class="dv">1</span>, <span class="dt">train =</span> train)</a></code></pre></div>
+<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="model-comparison-and-regularization.html#cb252-1"></a><span class="kw">deviance_kidiq</span>(<span class="dt">degree =</span> <span class="dv">1</span>, <span class="dt">train =</span> train)</span></code></pre></div>
 <pre><code>&gt;# # A tibble: 2 x 3
 &gt;#   degree sample        deviance
 &gt;#    &lt;dbl&gt; &lt;chr&gt;            &lt;dbl&gt;
 &gt;# 1      1 in-sample         7.92
 &gt;# 2      1 out-of-sample     8.88</code></pre>
 <p>And for quadratic:</p>
-<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb236-1" data-line-number="1"><span class="kw">deviance_kidiq</span>(<span class="dt">degree =</span> <span class="dv">2</span>, <span class="dt">train =</span> train)</a></code></pre></div>
+<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="model-comparison-and-regularization.html#cb254-1"></a><span class="kw">deviance_kidiq</span>(<span class="dt">degree =</span> <span class="dv">2</span>, <span class="dt">train =</span> train)</span></code></pre></div>
 <pre><code>&gt;# # A tibble: 2 x 3
 &gt;#   degree sample        deviance
 &gt;#    &lt;dbl&gt; &lt;chr&gt;            &lt;dbl&gt;
@@ -682,24 +689,24 @@ for the hold-out data. Note also because the data sets have different size, I
 divide the deviance by the sample size so that they can be compared.</p>
 <p>Now let’s run an experiment to check the elpd with different degrees polynomial,
 with a training sample size of 60:</p>
-<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb238-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">1733</span>)</a>
-<a class="sourceLine" id="cb238-2" data-line-number="2"><span class="co"># Use the `map` function to run different polynomials, and use the `rerun`</span></a>
-<a class="sourceLine" id="cb238-3" data-line-number="3"><span class="co"># function run the deviance 100 times. The code below runs `deviance_kidiq` by</span></a>
-<a class="sourceLine" id="cb238-4" data-line-number="4"><span class="co"># randomly sampling 30 training samples 100 times, and compute the in-sample and</span></a>
-<a class="sourceLine" id="cb238-5" data-line-number="5"><span class="co"># out-of-sample deviance for each.</span></a>
-<a class="sourceLine" id="cb238-6" data-line-number="6"><span class="co"># rerun(100, deviance_kidiq(degree = 1, train = 30L)) %&gt;% </span></a>
-<a class="sourceLine" id="cb238-7" data-line-number="7"><span class="co">#   bind_rows()</span></a>
-<a class="sourceLine" id="cb238-8" data-line-number="8"><span class="co"># Now run 1 to 8 degree polynomial, each 1000 times:</span></a>
-<a class="sourceLine" id="cb238-9" data-line-number="9">dev_df &lt;-<span class="st"> </span><span class="kw">map_df</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, </a>
-<a class="sourceLine" id="cb238-10" data-line-number="10">                 <span class="op">~</span><span class="st"> </span><span class="kw">rerun</span>(<span class="dv">1000</span>, <span class="kw">deviance_kidiq</span>(<span class="dt">degree =</span> .x, <span class="dt">train =</span> 60L)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb238-11" data-line-number="11"><span class="st">                   </span>bind_rows)</a>
-<a class="sourceLine" id="cb238-12" data-line-number="12"><span class="co"># Plot the results</span></a>
-<a class="sourceLine" id="cb238-13" data-line-number="13">dev_df <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb238-14" data-line-number="14"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> degree, <span class="dt">y =</span> deviance, <span class="dt">col =</span> sample)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb238-15" data-line-number="15"><span class="st">  </span><span class="kw">stat_summary</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb238-16" data-line-number="16"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">geom =</span> <span class="st">&quot;line&quot;</span>)</a></code></pre></div>
-<pre><code>&gt;# No summary function supplied, defaulting to `mean_se()
-&gt;# No summary function supplied, defaulting to `mean_se()</code></pre>
+<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="model-comparison-and-regularization.html#cb256-1"></a><span class="kw">set.seed</span>(<span class="dv">1733</span>)</span>
+<span id="cb256-2"><a href="model-comparison-and-regularization.html#cb256-2"></a><span class="co"># Use the `map` function to run different polynomials, and use the `rerun`</span></span>
+<span id="cb256-3"><a href="model-comparison-and-regularization.html#cb256-3"></a><span class="co"># function run the deviance 100 times. The code below runs `deviance_kidiq` by</span></span>
+<span id="cb256-4"><a href="model-comparison-and-regularization.html#cb256-4"></a><span class="co"># randomly sampling 30 training samples 100 times, and compute the in-sample and</span></span>
+<span id="cb256-5"><a href="model-comparison-and-regularization.html#cb256-5"></a><span class="co"># out-of-sample deviance for each.</span></span>
+<span id="cb256-6"><a href="model-comparison-and-regularization.html#cb256-6"></a><span class="co"># rerun(100, deviance_kidiq(degree = 1, train = 30L)) %&gt;% </span></span>
+<span id="cb256-7"><a href="model-comparison-and-regularization.html#cb256-7"></a><span class="co">#   bind_rows()</span></span>
+<span id="cb256-8"><a href="model-comparison-and-regularization.html#cb256-8"></a><span class="co"># Now run 1 to 8 degree polynomial, each 1000 times:</span></span>
+<span id="cb256-9"><a href="model-comparison-and-regularization.html#cb256-9"></a>dev_df &lt;-<span class="st"> </span><span class="kw">map_df</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, </span>
+<span id="cb256-10"><a href="model-comparison-and-regularization.html#cb256-10"></a>                 <span class="op">~</span><span class="st"> </span><span class="kw">rerun</span>(<span class="dv">1000</span>, <span class="kw">deviance_kidiq</span>(<span class="dt">degree =</span> .x, <span class="dt">train =</span> 60L)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb256-11"><a href="model-comparison-and-regularization.html#cb256-11"></a><span class="st">                   </span>bind_rows)</span>
+<span id="cb256-12"><a href="model-comparison-and-regularization.html#cb256-12"></a><span class="co"># Plot the results</span></span>
+<span id="cb256-13"><a href="model-comparison-and-regularization.html#cb256-13"></a>dev_df <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb256-14"><a href="model-comparison-and-regularization.html#cb256-14"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> degree, <span class="dt">y =</span> deviance, <span class="dt">col =</span> sample)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb256-15"><a href="model-comparison-and-regularization.html#cb256-15"></a><span class="st">  </span><span class="kw">stat_summary</span>() <span class="op">+</span><span class="st"> </span></span>
+<span id="cb256-16"><a href="model-comparison-and-regularization.html#cb256-16"></a><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">geom =</span> <span class="st">&quot;line&quot;</span>)</span></code></pre></div>
+<pre><code>&gt;# No summary function supplied, defaulting to `mean_se()`
+&gt;# No summary function supplied, defaulting to `mean_se()`</code></pre>
 <p><img src="09_model_comparison_files/figure-html/dev_df-plot-1.png" width="480" /></p>
 <p>As you can see, the in-sample deviance (red line) keeps decreasing, indicating
 that a more complex model fit the data better, which is always the case. So if
@@ -738,9 +745,9 @@ the <span class="math inline">\(M_1\)</span> is normal, and that the sample size
 parameters. It is nothing Bayesian because there is no posterior distributions
 used, as <span class="math inline">\(D\)</span> is computed only based on the MLE. Also, it does not take into
 account any prior information.</p>
-<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb240-1" data-line-number="1"><span class="co"># Frequentist model</span></a>
-<a class="sourceLine" id="cb240-2" data-line-number="2">m1_freq &lt;-<span class="st"> </span><span class="kw">lm</span>(m1<span class="op">$</span>formula, <span class="dt">data =</span> m1<span class="op">$</span>data)</a>
-<a class="sourceLine" id="cb240-3" data-line-number="3"><span class="kw">AIC</span>(m1_freq)</a></code></pre></div>
+<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="model-comparison-and-regularization.html#cb258-1"></a><span class="co"># Frequentist model</span></span>
+<span id="cb258-2"><a href="model-comparison-and-regularization.html#cb258-2"></a>m1_freq &lt;-<span class="st"> </span><span class="kw">lm</span>(m1<span class="op">$</span>formula, <span class="dt">data =</span> m1<span class="op">$</span>data)</span>
+<span id="cb258-3"><a href="model-comparison-and-regularization.html#cb258-3"></a><span class="kw">AIC</span>(m1_freq)</span></code></pre></div>
 <pre><code>&gt;# [1] -240</code></pre>
 </div>
 <div id="deviance-information-criteria-dic" class="section level3">
@@ -752,23 +759,23 @@ posterior distribution of the parameters. The general formula for DIC is</p>
 <p>where <span class="math inline">\(p_D\)</span> is the effective number of parameters estimated in the Markov chain.
 Although DIC does take into account the prior distributions, and <span class="math inline">\(\mathrm{E}(D | \boldsymbol{\mathbf{y}})\)</span> is based on a posterior distribution, it still works best when the posterior
 distributions are multivariate normal, and that <span class="math inline">\(N \gg p\)</span>.</p>
-<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb242-1" data-line-number="1"><span class="co"># Function to compute DIC</span></a>
-<a class="sourceLine" id="cb242-2" data-line-number="2">dic_brmsfit &lt;-<span class="st"> </span><span class="cf">function</span>(object) {</a>
-<a class="sourceLine" id="cb242-3" data-line-number="3">  Dbar &lt;-<span class="st"> </span><span class="dv">-2</span> <span class="op">*</span><span class="st"> </span><span class="kw">mean</span>(<span class="kw">rowSums</span>(<span class="kw">log_lik</span>(object)))</a>
-<a class="sourceLine" id="cb242-4" data-line-number="4">  coef_pmean &lt;-<span class="st"> </span><span class="kw">unname</span>(<span class="kw">fixef</span>(m1)[ , <span class="st">&quot;Estimate&quot;</span>])</a>
-<a class="sourceLine" id="cb242-5" data-line-number="5">  X &lt;-<span class="st"> </span><span class="kw">model.matrix</span>(<span class="kw">as.formula</span>(object<span class="op">$</span>formula), object<span class="op">$</span>data)</a>
-<a class="sourceLine" id="cb242-6" data-line-number="6">  res &lt;-<span class="st"> </span>res &lt;-<span class="st"> </span><span class="kw">residuals</span>(m1)[ , <span class="st">&quot;Estimate&quot;</span>]</a>
-<a class="sourceLine" id="cb242-7" data-line-number="7">  N &lt;-<span class="st"> </span><span class="kw">length</span>(res)</a>
-<a class="sourceLine" id="cb242-8" data-line-number="8">  sigma &lt;-<span class="st"> </span><span class="kw">posterior_summary</span>(m1, <span class="dt">pars =</span> <span class="st">&quot;sigma&quot;</span>)[ , <span class="st">&quot;Estimate&quot;</span>]</a>
-<a class="sourceLine" id="cb242-9" data-line-number="9">  Dhat &lt;-<span class="st"> </span><span class="dv">-2</span> <span class="op">*</span><span class="st"> </span><span class="kw">sum</span>(<span class="kw">dnorm</span>(res, <span class="dt">sd =</span> sigma, <span class="dt">log =</span> <span class="ot">TRUE</span>))</a>
-<a class="sourceLine" id="cb242-10" data-line-number="10">  p &lt;-<span class="st"> </span>Dbar <span class="op">-</span><span class="st"> </span>Dhat</a>
-<a class="sourceLine" id="cb242-11" data-line-number="11">  elpd &lt;-<span class="st"> </span>Dhat <span class="op">/</span><span class="st"> </span><span class="dv">-2</span> <span class="op">-</span><span class="st"> </span>p</a>
-<a class="sourceLine" id="cb242-12" data-line-number="12">  <span class="kw">data.frame</span>(<span class="dt">elpd_dic =</span> elpd, <span class="dt">p_dic =</span> p, <span class="dt">dic =</span> Dhat <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>p, </a>
-<a class="sourceLine" id="cb242-13" data-line-number="13">             <span class="dt">row.names =</span> <span class="st">&quot;Estimate&quot;</span>)</a>
-<a class="sourceLine" id="cb242-14" data-line-number="14">}</a>
-<a class="sourceLine" id="cb242-15" data-line-number="15"><span class="kw">dic_brmsfit</span>(m1)</a></code></pre></div>
+<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="model-comparison-and-regularization.html#cb260-1"></a><span class="co"># Function to compute DIC</span></span>
+<span id="cb260-2"><a href="model-comparison-and-regularization.html#cb260-2"></a>dic_brmsfit &lt;-<span class="st"> </span><span class="cf">function</span>(object) {</span>
+<span id="cb260-3"><a href="model-comparison-and-regularization.html#cb260-3"></a>  Dbar &lt;-<span class="st"> </span><span class="dv">-2</span> <span class="op">*</span><span class="st"> </span><span class="kw">mean</span>(<span class="kw">rowSums</span>(<span class="kw">log_lik</span>(object)))</span>
+<span id="cb260-4"><a href="model-comparison-and-regularization.html#cb260-4"></a>  coef_pmean &lt;-<span class="st"> </span><span class="kw">unname</span>(<span class="kw">fixef</span>(m1)[ , <span class="st">&quot;Estimate&quot;</span>])</span>
+<span id="cb260-5"><a href="model-comparison-and-regularization.html#cb260-5"></a>  X &lt;-<span class="st"> </span><span class="kw">model.matrix</span>(<span class="kw">as.formula</span>(object<span class="op">$</span>formula), object<span class="op">$</span>data)</span>
+<span id="cb260-6"><a href="model-comparison-and-regularization.html#cb260-6"></a>  res &lt;-<span class="st"> </span>res &lt;-<span class="st"> </span><span class="kw">residuals</span>(m1)[ , <span class="st">&quot;Estimate&quot;</span>]</span>
+<span id="cb260-7"><a href="model-comparison-and-regularization.html#cb260-7"></a>  N &lt;-<span class="st"> </span><span class="kw">length</span>(res)</span>
+<span id="cb260-8"><a href="model-comparison-and-regularization.html#cb260-8"></a>  sigma &lt;-<span class="st"> </span><span class="kw">posterior_summary</span>(m1, <span class="dt">pars =</span> <span class="st">&quot;sigma&quot;</span>)[ , <span class="st">&quot;Estimate&quot;</span>]</span>
+<span id="cb260-9"><a href="model-comparison-and-regularization.html#cb260-9"></a>  Dhat &lt;-<span class="st"> </span><span class="dv">-2</span> <span class="op">*</span><span class="st"> </span><span class="kw">sum</span>(<span class="kw">dnorm</span>(res, <span class="dt">sd =</span> sigma, <span class="dt">log =</span> <span class="ot">TRUE</span>))</span>
+<span id="cb260-10"><a href="model-comparison-and-regularization.html#cb260-10"></a>  p &lt;-<span class="st"> </span>Dbar <span class="op">-</span><span class="st"> </span>Dhat</span>
+<span id="cb260-11"><a href="model-comparison-and-regularization.html#cb260-11"></a>  elpd &lt;-<span class="st"> </span>Dhat <span class="op">/</span><span class="st"> </span><span class="dv">-2</span> <span class="op">-</span><span class="st"> </span>p</span>
+<span id="cb260-12"><a href="model-comparison-and-regularization.html#cb260-12"></a>  <span class="kw">data.frame</span>(<span class="dt">elpd_dic =</span> elpd, <span class="dt">p_dic =</span> p, <span class="dt">dic =</span> Dhat <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>p, </span>
+<span id="cb260-13"><a href="model-comparison-and-regularization.html#cb260-13"></a>             <span class="dt">row.names =</span> <span class="st">&quot;Estimate&quot;</span>)</span>
+<span id="cb260-14"><a href="model-comparison-and-regularization.html#cb260-14"></a>}</span>
+<span id="cb260-15"><a href="model-comparison-and-regularization.html#cb260-15"></a><span class="kw">dic_brmsfit</span>(m1)</span></code></pre></div>
 <pre><code>&gt;#          elpd_dic p_dic  dic
-&gt;# Estimate      120  2.92 -240</code></pre>
+&gt;# Estimate      120  3.01 -240</code></pre>
 </div>
 <div id="watanabe-akaike-information-criteria-waic" class="section level3">
 <h3><span class="header-section-number">9.4.3</span> Watanabe-Akaike Information Criteria (WAIC)</h3>
@@ -782,14 +789,14 @@ of the <span class="math inline">\(i\)</span>th observation. The WAIC incorporat
 of pointwise likelihood makes it more robust when the posterior distributions
 deviate from normality. In general, WAIC is a better estimate of the
 out-of-sample deviance than AIC and DIC.</p>
-<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb244-1" data-line-number="1"><span class="kw">waic</span>(m1)  <span class="co"># built-in function in brms</span></a></code></pre></div>
+<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="model-comparison-and-regularization.html#cb262-1"></a><span class="kw">waic</span>(m1)  <span class="co"># built-in function in brms</span></span></code></pre></div>
 <pre><code>&gt;# 
 &gt;# Computed from 4000 by 434 log-likelihood matrix
 &gt;# 
 &gt;#           Estimate   SE
-&gt;# elpd_waic    120.1 14.5
-&gt;# p_waic         2.8  0.3
-&gt;# waic        -240.3 29.0</code></pre>
+&gt;# elpd_waic    120.0 14.5
+&gt;# p_waic         2.9  0.3
+&gt;# waic        -240.1 28.9</code></pre>
 </div>
 <div id="leave-one-out-cross-validation" class="section level3">
 <h3><span class="header-section-number">9.4.4</span> Leave-One-Out Cross Validation</h3>
@@ -805,12 +812,12 @@ that closely approximates the results that would be obtained by collecting new
 data and doing the validation. To make it more concrete, we can go back to the
 <code>kidiq</code> data with <code>mom_iq</code> predicting <code>kid_score</code>. We can do this for case #286,
 as an example:</p>
-<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb246-1" data-line-number="1"><span class="co"># Estimate the model without case #286</span></a>
-<a class="sourceLine" id="cb246-2" data-line-number="2">m1_no286 &lt;-<span class="st"> </span><span class="kw">update</span>(m1, <span class="dt">newdata =</span> kidiq100[<span class="op">-</span><span class="dv">286</span>, ])</a></code></pre></div>
+<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="model-comparison-and-regularization.html#cb264-1"></a><span class="co"># Estimate the model without case #286</span></span>
+<span id="cb264-2"><a href="model-comparison-and-regularization.html#cb264-2"></a>m1_no286 &lt;-<span class="st"> </span><span class="kw">update</span>(m1, <span class="dt">newdata =</span> kidiq100[<span class="op">-</span><span class="dv">286</span>, ])</span></code></pre></div>
 <pre><code>&gt;# Start sampling</code></pre>
-<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb248-1" data-line-number="1"><span class="co"># The log predictive density for case #286</span></a>
-<a class="sourceLine" id="cb248-2" data-line-number="2"><span class="kw">mean</span>(<span class="kw">log_lik</span>(m1_no286, <span class="dt">newdata =</span> kidiq100[<span class="dv">286</span>, ]))</a></code></pre></div>
-<pre><code>&gt;# [1] -4.19</code></pre>
+<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="model-comparison-and-regularization.html#cb266-1"></a><span class="co"># The log predictive density for case #286</span></span>
+<span id="cb266-2"><a href="model-comparison-and-regularization.html#cb266-2"></a><span class="kw">mean</span>(<span class="kw">log_lik</span>(m1_no286, <span class="dt">newdata =</span> kidiq100[<span class="dv">286</span>, ]))</span></code></pre></div>
+<pre><code>&gt;# [1] -4.2</code></pre>
 <p>Because LOO-IC requires fitting the model <span class="math inline">\(N\)</span> times, it is generally very
 computational intensive. There are, however, shortcuts for some common models
 that make it computed faster. Otherwise, WAIC can be treated as a fast
@@ -819,22 +826,22 @@ estimate of out-of-sample deviance. In STAN, it uses the so called Pareto
 smoothed importance sampling (PSIS) to make the process faster, without having
 to repeat the process <span class="math inline">\(N\)</span> times.</p>
 <p>Here is the LOO-IC for the model:</p>
-<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb250-1" data-line-number="1"><span class="kw">loo</span>(m1)</a></code></pre></div>
+<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="model-comparison-and-regularization.html#cb268-1"></a><span class="kw">loo</span>(m1)</span></code></pre></div>
 <pre><code>&gt;# 
 &gt;# Computed from 4000 by 434 log-likelihood matrix
 &gt;# 
 &gt;#          Estimate   SE
-&gt;# elpd_loo    120.1 14.5
-&gt;# p_loo         2.8  0.3
-&gt;# looic      -240.3 29.0
+&gt;# elpd_loo    120.0 14.5
+&gt;# p_loo         2.9  0.3
+&gt;# looic      -240.1 28.9
 &gt;# ------
 &gt;# Monte Carlo SE of elpd_loo is 0.0.
 &gt;# 
 &gt;# All Pareto k estimates are good (k &lt; 0.5).
 &gt;# See help(&#39;pareto-k-diagnostic&#39;) for details.</code></pre>
 <p>You can save the WAIC and the LOO-IC information to the fitted result:</p>
-<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb252-1" data-line-number="1">m1 &lt;-<span class="st"> </span><span class="kw">add_criterion</span>(m1, <span class="kw">c</span>(<span class="st">&quot;loo&quot;</span>, <span class="st">&quot;waic&quot;</span>))</a></code></pre></div>
-<p>See <span class="citation">Vehtari, Gelman, and Gabry (<a href="#ref-Vehtari2016">2016</a>)</span> for more discussions on WAIC and LOO-IC.</p>
+<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="model-comparison-and-regularization.html#cb270-1"></a>m1 &lt;-<span class="st"> </span><span class="kw">add_criterion</span>(m1, <span class="kw">c</span>(<span class="st">&quot;loo&quot;</span>, <span class="st">&quot;waic&quot;</span>))</span></code></pre></div>
+<p>See <span class="citation">Vehtari, Gelman, and Gabry (<a href="#ref-Vehtari2016" role="doc-biblioref">2016</a>)</span> for more discussions on WAIC and LOO-IC.</p>
 <hr />
 </div>
 <div id="example" class="section level3">
@@ -858,23 +865,23 @@ saying that the coefficients for <code>mom_hs</code> and <code>mom_age</code> ar
 model added <code>mom_hs</code> as a predictor. The third model includes an additional
 interaction term, whereas the fourth model also include <code>mom_age</code>. Now,
 we can compare the four models:</p>
-<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb253-1" data-line-number="1"><span class="kw">loo_compare</span>(m1, m2, m3, m4)</a></code></pre></div>
+<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="model-comparison-and-regularization.html#cb271-1"></a><span class="kw">loo_compare</span>(m1, m2, m3, m4)</span></code></pre></div>
 <pre><code>&gt;#    elpd_diff se_diff
 &gt;# m3  0.0       0.0   
-&gt;# m4 -0.5       1.1   
+&gt;# m4 -0.4       1.1   
 &gt;# m2 -3.4       2.5   
 &gt;# m1 -6.0       3.9</code></pre>
-<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb255-1" data-line-number="1"><span class="co"># m3 is the best</span></a></code></pre></div>
-<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb256-1" data-line-number="1"><span class="co"># show details</span></a>
-<a class="sourceLine" id="cb256-2" data-line-number="2"><span class="kw">loo</span>(m1, m2, m3, m4)</a></code></pre></div>
+<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="model-comparison-and-regularization.html#cb273-1"></a><span class="co"># m3 is the best</span></span></code></pre></div>
+<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb274-1"><a href="model-comparison-and-regularization.html#cb274-1"></a><span class="co"># show details</span></span>
+<span id="cb274-2"><a href="model-comparison-and-regularization.html#cb274-2"></a><span class="kw">loo</span>(m1, m2, m3, m4)</span></code></pre></div>
 <pre><code>&gt;# Output of model &#39;m1&#39;:
 &gt;# 
 &gt;# Computed from 4000 by 434 log-likelihood matrix
 &gt;# 
 &gt;#          Estimate   SE
-&gt;# elpd_loo    120.1 14.5
-&gt;# p_loo         2.8  0.3
-&gt;# looic      -240.3 29.0
+&gt;# elpd_loo    120.0 14.5
+&gt;# p_loo         2.9  0.3
+&gt;# looic      -240.1 28.9
 &gt;# ------
 &gt;# Monte Carlo SE of elpd_loo is 0.0.
 &gt;# 
@@ -886,9 +893,9 @@ we can compare the four models:</p>
 &gt;# Computed from 4000 by 434 log-likelihood matrix
 &gt;# 
 &gt;#          Estimate   SE
-&gt;# elpd_loo    122.7 14.2
-&gt;# p_loo         3.9  0.4
-&gt;# looic      -245.3 28.4
+&gt;# elpd_loo    122.6 14.2
+&gt;# p_loo         4.0  0.4
+&gt;# looic      -245.2 28.4
 &gt;# ------
 &gt;# Monte Carlo SE of elpd_loo is 0.0.
 &gt;# 
@@ -900,9 +907,9 @@ we can compare the four models:</p>
 &gt;# Computed from 4000 by 434 log-likelihood matrix
 &gt;# 
 &gt;#          Estimate   SE
-&gt;# elpd_loo    126.1 14.3
-&gt;# p_loo         4.8  0.5
-&gt;# looic      -252.2 28.7
+&gt;# elpd_loo    126.0 14.3
+&gt;# p_loo         4.9  0.5
+&gt;# looic      -252.0 28.7
 &gt;# ------
 &gt;# Monte Carlo SE of elpd_loo is 0.0.
 &gt;# 
@@ -914,9 +921,9 @@ we can compare the four models:</p>
 &gt;# Computed from 4000 by 434 log-likelihood matrix
 &gt;# 
 &gt;#          Estimate   SE
-&gt;# elpd_loo    125.6 14.4
-&gt;# p_loo         6.0  0.6
-&gt;# looic      -251.1 28.9
+&gt;# elpd_loo    125.7 14.4
+&gt;# p_loo         5.9  0.6
+&gt;# looic      -251.3 28.8
 &gt;# ------
 &gt;# Monte Carlo SE of elpd_loo is 0.0.
 &gt;# 
@@ -926,7 +933,7 @@ we can compare the four models:</p>
 &gt;# Model comparisons:
 &gt;#    elpd_diff se_diff
 &gt;# m3  0.0       0.0   
-&gt;# m4 -0.5       1.1   
+&gt;# m4 -0.4       1.1   
 &gt;# m2 -3.4       2.5   
 &gt;# m1 -6.0       3.9</code></pre>
 <p>Model 3 has the lowest LOO-IC, although if you compare the difference in LOO-IC
@@ -946,10 +953,10 @@ they make somewhat different predictions. Instead, we can perform <em>stacking</
 weights that are based on their information criteria performance. Stacking
 approaches this by optimizing the leave-one-out mean squared error in the
 resulting prediction, whereas model averaging preserves the uncertainty and was
-not optimized for that task. The technical details can be found in <span class="citation">Yao et al. (<a href="#ref-Yao2018">2018</a>)</span>.</p>
+not optimized for that task. The technical details can be found in <span class="citation">Yao et al. (<a href="#ref-Yao2018" role="doc-biblioref">2018</a>)</span>.</p>
 <p>Note that the conventional Bayesian model averaging used the posterior model
-probability <span class="citation">(Hoeting et al. <a href="#ref-hoeting1999bayesian">1999</a>)</span>, which are approximated by the BIC. The
-discussion in this note is based on more recent discussion in, e.g., <span class="citation">Yao et al. (<a href="#ref-Yao2018">2018</a>)</span>.</p>
+probability <span class="citation">(Hoeting et al. <a href="#ref-hoeting1999bayesian" role="doc-biblioref">1999</a>)</span>, which are approximated by the BIC. The
+discussion in this note is based on more recent discussion in, e.g., <span class="citation">Yao et al. (<a href="#ref-Yao2018" role="doc-biblioref">2018</a>)</span>.</p>
 <p>Let’s run four models on some training data by randomly splitting the data into
 half. First rescale some of the variables:</p>
 <!-- ```{r kidiq100, echo=TRUE} -->
@@ -975,48 +982,48 @@ half. First rescale some of the variables:</p>
             \beta_3 (\texttt{mom_iq}_i \times \texttt{mom_hs}_i) + 
             \beta_4 (\texttt{mom_age}_i)
 \end{align*}\]</span></p>
-<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb258-1" data-line-number="1"><span class="co"># mom_iq with centering</span></a>
-<a class="sourceLine" id="cb258-2" data-line-number="2">m1 &lt;-<span class="st"> </span><span class="kw">brm</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_iq_c, <span class="dt">data =</span> kidiq100, </a>
-<a class="sourceLine" id="cb258-3" data-line-number="3">          <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </a>
-<a class="sourceLine" id="cb258-4" data-line-number="4">                    <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>), </a>
-<a class="sourceLine" id="cb258-5" data-line-number="5">                    <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </a>
-<a class="sourceLine" id="cb258-6" data-line-number="6">          <span class="dt">seed =</span> <span class="dv">2302</span>, </a>
-<a class="sourceLine" id="cb258-7" data-line-number="7">          <span class="dt">chains =</span> 2L, <span class="dt">cores =</span> 2L</a>
-<a class="sourceLine" id="cb258-8" data-line-number="8">)</a>
-<a class="sourceLine" id="cb258-9" data-line-number="9">m1 &lt;-<span class="st"> </span><span class="kw">add_criterion</span>(m1, <span class="kw">c</span>(<span class="st">&quot;loo&quot;</span>, <span class="st">&quot;waic&quot;</span>))</a>
-<a class="sourceLine" id="cb258-10" data-line-number="10"><span class="co"># Use `update` will sometimes avoid recompiling</span></a>
-<a class="sourceLine" id="cb258-11" data-line-number="11">m2 &lt;-<span class="st"> </span><span class="kw">update</span>(m1, kid_score <span class="op">~</span><span class="st"> </span>mom_iq_c <span class="op">+</span><span class="st"> </span>mom_hs, <span class="dt">newdata =</span> kidiq100)</a>
-<a class="sourceLine" id="cb258-12" data-line-number="12">m2 &lt;-<span class="st"> </span><span class="kw">add_criterion</span>(m2, <span class="kw">c</span>(<span class="st">&quot;loo&quot;</span>, <span class="st">&quot;waic&quot;</span>))</a>
-<a class="sourceLine" id="cb258-13" data-line-number="13">m3 &lt;-<span class="st"> </span><span class="kw">update</span>(m2, kid_score <span class="op">~</span><span class="st"> </span>mom_iq_c <span class="op">*</span><span class="st"> </span>mom_hs, </a>
-<a class="sourceLine" id="cb258-14" data-line-number="14">             <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="fl">0.5</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>, </a>
-<a class="sourceLine" id="cb258-15" data-line-number="15">                             <span class="dt">coef =</span> <span class="st">&quot;mom_iq_c:mom_hsyes&quot;</span>))</a>
-<a class="sourceLine" id="cb258-16" data-line-number="16">)</a>
-<a class="sourceLine" id="cb258-17" data-line-number="17">m3 &lt;-<span class="st"> </span><span class="kw">add_criterion</span>(m3, <span class="kw">c</span>(<span class="st">&quot;loo&quot;</span>, <span class="st">&quot;waic&quot;</span>))</a>
-<a class="sourceLine" id="cb258-18" data-line-number="18">m4 &lt;-<span class="st"> </span><span class="kw">update</span>(m3, kid_score <span class="op">~</span><span class="st"> </span>mom_iq_c <span class="op">*</span><span class="st"> </span>mom_hs <span class="op">+</span><span class="st"> </span>mom_age_c, <span class="dt">newdata =</span> kidiq100)</a>
-<a class="sourceLine" id="cb258-19" data-line-number="19">m4 &lt;-<span class="st"> </span><span class="kw">add_criterion</span>(m4, <span class="kw">c</span>(<span class="st">&quot;loo&quot;</span>, <span class="st">&quot;waic&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb276-1"><a href="model-comparison-and-regularization.html#cb276-1"></a><span class="co"># mom_iq with centering</span></span>
+<span id="cb276-2"><a href="model-comparison-and-regularization.html#cb276-2"></a>m1 &lt;-<span class="st"> </span><span class="kw">brm</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_iq_c, <span class="dt">data =</span> kidiq100, </span>
+<span id="cb276-3"><a href="model-comparison-and-regularization.html#cb276-3"></a>          <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </span>
+<span id="cb276-4"><a href="model-comparison-and-regularization.html#cb276-4"></a>                    <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>), </span>
+<span id="cb276-5"><a href="model-comparison-and-regularization.html#cb276-5"></a>                    <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </span>
+<span id="cb276-6"><a href="model-comparison-and-regularization.html#cb276-6"></a>          <span class="dt">seed =</span> <span class="dv">2302</span>, </span>
+<span id="cb276-7"><a href="model-comparison-and-regularization.html#cb276-7"></a>          <span class="dt">chains =</span> 2L, <span class="dt">cores =</span> 2L</span>
+<span id="cb276-8"><a href="model-comparison-and-regularization.html#cb276-8"></a>)</span>
+<span id="cb276-9"><a href="model-comparison-and-regularization.html#cb276-9"></a>m1 &lt;-<span class="st"> </span><span class="kw">add_criterion</span>(m1, <span class="kw">c</span>(<span class="st">&quot;loo&quot;</span>, <span class="st">&quot;waic&quot;</span>))</span>
+<span id="cb276-10"><a href="model-comparison-and-regularization.html#cb276-10"></a><span class="co"># Use `update` will sometimes avoid recompiling</span></span>
+<span id="cb276-11"><a href="model-comparison-and-regularization.html#cb276-11"></a>m2 &lt;-<span class="st"> </span><span class="kw">update</span>(m1, kid_score <span class="op">~</span><span class="st"> </span>mom_iq_c <span class="op">+</span><span class="st"> </span>mom_hs, <span class="dt">newdata =</span> kidiq100)</span>
+<span id="cb276-12"><a href="model-comparison-and-regularization.html#cb276-12"></a>m2 &lt;-<span class="st"> </span><span class="kw">add_criterion</span>(m2, <span class="kw">c</span>(<span class="st">&quot;loo&quot;</span>, <span class="st">&quot;waic&quot;</span>))</span>
+<span id="cb276-13"><a href="model-comparison-and-regularization.html#cb276-13"></a>m3 &lt;-<span class="st"> </span><span class="kw">update</span>(m2, kid_score <span class="op">~</span><span class="st"> </span>mom_iq_c <span class="op">*</span><span class="st"> </span>mom_hs, </span>
+<span id="cb276-14"><a href="model-comparison-and-regularization.html#cb276-14"></a>             <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="fl">0.5</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>, </span>
+<span id="cb276-15"><a href="model-comparison-and-regularization.html#cb276-15"></a>                             <span class="dt">coef =</span> <span class="st">&quot;mom_iq_c:mom_hsyes&quot;</span>))</span>
+<span id="cb276-16"><a href="model-comparison-and-regularization.html#cb276-16"></a>)</span>
+<span id="cb276-17"><a href="model-comparison-and-regularization.html#cb276-17"></a>m3 &lt;-<span class="st"> </span><span class="kw">add_criterion</span>(m3, <span class="kw">c</span>(<span class="st">&quot;loo&quot;</span>, <span class="st">&quot;waic&quot;</span>))</span>
+<span id="cb276-18"><a href="model-comparison-and-regularization.html#cb276-18"></a>m4 &lt;-<span class="st"> </span><span class="kw">update</span>(m3, kid_score <span class="op">~</span><span class="st"> </span>mom_iq_c <span class="op">*</span><span class="st"> </span>mom_hs <span class="op">+</span><span class="st"> </span>mom_age_c, <span class="dt">newdata =</span> kidiq100)</span>
+<span id="cb276-19"><a href="model-comparison-and-regularization.html#cb276-19"></a>m4 &lt;-<span class="st"> </span><span class="kw">add_criterion</span>(m4, <span class="kw">c</span>(<span class="st">&quot;loo&quot;</span>, <span class="st">&quot;waic&quot;</span>))</span></code></pre></div>
 <div id="model-weights" class="section level3">
 <h3><span class="header-section-number">9.5.1</span> Model Weights</h3>
 <p>We have seen that <code>m3</code> and <code>m4</code> gave the best LOO-IC and WAIC:</p>
-<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb259-1" data-line-number="1"><span class="kw">loo_compare</span>(m1, m2, m3, m4)</a></code></pre></div>
+<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="model-comparison-and-regularization.html#cb277-1"></a><span class="kw">loo_compare</span>(m1, m2, m3, m4)</span></code></pre></div>
 <pre><code>&gt;#    elpd_diff se_diff
 &gt;# m3  0.0       0.0   
-&gt;# m4 -0.9       1.1   
-&gt;# m2 -3.7       2.4   
-&gt;# m1 -6.3       3.9</code></pre>
+&gt;# m4 -0.6       1.2   
+&gt;# m1 -6.2       3.9   
+&gt;# m2 -6.2       3.9</code></pre>
 <p>So it makes sense that if we’re to assign weights, <code>m3</code> should get most weights.
 Let’s check the following:</p>
-<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb261-1" data-line-number="1"><span class="co"># Weights based on WAIC</span></a>
-<a class="sourceLine" id="cb261-2" data-line-number="2">waic_wts &lt;-<span class="st"> </span><span class="kw">model_weights</span>(m1, m2, m3, m4, <span class="dt">weights =</span> <span class="st">&quot;waic&quot;</span>)</a>
-<a class="sourceLine" id="cb261-3" data-line-number="3"><span class="co"># Weights based on Pseudo-BMA (with Bayesian bootstrap)</span></a>
-<a class="sourceLine" id="cb261-4" data-line-number="4">pbma_wts &lt;-<span class="st"> </span><span class="kw">loo_model_weights</span>(m1, m2, m3, m4, <span class="dt">method =</span> <span class="st">&quot;pseudobma&quot;</span>)</a>
-<a class="sourceLine" id="cb261-5" data-line-number="5"><span class="co"># Print out the weights</span></a>
-<a class="sourceLine" id="cb261-6" data-line-number="6"><span class="kw">round</span>(<span class="kw">cbind</span>(waic_wts, pbma_wts), <span class="dv">3</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="model-comparison-and-regularization.html#cb279-1"></a><span class="co"># Weights based on WAIC</span></span>
+<span id="cb279-2"><a href="model-comparison-and-regularization.html#cb279-2"></a>waic_wts &lt;-<span class="st"> </span><span class="kw">model_weights</span>(m1, m2, m3, m4, <span class="dt">weights =</span> <span class="st">&quot;waic&quot;</span>)</span>
+<span id="cb279-3"><a href="model-comparison-and-regularization.html#cb279-3"></a><span class="co"># Weights based on Pseudo-BMA (with Bayesian bootstrap)</span></span>
+<span id="cb279-4"><a href="model-comparison-and-regularization.html#cb279-4"></a>pbma_wts &lt;-<span class="st"> </span><span class="kw">loo_model_weights</span>(m1, m2, m3, m4, <span class="dt">method =</span> <span class="st">&quot;pseudobma&quot;</span>)</span>
+<span id="cb279-5"><a href="model-comparison-and-regularization.html#cb279-5"></a><span class="co"># Print out the weights</span></span>
+<span id="cb279-6"><a href="model-comparison-and-regularization.html#cb279-6"></a><span class="kw">round</span>(<span class="kw">cbind</span>(waic_wts, pbma_wts), <span class="dv">3</span>)</span></code></pre></div>
 <pre><code>&gt;#    waic_wts pbma_wts
-&gt;# m1    0.001    0.050
-&gt;# m2    0.018    0.078
-&gt;# m3    0.687    0.566
-&gt;# m4    0.294    0.307</code></pre>
-<p>You can see <code>m3</code> would get the highest weight, but it’s only 0.687 and
+&gt;# m1    0.001    0.049
+&gt;# m2    0.001    0.073
+&gt;# m3    0.641    0.522
+&gt;# m4    0.356    0.356</code></pre>
+<p>You can see <code>m3</code> would get the highest weight, but it’s only 0.641 and
 thus less than half of the weights when all four models are considered together.</p>
 <p>In Bayesian, we want to preserve all the uncertainty in our analyses. Therefore,
 if we’re not certain which models to use and have tried multiple ones, it would
@@ -1040,38 +1047,38 @@ linear models. Whereas averaging of predictions can be done for any models,
 generally it only makes sense to average the coefficients
 Here is an example of using it for the four models and output posterior draws
 of the parameters that are weighted averages from the original models.</p>
-<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb263-1" data-line-number="1"><span class="kw">source</span>(<span class="st">&quot;../codes/pbma_brm_lm.R&quot;</span>)</a>
-<a class="sourceLine" id="cb263-2" data-line-number="2">pbma_draws &lt;-<span class="st"> </span><span class="kw">pbma_brm_lm</span>(m1, m2, m3, m4)</a></code></pre></div>
+<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="model-comparison-and-regularization.html#cb281-1"></a><span class="kw">source</span>(<span class="st">&quot;../codes/pbma_brm_lm.R&quot;</span>)</span>
+<span id="cb281-2"><a href="model-comparison-and-regularization.html#cb281-2"></a>pbma_draws &lt;-<span class="st"> </span><span class="kw">pbma_brm_lm</span>(m1, m2, m3, m4)</span></code></pre></div>
 <pre><code>&gt;# Method: pseudo-BMA+ with Bayesian bootstrap
 &gt;# ------
 &gt;#    weight
-&gt;# m1 0.043 
-&gt;# m2 0.067 
-&gt;# m3 0.577 
-&gt;# m4 0.313</code></pre>
-<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb265-1" data-line-number="1"><span class="co"># Coefficients for pseudo-BMA</span></a>
-<a class="sourceLine" id="cb265-2" data-line-number="2"><span class="kw">posterior_summary</span>(pbma_draws)</a></code></pre></div>
+&gt;# m1 0.048 
+&gt;# m2 0.074 
+&gt;# m3 0.528 
+&gt;# m4 0.349</code></pre>
+<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="model-comparison-and-regularization.html#cb283-1"></a><span class="co"># Coefficients for pseudo-BMA</span></span>
+<span id="cb283-2"><a href="model-comparison-and-regularization.html#cb283-2"></a><span class="kw">posterior_summary</span>(pbma_draws)</span></code></pre></div>
 <pre><code>&gt;#                    Estimate Est.Error     Q2.5   Q97.5
-&gt;# Intercept            0.8443    0.0144  0.81614  0.8718
-&gt;# mom_iq_c             0.8738    0.0966  0.68313  1.0595
-&gt;# mom_hsyes            0.0320    0.0156  0.00227  0.0625
-&gt;# mom_iq_c:mom_hsyes  -0.3725    0.1043 -0.57323 -0.1658
-&gt;# mom_age_c            0.0106    0.0106 -0.01000  0.0318</code></pre>
-<div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb267-1" data-line-number="1"><span class="co"># Coefficients for M3</span></a>
-<a class="sourceLine" id="cb267-2" data-line-number="2"><span class="kw">fixef</span>(m3)</a></code></pre></div>
+&gt;# Intercept            0.8442    0.0145  0.81585  0.8718
+&gt;# mom_iq_c             0.8791    0.0878  0.71526  1.0589
+&gt;# mom_hsyes            0.0311    0.0153  0.00146  0.0612
+&gt;# mom_iq_c:mom_hsyes  -0.3783    0.0952 -0.56835 -0.1972
+&gt;# mom_age_c            0.0120    0.0114 -0.00945  0.0344</code></pre>
+<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="model-comparison-and-regularization.html#cb285-1"></a><span class="co"># Coefficients for M3</span></span>
+<span id="cb285-2"><a href="model-comparison-and-regularization.html#cb285-2"></a><span class="kw">fixef</span>(m3)</span></code></pre></div>
 <pre><code>&gt;#                    Estimate Est.Error    Q2.5   Q97.5
-&gt;# Intercept            0.8488    0.0215  0.8070  0.8891
-&gt;# mom_iq_c             0.9060    0.1440  0.6291  1.1745
-&gt;# mom_hsyes            0.0336    0.0235 -0.0104  0.0804
-&gt;# mom_iq_c:mom_hsyes  -0.4126    0.1563 -0.7138 -0.1130</code></pre>
-<div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb269-1" data-line-number="1"><span class="co"># Coefficients for M4</span></a>
-<a class="sourceLine" id="cb269-2" data-line-number="2"><span class="kw">fixef</span>(m4)</a></code></pre></div>
-<pre><code>&gt;#                    Estimate Est.Error    Q2.5   Q97.5
-&gt;# Intercept            0.8375    0.0250  0.7881  0.8856
-&gt;# mom_iq_c             0.9165    0.1490  0.6424  1.2135
-&gt;# mom_hsyes            0.0276    0.0246 -0.0194  0.0762
-&gt;# mom_age_c            0.0340    0.0338 -0.0319  0.1014
-&gt;# mom_iq_c:mom_hsyes  -0.4288    0.1599 -0.7433 -0.1186</code></pre>
+&gt;# Intercept             0.849    0.0213  0.8092  0.8912
+&gt;# mom_iq_c              0.914    0.1386  0.6580  1.1873
+&gt;# mom_hsyes             0.033    0.0235 -0.0119  0.0763
+&gt;# mom_iq_c:mom_hsyes   -0.422    0.1524 -0.7179 -0.1390</code></pre>
+<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="model-comparison-and-regularization.html#cb287-1"></a><span class="co"># Coefficients for M4</span></span>
+<span id="cb287-2"><a href="model-comparison-and-regularization.html#cb287-2"></a><span class="kw">fixef</span>(m4)</span></code></pre></div>
+<pre><code>&gt;#                    Estimate Est.Error   Q2.5   Q97.5
+&gt;# Intercept            0.8383    0.0246  0.790  0.8860
+&gt;# mom_iq_c             0.9312    0.1430  0.662  1.2208
+&gt;# mom_hsyes            0.0265    0.0243 -0.022  0.0733
+&gt;# mom_age_c            0.0344    0.0325 -0.027  0.0985
+&gt;# mom_iq_c:mom_hsyes  -0.4448    0.1541 -0.766 -0.1502</code></pre>
 <p>As you can see, the coefficients from the pseudo-BMA is smaller (i.e., being
 shrunk to closer to zero) as compared to <code>m3</code> and <code>m4</code>. However, we also had
 a smaller posterior <em>SD</em> of the estimates. Simulation studies have generally
@@ -1093,23 +1100,23 @@ especially when overfitting is suspected to be a problem.</p>
 <div id="stacking" class="section level3">
 <h3><span class="header-section-number">9.5.3</span> Stacking</h3>
 <p>Stacking is another way to combine the predictions of different models. The
-technical details can be found in <span class="citation">Yao et al. (<a href="#ref-Yao2018">2018</a>)</span>, but you can obtain the predictions
+technical details can be found in <span class="citation">Yao et al. (<a href="#ref-Yao2018" role="doc-biblioref">2018</a>)</span>, but you can obtain the predictions
 using the <code>pp_average</code> function:</p>
-<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb271-1" data-line-number="1"><span class="co"># Prediction from stacking by Yao et al. (2018)</span></a>
-<a class="sourceLine" id="cb271-2" data-line-number="2">pred_stacking &lt;-<span class="st"> </span><span class="kw">pp_average</span>(m1, m2, m3, m4, <span class="dt">method =</span> <span class="st">&quot;predict&quot;</span>)</a>
-<a class="sourceLine" id="cb271-3" data-line-number="3"><span class="co"># Prediction from pseudo BMA</span></a>
-<a class="sourceLine" id="cb271-4" data-line-number="4"><span class="co"># 1. Obtain predictions from each model</span></a>
-<a class="sourceLine" id="cb271-5" data-line-number="5">pred_m1234 &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="kw">list</span>(m1, m2, m3, m4), posterior_predict)</a>
-<a class="sourceLine" id="cb271-6" data-line-number="6"><span class="co"># 2. Obtain model weights (pbma_wts as previously obtained)</span></a>
-<a class="sourceLine" id="cb271-7" data-line-number="7"><span class="co"># 3. Obtain weighted predictions</span></a>
-<a class="sourceLine" id="cb271-8" data-line-number="8">pred_pbma &lt;-<span class="st"> </span><span class="kw">map2</span>(pred_m1234, pbma_wts, <span class="st">`</span><span class="dt">*</span><span class="st">`</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb271-9" data-line-number="9"><span class="st">  </span><span class="kw">reduce</span>(<span class="st">`</span><span class="dt">+</span><span class="st">`</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb271-10" data-line-number="10"><span class="st">  </span><span class="kw">posterior_summary</span>()</a>
-<a class="sourceLine" id="cb271-11" data-line-number="11"><span class="co"># Compare the weights</span></a>
-<a class="sourceLine" id="cb271-12" data-line-number="12"><span class="kw">ggplot</span>(<span class="kw">tibble</span>(<span class="dt">stacking =</span> pred_stacking[ , <span class="st">&quot;Estimate&quot;</span>], </a>
-<a class="sourceLine" id="cb271-13" data-line-number="13">              <span class="dt">pbma =</span> pred_pbma[ , <span class="st">&quot;Estimate&quot;</span>]), <span class="kw">aes</span>(<span class="dt">x =</span> pbma, <span class="dt">y =</span> stacking)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb271-14" data-line-number="14"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb271-15" data-line-number="15"><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">slope =</span> <span class="dv">1</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="model-comparison-and-regularization.html#cb289-1"></a><span class="co"># Prediction from stacking by Yao et al. (2018)</span></span>
+<span id="cb289-2"><a href="model-comparison-and-regularization.html#cb289-2"></a>pred_stacking &lt;-<span class="st"> </span><span class="kw">pp_average</span>(m1, m2, m3, m4, <span class="dt">method =</span> <span class="st">&quot;predict&quot;</span>)</span>
+<span id="cb289-3"><a href="model-comparison-and-regularization.html#cb289-3"></a><span class="co"># Prediction from pseudo BMA</span></span>
+<span id="cb289-4"><a href="model-comparison-and-regularization.html#cb289-4"></a><span class="co"># 1. Obtain predictions from each model</span></span>
+<span id="cb289-5"><a href="model-comparison-and-regularization.html#cb289-5"></a>pred_m1234 &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="kw">list</span>(m1, m2, m3, m4), posterior_predict)</span>
+<span id="cb289-6"><a href="model-comparison-and-regularization.html#cb289-6"></a><span class="co"># 2. Obtain model weights (pbma_wts as previously obtained)</span></span>
+<span id="cb289-7"><a href="model-comparison-and-regularization.html#cb289-7"></a><span class="co"># 3. Obtain weighted predictions</span></span>
+<span id="cb289-8"><a href="model-comparison-and-regularization.html#cb289-8"></a>pred_pbma &lt;-<span class="st"> </span><span class="kw">map2</span>(pred_m1234, pbma_wts, <span class="st">`</span><span class="dt">*</span><span class="st">`</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb289-9"><a href="model-comparison-and-regularization.html#cb289-9"></a><span class="st">  </span><span class="kw">reduce</span>(<span class="st">`</span><span class="dt">+</span><span class="st">`</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb289-10"><a href="model-comparison-and-regularization.html#cb289-10"></a><span class="st">  </span><span class="kw">posterior_summary</span>()</span>
+<span id="cb289-11"><a href="model-comparison-and-regularization.html#cb289-11"></a><span class="co"># Compare the weights</span></span>
+<span id="cb289-12"><a href="model-comparison-and-regularization.html#cb289-12"></a><span class="kw">ggplot</span>(<span class="kw">tibble</span>(<span class="dt">stacking =</span> pred_stacking[ , <span class="st">&quot;Estimate&quot;</span>], </span>
+<span id="cb289-13"><a href="model-comparison-and-regularization.html#cb289-13"></a>              <span class="dt">pbma =</span> pred_pbma[ , <span class="st">&quot;Estimate&quot;</span>]), <span class="kw">aes</span>(<span class="dt">x =</span> pbma, <span class="dt">y =</span> stacking)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb289-14"><a href="model-comparison-and-regularization.html#cb289-14"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span></span>
+<span id="cb289-15"><a href="model-comparison-and-regularization.html#cb289-15"></a><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">slope =</span> <span class="dv">1</span>)</span></code></pre></div>
 <p><img src="09_model_comparison_files/figure-html/pred-stacking-pbma-1.png" width="672" /></p>
 <p>As can be seen, in this example the two methods give very similar predictions.</p>
 <div id="prediction-example" class="section level4">
@@ -1143,6 +1150,9 @@ the data. For non-informative priors, it would make sense to simply count the
 number of parameters. However, say one put a very strong prior on one of the
 regression coefficients, which has about 9 times the weights of the information
 contributed by the data:</p>
+<pre><code>&gt;# Warning: `mapping` is not used by stat_function()
+
+&gt;# Warning: `mapping` is not used by stat_function()</code></pre>
 <p><img src="09_model_comparison_files/figure-html/prior-data-weight-1.png" width="672" /></p>
 <p>Then the posterior for the parameter only uses 1/10 of the information from the
 data! Therefore, it would make more sense to count this as 0.1 parameter,
@@ -1159,9 +1169,9 @@ the blog pot by Michael Betancourt: <a href="https://betanalpha.github.io/assets
 <p>It should first be pointed out that these priors were based on the assumption
 that the predictors and the outcome has been scaled to have a standard deviation
 of one. So we will do this here:</p>
-<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb272-1" data-line-number="1"><span class="co"># For variable selection, scale the predictor and outcome to have unit variance</span></a>
-<a class="sourceLine" id="cb272-2" data-line-number="2">kidiq_std &lt;-<span class="st"> </span><span class="kw">scale</span>(kidiq)</a>
-<a class="sourceLine" id="cb272-3" data-line-number="3"><span class="kw">head</span>(kidiq_std)</a></code></pre></div>
+<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="model-comparison-and-regularization.html#cb291-1"></a><span class="co"># For variable selection, scale the predictor and outcome to have unit variance</span></span>
+<span id="cb291-2"><a href="model-comparison-and-regularization.html#cb291-2"></a>kidiq_std &lt;-<span class="st"> </span><span class="kw">scale</span>(kidiq)</span>
+<span id="cb291-3"><a href="model-comparison-and-regularization.html#cb291-3"></a><span class="kw">head</span>(kidiq_std)</span></code></pre></div>
 <pre><code>&gt;#      kid_score mom_hs  mom_iq mom_work mom_age
 &gt;# [1,]   -1.0679  0.522  1.4078   0.9342    1.56
 &gt;# [2,]    0.5489  0.522 -0.7092   0.9342    0.82
@@ -1172,7 +1182,7 @@ of one. So we will do this here:</p>
 </div>
 <div id="sparsity-inducing-priors" class="section level3">
 <h3><span class="header-section-number">9.6.2</span> Sparsity-Inducing Priors</h3>
-<p>The <em>horseshoe</em> prior <span class="citation">(Carvalho, Polson, and Scott <a href="#ref-carvalho2009">2009</a>)</span> is a type of hierarchical prior for
+<p>The <em>horseshoe</em> prior <span class="citation">(Carvalho, Polson, and Scott <a href="#ref-carvalho2009" role="doc-biblioref">2009</a>)</span> is a type of hierarchical prior for
 regression models by introducing a global scale, <span class="math inline">\(\tau\)</span>, and local scale,
 <span class="math inline">\(\lambda_m\)</span>, parameters on the priors for the regression coefficients.
 Specifically, with <span class="math inline">\(p\)</span> predictors,
@@ -1186,7 +1196,7 @@ Specifically, with <span class="math inline">\(p\)</span> predictors,
 \end{align*}\]</span></p>
 <p>The local scale, <span class="math inline">\(\lambda_m\)</span>, can flexibly shrink the coefficient to close to
 zero. Below is the implication of the prior on the shrinkage of <span class="math inline">\(\beta\)</span>:</p>
-<pre><code>&gt;# Warning: Removed 1 rows containing missing values (geom_path).</code></pre>
+<pre><code>&gt;# Warning: Removed 1 row(s) containing missing values (geom_path).</code></pre>
 <p><img src="09_model_comparison_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
 <p>The U-shape here means that, for coefficients that are weakly supported by the
 data, the horseshoe will shrink it to very close to zero, whereas for
@@ -1194,21 +1204,24 @@ coefficients that are more strongly supported by the data, the horseshoe will
 not shrink it much.</p>
 <p>The red curve in the following is one example for the resulting prior
 distribution on <span class="math inline">\(\beta\)</span>:</p>
-<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb275-1" data-line-number="1">dhs &lt;-<span class="st"> </span><span class="kw">Vectorize</span>(</a>
-<a class="sourceLine" id="cb275-2" data-line-number="2">  <span class="cf">function</span>(y, <span class="dt">df =</span> <span class="dv">1</span>) {</a>
-<a class="sourceLine" id="cb275-3" data-line-number="3">  ff &lt;-<span class="st"> </span><span class="cf">function</span>(lam) <span class="kw">dnorm</span>(y, <span class="dv">0</span>, <span class="dt">sd =</span> lam) <span class="op">*</span><span class="st"> </span><span class="kw">dt</span>(lam, df) <span class="op">*</span><span class="st"> </span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb275-4" data-line-number="4">  <span class="cf">if</span> (y <span class="op">!=</span><span class="st"> </span><span class="dv">0</span>) <span class="kw">integrate</span>(ff, <span class="dt">lower =</span> <span class="dv">0</span>, <span class="dt">upper =</span> <span class="ot">Inf</span>)<span class="op">$</span>value</a>
-<a class="sourceLine" id="cb275-5" data-line-number="5">  <span class="cf">else</span> <span class="ot">Inf</span></a>
-<a class="sourceLine" id="cb275-6" data-line-number="6">  }</a>
-<a class="sourceLine" id="cb275-7" data-line-number="7">)</a>
-<a class="sourceLine" id="cb275-8" data-line-number="8"><span class="kw">ggplot</span>(<span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">6</span>, <span class="dv">6</span>)), <span class="kw">aes</span>(<span class="dt">x =</span> x)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb275-9" data-line-number="9"><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> dhs, <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">df =</span> <span class="dv">3</span>), <span class="dt">n =</span> <span class="dv">501</span>,</a>
-<a class="sourceLine" id="cb275-10" data-line-number="10">                <span class="kw">aes</span>(<span class="dt">col =</span> <span class="st">&quot;HS&quot;</span>), <span class="dt">linetype =</span> <span class="dv">1</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb275-11" data-line-number="11"><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> dnorm, <span class="dt">n =</span> <span class="dv">501</span>, </a>
-<a class="sourceLine" id="cb275-12" data-line-number="12">                <span class="kw">aes</span>(<span class="dt">col =</span> <span class="st">&quot;norm&quot;</span>), <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb275-13" data-line-number="13"><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="st">&quot;&quot;</span>, <span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;black&quot;</span>),</a>
-<a class="sourceLine" id="cb275-14" data-line-number="14">                     <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;horseshoe(3)&quot;</span>, <span class="st">&quot;N(0, 1)&quot;</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb275-15" data-line-number="15"><span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;y&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;density&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylim</span>(<span class="dv">0</span>, <span class="fl">0.75</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="model-comparison-and-regularization.html#cb294-1"></a>dhs &lt;-<span class="st"> </span><span class="kw">Vectorize</span>(</span>
+<span id="cb294-2"><a href="model-comparison-and-regularization.html#cb294-2"></a>  <span class="cf">function</span>(y, <span class="dt">df =</span> <span class="dv">1</span>) {</span>
+<span id="cb294-3"><a href="model-comparison-and-regularization.html#cb294-3"></a>  ff &lt;-<span class="st"> </span><span class="cf">function</span>(lam) <span class="kw">dnorm</span>(y, <span class="dv">0</span>, <span class="dt">sd =</span> lam) <span class="op">*</span><span class="st"> </span><span class="kw">dt</span>(lam, df) <span class="op">*</span><span class="st"> </span><span class="dv">2</span></span>
+<span id="cb294-4"><a href="model-comparison-and-regularization.html#cb294-4"></a>  <span class="cf">if</span> (y <span class="op">!=</span><span class="st"> </span><span class="dv">0</span>) <span class="kw">integrate</span>(ff, <span class="dt">lower =</span> <span class="dv">0</span>, <span class="dt">upper =</span> <span class="ot">Inf</span>)<span class="op">$</span>value</span>
+<span id="cb294-5"><a href="model-comparison-and-regularization.html#cb294-5"></a>  <span class="cf">else</span> <span class="ot">Inf</span></span>
+<span id="cb294-6"><a href="model-comparison-and-regularization.html#cb294-6"></a>  }</span>
+<span id="cb294-7"><a href="model-comparison-and-regularization.html#cb294-7"></a>)</span>
+<span id="cb294-8"><a href="model-comparison-and-regularization.html#cb294-8"></a><span class="kw">ggplot</span>(<span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">6</span>, <span class="dv">6</span>)), <span class="kw">aes</span>(<span class="dt">x =</span> x)) <span class="op">+</span></span>
+<span id="cb294-9"><a href="model-comparison-and-regularization.html#cb294-9"></a><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> dhs, <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">df =</span> <span class="dv">3</span>), <span class="dt">n =</span> <span class="dv">501</span>,</span>
+<span id="cb294-10"><a href="model-comparison-and-regularization.html#cb294-10"></a>                <span class="kw">aes</span>(<span class="dt">col =</span> <span class="st">&quot;HS&quot;</span>), <span class="dt">linetype =</span> <span class="dv">1</span>) <span class="op">+</span></span>
+<span id="cb294-11"><a href="model-comparison-and-regularization.html#cb294-11"></a><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> dnorm, <span class="dt">n =</span> <span class="dv">501</span>, </span>
+<span id="cb294-12"><a href="model-comparison-and-regularization.html#cb294-12"></a>                <span class="kw">aes</span>(<span class="dt">col =</span> <span class="st">&quot;norm&quot;</span>), <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span></span>
+<span id="cb294-13"><a href="model-comparison-and-regularization.html#cb294-13"></a><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="st">&quot;&quot;</span>, <span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;black&quot;</span>),</span>
+<span id="cb294-14"><a href="model-comparison-and-regularization.html#cb294-14"></a>                     <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;horseshoe(3)&quot;</span>, <span class="st">&quot;N(0, 1)&quot;</span>)) <span class="op">+</span></span>
+<span id="cb294-15"><a href="model-comparison-and-regularization.html#cb294-15"></a><span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;y&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;density&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylim</span>(<span class="dv">0</span>, <span class="fl">0.75</span>)</span></code></pre></div>
+<pre><code>&gt;# Warning: `mapping` is not used by stat_function()
+
+&gt;# Warning: `mapping` is not used by stat_function()</code></pre>
 <div class="figure"><span id="fig:unnamed-chunk-2"></span>
 <img src="09_model_comparison_files/figure-html/unnamed-chunk-2-1.png" alt="Density for the Finnish horseshoe prior with 3 degrees of freedom" width="672" />
 <p class="caption">
@@ -1220,7 +1233,7 @@ compared to a normal distribution. Thus, for coefficients with very weak
 evidence, the regularizing prior will shrink it to zero, whereas for
 coefficients with strong evidence, the shrinkage will be very small. This is
 called a horseshoe prior. In <code>brms</code>, one can specify it with <code>horseshoe()</code>,
-which is a stabilized version of the original horseshoe prior <span class="citation">(Carvalho, Polson, and Scott <a href="#ref-carvalho2009">2009</a>)</span>.</p>
+which is a stabilized version of the original horseshoe prior <span class="citation">(Carvalho, Polson, and Scott <a href="#ref-carvalho2009" role="doc-biblioref">2009</a>)</span>.</p>
 </div>
 <div id="finnish-horseshoe" class="section level3">
 <h3><span class="header-section-number">9.6.3</span> Finnish Horseshoe</h3>
@@ -1234,60 +1247,54 @@ which is a stabilized version of the original horseshoe prior <span class="citat
 \end{align*}\]</span></p>
 <p>The additional parameters are chosen in the code below. First, fit a model
 without shrinkage:</p>
-<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb276-1" data-line-number="1"><span class="co"># A model with all main and interaction effects</span></a>
-<a class="sourceLine" id="cb276-2" data-line-number="2">m5 &lt;-<span class="st"> </span><span class="kw">brm</span>(kid_score <span class="op">~</span><span class="st"> </span>(.)<span class="op">^</span><span class="dv">2</span>, <span class="dt">data =</span> kidiq_std,</a>
-<a class="sourceLine" id="cb276-3" data-line-number="3">          <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </a>
-<a class="sourceLine" id="cb276-4" data-line-number="4">                    <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>), </a>
-<a class="sourceLine" id="cb276-5" data-line-number="5">                    <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </a>
-<a class="sourceLine" id="cb276-6" data-line-number="6">          <span class="dt">iter =</span> <span class="dv">1000</span>,  <span class="co"># just to save time</span></a>
-<a class="sourceLine" id="cb276-7" data-line-number="7">          <span class="dt">chains =</span> 2L,</a>
-<a class="sourceLine" id="cb276-8" data-line-number="8">          <span class="dt">cores =</span> 2L,</a>
-<a class="sourceLine" id="cb276-9" data-line-number="9">          <span class="dt">seed =</span> <span class="dv">2217</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb277-1" data-line-number="1"><span class="co"># A model with all main and interaction effects</span></a>
-<a class="sourceLine" id="cb277-2" data-line-number="2">m_hs &lt;-<span class="st"> </span><span class="kw">brm</span>(kid_score <span class="op">~</span><span class="st"> </span>(.)<span class="op">^</span><span class="dv">2</span>, <span class="dt">data =</span> kidiq_std,</a>
-<a class="sourceLine" id="cb277-3" data-line-number="3">            <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </a>
-<a class="sourceLine" id="cb277-4" data-line-number="4">                      <span class="co"># Prior guess of 20% of the terms are non-zero</span></a>
-<a class="sourceLine" id="cb277-5" data-line-number="5">                      <span class="kw">prior</span>(<span class="kw">horseshoe</span>(<span class="dt">par_ratio =</span> <span class="dv">2</span> <span class="op">/</span><span class="st"> </span><span class="dv">8</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>),</a>
-<a class="sourceLine" id="cb277-6" data-line-number="6">                      <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </a>
-<a class="sourceLine" id="cb277-7" data-line-number="7">            <span class="dt">iter =</span> <span class="dv">1000</span>,  <span class="co"># just to save time</span></a>
-<a class="sourceLine" id="cb277-8" data-line-number="8">            <span class="dt">chains =</span> 2L,</a>
-<a class="sourceLine" id="cb277-9" data-line-number="9">            <span class="dt">cores =</span> 2L,</a>
-<a class="sourceLine" id="cb277-10" data-line-number="10">            <span class="co"># Need higher adapt_delta</span></a>
-<a class="sourceLine" id="cb277-11" data-line-number="11">            <span class="dt">control =</span> <span class="kw">list</span>(<span class="dt">adapt_delta =</span> <span class="fl">.99</span>),</a>
-<a class="sourceLine" id="cb277-12" data-line-number="12">            <span class="dt">seed =</span> <span class="dv">2217</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="model-comparison-and-regularization.html#cb296-1"></a><span class="co"># A model with all main and interaction effects</span></span>
+<span id="cb296-2"><a href="model-comparison-and-regularization.html#cb296-2"></a>m5 &lt;-<span class="st"> </span><span class="kw">brm</span>(kid_score <span class="op">~</span><span class="st"> </span>(.)<span class="op">^</span><span class="dv">2</span>, <span class="dt">data =</span> kidiq_std,</span>
+<span id="cb296-3"><a href="model-comparison-and-regularization.html#cb296-3"></a>          <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </span>
+<span id="cb296-4"><a href="model-comparison-and-regularization.html#cb296-4"></a>                    <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>), </span>
+<span id="cb296-5"><a href="model-comparison-and-regularization.html#cb296-5"></a>                    <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </span>
+<span id="cb296-6"><a href="model-comparison-and-regularization.html#cb296-6"></a>          <span class="dt">iter =</span> <span class="dv">1000</span>,  <span class="co"># just to save time</span></span>
+<span id="cb296-7"><a href="model-comparison-and-regularization.html#cb296-7"></a>          <span class="dt">chains =</span> 2L,</span>
+<span id="cb296-8"><a href="model-comparison-and-regularization.html#cb296-8"></a>          <span class="dt">cores =</span> 2L,</span>
+<span id="cb296-9"><a href="model-comparison-and-regularization.html#cb296-9"></a>          <span class="dt">seed =</span> <span class="dv">2217</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="model-comparison-and-regularization.html#cb297-1"></a><span class="co"># A model with all main and interaction effects</span></span>
+<span id="cb297-2"><a href="model-comparison-and-regularization.html#cb297-2"></a>m_hs &lt;-<span class="st"> </span><span class="kw">brm</span>(kid_score <span class="op">~</span><span class="st"> </span>(.)<span class="op">^</span><span class="dv">2</span>, <span class="dt">data =</span> kidiq_std,</span>
+<span id="cb297-3"><a href="model-comparison-and-regularization.html#cb297-3"></a>            <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </span>
+<span id="cb297-4"><a href="model-comparison-and-regularization.html#cb297-4"></a>                      <span class="co"># Prior guess of 20% of the terms are non-zero</span></span>
+<span id="cb297-5"><a href="model-comparison-and-regularization.html#cb297-5"></a>                      <span class="kw">prior</span>(<span class="kw">horseshoe</span>(<span class="dt">par_ratio =</span> <span class="dv">2</span> <span class="op">/</span><span class="st"> </span><span class="dv">8</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>),</span>
+<span id="cb297-6"><a href="model-comparison-and-regularization.html#cb297-6"></a>                      <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </span>
+<span id="cb297-7"><a href="model-comparison-and-regularization.html#cb297-7"></a>            <span class="dt">iter =</span> <span class="dv">1000</span>,  <span class="co"># just to save time</span></span>
+<span id="cb297-8"><a href="model-comparison-and-regularization.html#cb297-8"></a>            <span class="dt">chains =</span> 2L,</span>
+<span id="cb297-9"><a href="model-comparison-and-regularization.html#cb297-9"></a>            <span class="dt">cores =</span> 2L,</span>
+<span id="cb297-10"><a href="model-comparison-and-regularization.html#cb297-10"></a>            <span class="co"># Need higher adapt_delta</span></span>
+<span id="cb297-11"><a href="model-comparison-and-regularization.html#cb297-11"></a>            <span class="dt">control =</span> <span class="kw">list</span>(<span class="dt">adapt_delta =</span> <span class="fl">.99</span>),</span>
+<span id="cb297-12"><a href="model-comparison-and-regularization.html#cb297-12"></a>            <span class="dt">seed =</span> <span class="dv">2217</span>)</span></code></pre></div>
 <p>We can plot the coefficients:</p>
-<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb278-1" data-line-number="1"><span class="kw">stanplot</span>(m_hs) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb278-2" data-line-number="2"><span class="st">  </span><span class="co"># Show the shrinkage as black, transparent dots</span></a>
-<a class="sourceLine" id="cb278-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> <span class="kw">posterior_summary</span>(m5) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb278-4" data-line-number="4"><span class="st">               </span><span class="kw">as_tibble</span>(<span class="dt">rownames =</span> <span class="st">&quot;parameter&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb278-5" data-line-number="5"><span class="st">               </span><span class="kw">filter</span>(parameter <span class="op">!=</span><span class="st"> &quot;lp__&quot;</span>), </a>
-<a class="sourceLine" id="cb278-6" data-line-number="6">             <span class="kw">aes</span>(<span class="dt">x =</span> Estimate, <span class="dt">y =</span> parameter), <span class="dt">alpha =</span> <span class="fl">0.8</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb278-7" data-line-number="7"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">c</span>(<span class="op">-</span>.<span class="dv">05</span>, <span class="fl">.05</span>), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="model-comparison-and-regularization.html#cb298-1"></a><span class="kw">stanplot</span>(m_hs) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb298-2"><a href="model-comparison-and-regularization.html#cb298-2"></a><span class="st">  </span><span class="co"># Show the shrinkage as black, transparent dots</span></span>
+<span id="cb298-3"><a href="model-comparison-and-regularization.html#cb298-3"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> <span class="kw">posterior_summary</span>(m5) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb298-4"><a href="model-comparison-and-regularization.html#cb298-4"></a><span class="st">               </span><span class="kw">as_tibble</span>(<span class="dt">rownames =</span> <span class="st">&quot;parameter&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb298-5"><a href="model-comparison-and-regularization.html#cb298-5"></a><span class="st">               </span><span class="kw">filter</span>(parameter <span class="op">!=</span><span class="st"> &quot;lp__&quot;</span>), </span>
+<span id="cb298-6"><a href="model-comparison-and-regularization.html#cb298-6"></a>             <span class="kw">aes</span>(<span class="dt">x =</span> Estimate, <span class="dt">y =</span> parameter), <span class="dt">alpha =</span> <span class="fl">0.8</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb298-7"><a href="model-comparison-and-regularization.html#cb298-7"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">c</span>(<span class="op">-</span>.<span class="dv">05</span>, <span class="fl">.05</span>), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<pre><code>&gt;# Warning: Method &#39;stanplot&#39; is deprecated. Please use &#39;mcmc_plot&#39; instead.</code></pre>
 <p><img src="09_model_comparison_files/figure-html/interval-m_hs-1.png" width="432" /></p>
 <p>An arbitrary cutoff is to select only coefficients with posterior means
 larger than .05, in which case only <code>mom_iq</code> and <code>mom_hs</code> and their interaction
 were supported by the data.</p>
 <p>You can also double check that the regularized version has better LOO-IC:</p>
-<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb279-1" data-line-number="1"><span class="kw">loo</span>(m5, m_hs)</a></code></pre></div>
+<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="model-comparison-and-regularization.html#cb300-1"></a><span class="kw">loo</span>(m5, m_hs)</span></code></pre></div>
 <pre><code>&gt;# Output of model &#39;m5&#39;:
 &gt;# 
 &gt;# Computed from 1000 by 434 log-likelihood matrix
 &gt;# 
 &gt;#          Estimate   SE
-&gt;# elpd_loo   -567.8 14.3
-&gt;# p_loo        13.3  1.4
-&gt;# looic      1135.5 28.7
+&gt;# elpd_loo   -567.6 14.4
+&gt;# p_loo        13.1  1.4
+&gt;# looic      1135.1 28.8
 &gt;# ------
 &gt;# Monte Carlo SE of elpd_loo is 0.1.
 &gt;# 
-&gt;# Pareto k diagnostic values:
-&gt;#                          Count Pct.    Min. n_eff
-&gt;# (-Inf, 0.5]   (good)     429   98.8%   265       
-&gt;#  (0.5, 0.7]   (ok)         5    1.2%   1378      
-&gt;#    (0.7, 1]   (bad)        0    0.0%   &lt;NA&gt;      
-&gt;#    (1, Inf)   (very bad)   0    0.0%   &lt;NA&gt;      
-&gt;# 
-&gt;# All Pareto k estimates are ok (k &lt; 0.7).
+&gt;# All Pareto k estimates are good (k &lt; 0.5).
 &gt;# See help(&#39;pareto-k-diagnostic&#39;) for details.
 &gt;# 
 &gt;# Output of model &#39;m_hs&#39;:
@@ -1295,9 +1302,9 @@ were supported by the data.</p>
 &gt;# Computed from 1000 by 434 log-likelihood matrix
 &gt;# 
 &gt;#          Estimate   SE
-&gt;# elpd_loo   -565.1 14.4
+&gt;# elpd_loo   -565.1 14.5
 &gt;# p_loo         8.4  1.0
-&gt;# looic      1130.3 28.9
+&gt;# looic      1130.1 28.9
 &gt;# ------
 &gt;# Monte Carlo SE of elpd_loo is 0.1.
 &gt;# 
@@ -1307,7 +1314,7 @@ were supported by the data.</p>
 &gt;# Model comparisons:
 &gt;#      elpd_diff se_diff
 &gt;# m_hs  0.0       0.0   
-&gt;# m5   -2.6       2.3</code></pre>
+&gt;# m5   -2.5       2.4</code></pre>
 <p>And also that the effective number of parameters was smaller in <code>m_hs</code>.</p>
 </div>
 </div>
@@ -1315,32 +1322,36 @@ were supported by the data.</p>
 <h2><span class="header-section-number">9.7</span> Variable Selection</h2>
 <p>One way to identify variables that are relevant to predict a certain outcome is
 to use the projection-based method, as discussed in <a href="https://cran.r-project.org/web/packages/projpred/vignettes/quickstart.html" class="uri">https://cran.r-project.org/web/packages/projpred/vignettes/quickstart.html</a> and
-in <span class="citation">Piironen and Vehtari (<a href="#ref-Piironen2016">2016</a>)</span>.</p>
+in <span class="citation">Piironen and Vehtari (<a href="#ref-Piironen2016" role="doc-biblioref">2016</a>)</span>.</p>
 <p>Building from the full model with shrinkage priors, we first identify the
 importance of various variables in terms of their importance for prediction:</p>
-<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb281-1" data-line-number="1"><span class="kw">library</span>(projpred)</a>
-<a class="sourceLine" id="cb281-2" data-line-number="2"><span class="co"># Variable selection:</span></a>
-<a class="sourceLine" id="cb281-3" data-line-number="3">vs &lt;-<span class="st"> </span><span class="kw">varsel</span>(m_hs)</a>
-<a class="sourceLine" id="cb281-4" data-line-number="4">vs<span class="op">$</span>vind  <span class="co"># variables ordered as they enter during the search</span></a></code></pre></div>
+<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="model-comparison-and-regularization.html#cb302-1"></a><span class="kw">library</span>(projpred)</span>
+<span id="cb302-2"><a href="model-comparison-and-regularization.html#cb302-2"></a><span class="co"># Variable selection:</span></span>
+<span id="cb302-3"><a href="model-comparison-and-regularization.html#cb302-3"></a>vs &lt;-<span class="st"> </span><span class="kw">varsel</span>(m_hs)</span></code></pre></div>
+<pre><code>&gt;# Warning: posterior_linpred(transform = TRUE) is deprecated. Please use
+&gt;# pp_expect() instead, without the &#39;transform&#39; argument.</code></pre>
+<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="model-comparison-and-regularization.html#cb304-1"></a>vs<span class="op">$</span>vind  <span class="co"># variables ordered as they enter during the search</span></span></code></pre></div>
 <pre><code>&gt;#           mom_iq    mom_hs:mom_iq  mom_hs:mom_work mom_work:mom_age 
 &gt;#                2                5                6               10 
-&gt;#           mom_hs  mom_iq:mom_work          mom_age   mom_hs:mom_age 
-&gt;#                1                8                4                7 
+&gt;#           mom_hs  mom_iq:mom_work   mom_hs:mom_age          mom_age 
+&gt;#                1                8                7                4 
 &gt;#   mom_iq:mom_age         mom_work 
 &gt;#                9                3</code></pre>
-<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb283-1" data-line-number="1"><span class="co"># plot predictive performance on training data</span></a>
-<a class="sourceLine" id="cb283-2" data-line-number="2"><span class="kw">varsel_plot</span>(vs, <span class="dt">stats =</span> <span class="kw">c</span>(<span class="st">&quot;elpd&quot;</span>, <span class="st">&quot;rmse&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="model-comparison-and-regularization.html#cb306-1"></a><span class="co"># plot predictive performance on training data</span></span>
+<span id="cb306-2"><a href="model-comparison-and-regularization.html#cb306-2"></a><span class="kw">varsel_plot</span>(vs, <span class="dt">stats =</span> <span class="kw">c</span>(<span class="st">&quot;elpd&quot;</span>, <span class="st">&quot;rmse&quot;</span>))</span></code></pre></div>
 <p><img src="09_model_comparison_files/figure-html/vs-1.png" width="576" /></p>
 <p>We then use the <code>cv_varsel</code> method to perform cross-validation to see how many
 variables should be included:</p>
-<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb284-1" data-line-number="1"><span class="co"># With cross-validation</span></a>
-<a class="sourceLine" id="cb284-2" data-line-number="2">cvs &lt;-<span class="st"> </span><span class="kw">cv_varsel</span>(m_hs, </a>
-<a class="sourceLine" id="cb284-3" data-line-number="3">                 <span class="dt">verbose =</span> <span class="ot">FALSE</span>)  <span class="co"># not printing progress</span></a>
-<a class="sourceLine" id="cb284-4" data-line-number="4"><span class="co"># model size suggested by the program</span></a>
-<a class="sourceLine" id="cb284-5" data-line-number="5"><span class="kw">suggest_size</span>(cvs)</a></code></pre></div>
+<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="model-comparison-and-regularization.html#cb307-1"></a><span class="co"># With cross-validation</span></span>
+<span id="cb307-2"><a href="model-comparison-and-regularization.html#cb307-2"></a>cvs &lt;-<span class="st"> </span><span class="kw">cv_varsel</span>(m_hs, </span>
+<span id="cb307-3"><a href="model-comparison-and-regularization.html#cb307-3"></a>                 <span class="dt">verbose =</span> <span class="ot">FALSE</span>)  <span class="co"># not printing progress</span></span></code></pre></div>
+<pre><code>&gt;# Warning: posterior_linpred(transform = TRUE) is deprecated. Please use
+&gt;# pp_expect() instead, without the &#39;transform&#39; argument.</code></pre>
+<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb309-1"><a href="model-comparison-and-regularization.html#cb309-1"></a><span class="co"># model size suggested by the program</span></span>
+<span id="cb309-2"><a href="model-comparison-and-regularization.html#cb309-2"></a><span class="kw">suggest_size</span>(cvs)</span></code></pre></div>
 <pre><code>&gt;# [1] 2</code></pre>
-<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb286-1" data-line-number="1"><span class="co"># plot the validation results, this time relative to the full model</span></a>
-<a class="sourceLine" id="cb286-2" data-line-number="2"><span class="kw">varsel_plot</span>(cvs, <span class="dt">stats =</span> <span class="kw">c</span>(<span class="st">&quot;elpd&quot;</span>, <span class="st">&quot;rmse&quot;</span>), <span class="dt">deltas =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="model-comparison-and-regularization.html#cb311-1"></a><span class="co"># plot the validation results, this time relative to the full model</span></span>
+<span id="cb311-2"><a href="model-comparison-and-regularization.html#cb311-2"></a><span class="kw">varsel_plot</span>(cvs, <span class="dt">stats =</span> <span class="kw">c</span>(<span class="st">&quot;elpd&quot;</span>, <span class="st">&quot;rmse&quot;</span>), <span class="dt">deltas =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <p><img src="09_model_comparison_files/figure-html/cvs-1.png" width="576" /></p>
 <p>Here it suggests to include only <code>mom_iq</code> and its interaction with <code>mom_hs</code>.
 However, we generally prefers to also include the main effect of <code>mom_hs</code>.</p>
@@ -1358,25 +1369,25 @@ accuracy is as closed to the full model as possible?</p>
 estimate the model using the three predictors (i.e., <code>m3</code>). In this case,
 simulation results showed that the projection-based method will yield a model
 with better predictive performance.</p>
-<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb287-1" data-line-number="1"><span class="co"># Fit m3 with the standardized data</span></a>
-<a class="sourceLine" id="cb287-2" data-line-number="2">m3_std &lt;-<span class="st"> </span><span class="kw">brm</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_hs <span class="op">*</span><span class="st"> </span>mom_iq, <span class="dt">data =</span> kidiq_std, </a>
-<a class="sourceLine" id="cb287-3" data-line-number="3">              <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </a>
-<a class="sourceLine" id="cb287-4" data-line-number="4">                        <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>), </a>
-<a class="sourceLine" id="cb287-5" data-line-number="5">                        <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="fl">0.5</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>, </a>
-<a class="sourceLine" id="cb287-6" data-line-number="6">                              <span class="dt">coef =</span> <span class="st">&quot;mom_hs:mom_iq&quot;</span>), </a>
-<a class="sourceLine" id="cb287-7" data-line-number="7">                        <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </a>
-<a class="sourceLine" id="cb287-8" data-line-number="8">              <span class="dt">seed =</span> <span class="dv">2302</span>, </a>
-<a class="sourceLine" id="cb287-9" data-line-number="9">              <span class="dt">chains =</span> 2L, <span class="dt">cores =</span> 2L</a>
-<a class="sourceLine" id="cb287-10" data-line-number="10">)</a></code></pre></div>
-<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb288-1" data-line-number="1"><span class="co"># Visualise the projected three most relevant variables</span></a>
-<a class="sourceLine" id="cb288-2" data-line-number="2">proj &lt;-<span class="st"> </span><span class="kw">project</span>(vs, <span class="dt">vind =</span> vs<span class="op">$</span>vind[<span class="kw">c</span>(<span class="st">&quot;mom_iq&quot;</span>, <span class="st">&quot;mom_hs:mom_iq&quot;</span>, <span class="st">&quot;mom_hs&quot;</span>)])</a>
-<a class="sourceLine" id="cb288-3" data-line-number="3"><span class="kw">mcmc_intervals</span>(<span class="kw">as.matrix</span>(proj)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb288-4" data-line-number="4"><span class="st">  </span><span class="co"># Show the non-projection version as black, transparent dots</span></a>
-<a class="sourceLine" id="cb288-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> </a>
-<a class="sourceLine" id="cb288-6" data-line-number="6">               <span class="kw">fixef</span>(m3_std, <span class="dt">pars =</span> <span class="kw">c</span>(<span class="st">&quot;Intercept&quot;</span>, <span class="st">&quot;mom_iq&quot;</span>, </a>
-<a class="sourceLine" id="cb288-7" data-line-number="7">                                      <span class="st">&quot;mom_hs&quot;</span>, <span class="st">&quot;mom_hs:mom_iq&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb288-8" data-line-number="8"><span class="st">               </span><span class="kw">as_tibble</span>(<span class="dt">rownames =</span> <span class="st">&quot;parameter&quot;</span>), </a>
-<a class="sourceLine" id="cb288-9" data-line-number="9">             <span class="kw">aes</span>(<span class="dt">x =</span> Estimate, <span class="dt">y =</span> parameter), <span class="dt">alpha =</span> <span class="fl">0.8</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="model-comparison-and-regularization.html#cb312-1"></a><span class="co"># Fit m3 with the standardized data</span></span>
+<span id="cb312-2"><a href="model-comparison-and-regularization.html#cb312-2"></a>m3_std &lt;-<span class="st"> </span><span class="kw">brm</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_hs <span class="op">*</span><span class="st"> </span>mom_iq, <span class="dt">data =</span> kidiq_std, </span>
+<span id="cb312-3"><a href="model-comparison-and-regularization.html#cb312-3"></a>              <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </span>
+<span id="cb312-4"><a href="model-comparison-and-regularization.html#cb312-4"></a>                        <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>), </span>
+<span id="cb312-5"><a href="model-comparison-and-regularization.html#cb312-5"></a>                        <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="fl">0.5</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>, </span>
+<span id="cb312-6"><a href="model-comparison-and-regularization.html#cb312-6"></a>                              <span class="dt">coef =</span> <span class="st">&quot;mom_hs:mom_iq&quot;</span>), </span>
+<span id="cb312-7"><a href="model-comparison-and-regularization.html#cb312-7"></a>                        <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </span>
+<span id="cb312-8"><a href="model-comparison-and-regularization.html#cb312-8"></a>              <span class="dt">seed =</span> <span class="dv">2302</span>, </span>
+<span id="cb312-9"><a href="model-comparison-and-regularization.html#cb312-9"></a>              <span class="dt">chains =</span> 2L, <span class="dt">cores =</span> 2L</span>
+<span id="cb312-10"><a href="model-comparison-and-regularization.html#cb312-10"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="model-comparison-and-regularization.html#cb313-1"></a><span class="co"># Visualise the projected three most relevant variables</span></span>
+<span id="cb313-2"><a href="model-comparison-and-regularization.html#cb313-2"></a>proj &lt;-<span class="st"> </span><span class="kw">project</span>(vs, <span class="dt">vind =</span> vs<span class="op">$</span>vind[<span class="kw">c</span>(<span class="st">&quot;mom_iq&quot;</span>, <span class="st">&quot;mom_hs:mom_iq&quot;</span>, <span class="st">&quot;mom_hs&quot;</span>)])</span>
+<span id="cb313-3"><a href="model-comparison-and-regularization.html#cb313-3"></a><span class="kw">mcmc_intervals</span>(<span class="kw">as.matrix</span>(proj)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb313-4"><a href="model-comparison-and-regularization.html#cb313-4"></a><span class="st">  </span><span class="co"># Show the non-projection version as black, transparent dots</span></span>
+<span id="cb313-5"><a href="model-comparison-and-regularization.html#cb313-5"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> </span>
+<span id="cb313-6"><a href="model-comparison-and-regularization.html#cb313-6"></a>               <span class="kw">fixef</span>(m3_std, <span class="dt">pars =</span> <span class="kw">c</span>(<span class="st">&quot;Intercept&quot;</span>, <span class="st">&quot;mom_iq&quot;</span>, </span>
+<span id="cb313-7"><a href="model-comparison-and-regularization.html#cb313-7"></a>                                      <span class="st">&quot;mom_hs&quot;</span>, <span class="st">&quot;mom_hs:mom_iq&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb313-8"><a href="model-comparison-and-regularization.html#cb313-8"></a><span class="st">               </span><span class="kw">as_tibble</span>(<span class="dt">rownames =</span> <span class="st">&quot;parameter&quot;</span>), </span>
+<span id="cb313-9"><a href="model-comparison-and-regularization.html#cb313-9"></a>             <span class="kw">aes</span>(<span class="dt">x =</span> Estimate, <span class="dt">y =</span> parameter), <span class="dt">alpha =</span> <span class="fl">0.8</span>)</span></code></pre></div>
 <pre><code>&gt;# Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
 <p><img src="09_model_comparison_files/figure-html/proj-interval-1.png" width="672" /></p>
 
@@ -1389,13 +1400,13 @@ with better predictive performance.</p>
 <p>Carvalho, Carlos M, Nicholas G Polson, and James G Scott. 2009. “Handling Sparsity via the Horseshoe.” In <em>Artificial Intelligence and Statistics</em>, 73–80.</p>
 </div>
 <div id="ref-hoeting1999bayesian">
-<p>Hoeting, Jennifer A, David Madigan, Adrian E Raftery, and Chris T Volinsky. 1999. “Bayesian Model Averaging: A Tutorial.” <em>Statistical Science</em>. JSTOR, 382–401.</p>
+<p>Hoeting, Jennifer A, David Madigan, Adrian E Raftery, and Chris T Volinsky. 1999. “Bayesian Model Averaging: A Tutorial.” <em>Statistical Science</em>, 382–401.</p>
 </div>
 <div id="ref-Piironen2016">
 <p>Piironen, Juho, and Aki Vehtari. 2016. “Comparison of Bayesian Predictive Methods for Model Selection.” <em>Statistics and Computing</em>.</p>
 </div>
 <div id="ref-Vehtari2016">
-<p>Vehtari, Aki, Andrew Gelman, and Jonah Gabry. 2016. “Practical Bayesian Model Evaluation Using Leave-One-Out Cross-Validation and Waic.” <em>Statistics and Computing</em> 27 (5). Springer Science; Business Media LLC: 1413–32. <a href="https://doi.org/10.1007/s11222-016-9696-4">https://doi.org/10.1007/s11222-016-9696-4</a>.</p>
+<p>Vehtari, Aki, Andrew Gelman, and Jonah Gabry. 2016. “Practical Bayesian Model Evaluation Using Leave-One-Out Cross-Validation and Waic.” <em>Statistics and Computing</em> 27 (5): 1413–32. <a href="https://doi.org/10.1007/s11222-016-9696-4">https://doi.org/10.1007/s11222-016-9696-4</a>.</p>
 </div>
 <div id="ref-Yao2018">
 <p>Yao, Yuling, Aki Vehtari, Daniel Simpson, and Andrew Gelman. 2018. “Using stacking to average bayesian predictive distributions (with discussion).” <em>Bayesian Analysis</em> 13 (3): 917–1007. <a href="https://doi.org/10.1214/17-BA1091">https://doi.org/10.1214/17-BA1091</a>.</p>
@@ -1449,7 +1460,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["notes_bookdown.pdf", "notes_bookdown.epub"],
+"download": ["notes_bookdown.epub"],
 "toc": {
 "collapse": "subsection"
 }

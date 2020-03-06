@@ -1,30 +1,30 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 8 Model Diagnostics | Course Handouts for Bayesian Data Analysis Class</title>
-  <meta name="description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Spring semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
-  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
+  <meta name="description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Fall semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 8 Model Diagnostics | Course Handouts for Bayesian Data Analysis Class" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Spring semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
+  <meta property="og:description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Fall semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
   
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 8 Model Diagnostics | Course Handouts for Bayesian Data Analysis Class" />
   
-  <meta name="twitter:description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Spring semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
+  <meta name="twitter:description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Fall semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
   
 
 <meta name="author" content="Mark Lai" />
 
 
-<meta name="date" content="2019-12-14" />
+<meta name="date" content="2020-03-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,15 +51,15 @@
 
 
 <script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
-<script src="libs/viz-0.3/viz.js"></script>
+<script src="libs/viz-1.8.2/viz.js"></script>
 <link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
-<script src="libs/grViz-binding-1.0.1/grViz.js"></script>
+<script src="libs/grViz-binding-1.0.5/grViz.js"></script>
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
@@ -68,14 +68,16 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -84,9 +86,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -434,42 +436,42 @@ diagnostics. The first one is about a correct specification of the model, which
 can be partly assessed with posterior predictive check.</p>
 <div id="posterior-predictive-check-7" class="section level3">
 <h3><span class="header-section-number">8.2.1</span> Posterior Predictive Check</h3>
-<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb204-1" data-line-number="1">kidiq &lt;-<span class="st"> </span>haven<span class="op">::</span><span class="kw">read_dta</span>(<span class="st">&quot;../data/kidiq.dta&quot;</span>)</a>
-<a class="sourceLine" id="cb204-2" data-line-number="2">kidiq100 &lt;-<span class="st"> </span>kidiq <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb204-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mom_iq =</span> mom_iq <span class="op">/</span><span class="st"> </span><span class="dv">100</span>,  <span class="co"># divid mom_iq by 100</span></a>
-<a class="sourceLine" id="cb204-4" data-line-number="4">         <span class="dt">kid_score =</span> kid_score <span class="op">/</span><span class="st"> </span><span class="dv">100</span>,   <span class="co"># divide kid_score by 100</span></a>
-<a class="sourceLine" id="cb204-5" data-line-number="5">         <span class="dt">mom_iq_c =</span> mom_iq <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, </a>
-<a class="sourceLine" id="cb204-6" data-line-number="6">         <span class="dt">mom_hs =</span> <span class="kw">factor</span>(mom_hs, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>)))</a></code></pre></div>
-<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb205-1" data-line-number="1">m4 &lt;-<span class="st"> </span><span class="kw">brm</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_iq_c <span class="op">*</span><span class="st"> </span>mom_hs, <span class="dt">data =</span> kidiq100, </a>
-<a class="sourceLine" id="cb205-2" data-line-number="2">          <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </a>
-<a class="sourceLine" id="cb205-3" data-line-number="3">                    <span class="co"># set for all &quot;b&quot; coefficients</span></a>
-<a class="sourceLine" id="cb205-4" data-line-number="4">                    <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>),</a>
-<a class="sourceLine" id="cb205-5" data-line-number="5">                    <span class="co"># for interaction</span></a>
-<a class="sourceLine" id="cb205-6" data-line-number="6">                    <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="fl">0.5</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>, </a>
-<a class="sourceLine" id="cb205-7" data-line-number="7">                          <span class="dt">coef =</span> <span class="st">&quot;mom_iq_c:mom_hsyes&quot;</span>), </a>
-<a class="sourceLine" id="cb205-8" data-line-number="8">                    <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </a>
-<a class="sourceLine" id="cb205-9" data-line-number="9">          <span class="dt">seed =</span> <span class="dv">2302</span></a>
-<a class="sourceLine" id="cb205-10" data-line-number="10">)</a></code></pre></div>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="model-diagnostics.html#cb215-1"></a>kidiq &lt;-<span class="st"> </span>haven<span class="op">::</span><span class="kw">read_dta</span>(<span class="st">&quot;../data/kidiq.dta&quot;</span>)</span>
+<span id="cb215-2"><a href="model-diagnostics.html#cb215-2"></a>kidiq100 &lt;-<span class="st"> </span>kidiq <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb215-3"><a href="model-diagnostics.html#cb215-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mom_iq =</span> mom_iq <span class="op">/</span><span class="st"> </span><span class="dv">100</span>,  <span class="co"># divid mom_iq by 100</span></span>
+<span id="cb215-4"><a href="model-diagnostics.html#cb215-4"></a>         <span class="dt">kid_score =</span> kid_score <span class="op">/</span><span class="st"> </span><span class="dv">100</span>,   <span class="co"># divide kid_score by 100</span></span>
+<span id="cb215-5"><a href="model-diagnostics.html#cb215-5"></a>         <span class="dt">mom_iq_c =</span> mom_iq <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, </span>
+<span id="cb215-6"><a href="model-diagnostics.html#cb215-6"></a>         <span class="dt">mom_hs =</span> <span class="kw">factor</span>(mom_hs, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="model-diagnostics.html#cb216-1"></a>m4 &lt;-<span class="st"> </span><span class="kw">brm</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_iq_c <span class="op">*</span><span class="st"> </span>mom_hs, <span class="dt">data =</span> kidiq100, </span>
+<span id="cb216-2"><a href="model-diagnostics.html#cb216-2"></a>          <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </span>
+<span id="cb216-3"><a href="model-diagnostics.html#cb216-3"></a>                    <span class="co"># set for all &quot;b&quot; coefficients</span></span>
+<span id="cb216-4"><a href="model-diagnostics.html#cb216-4"></a>                    <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>),</span>
+<span id="cb216-5"><a href="model-diagnostics.html#cb216-5"></a>                    <span class="co"># for interaction</span></span>
+<span id="cb216-6"><a href="model-diagnostics.html#cb216-6"></a>                    <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="fl">0.5</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>, </span>
+<span id="cb216-7"><a href="model-diagnostics.html#cb216-7"></a>                          <span class="dt">coef =</span> <span class="st">&quot;mom_iq_c:mom_hsyes&quot;</span>), </span>
+<span id="cb216-8"><a href="model-diagnostics.html#cb216-8"></a>                    <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </span>
+<span id="cb216-9"><a href="model-diagnostics.html#cb216-9"></a>          <span class="dt">seed =</span> <span class="dv">2302</span></span>
+<span id="cb216-10"><a href="model-diagnostics.html#cb216-10"></a>)</span></code></pre></div>
 <p>Below is the posterior predictive graphical check for the interaction model
 we fit last week (with centering):</p>
-<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb206-1" data-line-number="1"><span class="kw">pp_check</span>(m4, <span class="dt">nsamples =</span> <span class="dv">100</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="model-diagnostics.html#cb217-1"></a><span class="kw">pp_check</span>(m4, <span class="dt">nsamples =</span> <span class="dv">100</span>)</span></code></pre></div>
 <p><img src="08_model_diagnostics_files/figure-html/ppc-m4-1.png" width="384" /></p>
 <p>Based on the graphical check, we do not see any major systematic discrepancies
 of our data from what can be predicted from our model.</p>
 <p>We should do the posterior predictive check with test statistics too. The
 following functions show the mean, maximum value, and minimum value of the
 outcome.</p>
-<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb207-1" data-line-number="1"><span class="co"># PPC for the mean (it should always fit)</span></a>
-<a class="sourceLine" id="cb207-2" data-line-number="2"><span class="kw">pp_check</span>(m4, <span class="dt">type =</span> <span class="st">&quot;stat_grouped&quot;</span>, <span class="dt">stat =</span> <span class="st">&quot;mean&quot;</span>, <span class="dt">group =</span> <span class="st">&quot;mom_hs&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="model-diagnostics.html#cb218-1"></a><span class="co"># PPC for the mean (it should always fit)</span></span>
+<span id="cb218-2"><a href="model-diagnostics.html#cb218-2"></a><span class="kw">pp_check</span>(m4, <span class="dt">type =</span> <span class="st">&quot;stat_grouped&quot;</span>, <span class="dt">stat =</span> <span class="st">&quot;mean&quot;</span>, <span class="dt">group =</span> <span class="st">&quot;mom_hs&quot;</span>)</span></code></pre></div>
 <pre><code>&gt;# Using all posterior samples for ppc type &#39;stat_grouped&#39; by default.</code></pre>
 <pre><code>&gt;# `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="08_model_diagnostics_files/figure-html/ppc-m4-stat-1.png" width="432" /></p>
-<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb210-1" data-line-number="1"><span class="co"># PPC for the maximum and minimum values</span></a>
-<a class="sourceLine" id="cb210-2" data-line-number="2"><span class="kw">pp_check</span>(m4, <span class="dt">type =</span> <span class="st">&quot;stat_2d&quot;</span>, <span class="dt">stat =</span> <span class="kw">c</span>(<span class="st">&quot;max&quot;</span>, <span class="st">&quot;min&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="model-diagnostics.html#cb221-1"></a><span class="co"># PPC for the maximum and minimum values</span></span>
+<span id="cb221-2"><a href="model-diagnostics.html#cb221-2"></a><span class="kw">pp_check</span>(m4, <span class="dt">type =</span> <span class="st">&quot;stat_2d&quot;</span>, <span class="dt">stat =</span> <span class="kw">c</span>(<span class="st">&quot;max&quot;</span>, <span class="st">&quot;min&quot;</span>))</span></code></pre></div>
 <pre><code>&gt;# Using all posterior samples for ppc type &#39;stat_2d&#39; by default.</code></pre>
 <p><img src="08_model_diagnostics_files/figure-html/ppc-m4-stat-2.png" width="432" /></p>
 <p>Here is a ribbon plot to check for outliers:</p>
-<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb212-1" data-line-number="1"><span class="kw">pp_check</span>(m4, <span class="dt">type =</span> <span class="st">&quot;ribbon_grouped&quot;</span>, <span class="dt">x =</span> <span class="st">&quot;mom_iq_c&quot;</span>, <span class="dt">group =</span> <span class="st">&quot;mom_hs&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="model-diagnostics.html#cb223-1"></a><span class="kw">pp_check</span>(m4, <span class="dt">type =</span> <span class="st">&quot;ribbon_grouped&quot;</span>, <span class="dt">x =</span> <span class="st">&quot;mom_iq_c&quot;</span>, <span class="dt">group =</span> <span class="st">&quot;mom_hs&quot;</span>)</span></code></pre></div>
 <pre><code>&gt;# Using all posterior samples for ppc type &#39;ribbon_grouped&#39; by default.</code></pre>
 <p><img src="08_model_diagnostics_files/figure-html/ppc-m4-ribbon-1.png" width="672" /></p>
 <p>Some points are outside the 90% predictive intervals.</p>
@@ -482,7 +484,7 @@ model predicted relationship between the outcome and each predictor, and the
 relationship obtained using nonparametric methods with smoothing. There is not a
 built-in function for marginal model plot in R for Bayesian regression, but
 it’s available in the R function <code>mmp_brm</code> I wrote.</p>
-<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb214-1" data-line-number="1"><span class="kw">mmp_brm</span>(m4, <span class="dt">x =</span> <span class="st">&quot;mom_iq_c&quot;</span>, <span class="dt">prob =</span> <span class="fl">.95</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="model-diagnostics.html#cb225-1"></a><span class="kw">mmp_brm</span>(m4, <span class="dt">x =</span> <span class="st">&quot;mom_iq_c&quot;</span>, <span class="dt">prob =</span> <span class="fl">.95</span>)</span></code></pre></div>
 <pre><code>&gt;# `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;
 &gt;# `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</code></pre>
 <p><img src="08_model_diagnostics_files/figure-html/mmp-m4-1.png" width="432" /></p>
@@ -509,8 +511,8 @@ posterior distribution for each residual. Below is a check of the average
 residual <span class="math inline">\(Y\)</span> (i.e., <span class="math inline">\(Y\)</span> - <span class="math inline">\(\hat Y\)</span>) and the true value of <span class="math inline">\(Y\)</span>. If the model fit
 the data well, the points should be scattered with no specific pattern, like the
 graph below:</p>
-<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb216-1" data-line-number="1"><span class="kw">pp_check</span>(m4, <span class="dt">type =</span> <span class="st">&quot;error_scatter_avg_vs_x&quot;</span>, <span class="dt">size =</span> <span class="fl">1.1</span>, </a>
-<a class="sourceLine" id="cb216-2" data-line-number="2">         <span class="dt">x =</span> <span class="st">&quot;mom_iq_c&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="model-diagnostics.html#cb227-1"></a><span class="kw">pp_check</span>(m4, <span class="dt">type =</span> <span class="st">&quot;error_scatter_avg_vs_x&quot;</span>, <span class="dt">size =</span> <span class="fl">1.1</span>, </span>
+<span id="cb227-2"><a href="model-diagnostics.html#cb227-2"></a>         <span class="dt">x =</span> <span class="st">&quot;mom_iq_c&quot;</span>)</span></code></pre></div>
 <pre><code>&gt;# Using all posterior samples for ppc type &#39;error_scatter_avg_vs_x&#39; by default.</code></pre>
 <p><img src="08_model_diagnostics_files/figure-html/ppc-m4-error-x-1.png" width="336" /></p>
 <p>No big problem was found in the residuals. If you see that the <em>SD</em> of the
@@ -523,12 +525,13 @@ it’s not necessary to standardize them. However, it’s easier to compare with
 frequentist results to flag cases with standardized residuals larger than 3 or 4
 in standardized values. The plot below shows the standardized residuals against
 the predicted <span class="math inline">\(y\)</span> values.</p>
-<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb218-1" data-line-number="1">res_df &lt;-<span class="st"> </span>m4<span class="op">$</span>data <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb218-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">predict_y =</span> <span class="kw">predict</span>(m4)[ , <span class="st">&quot;Estimate&quot;</span>], </a>
-<a class="sourceLine" id="cb218-3" data-line-number="3">         <span class="dt">std_resid =</span> <span class="kw">residuals</span>(m4, <span class="dt">type =</span> <span class="st">&quot;pearson&quot;</span>)[ , <span class="st">&quot;Estimate&quot;</span>])</a>
-<a class="sourceLine" id="cb218-4" data-line-number="4"><span class="kw">ggplot</span>(res_df, </a>
-<a class="sourceLine" id="cb218-5" data-line-number="5">       <span class="kw">aes</span>(predict_y, std_resid)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb218-6" data-line-number="6"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="fl">0.8</span>) <span class="op">+</span><span class="st"> </span><span class="kw">stat_smooth</span>(<span class="dt">se =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="model-diagnostics.html#cb229-1"></a>res_df &lt;-<span class="st"> </span>m4<span class="op">$</span>data <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb229-2"><a href="model-diagnostics.html#cb229-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">predict_y =</span> <span class="kw">predict</span>(m4)[ , <span class="st">&quot;Estimate&quot;</span>], </span>
+<span id="cb229-3"><a href="model-diagnostics.html#cb229-3"></a>         <span class="dt">std_resid =</span> <span class="kw">residuals</span>(m4, <span class="dt">type =</span> <span class="st">&quot;pearson&quot;</span>)[ , <span class="st">&quot;Estimate&quot;</span>])</span></code></pre></div>
+<pre><code>&gt;# Warning: Type &#39;pearson&#39; is deprecated and will be removed in the future.</code></pre>
+<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="model-diagnostics.html#cb231-1"></a><span class="kw">ggplot</span>(res_df, </span>
+<span id="cb231-2"><a href="model-diagnostics.html#cb231-2"></a>       <span class="kw">aes</span>(predict_y, std_resid)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb231-3"><a href="model-diagnostics.html#cb231-3"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="fl">0.8</span>) <span class="op">+</span><span class="st"> </span><span class="kw">stat_smooth</span>(<span class="dt">se =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
 <pre><code>&gt;# `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</code></pre>
 <p><img src="08_model_diagnostics_files/figure-html/std-resid-m4-1.png" width="384" /></p>
 <p>All points are within the -3 to 3 range, so no big issues with outliers.
@@ -555,10 +558,10 @@ deviation [which sounds like an important research project].
 <!-- inflation factor (VIF), which will indicate some problem if VIF > 5. --></p>
 <p>You can look at the posterior density of the coefficients to see how correlated
 they are:</p>
-<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb220-1" data-line-number="1"><span class="kw">pairs</span>(m4, <span class="dt">pars =</span> <span class="st">&quot;b&quot;</span>, </a>
-<a class="sourceLine" id="cb220-2" data-line-number="2">      <span class="dt">off_diag_args =</span>  <span class="co"># arguments of the scatterplots</span></a>
-<a class="sourceLine" id="cb220-3" data-line-number="3">        <span class="kw">list</span>(<span class="dt">size =</span> <span class="fl">0.5</span>,  <span class="co"># point size</span></a>
-<a class="sourceLine" id="cb220-4" data-line-number="4">             <span class="dt">alpha =</span> <span class="fl">0.25</span>))  <span class="co"># transparency</span></a></code></pre></div>
+<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="model-diagnostics.html#cb233-1"></a><span class="kw">pairs</span>(m4, <span class="dt">pars =</span> <span class="st">&quot;b&quot;</span>, </span>
+<span id="cb233-2"><a href="model-diagnostics.html#cb233-2"></a>      <span class="dt">off_diag_args =</span>  <span class="co"># arguments of the scatterplots</span></span>
+<span id="cb233-3"><a href="model-diagnostics.html#cb233-3"></a>        <span class="kw">list</span>(<span class="dt">size =</span> <span class="fl">0.5</span>,  <span class="co"># point size</span></span>
+<span id="cb233-4"><a href="model-diagnostics.html#cb233-4"></a>             <span class="dt">alpha =</span> <span class="fl">0.25</span>))  <span class="co"># transparency</span></span></code></pre></div>
 <p><img src="08_model_diagnostics_files/figure-html/pairs-m4-1.png" width="720" /></p>
 <p>If some coefficients are particularly strongly correlated, you may need to
 think about using a stronger prior or combining some predictors. Principal
@@ -582,54 +585,57 @@ data. For example, both the red and the green dots will be considered outliers i
 the graph below, as both are away from the majority of the data. The red point
 will be considered an influential observation because it can have a relatively
 large influence on the regression line.</p>
+<pre><code>&gt;# `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <p><img src="08_model_diagnostics_files/figure-html/unnamed-chunk-1-1.png" width="384" /></p>
 <div id="students-t-regression" class="section level4">
 <h4><span class="header-section-number">8.2.5.1</span> Student’s <span class="math inline">\(t\)</span> regression</h4>
 <p>One relatively straightforward way to extend the normal linear model to one
 with a <span class="math inline">\(t\)</span> likelihood:</p>
-<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb221-1" data-line-number="1">m4t &lt;-<span class="st"> </span><span class="kw">brm</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_iq_c <span class="op">*</span><span class="st"> </span>mom_hs, <span class="dt">data =</span> kidiq100, </a>
-<a class="sourceLine" id="cb221-2" data-line-number="2">           <span class="dt">family =</span> <span class="kw">student</span>(),</a>
-<a class="sourceLine" id="cb221-3" data-line-number="3">           <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </a>
-<a class="sourceLine" id="cb221-4" data-line-number="4">                     <span class="co"># set for all &quot;b&quot; coefficients</span></a>
-<a class="sourceLine" id="cb221-5" data-line-number="5">                     <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>),</a>
-<a class="sourceLine" id="cb221-6" data-line-number="6">                     <span class="co"># for interaction</span></a>
-<a class="sourceLine" id="cb221-7" data-line-number="7">                     <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="fl">0.5</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>, </a>
-<a class="sourceLine" id="cb221-8" data-line-number="8">                           <span class="dt">coef =</span> <span class="st">&quot;mom_iq_c:mom_hsyes&quot;</span>), </a>
-<a class="sourceLine" id="cb221-9" data-line-number="9">                     <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </a>
-<a class="sourceLine" id="cb221-10" data-line-number="10">           <span class="dt">seed =</span> <span class="dv">2302</span></a>
-<a class="sourceLine" id="cb221-11" data-line-number="11">)</a></code></pre></div>
+<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="model-diagnostics.html#cb235-1"></a>m4t &lt;-<span class="st"> </span><span class="kw">brm</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_iq_c <span class="op">*</span><span class="st"> </span>mom_hs, <span class="dt">data =</span> kidiq100, </span>
+<span id="cb235-2"><a href="model-diagnostics.html#cb235-2"></a>           <span class="dt">family =</span> <span class="kw">student</span>(),</span>
+<span id="cb235-3"><a href="model-diagnostics.html#cb235-3"></a>           <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </span>
+<span id="cb235-4"><a href="model-diagnostics.html#cb235-4"></a>                     <span class="co"># set for all &quot;b&quot; coefficients</span></span>
+<span id="cb235-5"><a href="model-diagnostics.html#cb235-5"></a>                     <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>),</span>
+<span id="cb235-6"><a href="model-diagnostics.html#cb235-6"></a>                     <span class="co"># for interaction</span></span>
+<span id="cb235-7"><a href="model-diagnostics.html#cb235-7"></a>                     <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="fl">0.5</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>, </span>
+<span id="cb235-8"><a href="model-diagnostics.html#cb235-8"></a>                           <span class="dt">coef =</span> <span class="st">&quot;mom_iq_c:mom_hsyes&quot;</span>), </span>
+<span id="cb235-9"><a href="model-diagnostics.html#cb235-9"></a>                     <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </span>
+<span id="cb235-10"><a href="model-diagnostics.html#cb235-10"></a>           <span class="dt">seed =</span> <span class="dv">2302</span></span>
+<span id="cb235-11"><a href="model-diagnostics.html#cb235-11"></a>)</span></code></pre></div>
 <p>In <code>brms</code>, the default prior is <span class="math inline">\(\nu \sim \mathrm{Gamma}(2, 0.1)\)</span>, with a lower bound of 1:</p>
-<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb222-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="kw">tibble</span>(<span class="dt">nu =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">50</span>)), <span class="kw">aes</span>(<span class="dt">x =</span> nu)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb222-2" data-line-number="2"><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> <span class="cf">function</span>(x) {</a>
-<a class="sourceLine" id="cb222-3" data-line-number="3">    <span class="kw">dgamma</span>(x, <span class="dv">2</span>, <span class="fl">0.1</span>) <span class="op">/</span><span class="st"> </span><span class="kw">pgamma</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="fl">0.1</span>, <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb222-4" data-line-number="4">  })</a></code></pre></div>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="model-diagnostics.html#cb236-1"></a><span class="kw">ggplot</span>(<span class="kw">tibble</span>(<span class="dt">nu =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">50</span>)), <span class="kw">aes</span>(<span class="dt">x =</span> nu)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb236-2"><a href="model-diagnostics.html#cb236-2"></a><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> <span class="cf">function</span>(x) {</span>
+<span id="cb236-3"><a href="model-diagnostics.html#cb236-3"></a>    <span class="kw">dgamma</span>(x, <span class="dv">2</span>, <span class="fl">0.1</span>) <span class="op">/</span><span class="st"> </span><span class="kw">pgamma</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="fl">0.1</span>, <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb236-4"><a href="model-diagnostics.html#cb236-4"></a>  })</span></code></pre></div>
 <p><img src="08_model_diagnostics_files/figure-html/plot-gamma-prior-1.png" width="288" /></p>
 <p>The data did not indicate strong outlier influence, as you can see from the
 <code>nu</code> parameter:</p>
-<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb223-1" data-line-number="1"><span class="kw">stanplot</span>(m4t, <span class="dt">pars =</span> <span class="st">&quot;nu&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;areas&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="model-diagnostics.html#cb237-1"></a><span class="kw">stanplot</span>(m4t, <span class="dt">pars =</span> <span class="st">&quot;nu&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;areas&quot;</span>)</span></code></pre></div>
+<pre><code>&gt;# Warning: Method &#39;stanplot&#39; is deprecated. Please use &#39;mcmc_plot&#39; instead.</code></pre>
+<pre><code>&gt;# Warning: `expand_scale()` is deprecated; use `expansion()` instead.</code></pre>
 <p><img src="08_model_diagnostics_files/figure-html/plot-m4t-1.png" width="384" /></p>
 <p>which is pretty large.</p>
 <p>If you compared the results of the normal model and the <span class="math inline">\(t\)</span> model the results
 appeared similar:</p>
-<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb224-1" data-line-number="1"><span class="kw">source</span>(<span class="st">&quot;../codes/extract_brmsfit.R&quot;</span>)</a>
-<a class="sourceLine" id="cb224-2" data-line-number="2">texreg<span class="op">::</span><span class="kw">screenreg</span>(<span class="kw">map</span>(<span class="kw">list</span>(m4, m4t), extract_brmsfit))</a></code></pre></div>
+<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="model-diagnostics.html#cb240-1"></a><span class="kw">source</span>(<span class="st">&quot;../codes/extract_brmsfit.R&quot;</span>)</span>
+<span id="cb240-2"><a href="model-diagnostics.html#cb240-2"></a>texreg<span class="op">::</span><span class="kw">screenreg</span>(<span class="kw">map</span>(<span class="kw">list</span>(m4, m4t), extract_brmsfit))</span></code></pre></div>
 <pre><code>&gt;# 
 &gt;# ==================================================
 &gt;#                     Model 1         Model 2       
 &gt;# --------------------------------------------------
 &gt;# Intercept              0.85 *          0.85 *     
-&gt;#                     [ 0.81;  0.89]  [ 0.81;  0.90]
+&gt;#                     [ 0.80;  0.89]  [ 0.81;  0.89]
 &gt;# mom_iq_c               0.91 *          0.92 *     
-&gt;#                     [ 0.65;  1.20]  [ 0.65;  1.19]
+&gt;#                     [ 0.64;  1.20]  [ 0.64;  1.18]
 &gt;# mom_hsyes              0.03            0.03       
-&gt;#                     [-0.01;  0.08]  [-0.02;  0.08]
+&gt;#                     [-0.01;  0.08]  [-0.01;  0.08]
 &gt;# mom_iq_c:mom_hsyes    -0.42 *         -0.43 *     
-&gt;#                     [-0.73; -0.14]  [-0.71; -0.12]
+&gt;#                     [-0.75; -0.13]  [-0.73; -0.13]
 &gt;# --------------------------------------------------
 &gt;# R^2                    0.23            0.23       
 &gt;# Num. obs.            434             434          
-&gt;# loo IC              -252.21         -250.54       
-&gt;# WAIC                -252.22         -250.56       
+&gt;# loo IC              -252.03         -250.91       
+&gt;# WAIC                -252.05         -250.93       
 &gt;# ==================================================
 &gt;# * 0 outside the confidence interval</code></pre>
 <p>The LOOIC and the WAIC reported, which we will talk about in the next set of
@@ -642,26 +648,27 @@ every individual, which is the equal variance assumption. However, such an
 assumption may not always hold, especially in data when some scores represent
 aggregates of more than one person or time points (e.g., see your homework
 problem). For example, you can look at the residuals in the following:</p>
+<pre><code>&gt;# `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <p><img src="08_model_diagnostics_files/figure-html/heter-data-1.png" width="672" /></p>
 <p>Check the variability for each group. How are they different?</p>
 <p>If you suspect that the spreadness (<span class="math inline">\(\sigma\)</span>) depends on some predictors, you
 can run the following <code>brms</code> model to see whether the spreadness differs across
 <code>mom_hs</code> levels:</p>
-<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb226-1" data-line-number="1">m4h &lt;-<span class="st"> </span><span class="kw">brm</span>(<span class="kw">bf</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_iq_c <span class="op">*</span><span class="st"> </span>mom_hs, </a>
-<a class="sourceLine" id="cb226-2" data-line-number="2">              sigma <span class="op">~</span><span class="st"> </span>mom_hs), </a>
-<a class="sourceLine" id="cb226-3" data-line-number="3">           <span class="dt">data =</span> kidiq100, </a>
-<a class="sourceLine" id="cb226-4" data-line-number="4">           <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </a>
-<a class="sourceLine" id="cb226-5" data-line-number="5">                     <span class="co"># set for all &quot;b&quot; coefficients</span></a>
-<a class="sourceLine" id="cb226-6" data-line-number="6">                     <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>),</a>
-<a class="sourceLine" id="cb226-7" data-line-number="7">                     <span class="co"># for interaction</span></a>
-<a class="sourceLine" id="cb226-8" data-line-number="8">                     <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="fl">0.5</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>, </a>
-<a class="sourceLine" id="cb226-9" data-line-number="9">                           <span class="dt">coef =</span> <span class="st">&quot;mom_iq_c:mom_hsyes&quot;</span>), </a>
-<a class="sourceLine" id="cb226-10" data-line-number="10">                     <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">dpar =</span> <span class="st">&quot;sigma&quot;</span>, </a>
-<a class="sourceLine" id="cb226-11" data-line-number="11">                           <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>), </a>
-<a class="sourceLine" id="cb226-12" data-line-number="12">                     <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">dpar =</span> <span class="st">&quot;sigma&quot;</span>, </a>
-<a class="sourceLine" id="cb226-13" data-line-number="13">                           <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>)), </a>
-<a class="sourceLine" id="cb226-14" data-line-number="14">           <span class="dt">seed =</span> <span class="dv">2302</span></a>
-<a class="sourceLine" id="cb226-15" data-line-number="15">)</a></code></pre></div>
+<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="model-diagnostics.html#cb243-1"></a>m4h &lt;-<span class="st"> </span><span class="kw">brm</span>(<span class="kw">bf</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_iq_c <span class="op">*</span><span class="st"> </span>mom_hs, </span>
+<span id="cb243-2"><a href="model-diagnostics.html#cb243-2"></a>              sigma <span class="op">~</span><span class="st"> </span>mom_hs), </span>
+<span id="cb243-3"><a href="model-diagnostics.html#cb243-3"></a>           <span class="dt">data =</span> kidiq100, </span>
+<span id="cb243-4"><a href="model-diagnostics.html#cb243-4"></a>           <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </span>
+<span id="cb243-5"><a href="model-diagnostics.html#cb243-5"></a>                     <span class="co"># set for all &quot;b&quot; coefficients</span></span>
+<span id="cb243-6"><a href="model-diagnostics.html#cb243-6"></a>                     <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>),</span>
+<span id="cb243-7"><a href="model-diagnostics.html#cb243-7"></a>                     <span class="co"># for interaction</span></span>
+<span id="cb243-8"><a href="model-diagnostics.html#cb243-8"></a>                     <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="fl">0.5</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>, </span>
+<span id="cb243-9"><a href="model-diagnostics.html#cb243-9"></a>                           <span class="dt">coef =</span> <span class="st">&quot;mom_iq_c:mom_hsyes&quot;</span>), </span>
+<span id="cb243-10"><a href="model-diagnostics.html#cb243-10"></a>                     <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">dpar =</span> <span class="st">&quot;sigma&quot;</span>, </span>
+<span id="cb243-11"><a href="model-diagnostics.html#cb243-11"></a>                           <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>), </span>
+<span id="cb243-12"><a href="model-diagnostics.html#cb243-12"></a>                     <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">dpar =</span> <span class="st">&quot;sigma&quot;</span>, </span>
+<span id="cb243-13"><a href="model-diagnostics.html#cb243-13"></a>                           <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>)), </span>
+<span id="cb243-14"><a href="model-diagnostics.html#cb243-14"></a>           <span class="dt">seed =</span> <span class="dv">2302</span></span>
+<span id="cb243-15"><a href="model-diagnostics.html#cb243-15"></a>)</span></code></pre></div>
 <p>So not much evidence for heterogeneity of variance across <code>mom_hs</code> in this case.
 The coefficients were expressed in log unit, so you need to exponentiate the
 coefficients to get back the <span class="math inline">\(\sigma\)</span> coefficient. Specifically,</p>
@@ -669,7 +676,7 @@ coefficients to get back the <span class="math inline">\(\sigma\)</span> coeffic
   \log(\sigma_i) &amp; = \beta_0^{[s]} + \beta_1^{[s]} \texttt{mom_hs}_i
 \end{align*}\]</span></p>
 <p>The estimated error standard deviation was
-0.192 when the mother did not
+0.193 when the mother did not
 have a high school degree, and
 0.177 when the mother have a
 high school degree. However, accounting for the posterior uncertainty, there
@@ -739,7 +746,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["notes_bookdown.pdf", "notes_bookdown.epub"],
+"download": ["notes_bookdown.epub"],
 "toc": {
 "collapse": "subsection"
 }

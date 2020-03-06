@@ -64,6 +64,18 @@ demo_data <- tibble(y = y, x = x,
 
 
 
+
+```
+># `geom_smooth()` using formula 'y ~ x'
+># `geom_smooth()` using formula 'y ~ x'
+># `geom_smooth()` using formula 'y ~ x'
+># `geom_smooth()` using formula 'y ~ x'
+># `geom_smooth()` using formula 'y ~ x'
+># `geom_smooth()` using formula 'y ~ x'
+># `geom_smooth()` using formula 'y ~ x'
+># `geom_smooth()` using formula 'y ~ x'
+```
+
 <div class="figure">
 <img src="12_missing_data_files/figure-html/mechanism-plots-1.png" alt="Scatter plots for different types of missing data" width="624" />
 <p class="caption">(\#fig:mechanism-plots)Scatter plots for different types of missing data</p>
@@ -471,16 +483,16 @@ m3_ld
 ># 
 ># Population-Level Effects: 
 >#           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-># Intercept     0.81      0.03     0.76     0.86 1.00     3395     3055
-># mom_iq_c      0.71      0.11     0.50     0.92 1.00     3518     2641
-># mom_hsyes     0.07      0.03     0.01     0.13 1.00     3583     3274
+># Intercept     0.81      0.03     0.76     0.86 1.00     4281     3286
+># mom_iq_c      0.71      0.11     0.51     0.91 1.00     4192     3222
+># mom_hsyes     0.07      0.03     0.01     0.13 1.00     4361     3233
 ># 
 ># Family Specific Parameters: 
 >#       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-># sigma     0.20      0.01     0.18     0.22 1.00     3632     2916
+># sigma     0.20      0.01     0.18     0.22 1.00     4354     3116
 ># 
-># Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
-># is a crude measure of effective sample size, and Rhat is the potential 
+># Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
+># and Tail_ESS are effective sample size measures, and Rhat is the potential
 ># scale reduction factor on split chains (at convergence, Rhat = 1).
 ```
 
@@ -517,16 +529,16 @@ m3
 ># 
 ># Population-Level Effects: 
 >#           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-># Intercept     0.82      0.02     0.78     0.86 1.00     3840     3093
-># mom_iq_c      0.56      0.06     0.44     0.68 1.00     3672     2883
-># mom_hsyes     0.06      0.02     0.02     0.10 1.00     3761     3213
+># Intercept     0.82      0.02     0.78     0.86 1.00     4140     2905
+># mom_iq_c      0.56      0.06     0.44     0.68 1.00     4044     3195
+># mom_hsyes     0.06      0.02     0.02     0.10 1.00     3884     3034
 ># 
 ># Family Specific Parameters: 
 >#       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-># sigma     0.18      0.01     0.17     0.19 1.00     3899     3136
+># sigma     0.18      0.01     0.17     0.19 1.00     3902     3132
 ># 
-># Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
-># is a crude measure of effective sample size, and Rhat is the potential 
+># Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
+># and Tail_ESS are effective sample size measures, and Rhat is the potential
 ># scale reduction factor on split chains (at convergence, Rhat = 1).
 ```
 
@@ -866,8 +878,9 @@ m3_imp
 ```
 
 ```
-># Warning: The model has not converged (some Rhats are > 1.05). Do not analyse the results! 
-># We recommend running more iterations and/or setting stronger priors.
+># Warning: Parts of the model have not converged (some Rhats are > 1.05). Be
+># careful when analysing the results! We recommend running more iterations and/or
+># setting stronger priors.
 ```
 
 ```
@@ -880,16 +893,16 @@ m3_imp
 ># 
 ># Population-Level Effects: 
 >#           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-># Intercept     0.80      0.02     0.76     0.85 1.15      166      768
-># mom_iq_c      0.67      0.10     0.48     0.85 1.39       84      329
-># mom_hsyes     0.07      0.03     0.02     0.13 1.18      143      665
+># Intercept     0.80      0.02     0.76     0.85 1.15      170      783
+># mom_iq_c      0.67      0.10     0.48     0.86 1.40       84      328
+># mom_hsyes     0.07      0.03     0.02     0.13 1.18      144      653
 ># 
 ># Family Specific Parameters: 
 >#       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-># sigma     0.19      0.01     0.18     0.21 1.20      137      256
+># sigma     0.19      0.01     0.18     0.21 1.20      135      246
 ># 
-># Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
-># is a crude measure of effective sample size, and Rhat is the potential 
+># Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
+># and Tail_ESS are effective sample size measures, and Rhat is the potential
 ># scale reduction factor on split chains (at convergence, Rhat = 1).
 ```
 
@@ -904,26 +917,26 @@ m3_imp$rhats
 
 ```
 >#    b_Intercept b_mom_iq_c b_mom_hsyes sigma  lp__
-># 1        1.001      1.002       1.002 0.999 1.000
-># 2        1.000      1.003       1.001 1.000 1.000
-># 3        0.999      1.000       0.999 1.000 1.001
-># 4        1.001      1.000       1.001 1.000 1.001
-># 5        0.999      0.999       1.000 0.999 0.999
-># 6        0.999      1.000       0.999 1.000 1.000
-># 7        0.999      1.002       1.000 1.003 1.000
-># 8        0.999      0.999       0.999 1.000 0.999
-># 9        1.000      1.000       0.999 1.000 1.003
-># 10       0.999      0.999       0.999 0.999 1.001
-># 11       1.002      1.000       1.001 1.001 1.000
-># 12       1.001      1.000       1.000 1.001 1.000
-># 13       0.999      1.000       0.999 0.999 1.001
-># 14       1.000      1.003       1.001 1.000 0.999
-># 15       1.000      1.000       0.999 1.000 1.006
-># 16       0.999      0.999       0.999 1.001 1.002
-># 17       1.000      1.000       0.999 1.001 1.003
-># 18       1.000      1.000       1.000 1.001 1.000
-># 19       1.000      1.000       0.999 1.001 1.002
-># 20       1.000      1.001       1.000 1.001 1.003
+># 1        1.002      1.000       1.002 1.003 1.002
+># 2        0.999      1.001       0.999 1.000 1.000
+># 3        1.000      0.999       1.000 1.002 0.999
+># 4        0.999      0.999       0.999 1.001 1.004
+># 5        1.001      1.001       1.002 1.003 1.001
+># 6        1.000      1.001       1.001 1.001 0.999
+># 7        1.000      1.000       1.000 1.001 1.000
+># 8        1.000      1.000       1.000 1.000 1.002
+># 9        1.000      0.999       1.001 0.999 1.002
+># 10       0.999      1.000       0.999 1.000 1.003
+># 11       0.999      1.001       0.999 1.000 1.000
+># 12       0.999      1.000       0.999 0.999 1.000
+># 13       1.000      1.000       1.000 1.000 1.000
+># 14       1.001      1.000       1.000 0.999 1.001
+># 15       1.001      1.000       1.001 1.000 1.000
+># 16       0.999      1.000       0.999 0.999 1.001
+># 17       1.001      1.000       1.003 0.999 1.000
+># 18       1.000      1.000       1.000 0.999 0.999
+># 19       1.000      0.999       1.001 0.999 1.000
+># 20       1.001      1.000       1.001 1.002 1.003
 ```
 
 So the chains have converged for each individual data set. 
@@ -945,8 +958,9 @@ texreg::screenreg(map(list(m3, m3_ld, m3_imp),
 ```
 
 ```
-># Warning: The model has not converged (some Rhats are > 1.05). Do not analyse the results! 
-># We recommend running more iterations and/or setting stronger priors.
+># Warning: Parts of the model have not converged (some Rhats are > 1.05). Be
+># careful when analysing the results! We recommend running more iterations and/or
+># setting stronger priors.
 ```
 
 ```
@@ -960,11 +974,11 @@ texreg::screenreg(map(list(m3, m3_ld, m3_imp),
 >#            Full data     Complete case  MI          
 ># ----------------------------------------------------
 ># Intercept    0.82 *        0.81 *         0.80 *    
->#            [0.78; 0.86]  [0.76; 0.86]   [0.75; 0.85]
+>#            [0.78; 0.86]  [0.76; 0.86]   [0.76; 0.85]
 ># mom_iq_c     0.56 *        0.71 *         0.67 *    
->#            [0.43; 0.67]  [0.48; 0.90]   [0.48; 0.85]
+>#            [0.44; 0.68]  [0.51; 0.91]   [0.49; 0.86]
 ># mom_hsyes    0.06 *        0.07 *         0.07 *    
->#            [0.02; 0.10]  [0.01; 0.13]   [0.02; 0.13]
+>#            [0.01; 0.10]  [0.01; 0.13]   [0.02; 0.13]
 ># ----------------------------------------------------
 ># R^2          0.21          0.22           0.22      
 ># Num. obs.  434           219            434         

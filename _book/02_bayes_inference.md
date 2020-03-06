@@ -617,6 +617,12 @@ ggplot(tibble(x = c(0, 1)), aes(x = x)) +
   scale_linetype_manual("", values = c("dashed", "solid"))
 ```
 
+```
+># Warning: `mapping` is not used by stat_function()
+
+># Warning: `mapping` is not used by stat_function()
+```
+
 <img src="02_bayes_inference_files/figure-html/plot_Laplace-1.png" width="528" />
 
 The advantage of using Laplace approximation is mainly computational, as it is

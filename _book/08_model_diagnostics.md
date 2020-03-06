@@ -217,6 +217,13 @@ the predicted $y$ values.
 res_df <- m4$data %>% 
   mutate(predict_y = predict(m4)[ , "Estimate"], 
          std_resid = residuals(m4, type = "pearson")[ , "Estimate"])
+```
+
+```
+># Warning: Type 'pearson' is deprecated and will be removed in the future.
+```
+
+```r
 ggplot(res_df, 
        aes(predict_y, std_resid)) + 
   geom_point(size = 0.8) + stat_smooth(se = FALSE)
@@ -287,6 +294,11 @@ the graph below, as both are away from the majority of the data. The red point
 will be considered an influential observation because it can have a relatively
 large influence on the regression line. 
 
+
+```
+># `geom_smooth()` using formula 'y ~ x'
+```
+
 <img src="08_model_diagnostics_files/figure-html/unnamed-chunk-1-1.png" width="384" />
 
 #### Student's $t$ regression
@@ -329,6 +341,14 @@ The data did not indicate strong outlier influence, as you can see from the
 stanplot(m4t, pars = "nu", type = "areas")
 ```
 
+```
+># Warning: Method 'stanplot' is deprecated. Please use 'mcmc_plot' instead.
+```
+
+```
+># Warning: `expand_scale()` is deprecated; use `expansion()` instead.
+```
+
 <img src="08_model_diagnostics_files/figure-html/plot-m4t-1.png" width="384" />
 
 which is pretty large. 
@@ -348,18 +368,18 @@ texreg::screenreg(map(list(m4, m4t), extract_brmsfit))
 >#                     Model 1         Model 2       
 ># --------------------------------------------------
 ># Intercept              0.85 *          0.85 *     
->#                     [ 0.81;  0.89]  [ 0.81;  0.90]
+>#                     [ 0.80;  0.89]  [ 0.81;  0.89]
 ># mom_iq_c               0.91 *          0.92 *     
->#                     [ 0.65;  1.20]  [ 0.65;  1.19]
+>#                     [ 0.64;  1.20]  [ 0.64;  1.18]
 ># mom_hsyes              0.03            0.03       
->#                     [-0.01;  0.08]  [-0.02;  0.08]
+>#                     [-0.01;  0.08]  [-0.01;  0.08]
 ># mom_iq_c:mom_hsyes    -0.42 *         -0.43 *     
->#                     [-0.73; -0.14]  [-0.71; -0.12]
+>#                     [-0.75; -0.13]  [-0.73; -0.13]
 ># --------------------------------------------------
 ># R^2                    0.23            0.23       
 ># Num. obs.            434             434          
-># loo IC              -252.21         -250.54       
-># WAIC                -252.22         -250.56       
+># loo IC              -252.03         -250.91       
+># WAIC                -252.05         -250.93       
 ># ==================================================
 ># * 0 outside the confidence interval
 ```
@@ -374,6 +394,11 @@ every individual, which is the equal variance assumption. However, such an
 assumption may not always hold, especially in data when some scores represent
 aggregates of more than one person or time points (e.g., see your homework
 problem). For example, you can look at the residuals in the following:
+
+
+```
+># `geom_smooth()` using formula 'y ~ x'
+```
 
 <img src="08_model_diagnostics_files/figure-html/heter-data-1.png" width="672" />
 
@@ -411,7 +436,7 @@ coefficients to get back the $\sigma$ coefficient. Specifically,
 \end{align*}
 
 The estimated error standard deviation was 
-0.192 when the mother did not
+0.193 when the mother did not
 have a high school degree, and 
 0.177 when the mother have a
 high school degree. However, accounting for the posterior uncertainty, there

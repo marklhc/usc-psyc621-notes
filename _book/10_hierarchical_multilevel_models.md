@@ -29,7 +29,7 @@ ggplot(alert, aes(x = Dosage, y = Alertness)) +
 ```
 
 ```
-># No summary function supplied, defaulting to `mean_se()
+># No summary function supplied, defaulting to `mean_se()`
 ```
 
 <img src="10_hierarchical_multilevel_models_files/figure-html/alert-1.png" width="672" />
@@ -48,7 +48,7 @@ summary(aov(Alertness ~ Dosage, data = alert))
 ```
 >#             Df Sum Sq Mean Sq F value  Pr(>F)    
 ># Dosage       2    619   309.5    11.5 0.00094 ***
-># Residuals   15    404    26.9                    
+># Residuals   15    403    26.9                    
 ># ---
 ># Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
@@ -125,21 +125,21 @@ broom::tidy(m1) %>%
 
 term                     estimate   std.error    lower    upper
 ----------------------  ---------  ----------  -------  -------
-b_Intercept                 26.45        7.04    14.69    37.28
-sd_Dosage__Intercept        10.97        6.05     4.29    22.68
-sigma                        5.58        1.15     4.04     7.70
-r_Dosage[a,Intercept]        5.62        7.24    -5.21    17.93
-r_Dosage[b,Intercept]        3.28        7.14    -7.77    15.14
-r_Dosage[c,Intercept]       -6.77        7.20   -18.15     4.91
-lp__                       -66.93        1.98   -70.63   -64.35
+b_Intercept                 26.37        8.20    13.22    37.49
+sd_Dosage__Intercept        11.42        6.79     4.10    24.62
+sigma                        5.65        1.17     4.11     7.87
+r_Dosage[a,Intercept]        5.63        8.32    -5.47    19.22
+r_Dosage[b,Intercept]        3.38        8.37    -8.07    17.18
+r_Dosage[c,Intercept]       -6.71        8.31   -18.71     6.29
+lp__                       -67.08        2.13   -71.13   -64.33
 
 From the results, the posterior mean for $\gamma$ is 
-26.455 (*SD* = 
-7.045), which was the grand mean `Alertness`
+26.37 (*SD* = 
+8.198), which was the grand mean `Alertness`
 level. The between-group *SD* was estimated to be $\tau$ = 
-10.973, whereas the within-group
+11.416, whereas the within-group
 *SD* was estimated to be $\sigma$ = 
-5.575. 
+5.654. 
 
 You can get the posterior mean for the mean of each group (i.e., $\mu_j$) using
 
@@ -150,9 +150,9 @@ coef(m1)$Dosage[ , , "Intercept"]
 
 ```
 >#   Estimate Est.Error Q2.5 Q97.5
-># a     32.1      2.31 27.4  36.7
-># b     29.7      2.27 25.4  34.2
-># c     19.7      2.32 15.3  24.4
+># a     32.0      2.36 27.2  36.6
+># b     29.7      2.29 25.2  34.2
+># c     19.7      2.42 15.0  24.6
 ```
 
 #### Shrinkage
@@ -175,7 +175,7 @@ ggplot(alert, aes(x = Dosage, y = Alertness)) +
 ```
 
 ```
-># No summary function supplied, defaulting to `mean_se()
+># No summary function supplied, defaulting to `mean_se()`
 ```
 
 <img src="10_hierarchical_multilevel_models_files/figure-html/plot-blup-1.png" width="480" />
@@ -227,6 +227,10 @@ m1_cont_draws <- map_dfc(m1_cont,
                            `names<-`(paste(.x[1], .x[2], sep = "-")))
 # Plot the contrasts
 mcmc_areas(m1_cont_draws, prob = .95, bw = "SJ")
+```
+
+```
+># Warning: `expand_scale()` is deprecated; use `expansion()` instead.
 ```
 
 <img src="10_hierarchical_multilevel_models_files/figure-html/mcp-m1-1.png" width="672" />
@@ -353,6 +357,10 @@ ggplot(sleepstudy, aes(x = Subject, y = Reaction)) +
                size = 4, shape = 24, fill = "red")
 ```
 
+```
+># Warning: `fun.y` is deprecated. Use `fun` instead.
+```
+
 <img src="10_hierarchical_multilevel_models_files/figure-html/plot-icc-data-1.png" width="528" />
 
 Which has substantial between-person variations. 
@@ -425,7 +433,7 @@ psych::describe(draws_icc)
 
 ```
 >#    vars    n mean  sd median trimmed mad  min  max range skew kurtosis se
-># X1    1 4000 0.43 0.1   0.43    0.43 0.1 0.16 0.78  0.62  0.2    -0.21  0
+># X1    1 4000 0.42 0.1   0.42    0.42 0.1 0.13 0.78  0.65 0.24    -0.19  0
 ```
 
 #### Interpretations
@@ -440,18 +448,18 @@ broom::tidy(m2, parameters = c("b_Intercept", "sd", "sigma")) %>%
 
 term                     estimate   std.error   lower   upper
 ----------------------  ---------  ----------  ------  ------
-b_Intercept                 29.90       1.016   28.20   31.58
-sd_Subject__Intercept        3.93       0.838    2.75    5.45
-sigma                        4.46       0.248    4.06    4.88
+b_Intercept                 29.86       0.973   28.25   31.51
+sd_Subject__Intercept        3.88       0.824    2.71    5.38
+sigma                        4.45       0.253    4.06    4.89
 
 
 
 > The model suggested that the average reaction time across individuals and 
 measurement occasions was 
-298.988 ms, 95% CI [278.958, 319.692]. It was estimated 
-that 43.007%, 95% CI 
-[24.463%, 
-63.909%] of the variations in reaction time was 
+298.629 ms, 95% CI [279.936, 317.770]. It was estimated 
+that 42.477%, 95% CI 
+[23.954%, 
+63.417%] of the variations in reaction time was 
 attributed to between-person differences. 
 
 ### Is MLM needed?
@@ -463,8 +471,8 @@ larger than 1.1. It is defined as:
 $$\Deff = 1 + (n - 1) \rho$$
 where $n$ is the (average) number of observations in each cluster, and in our
 case it is 10. Therefore, the design effect in `sleepstudy` for `Reaction` is 
-$$\Deff = 1 + (10 - 1) (0.43)$$
-which is 4.871, so we do need to account for the 
+$$\Deff = 1 + (10 - 1) (0.425)$$
+which is 4.823, so we do need to account for the 
 clustering.
 
 ## Varying Coefficients
@@ -545,10 +553,10 @@ broom::tidy(m3, parameters = c("b_", "sd", "sigma")) %>%
 
 term                     estimate   std.error    lower   upper
 ----------------------  ---------  ----------  -------  ------
-b_Intercept                 25.11       1.043   23.297   26.80
-b_Days                       1.04       0.084    0.909    1.19
-sd_Subject__Intercept        4.08       0.831    2.953    5.65
-sigma                        3.12       0.178    2.845    3.43
+b_Intercept                 25.18       1.052   23.433   26.95
+b_Days                       1.05       0.080    0.915    1.18
+sd_Subject__Intercept        4.03       0.772    2.945    5.46
+sigma                        3.12       0.176    2.854    3.43
 
 Let's check the fit of the model to the data, first to the overall data and then
 to each individual specifically. 
@@ -701,7 +709,21 @@ ggplot(tibble(rho = c(-1, 1)), aes(x = rho)) +
 ```
 
 ```
-># Warning: Removed 2 rows containing missing values (geom_path).
+># Warning: `mapping` is not used by stat_function()
+
+># Warning: `mapping` is not used by stat_function()
+
+># Warning: `mapping` is not used by stat_function()
+
+># Warning: `mapping` is not used by stat_function()
+
+># Warning: `mapping` is not used by stat_function()
+
+># Warning: `mapping` is not used by stat_function()
+```
+
+```
+># Warning: Removed 2 row(s) containing missing values (geom_path).
 ```
 
 <img src="10_hierarchical_multilevel_models_files/figure-html/plot-lkj-1.png" width="480" />
@@ -769,11 +791,11 @@ broom::tidy(m4, parameters = c("b_", "sd", "sigma")) %>%
 
 term                     estimate   std.error    lower    upper
 ----------------------  ---------  ----------  -------  -------
-b_Intercept                 25.14       0.781   23.894   26.413
-b_Days                       1.04       0.183    0.751    1.339
-sd_Subject__Intercept        2.83       0.721    1.812    4.138
-sd_Subject__Days             0.69       0.167    0.462    0.996
-sigma                        2.59       0.153    2.351    2.860
+b_Intercept                25.135       0.798   23.811   26.428
+b_Days                      1.048       0.179    0.754    1.341
+sd_Subject__Intercept       2.865       0.752    1.823    4.252
+sd_Subject__Days            0.693       0.163    0.467    0.991
+sigma                       2.583       0.151    2.350    2.846
 
 #### Fit of Individuals
 
@@ -831,6 +853,11 @@ sjPlot::plot_model(m4, type = "pred",
 ```
 
 ```
+># Warning: posterior_linpred(transform = TRUE) is deprecated. Please use
+># pp_expect() instead, without the 'transform' argument.
+```
+
+```
 ># Note: uncertainty of error terms are not taken into account. You may want to use `rstantools::posterior_predict()`.
 ```
 
@@ -875,9 +902,9 @@ loo(m4, m4_fixed)
 ```
 
 ```
-># Warning: Found 5 observations with a pareto_k > 0.7 in model 'm4_fixed'. It is
+># Warning: Found 4 observations with a pareto_k > 0.7 in model 'm4_fixed'. It is
 ># recommended to set 'reloo = TRUE' in order to calculate the ELPD without the
-># assumption that these observations are negligible. This will refit the model 5
+># assumption that these observations are negligible. This will refit the model 4
 ># times to compute the ELPDs for the problematic observations directly.
 ```
 
@@ -887,18 +914,18 @@ loo(m4, m4_fixed)
 ># Computed from 4000 by 180 log-likelihood matrix
 ># 
 >#          Estimate   SE
-># elpd_loo   -445.9 22.1
-># p_loo        33.6  8.1
-># looic       891.8 44.1
+># elpd_loo   -446.3 22.5
+># p_loo        34.2  8.4
+># looic       892.5 44.9
 ># ------
 ># Monte Carlo SE of elpd_loo is NA.
 ># 
 ># Pareto k diagnostic values:
 >#                          Count Pct.    Min. n_eff
-># (-Inf, 0.5]   (good)     170   94.4%   887       
->#  (0.5, 0.7]   (ok)         7    3.9%   545       
->#    (0.7, 1]   (bad)        3    1.7%   25        
->#    (1, Inf)   (very bad)   0    0.0%   <NA>      
+># (-Inf, 0.5]   (good)     175   97.2%   899       
+>#  (0.5, 0.7]   (ok)         2    1.1%   493       
+>#    (0.7, 1]   (bad)        2    1.1%   31        
+>#    (1, Inf)   (very bad)   1    0.6%   15        
 ># See help('pareto-k-diagnostic') for details.
 ># 
 ># Output of model 'm4_fixed':
@@ -906,24 +933,24 @@ loo(m4, m4_fixed)
 ># Computed from 4000 by 180 log-likelihood matrix
 ># 
 >#          Estimate   SE
-># elpd_loo   -448.9 23.1
-># p_loo        38.7  9.1
-># looic       897.8 46.3
+># elpd_loo   -450.0 23.7
+># p_loo        40.1  9.8
+># looic       900.1 47.5
 ># ------
 ># Monte Carlo SE of elpd_loo is NA.
 ># 
 ># Pareto k diagnostic values:
 >#                          Count Pct.    Min. n_eff
-># (-Inf, 0.5]   (good)     167   92.8%   357       
->#  (0.5, 0.7]   (ok)         8    4.4%   711       
->#    (0.7, 1]   (bad)        4    2.2%   20        
->#    (1, Inf)   (very bad)   1    0.6%   15        
+># (-Inf, 0.5]   (good)     165   91.7%   251       
+>#  (0.5, 0.7]   (ok)        11    6.1%   210       
+>#    (0.7, 1]   (bad)        1    0.6%   721       
+>#    (1, Inf)   (very bad)   3    1.7%   5         
 ># See help('pareto-k-diagnostic') for details.
 ># 
 ># Model comparisons:
 >#          elpd_diff se_diff
 ># m4        0.0       0.0   
-># m4_fixed -3.0       2.6
+># m4_fixed -3.8       2.6
 ```
 
 As you can see, in this case the hierarchical approach yields a lower LOO (but
@@ -959,15 +986,15 @@ tau_m4 <- VarCorr(m4)$Subject$sd
 ```
 
 > Based on the model, at Day 0, the average reaction time across individuals was 
-251.417 ms, 95% CI [236.109, 266.954], and the *SD* at Day 0 
-was 28.278ms, 95% CI 
-[16.561ms, 
-44.749ms]. 
+251.348 ms, 95% CI [235.577, 267.109], and the *SD* at Day 0 
+was 28.646ms, 95% CI 
+[16.698ms, 
+45.883ms]. 
 
 > The average growth rate per day in reaction time across individuals was 
-10.427 ms, 95% CI [6.789, 14.064], and the *SD* at Day 0 
-was 6.904ms, 95% CI 
-[4.272ms, 10.769ms], as 
+10.477 ms, 95% CI [6.938, 14.178], and the *SD* at Day 0 
+was 6.93ms, 95% CI 
+[4.371ms, 10.886ms], as 
 shown in the figure. 
 
 ### Varying $\sigma$
@@ -1049,15 +1076,15 @@ broom::tidy(m5, parameters = c("b_", "sd_Subject", "cor")) %>%
 
 term                                       estimate   std.error    lower    upper
 ----------------------------------------  ---------  ----------  -------  -------
-b_Intercept                                  25.156       0.839   23.773   26.553
-b_sigma_Intercept                             0.734       0.138    0.511    0.965
-b_Days                                        1.042       0.179    0.747    1.332
-sd_Subject__Intercept                         3.184       0.722    2.187    4.499
-sd_Subject__Days                              0.708       0.159    0.493    1.019
-sd_Subject__sigma_Intercept                   0.512       0.124    0.340    0.739
-cor_Subject__Intercept__Days                  0.000       0.280   -0.465    0.463
-cor_Subject__Intercept__sigma_Intercept       0.243       0.297   -0.278    0.706
-cor_Subject__Days__sigma_Intercept            0.444       0.263   -0.044    0.810
+b_Intercept                                  25.158       0.838   23.816   26.581
+b_sigma_Intercept                             0.727       0.137    0.504    0.949
+b_Days                                        1.037       0.186    0.741    1.346
+sd_Subject__Intercept                         3.140       0.695    2.183    4.418
+sd_Subject__Days                              0.704       0.159    0.490    0.993
+sd_Subject__sigma_Intercept                   0.507       0.123    0.338    0.737
+cor_Subject__Intercept__Days                  0.004       0.270   -0.438    0.451
+cor_Subject__Intercept__sigma_Intercept       0.251       0.297   -0.284    0.697
+cor_Subject__Days__sigma_Intercept            0.438       0.255   -0.032    0.794
 
 And the posterior predictive check:
 
@@ -1110,7 +1137,7 @@ ext_m5 <- extract_brmsfit(m5)
 ```
 
 ```
-># Warning: Found 14 observations with a pareto_k > 0.7 in model 'model'. With this
+># Warning: Found 13 observations with a pareto_k > 0.7 in model 'model'. With this
 ># many problematic observations, it may be more appropriate to use 'kfold' with
 ># argument 'K = 10' to perform 10-fold cross-validation rather than LOO.
 ```
@@ -1141,27 +1168,27 @@ texreg::htmlreg(list(ext_m3, ext_m4, ext_m5),
 </tr>
 <tr>
 <td style="padding-right: 12px; border: none;">Intercept</td>
-<td style="padding-right: 12px; border: none;">25.11<sup style="vertical-align: 0px;">*</sup></td>
-<td style="padding-right: 12px; border: none;">25.14<sup style="vertical-align: 0px;">*</sup></td>
+<td style="padding-right: 12px; border: none;">25.18<sup style="vertical-align: 0px;">*</sup></td>
+<td style="padding-right: 12px; border: none;">25.13<sup style="vertical-align: 0px;">*</sup></td>
 <td style="padding-right: 12px; border: none;">25.16<sup style="vertical-align: 0px;">*</sup></td>
 </tr>
 <tr>
 <td style="padding-right: 12px; border: none;"></td>
-<td style="padding-right: 12px; border: none;">[22.99; 27.08]</td>
-<td style="padding-right: 12px; border: none;">[23.60; 26.67]</td>
-<td style="padding-right: 12px; border: none;">[23.55; 26.91]</td>
+<td style="padding-right: 12px; border: none;">[23.12; 27.30]</td>
+<td style="padding-right: 12px; border: none;">[23.59; 26.72]</td>
+<td style="padding-right: 12px; border: none;">[23.57; 26.86]</td>
 </tr>
 <tr>
 <td style="padding-right: 12px; border: none;">Days</td>
 <td style="padding-right: 12px; border: none;">1.05<sup style="vertical-align: 0px;">*</sup></td>
-<td style="padding-right: 12px; border: none;">1.04<sup style="vertical-align: 0px;">*</sup></td>
+<td style="padding-right: 12px; border: none;">1.05<sup style="vertical-align: 0px;">*</sup></td>
 <td style="padding-right: 12px; border: none;">1.04<sup style="vertical-align: 0px;">*</sup></td>
 </tr>
 <tr>
 <td style="padding-right: 12px; border: none;"></td>
-<td style="padding-right: 12px; border: none;">[0.89; 1.21]</td>
-<td style="padding-right: 12px; border: none;">[0.68; 1.41]</td>
-<td style="padding-right: 12px; border: none;">[0.70; 1.39]</td>
+<td style="padding-right: 12px; border: none;">[0.90; 1.21]</td>
+<td style="padding-right: 12px; border: none;">[0.66; 1.38]</td>
+<td style="padding-right: 12px; border: none;">[0.68; 1.42]</td>
 </tr>
 <tr>
 <td style="padding-right: 12px; border: none;">sigma_Intercept</td>
@@ -1173,19 +1200,19 @@ texreg::htmlreg(list(ext_m3, ext_m4, ext_m5),
 <td style="padding-right: 12px; border: none;"></td>
 <td style="padding-right: 12px; border: none;"></td>
 <td style="padding-right: 12px; border: none;"></td>
-<td style="padding-right: 12px; border: none;">[0.45; 1.00]</td>
+<td style="padding-right: 12px; border: none;">[0.47; 1.00]</td>
 </tr>
 <tr>
 <td style="border-top: 1px solid black;">SD(Intercept): Subject</td>
-<td style="border-top: 1px solid black;">4.08</td>
-<td style="border-top: 1px solid black;">2.83</td>
-<td style="border-top: 1px solid black;">3.18</td>
+<td style="border-top: 1px solid black;">4.03</td>
+<td style="border-top: 1px solid black;">2.86</td>
+<td style="border-top: 1px solid black;">3.14</td>
 </tr>
 <tr>
 <td style="padding-right: 12px; border: none;">SD(Days): Subject</td>
 <td style="padding-right: 12px; border: none;"></td>
 <td style="padding-right: 12px; border: none;">0.69</td>
-<td style="padding-right: 12px; border: none;">0.71</td>
+<td style="padding-right: 12px; border: none;">0.70</td>
 </tr>
 <tr>
 <td style="padding-right: 12px; border: none;">SD(log[sigma]): Subject</td>
@@ -1196,14 +1223,14 @@ texreg::htmlreg(list(ext_m3, ext_m4, ext_m5),
 <tr>
 <td style="padding-right: 12px; border: none;">Cor(Intercept,Days): Subject</td>
 <td style="padding-right: 12px; border: none;"></td>
-<td style="padding-right: 12px; border: none;">0.06</td>
-<td style="padding-right: 12px; border: none;">-0.00</td>
+<td style="padding-right: 12px; border: none;">0.05</td>
+<td style="padding-right: 12px; border: none;">0.00</td>
 </tr>
 <tr>
 <td style="padding-right: 12px; border: none;">Cor(Intercept,log[sigma]): Subject</td>
 <td style="padding-right: 12px; border: none;"></td>
 <td style="padding-right: 12px; border: none;"></td>
-<td style="padding-right: 12px; border: none;">0.24</td>
+<td style="padding-right: 12px; border: none;">0.25</td>
 </tr>
 <tr>
 <td style="padding-right: 12px; border: none;">Cor(Days,log[sigma]): Subject</td>
@@ -1225,15 +1252,15 @@ texreg::htmlreg(list(ext_m3, ext_m4, ext_m5),
 </tr>
 <tr>
 <td style="padding-right: 12px; border: none;">loo IC</td>
-<td style="padding-right: 12px; border: none;">941.42</td>
-<td style="padding-right: 12px; border: none;">891.80</td>
-<td style="padding-right: 12px; border: none;">839.34</td>
+<td style="padding-right: 12px; border: none;">941.06</td>
+<td style="padding-right: 12px; border: none;">892.55</td>
+<td style="padding-right: 12px; border: none;">838.70</td>
 </tr>
 <tr>
 <td style="border-bottom: 2px solid black;">WAIC</td>
-<td style="border-bottom: 2px solid black;">940.93</td>
-<td style="border-bottom: 2px solid black;">890.66</td>
-<td style="border-bottom: 2px solid black;">828.38</td>
+<td style="border-bottom: 2px solid black;">940.73</td>
+<td style="border-bottom: 2px solid black;">889.81</td>
+<td style="border-bottom: 2px solid black;">827.78</td>
 </tr>
 <tr>
 <td style="padding-right: 12px; border: none;" colspan="5"><span style="font-size:0.8em"><sup>*</sup> 0 outside the confidence interval</span></td>

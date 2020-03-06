@@ -1,30 +1,30 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 7 Linear Models | Course Handouts for Bayesian Data Analysis Class</title>
-  <meta name="description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Spring semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
-  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
+  <meta name="description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Fall semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 7 Linear Models | Course Handouts for Bayesian Data Analysis Class" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Spring semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
+  <meta property="og:description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Fall semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
   
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 7 Linear Models | Course Handouts for Bayesian Data Analysis Class" />
   
-  <meta name="twitter:description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Spring semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
+  <meta name="twitter:description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Fall semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
   
 
 <meta name="author" content="Mark Lai" />
 
 
-<meta name="date" content="2019-12-14" />
+<meta name="date" content="2020-03-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,15 +51,15 @@
 
 
 <script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
-<script src="libs/viz-0.3/viz.js"></script>
+<script src="libs/viz-1.8.2/viz.js"></script>
 <link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
-<script src="libs/grViz-binding-1.0.1/grViz.js"></script>
+<script src="libs/grViz-binding-1.0.5/grViz.js"></script>
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
@@ -68,14 +68,16 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -84,9 +86,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -440,10 +442,10 @@ can be quantified by a straight line with an intercept <span class="math inline"
 <h3><span class="header-section-number">7.2.1</span> A continuous predictor</h3>
 <p>We will use a data set, <code>kidiq</code>, that is available in the <code>rstanarm</code> package.
 You can import the data into R by (Internet connection needed):</p>
-<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb140-1" data-line-number="1">kidiq &lt;-<span class="st"> </span>haven<span class="op">::</span><span class="kw">read_dta</span>(<span class="st">&quot;http://www.stat.columbia.edu/~gelman/arm/examples/child.iq/kidiq.dta&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="linear-models.html#cb145-1"></a>kidiq &lt;-<span class="st"> </span>haven<span class="op">::</span><span class="kw">read_dta</span>(<span class="st">&quot;http://www.stat.columbia.edu/~gelman/arm/examples/child.iq/kidiq.dta&quot;</span>)</span></code></pre></div>
 <p>Or from the file I uploaded</p>
-<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb141-1" data-line-number="1">kidiq &lt;-<span class="st"> </span>haven<span class="op">::</span><span class="kw">read_dta</span>(<span class="st">&quot;../data/kidiq.dta&quot;</span>)</a>
-<a class="sourceLine" id="cb141-2" data-line-number="2">psych<span class="op">::</span><span class="kw">describe</span>(kidiq)</a></code></pre></div>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="linear-models.html#cb146-1"></a>kidiq &lt;-<span class="st"> </span>haven<span class="op">::</span><span class="kw">read_dta</span>(<span class="st">&quot;../data/kidiq.dta&quot;</span>)</span>
+<span id="cb146-2"><a href="linear-models.html#cb146-2"></a>psych<span class="op">::</span><span class="kw">describe</span>(kidiq)</span></code></pre></div>
 <pre><code>&gt;#           vars   n   mean    sd median trimmed   mad min max range  skew
 &gt;# kid_score    1 434  86.80 20.41   90.0   87.93 19.27  20 144 124.0 -0.46
 &gt;# mom_hs       2 434   0.79  0.41    1.0    0.86  0.00   0   1   1.0 -1.39
@@ -477,16 +479,16 @@ You can import the data into R by (Internet connection needed):</p>
 <div id="visualizing-the-data" class="section level4">
 <h4><span class="header-section-number">7.2.1.1</span> Visualizing the data</h4>
 <p>Let’s first see a scatterplot matrix</p>
-<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb144-1" data-line-number="1">psych<span class="op">::</span><span class="kw">pairs.panels</span>(kidiq)</a></code></pre></div>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="linear-models.html#cb149-1"></a>psych<span class="op">::</span><span class="kw">pairs.panels</span>(kidiq)</span></code></pre></div>
 <p><img src="07_linear_model_files/figure-html/panel-kidiq-1.png" width="768" /></p>
 <p>We will first use mother’s score on an IQ test to predict the child’s test
 score, as shown in the following scatter plot</p>
-<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb145-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
-<a class="sourceLine" id="cb145-2" data-line-number="2"><span class="co"># With ggplot2, first specify the `aesthetics`, i.e., what is the x variable</span></a>
-<a class="sourceLine" id="cb145-3" data-line-number="3"><span class="co"># and what is the y variable</span></a>
-<a class="sourceLine" id="cb145-4" data-line-number="4"><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> mom_iq, <span class="dt">y =</span> kid_score), <span class="dt">data =</span> kidiq) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb145-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="fl">0.7</span>) <span class="op">+</span><span class="st">  </span><span class="co"># add a layer with the points</span></a>
-<a class="sourceLine" id="cb145-6" data-line-number="6"><span class="st">  </span><span class="kw">geom_smooth</span>()  <span class="co"># add a smoother</span></a></code></pre></div>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="linear-models.html#cb150-1"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb150-2"><a href="linear-models.html#cb150-2"></a><span class="co"># With ggplot2, first specify the `aesthetics`, i.e., what is the x variable</span></span>
+<span id="cb150-3"><a href="linear-models.html#cb150-3"></a><span class="co"># and what is the y variable</span></span>
+<span id="cb150-4"><a href="linear-models.html#cb150-4"></a><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> mom_iq, <span class="dt">y =</span> kid_score), <span class="dt">data =</span> kidiq) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb150-5"><a href="linear-models.html#cb150-5"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="fl">0.7</span>) <span class="op">+</span><span class="st">  </span><span class="co"># add a layer with the points</span></span>
+<span id="cb150-6"><a href="linear-models.html#cb150-6"></a><span class="st">  </span><span class="kw">geom_smooth</span>()  <span class="co"># add a smoother</span></span></code></pre></div>
 <pre><code>&gt;# `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</code></pre>
 <p><img src="07_linear_model_files/figure-html/kidiq-momiq-1.png" width="672" /></p>
 <p>Here we use the <code>ggplot2</code> package to plot the data. You have already used the
@@ -537,9 +539,9 @@ priors, so the variance of the priors should be large but not unrealistic. For
 example, we don’t expect a one unit difference in <code>mom_iq</code> is associated with a
 100 units difference in <code>kid_iq</code>. Also, to increase numerical stability, we will
 rescale <code>mom_iq</code> and <code>kid_iq</code> by dividing them by 100, respectively:</p>
-<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb147-1" data-line-number="1">kidiq100 &lt;-<span class="st"> </span>kidiq <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb147-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mom_iq =</span> mom_iq <span class="op">/</span><span class="st"> </span><span class="dv">100</span>,  <span class="co"># divid mom_iq by 100</span></a>
-<a class="sourceLine" id="cb147-3" data-line-number="3">         <span class="dt">kid_score =</span> kid_score <span class="op">/</span><span class="st"> </span><span class="dv">100</span>)  <span class="co"># divide kid_score by 100</span></a></code></pre></div>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="linear-models.html#cb152-1"></a>kidiq100 &lt;-<span class="st"> </span>kidiq <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb152-2"><a href="linear-models.html#cb152-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mom_iq =</span> mom_iq <span class="op">/</span><span class="st"> </span><span class="dv">100</span>,  <span class="co"># divid mom_iq by 100</span></span>
+<span id="cb152-3"><a href="linear-models.html#cb152-3"></a>         <span class="dt">kid_score =</span> kid_score <span class="op">/</span><span class="st"> </span><span class="dv">100</span>)  <span class="co"># divide kid_score by 100</span></span></code></pre></div>
 <p>We will be using the prior distributions:</p>
 <p><span class="math display">\[\begin{align*}
   \beta_0 &amp; \sim \mathcal{N}(0, 1)  \\
@@ -547,7 +549,10 @@ rescale <code>mom_iq</code> and <code>kid_iq</code> by dividing them by 100, res
   \sigma &amp; \sim t^+(4, 0, 1)
 \end{align*}\]</span></p>
 <p>which are similar to the ones in the group comparison example. The half-<span class="math inline">\(t\)</span>
-distribution is recommended by <span class="citation">Gelman (<a href="#ref-Gelman2006">2006</a>)</span> and has the following shape:</p>
+distribution is recommended by <span class="citation">Gelman (<a href="#ref-Gelman2006" role="doc-biblioref">2006</a>)</span> and has the following shape:</p>
+<pre><code>&gt;# Warning: `mapping` is not used by stat_function()
+
+&gt;# Warning: `mapping` is not used by stat_function()</code></pre>
 <p><img src="07_linear_model_files/figure-html/half-t-1.png" width="672" /></p>
 <p>As you can see, there is more density towards zero, but the tail is still quite
 heavy (as compared to a normal distribution), as you can see by comparing it to
@@ -556,18 +561,18 @@ instead of <span class="math inline">\(-\infty\)</span>). This will avoid some e
 be overly restrictive in case <span class="math inline">\(\sigma\)</span> is extremely large.</p>
 <p>These priors can be set in <code>brms</code>. First check the default prior set up using
 <code>get_prior</code>:</p>
-<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb148-1" data-line-number="1"><span class="kw">get_prior</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_iq, <span class="dt">data =</span> kidiq100)</a></code></pre></div>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="linear-models.html#cb154-1"></a><span class="kw">get_prior</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_iq, <span class="dt">data =</span> kidiq100)</span></code></pre></div>
 <pre><code>&gt;#                 prior     class   coef group resp dpar nlpar bound
 &gt;# 1                             b                                   
 &gt;# 2                             b mom_iq                            
 &gt;# 3 student_t(3, 1, 10) Intercept                                   
 &gt;# 4 student_t(3, 0, 10)     sigma</code></pre>
-<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb150-1" data-line-number="1">m1 &lt;-<span class="st"> </span><span class="kw">brm</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_iq, <span class="dt">data =</span> kidiq100, </a>
-<a class="sourceLine" id="cb150-2" data-line-number="2">          <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </a>
-<a class="sourceLine" id="cb150-3" data-line-number="3">                    <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>, <span class="dt">coef =</span> <span class="st">&quot;mom_iq&quot;</span>), </a>
-<a class="sourceLine" id="cb150-4" data-line-number="4">                    <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </a>
-<a class="sourceLine" id="cb150-5" data-line-number="5">          <span class="dt">seed =</span> <span class="dv">2302</span></a>
-<a class="sourceLine" id="cb150-6" data-line-number="6">)</a></code></pre></div>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="linear-models.html#cb156-1"></a>m1 &lt;-<span class="st"> </span><span class="kw">brm</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_iq, <span class="dt">data =</span> kidiq100, </span>
+<span id="cb156-2"><a href="linear-models.html#cb156-2"></a>          <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </span>
+<span id="cb156-3"><a href="linear-models.html#cb156-3"></a>                    <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>, <span class="dt">coef =</span> <span class="st">&quot;mom_iq&quot;</span>), </span>
+<span id="cb156-4"><a href="linear-models.html#cb156-4"></a>                    <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </span>
+<span id="cb156-5"><a href="linear-models.html#cb156-5"></a>          <span class="dt">seed =</span> <span class="dv">2302</span></span>
+<span id="cb156-6"><a href="linear-models.html#cb156-6"></a>)</span></code></pre></div>
 </div>
 <div id="obtaining-the-posteriors" class="section level4">
 <h4><span class="header-section-number">7.2.1.4</span> Obtaining the posteriors</h4>
@@ -580,13 +585,13 @@ subsection), you will get a summary of the posterior distributions for each
 parameter, and in this example all <code>Rhat</code> is 1.00, so it appears that the chains
 have converged.</p>
 <p>You can see more with a graphical interface:</p>
-<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb151-1" data-line-number="1">shinystan<span class="op">::</span><span class="kw">launch_shinystan</span>(m1)</a></code></pre></div>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="linear-models.html#cb157-1"></a>shinystan<span class="op">::</span><span class="kw">launch_shinystan</span>(m1)</span></code></pre></div>
 </div>
 <div id="summarizing-the-posterior" class="section level5">
 <h5><span class="header-section-number">7.2.1.4.2</span> Summarizing the posterior</h5>
 <p>If you use the <code>summary</code> function on the model you will see a concise output
 with the estimate and the posterior <em>SD</em>.</p>
-<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb152-1" data-line-number="1"><span class="kw">summary</span>(m1, <span class="dt">prob =</span> <span class="fl">0.95</span>)  <span class="co"># prob = 0.95 is the default</span></a></code></pre></div>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="linear-models.html#cb158-1"></a><span class="kw">summary</span>(m1, <span class="dt">prob =</span> <span class="fl">0.95</span>)  <span class="co"># prob = 0.95 is the default</span></span></code></pre></div>
 <pre><code>&gt;#  Family: gaussian 
 &gt;#   Links: mu = identity; sigma = identity 
 &gt;# Formula: kid_score ~ mom_iq 
@@ -596,25 +601,25 @@ with the estimate and the posterior <em>SD</em>.</p>
 &gt;# 
 &gt;# Population-Level Effects: 
 &gt;#           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-&gt;# Intercept     0.26      0.06     0.14     0.38 1.00     3642     2826
-&gt;# mom_iq        0.61      0.06     0.49     0.72 1.00     3638     2758
+&gt;# Intercept     0.26      0.06     0.15     0.38 1.00     3331     2414
+&gt;# mom_iq        0.61      0.06     0.49     0.72 1.00     3248     2385
 &gt;# 
 &gt;# Family Specific Parameters: 
 &gt;#       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-&gt;# sigma     0.18      0.01     0.17     0.20 1.00     3565     2810
+&gt;# sigma     0.18      0.01     0.17     0.20 1.00     4069     2777
 &gt;# 
-&gt;# Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
-&gt;# is a crude measure of effective sample size, and Rhat is the potential 
+&gt;# Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
+&gt;# and Tail_ESS are effective sample size measures, and Rhat is the potential
 &gt;# scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <p>And here is the HPDI with the <code>broom</code> package and the <code>tidy()</code> function:</p>
-<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb154-1" data-line-number="1">broom<span class="op">::</span><span class="kw">tidy</span>(m1, <span class="dt">conf.method =</span> <span class="st">&quot;HPDinterval&quot;</span>, <span class="dt">conf.level =</span> <span class="fl">.90</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="linear-models.html#cb160-1"></a>broom<span class="op">::</span><span class="kw">tidy</span>(m1, <span class="dt">conf.method =</span> <span class="st">&quot;HPDinterval&quot;</span>, <span class="dt">conf.level =</span> <span class="fl">.90</span>)</span></code></pre></div>
 <pre><code>&gt;#          term estimate std.error   lower   upper
-&gt;# 1 b_Intercept    0.261   0.05904   0.163   0.359
-&gt;# 2    b_mom_iq    0.607   0.05845   0.511   0.703
-&gt;# 3       sigma    0.183   0.00645   0.173   0.194
-&gt;# 4        lp__  117.094   1.26376 114.572 118.450</code></pre>
+&gt;# 1 b_Intercept    0.261   0.05862   0.165   0.358
+&gt;# 2    b_mom_iq    0.607   0.05789   0.511   0.702
+&gt;# 3       sigma    0.183   0.00604   0.174   0.193
+&gt;# 4        lp__  117.176   1.18197 114.843 118.463</code></pre>
 <p>You can plot the density and mixing of the posterior distributions:</p>
-<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb156-1" data-line-number="1"><span class="kw">plot</span>(m1)</a></code></pre></div>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="linear-models.html#cb162-1"></a><span class="kw">plot</span>(m1)</span></code></pre></div>
 <p><img src="07_linear_model_files/figure-html/plot-m1-1.png" width="576" /></p>
 </div>
 </div>
@@ -622,7 +627,7 @@ with the estimate and the posterior <em>SD</em>.</p>
 <h4><span class="header-section-number">7.2.1.5</span> Posterior Predictive Check</h4>
 <p>Now, we want to draw some new data based on the posterior distributions.
 This can be done with <code>pp_check</code></p>
-<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb157-1" data-line-number="1"><span class="kw">pp_check</span>(m1, <span class="dt">nsamples =</span> <span class="dv">100</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="linear-models.html#cb163-1"></a><span class="kw">pp_check</span>(m1, <span class="dt">nsamples =</span> <span class="dv">100</span>)</span></code></pre></div>
 <p><img src="07_linear_model_files/figure-html/ppc-m1-1.png" width="672" /></p>
 <p>Looks like there is some skewness not captured in the model. We will talk more
 about diagnostics for regression models next week.</p>
@@ -634,26 +639,26 @@ about diagnostics for regression models next week.</p>
 0.607 \times \texttt{mom_iq}\]</span></p>
 <p>So, based on our model, if we observe two participants with 1 unit difference in
 <code>mom_iq</code>, the child’s IQ score is expected to be different by
-0.607 points, 95% CI [0.493, 0.723]. As <code>mom_iq</code> and <code>kid_score</code> are on similar scale,
+0.607 points, 95% CI [0.494, 0.720]. As <code>mom_iq</code> and <code>kid_score</code> are on similar scale,
 there seems to be strong heritability for IQ.</p>
 <p>However, in Bayesian statistics, we want to be explicit about the uncertainty
 in the parameter estimate, as the posterior mean/median is just one of the
 infinitely many possible values in the posterior distribution. We can visualize
 with the following code:</p>
-<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb158-1" data-line-number="1">draws_m1 &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(m1)  <span class="co"># Store the posterior draws as a data frame</span></a>
-<a class="sourceLine" id="cb158-2" data-line-number="2"><span class="co"># change the names for the first 2 columns just for convenience</span></a>
-<a class="sourceLine" id="cb158-3" data-line-number="3"><span class="kw">colnames</span>(draws_m1)[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>)</a>
-<a class="sourceLine" id="cb158-4" data-line-number="4"><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> mom_iq, <span class="dt">y =</span> kid_score), <span class="dt">data =</span> kidiq100) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb158-5" data-line-number="5"><span class="st">  </span><span class="co"># Add transparent regression lines using different posterior draws</span></a>
-<a class="sourceLine" id="cb158-6" data-line-number="6"><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">data =</span> draws_m1, <span class="kw">aes</span>(<span class="dt">intercept =</span> a, <span class="dt">slope =</span> b), </a>
-<a class="sourceLine" id="cb158-7" data-line-number="7">              <span class="dt">color =</span> <span class="st">&quot;skyblue&quot;</span>, <span class="dt">size =</span> <span class="fl">0.2</span>, <span class="dt">alpha =</span> <span class="fl">0.10</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb158-8" data-line-number="8"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="fl">0.7</span>) <span class="op">+</span><span class="st">  </span><span class="co"># add a layer with the points</span></a>
-<a class="sourceLine" id="cb158-9" data-line-number="9"><span class="st">  </span><span class="co"># Add the predicted line with the posterior means on top </span></a>
-<a class="sourceLine" id="cb158-10" data-line-number="10"><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="kw">fixef</span>(m1)[<span class="dv">1</span>, <span class="st">&quot;Estimate&quot;</span>], </a>
-<a class="sourceLine" id="cb158-11" data-line-number="11">              <span class="dt">slope =</span> <span class="kw">fixef</span>(m1)[<span class="dv">2</span>, <span class="st">&quot;Estimate&quot;</span>]) </a></code></pre></div>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="linear-models.html#cb164-1"></a>draws_m1 &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(m1)  <span class="co"># Store the posterior draws as a data frame</span></span>
+<span id="cb164-2"><a href="linear-models.html#cb164-2"></a><span class="co"># change the names for the first 2 columns just for convenience</span></span>
+<span id="cb164-3"><a href="linear-models.html#cb164-3"></a><span class="kw">colnames</span>(draws_m1)[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>)</span>
+<span id="cb164-4"><a href="linear-models.html#cb164-4"></a><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> mom_iq, <span class="dt">y =</span> kid_score), <span class="dt">data =</span> kidiq100) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb164-5"><a href="linear-models.html#cb164-5"></a><span class="st">  </span><span class="co"># Add transparent regression lines using different posterior draws</span></span>
+<span id="cb164-6"><a href="linear-models.html#cb164-6"></a><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">data =</span> draws_m1, <span class="kw">aes</span>(<span class="dt">intercept =</span> a, <span class="dt">slope =</span> b), </span>
+<span id="cb164-7"><a href="linear-models.html#cb164-7"></a>              <span class="dt">color =</span> <span class="st">&quot;skyblue&quot;</span>, <span class="dt">size =</span> <span class="fl">0.2</span>, <span class="dt">alpha =</span> <span class="fl">0.10</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb164-8"><a href="linear-models.html#cb164-8"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="fl">0.7</span>) <span class="op">+</span><span class="st">  </span><span class="co"># add a layer with the points</span></span>
+<span id="cb164-9"><a href="linear-models.html#cb164-9"></a><span class="st">  </span><span class="co"># Add the predicted line with the posterior means on top </span></span>
+<span id="cb164-10"><a href="linear-models.html#cb164-10"></a><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="kw">fixef</span>(m1)[<span class="dv">1</span>, <span class="st">&quot;Estimate&quot;</span>], </span>
+<span id="cb164-11"><a href="linear-models.html#cb164-11"></a>              <span class="dt">slope =</span> <span class="kw">fixef</span>(m1)[<span class="dv">2</span>, <span class="st">&quot;Estimate&quot;</span>]) </span></code></pre></div>
 <p><img src="07_linear_model_files/figure-html/line-m1-1.png" width="672" /></p>
 <p>Or with <code>brms</code>, we can use the handy <code>marginal_effects()</code> function:</p>
-<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb159-1" data-line-number="1"><span class="kw">plot</span>(<span class="kw">marginal_effects</span>(m1), <span class="dt">points =</span> <span class="ot">TRUE</span>, <span class="dt">point_args =</span> <span class="kw">list</span>(<span class="dt">size =</span> <span class="fl">0.5</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="linear-models.html#cb165-1"></a><span class="kw">plot</span>(<span class="kw">marginal_effects</span>(m1), <span class="dt">points =</span> <span class="ot">TRUE</span>, <span class="dt">point_args =</span> <span class="kw">list</span>(<span class="dt">size =</span> <span class="fl">0.5</span>))</span></code></pre></div>
 <pre><code>&gt;# Warning: Method &#39;marginal_effects&#39; is deprecated. Please use
 &gt;# &#39;conditional_effects&#39; instead.</code></pre>
 <p><img src="07_linear_model_files/figure-html/marginal-m1-1.png" width="672" /></p>
@@ -665,9 +670,9 @@ generated from our model will have a 90% chance of falling in that interval.
 This is an interval about the probability of new data, <span class="math inline">\(\tilde y\)</span>, which is
 different from a credible interval as the latter is about the probability of
 the parameter.</p>
-<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb161-1" data-line-number="1"><span class="co"># Need to load the mmp_brm.R script</span></a>
-<a class="sourceLine" id="cb161-2" data-line-number="2"><span class="kw">mmp_brm</span>(m1, <span class="dt">x =</span> <span class="st">&quot;mom_iq&quot;</span>, <span class="dt">prob =</span> <span class="fl">0.90</span>, </a>
-<a class="sourceLine" id="cb161-3" data-line-number="3">        <span class="dt">plot_pi =</span> <span class="ot">TRUE</span>)  <span class="co"># the predictive interval will be shown in green</span></a></code></pre></div>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="linear-models.html#cb167-1"></a><span class="co"># Need to load the mmp_brm.R script</span></span>
+<span id="cb167-2"><a href="linear-models.html#cb167-2"></a><span class="kw">mmp_brm</span>(m1, <span class="dt">x =</span> <span class="st">&quot;mom_iq&quot;</span>, <span class="dt">prob =</span> <span class="fl">0.90</span>, </span>
+<span id="cb167-3"><a href="linear-models.html#cb167-3"></a>        <span class="dt">plot_pi =</span> <span class="ot">TRUE</span>)  <span class="co"># the predictive interval will be shown in green</span></span></code></pre></div>
 <pre><code>&gt;# `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;
 &gt;# `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;
 &gt;# `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;
@@ -683,17 +688,18 @@ or
       = \frac{\beta_1^2 \mathrm{Var}(X)}{\beta_1^2 \mathrm{Var}(X) + \sigma^2}
       = 1 - \frac{\sigma^2}{\beta_1^2 \mathrm{Var}(X) + \sigma^2}\]</span></p>
 <p>Without going too much into the detail, you can get:</p>
-<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb163-1" data-line-number="1"><span class="kw">bayes_R2</span>(m1)  <span class="co"># Bayesian R^2</span></a></code></pre></div>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="linear-models.html#cb169-1"></a><span class="kw">bayes_R2</span>(m1)  <span class="co"># Bayesian R^2</span></span></code></pre></div>
 <pre><code>&gt;#    Estimate Est.Error Q2.5 Q97.5
-&gt;# R2    0.199    0.0304 0.14 0.259</code></pre>
-<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb165-1" data-line-number="1"><span class="kw">bayes_R2</span>(m1, <span class="dt">summary =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb165-2" data-line-number="2"><span class="st">  </span><span class="kw">mcmc_areas</span>(<span class="dt">prob =</span> <span class="fl">.90</span>)  <span class="co"># showing density and 95% CI</span></a></code></pre></div>
+&gt;# R2    0.199    0.0302 0.14 0.258</code></pre>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="linear-models.html#cb171-1"></a><span class="kw">bayes_R2</span>(m1, <span class="dt">summary =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb171-2"><a href="linear-models.html#cb171-2"></a><span class="st">  </span><span class="kw">mcmc_areas</span>(<span class="dt">prob =</span> <span class="fl">.90</span>)  <span class="co"># showing density and 95% CI</span></span></code></pre></div>
+<pre><code>&gt;# Warning: `expand_scale()` is deprecated; use `expansion()` instead.</code></pre>
 <p><img src="07_linear_model_files/figure-html/r2-m1-1.png" width="672" /></p>
 <p>This is interpreted as:</p>
 <blockquote>
-<p>Based on the model, 19.922% of the variance of
+<p>Based on the model, 19.942% of the variance of
 kid’s score can be predicted by mother’s IQ, 95% CI [
-13.992%, 25.924%].</p>
+14.025%, 25.8%].</p>
 </blockquote>
 <p>Note that <span class="math inline">\(R^2\)</span> is commonly referred to variance explained, but as “explained”
 usually implies causation this only makes sense when causal inference is the
@@ -714,23 +720,23 @@ the zero point is meaningful.</p>
 For <code>mom_iq</code>, usually the
 population mean for IQ is 100, so we can center the predictor to 1 by
 subtracting 1 from it:</p>
-<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb166-1" data-line-number="1">kidiq100 &lt;-<span class="st"> </span>kidiq100 <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb166-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mom_iq_c =</span> mom_iq <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb167-1" data-line-number="1">m1c &lt;-<span class="st"> </span><span class="kw">brm</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_iq_c, <span class="dt">data =</span> kidiq100, </a>
-<a class="sourceLine" id="cb167-2" data-line-number="2">           <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </a>
-<a class="sourceLine" id="cb167-3" data-line-number="3">                     <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>, <span class="dt">coef =</span> <span class="st">&quot;mom_iq_c&quot;</span>), </a>
-<a class="sourceLine" id="cb167-4" data-line-number="4">                     <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </a>
-<a class="sourceLine" id="cb167-5" data-line-number="5">           <span class="dt">seed =</span> <span class="dv">2302</span></a>
-<a class="sourceLine" id="cb167-6" data-line-number="6">)</a></code></pre></div>
-<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb168-1" data-line-number="1">broom<span class="op">::</span><span class="kw">tidy</span>(m1c)</a></code></pre></div>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="linear-models.html#cb173-1"></a>kidiq100 &lt;-<span class="st"> </span>kidiq100 <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb173-2"><a href="linear-models.html#cb173-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mom_iq_c =</span> mom_iq <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="linear-models.html#cb174-1"></a>m1c &lt;-<span class="st"> </span><span class="kw">brm</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_iq_c, <span class="dt">data =</span> kidiq100, </span>
+<span id="cb174-2"><a href="linear-models.html#cb174-2"></a>           <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </span>
+<span id="cb174-3"><a href="linear-models.html#cb174-3"></a>                     <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>, <span class="dt">coef =</span> <span class="st">&quot;mom_iq_c&quot;</span>), </span>
+<span id="cb174-4"><a href="linear-models.html#cb174-4"></a>                     <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </span>
+<span id="cb174-5"><a href="linear-models.html#cb174-5"></a>           <span class="dt">seed =</span> <span class="dv">2302</span></span>
+<span id="cb174-6"><a href="linear-models.html#cb174-6"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="linear-models.html#cb175-1"></a>broom<span class="op">::</span><span class="kw">tidy</span>(m1c)</span></code></pre></div>
 <pre><code>&gt;#          term estimate std.error   lower   upper
-&gt;# 1 b_Intercept    0.868   0.00875   0.854   0.882
-&gt;# 2  b_mom_iq_c    0.610   0.05820   0.516   0.707
-&gt;# 3       sigma    0.183   0.00606   0.174   0.193
-&gt;# 4        lp__  117.158   1.20882 114.819 118.455</code></pre>
+&gt;# 1 b_Intercept    0.868   0.00871   0.853   0.882
+&gt;# 2  b_mom_iq_c    0.607   0.05865   0.512   0.702
+&gt;# 3       sigma    0.183   0.00638   0.173   0.194
+&gt;# 4        lp__  117.109   1.24779 114.517 118.465</code></pre>
 <p>Now, we can interpret the intercept as the predicted average <code>kid_score</code> when
 <code>mom_iq</code> = 100 (or 1 in the rescaled version) for participants whose mother does not have a high school
-degree, which is 86.797 points, 95% CI [85.035, 88.438].</p>
+degree, which is 86.771 points, 95% CI [85.059, 88.541].</p>
 <blockquote>
 <p>Centering is especially important when evaluating interaction models.</p>
 </blockquote>
@@ -740,8 +746,8 @@ degree, which is 86.797 points, 95% CI [85.035, 88.438].</p>
 <p>We can repeat the analysis using a categorical predictor, <code>mom_hs</code>, indicating
 whether the mother has a high school degree (1 = yes, 0 = no). We can visualize
 the data:</p>
-<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb170-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">factor</span>(mom_hs), <span class="dt">y =</span> kid_score), <span class="dt">data =</span> kidiq100) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb170-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_boxplot</span>()  <span class="co"># add a layer with a boxplot</span></a></code></pre></div>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="linear-models.html#cb177-1"></a><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">factor</span>(mom_hs), <span class="dt">y =</span> kid_score), <span class="dt">data =</span> kidiq100) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb177-2"><a href="linear-models.html#cb177-2"></a><span class="st">  </span><span class="kw">geom_boxplot</span>()  <span class="co"># add a layer with a boxplot</span></span></code></pre></div>
 <p><img src="07_linear_model_files/figure-html/kid_score-mom_hs-1.png" width="384" /></p>
 <p>Our regression model is</p>
 <p><span class="math display">\[\begin{align}
@@ -759,39 +765,39 @@ whose mothers have a high school degree and those without.</p>
 \end{align*}\]</span></p>
 <p>It is safe to say that whether mother has a high school degree would not lead to
 a difference of 100 points in IQ.</p>
-<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb171-1" data-line-number="1"><span class="co"># First recode `mom_hs` to be a factor (not necessary but useful for plot)</span></a>
-<a class="sourceLine" id="cb171-2" data-line-number="2">kidiq100 &lt;-<span class="st"> </span>kidiq100 <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb171-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mom_hs =</span> <span class="kw">factor</span>(mom_hs, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>)))</a></code></pre></div>
-<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb172-1" data-line-number="1">m2 &lt;-<span class="st"> </span><span class="kw">brm</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_hs, <span class="dt">data =</span> kidiq100, </a>
-<a class="sourceLine" id="cb172-2" data-line-number="2">          <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </a>
-<a class="sourceLine" id="cb172-3" data-line-number="3">                    <span class="co"># set for all &quot;b&quot; coefficients</span></a>
-<a class="sourceLine" id="cb172-4" data-line-number="4">                    <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>),</a>
-<a class="sourceLine" id="cb172-5" data-line-number="5">                    <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </a>
-<a class="sourceLine" id="cb172-6" data-line-number="6">          <span class="dt">seed =</span> <span class="dv">2302</span></a>
-<a class="sourceLine" id="cb172-7" data-line-number="7">)</a></code></pre></div>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="linear-models.html#cb178-1"></a><span class="co"># First recode `mom_hs` to be a factor (not necessary but useful for plot)</span></span>
+<span id="cb178-2"><a href="linear-models.html#cb178-2"></a>kidiq100 &lt;-<span class="st"> </span>kidiq100 <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb178-3"><a href="linear-models.html#cb178-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mom_hs =</span> <span class="kw">factor</span>(mom_hs, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="linear-models.html#cb179-1"></a>m2 &lt;-<span class="st"> </span><span class="kw">brm</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_hs, <span class="dt">data =</span> kidiq100, </span>
+<span id="cb179-2"><a href="linear-models.html#cb179-2"></a>          <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </span>
+<span id="cb179-3"><a href="linear-models.html#cb179-3"></a>                    <span class="co"># set for all &quot;b&quot; coefficients</span></span>
+<span id="cb179-4"><a href="linear-models.html#cb179-4"></a>                    <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>),</span>
+<span id="cb179-5"><a href="linear-models.html#cb179-5"></a>                    <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </span>
+<span id="cb179-6"><a href="linear-models.html#cb179-6"></a>          <span class="dt">seed =</span> <span class="dv">2302</span></span>
+<span id="cb179-7"><a href="linear-models.html#cb179-7"></a>)</span></code></pre></div>
 <p>You can use the <code>summary</code> function, or the <code>tidy()</code> function in the <code>broom</code>
 package:</p>
-<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb173-1" data-line-number="1">broom<span class="op">::</span><span class="kw">tidy</span>(m2)</a></code></pre></div>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="linear-models.html#cb180-1"></a>broom<span class="op">::</span><span class="kw">tidy</span>(m2)</span></code></pre></div>
 <pre><code>&gt;#          term estimate std.error   lower  upper
-&gt;# 1 b_Intercept    0.776   0.02010  0.7435  0.809
-&gt;# 2 b_mom_hsyes    0.117   0.02287  0.0798  0.155
-&gt;# 3       sigma    0.199   0.00678  0.1879  0.211
-&gt;# 4        lp__   81.247   1.25133 78.7915 82.558</code></pre>
+&gt;# 1 b_Intercept    0.775   0.02027  0.7424  0.808
+&gt;# 2 b_mom_hsyes    0.118   0.02320  0.0805  0.156
+&gt;# 3       sigma    0.199   0.00678  0.1886  0.211
+&gt;# 4        lp__   81.244   1.24461 78.8563 82.565</code></pre>
 <p>The chains have converged. Using the posterior medians, the estimated child’s
-IQ score is 77.582 points, 95% CI [73.641, 81.519] for the group whose
+IQ score is 77.506 points, 95% CI [73.464, 81.449] for the group whose
 mother does not have a high school degree, and the estimated average difference
 between the group whose mother has a high school degree and those who does not
-on <code>kid_score</code> is 11.746 points, 95% CI [7.243, 16.094]. We can also obtain
+on <code>kid_score</code> is 11.800 points, 95% CI [7.200, 16.306]. We can also obtain
 the posterior distribution for the mean of the <code>mom_hs = 1</code> group by adding
 up the posterior draws of <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>:</p>
-<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb175-1" data-line-number="1">draws_m2 &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(m2)  <span class="co"># Store the posterior draws as a data frame</span></a>
-<a class="sourceLine" id="cb175-2" data-line-number="2"><span class="co"># Add up the two columns to get the predicted mean for `mom_hs = 1`</span></a>
-<a class="sourceLine" id="cb175-3" data-line-number="3">yhat_hs &lt;-<span class="st"> </span>draws_m2<span class="op">$</span>b_Intercept <span class="op">+</span><span class="st"> </span>draws_m2<span class="op">$</span>b_mom_hsyes</a>
-<a class="sourceLine" id="cb175-4" data-line-number="4">psych<span class="op">::</span><span class="kw">describe</span>(yhat_hs)</a></code></pre></div>
-<pre><code>&gt;#    vars    n mean   sd median trimmed  mad  min  max range  skew kurtosis se
-&gt;# X1    1 4000 0.89 0.01   0.89    0.89 0.01 0.85 0.93  0.09 -0.01     0.15  0</code></pre>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="linear-models.html#cb182-1"></a>draws_m2 &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(m2)  <span class="co"># Store the posterior draws as a data frame</span></span>
+<span id="cb182-2"><a href="linear-models.html#cb182-2"></a><span class="co"># Add up the two columns to get the predicted mean for `mom_hs = 1`</span></span>
+<span id="cb182-3"><a href="linear-models.html#cb182-3"></a>yhat_hs &lt;-<span class="st"> </span>draws_m2<span class="op">$</span>b_Intercept <span class="op">+</span><span class="st"> </span>draws_m2<span class="op">$</span>b_mom_hsyes</span>
+<span id="cb182-4"><a href="linear-models.html#cb182-4"></a>psych<span class="op">::</span><span class="kw">describe</span>(yhat_hs)</span></code></pre></div>
+<pre><code>&gt;#    vars    n mean   sd median trimmed  mad  min  max range skew kurtosis se
+&gt;# X1    1 4000 0.89 0.01   0.89    0.89 0.01 0.85 0.94  0.08 0.03     0.15  0</code></pre>
 <p>You can also use <code>marginal_effects()</code>:</p>
-<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb177-1" data-line-number="1"><span class="kw">plot</span>(<span class="kw">marginal_effects</span>(m2))</a></code></pre></div>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="linear-models.html#cb184-1"></a><span class="kw">plot</span>(<span class="kw">marginal_effects</span>(m2))</span></code></pre></div>
 <pre><code>&gt;# Warning: Method &#39;marginal_effects&#39; is deprecated. Please use
 &gt;# &#39;conditional_effects&#39; instead.</code></pre>
 <p><img src="07_linear_model_files/figure-html/marginal-m2-1.png" width="672" /></p>
@@ -806,22 +812,22 @@ the posterior samples of <span class="math inline">\(\beta_0 + \beta_1\)</span>.
 <p>In Bayesian, using predictors with multiple categories is just the same as in
 frequentist. In R this can be handled automatically. For example, if I recode
 <code>mom_iq</code> into three categories:</p>
-<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb179-1" data-line-number="1">kidiq_cat &lt;-<span class="st"> </span>kidiq100 <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb179-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mom_iq_cat =</span> </a>
-<a class="sourceLine" id="cb179-3" data-line-number="3">           <span class="kw">findInterval</span>(mom_iq, <span class="kw">c</span>(.<span class="dv">7</span>, <span class="fl">.85</span>, <span class="dv">1</span>, <span class="fl">1.15</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb179-4" data-line-number="4"><span class="st">           </span><span class="kw">factor</span>(<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;low&quot;</span>, <span class="st">&quot;below average&quot;</span>, </a>
-<a class="sourceLine" id="cb179-5" data-line-number="5">                             <span class="st">&quot;above average&quot;</span>, <span class="st">&quot;high&quot;</span>)))</a></code></pre></div>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="linear-models.html#cb186-1"></a>kidiq_cat &lt;-<span class="st"> </span>kidiq100 <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb186-2"><a href="linear-models.html#cb186-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mom_iq_cat =</span> </span>
+<span id="cb186-3"><a href="linear-models.html#cb186-3"></a>           <span class="kw">findInterval</span>(mom_iq, <span class="kw">c</span>(.<span class="dv">7</span>, <span class="fl">.85</span>, <span class="dv">1</span>, <span class="fl">1.15</span>)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb186-4"><a href="linear-models.html#cb186-4"></a><span class="st">           </span><span class="kw">factor</span>(<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;low&quot;</span>, <span class="st">&quot;below average&quot;</span>, </span>
+<span id="cb186-5"><a href="linear-models.html#cb186-5"></a>                             <span class="st">&quot;above average&quot;</span>, <span class="st">&quot;high&quot;</span>)))</span></code></pre></div>
 <p>I can put the categorical predictor into the model with <code>brm()</code></p>
-<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb180-1" data-line-number="1">m1_cat &lt;-<span class="st"> </span><span class="kw">brm</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_iq_cat, <span class="dt">data =</span> kidiq_cat, </a>
-<a class="sourceLine" id="cb180-2" data-line-number="2">              <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </a>
-<a class="sourceLine" id="cb180-3" data-line-number="3">                        <span class="co"># set for all &quot;b&quot; coefficients</span></a>
-<a class="sourceLine" id="cb180-4" data-line-number="4">                        <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>),</a>
-<a class="sourceLine" id="cb180-5" data-line-number="5">                        <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </a>
-<a class="sourceLine" id="cb180-6" data-line-number="6">              <span class="dt">seed =</span> <span class="dv">2302</span></a>
-<a class="sourceLine" id="cb180-7" data-line-number="7">)</a></code></pre></div>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="linear-models.html#cb187-1"></a>m1_cat &lt;-<span class="st"> </span><span class="kw">brm</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_iq_cat, <span class="dt">data =</span> kidiq_cat, </span>
+<span id="cb187-2"><a href="linear-models.html#cb187-2"></a>              <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </span>
+<span id="cb187-3"><a href="linear-models.html#cb187-3"></a>                        <span class="co"># set for all &quot;b&quot; coefficients</span></span>
+<span id="cb187-4"><a href="linear-models.html#cb187-4"></a>                        <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>),</span>
+<span id="cb187-5"><a href="linear-models.html#cb187-5"></a>                        <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </span>
+<span id="cb187-6"><a href="linear-models.html#cb187-6"></a>              <span class="dt">seed =</span> <span class="dv">2302</span></span>
+<span id="cb187-7"><a href="linear-models.html#cb187-7"></a>)</span></code></pre></div>
 <p>And R by default will choose the first category as the reference group. See the
 results below.</p>
-<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb181-1" data-line-number="1"><span class="kw">plot</span>(<span class="kw">marginal_effects</span>(m1_cat))</a></code></pre></div>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="linear-models.html#cb188-1"></a><span class="kw">plot</span>(<span class="kw">marginal_effects</span>(m1_cat))</span></code></pre></div>
 <pre><code>&gt;# Warning: Method &#39;marginal_effects&#39; is deprecated. Please use
 &gt;# &#39;conditional_effects&#39; instead.</code></pre>
 <p><img src="07_linear_model_files/figure-html/marginal-m1_cat-1.png" width="672" /></p>
@@ -829,8 +835,8 @@ results below.</p>
 <div id="stan-4" class="section level3">
 <h3><span class="header-section-number">7.2.5</span> STAN</h3>
 <p>It’s also easy to implement it in STAN</p>
-<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb183-1" data-line-number="1"><span class="kw">library</span>(rstan)</a>
-<a class="sourceLine" id="cb183-2" data-line-number="2"><span class="kw">rstan_options</span>(<span class="dt">auto_write =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="linear-models.html#cb190-1"></a><span class="kw">library</span>(rstan)</span>
+<span id="cb190-2"><a href="linear-models.html#cb190-2"></a><span class="kw">rstan_options</span>(<span class="dt">auto_write =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <pre class="stan"><code>data {
   int&lt;lower=0&gt; N;  // number of observations
   vector[N] y;  // response variable;
@@ -857,17 +863,17 @@ generated quantities {
     yrep[i] = normal_rng(yhat[i], sigma);
   }
 }</code></pre>
-<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb185-1" data-line-number="1">m1_stan &lt;-<span class="st"> </span><span class="kw">stan</span>(<span class="st">&quot;../codes/normal_regression.stan&quot;</span>, </a>
-<a class="sourceLine" id="cb185-2" data-line-number="2">     <span class="dt">data =</span> <span class="kw">list</span>(<span class="dt">N =</span> <span class="kw">nrow</span>(kidiq100), </a>
-<a class="sourceLine" id="cb185-3" data-line-number="3">                 <span class="dt">y =</span> kidiq100<span class="op">$</span>kid_score, </a>
-<a class="sourceLine" id="cb185-4" data-line-number="4">                 <span class="dt">p =</span> <span class="dv">1</span>, </a>
-<a class="sourceLine" id="cb185-5" data-line-number="5">                 <span class="dt">X =</span> <span class="kw">as.matrix</span>(kidiq100<span class="op">$</span>mom_iq_c)), </a>
-<a class="sourceLine" id="cb185-6" data-line-number="6">     <span class="dt">seed =</span> <span class="dv">1234</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="linear-models.html#cb192-1"></a>m1_stan &lt;-<span class="st"> </span><span class="kw">stan</span>(<span class="st">&quot;../codes/normal_regression.stan&quot;</span>, </span>
+<span id="cb192-2"><a href="linear-models.html#cb192-2"></a>     <span class="dt">data =</span> <span class="kw">list</span>(<span class="dt">N =</span> <span class="kw">nrow</span>(kidiq100), </span>
+<span id="cb192-3"><a href="linear-models.html#cb192-3"></a>                 <span class="dt">y =</span> kidiq100<span class="op">$</span>kid_score, </span>
+<span id="cb192-4"><a href="linear-models.html#cb192-4"></a>                 <span class="dt">p =</span> <span class="dv">1</span>, </span>
+<span id="cb192-5"><a href="linear-models.html#cb192-5"></a>                 <span class="dt">X =</span> <span class="kw">as.matrix</span>(kidiq100<span class="op">$</span>mom_iq_c)), </span>
+<span id="cb192-6"><a href="linear-models.html#cb192-6"></a>     <span class="dt">seed =</span> <span class="dv">1234</span>)</span></code></pre></div>
 <p>And the <span class="math inline">\(R^2\)</span> can be obtained as</p>
-<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb186-1" data-line-number="1">m1_r2 &lt;-<span class="st"> </span><span class="kw">bayes_R2</span>(<span class="kw">as.matrix</span>(m1_stan, <span class="st">&quot;yhat&quot;</span>), <span class="dt">y =</span> kidiq100<span class="op">$</span>kid_score)</a>
-<a class="sourceLine" id="cb186-2" data-line-number="2">psych<span class="op">::</span><span class="kw">describe</span>(m1_r2)</a></code></pre></div>
-<pre><code>&gt;#    vars    n mean   sd median trimmed  mad min  max range skew kurtosis se
-&gt;# X1    1 4000  0.2 0.03    0.2     0.2 0.03 0.1 0.31  0.21 0.02     0.16  0</code></pre>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="linear-models.html#cb193-1"></a>m1_r2 &lt;-<span class="st"> </span><span class="kw">bayes_R2</span>(<span class="kw">as.matrix</span>(m1_stan, <span class="st">&quot;yhat&quot;</span>), <span class="dt">y =</span> kidiq100<span class="op">$</span>kid_score)</span>
+<span id="cb193-2"><a href="linear-models.html#cb193-2"></a>psych<span class="op">::</span><span class="kw">describe</span>(m1_r2)</span></code></pre></div>
+<pre><code>&gt;#    vars    n mean   sd median trimmed  mad min max range skew kurtosis se
+&gt;# X1    1 4000  0.2 0.03    0.2     0.2 0.03 0.1 0.3   0.2 0.04    -0.09  0</code></pre>
 </div>
 </div>
 <div id="multiple-regression" class="section level2">
@@ -889,37 +895,39 @@ constant.</p>
   \beta_2 &amp; \sim \mathcal{N}(0, 1)  \\
   \sigma &amp; \sim t^+(4, 0, 1)
 \end{align*}\]</span></p>
-<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb188-1" data-line-number="1">m3 &lt;-<span class="st"> </span><span class="kw">brm</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_iq_c <span class="op">+</span><span class="st"> </span>mom_hs, <span class="dt">data =</span> kidiq100, </a>
-<a class="sourceLine" id="cb188-2" data-line-number="2">          <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </a>
-<a class="sourceLine" id="cb188-3" data-line-number="3">                    <span class="co"># set for all &quot;b&quot; coefficients</span></a>
-<a class="sourceLine" id="cb188-4" data-line-number="4">                    <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>),</a>
-<a class="sourceLine" id="cb188-5" data-line-number="5">                    <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </a>
-<a class="sourceLine" id="cb188-6" data-line-number="6">          <span class="dt">seed =</span> <span class="dv">2302</span></a>
-<a class="sourceLine" id="cb188-7" data-line-number="7">)</a></code></pre></div>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="linear-models.html#cb195-1"></a>m3 &lt;-<span class="st"> </span><span class="kw">brm</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_iq_c <span class="op">+</span><span class="st"> </span>mom_hs, <span class="dt">data =</span> kidiq100, </span>
+<span id="cb195-2"><a href="linear-models.html#cb195-2"></a>          <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </span>
+<span id="cb195-3"><a href="linear-models.html#cb195-3"></a>                    <span class="co"># set for all &quot;b&quot; coefficients</span></span>
+<span id="cb195-4"><a href="linear-models.html#cb195-4"></a>                    <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>),</span>
+<span id="cb195-5"><a href="linear-models.html#cb195-5"></a>                    <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </span>
+<span id="cb195-6"><a href="linear-models.html#cb195-6"></a>          <span class="dt">seed =</span> <span class="dv">2302</span></span>
+<span id="cb195-7"><a href="linear-models.html#cb195-7"></a>)</span></code></pre></div>
 <p>The chains have converged. We have the following results (with <code>mcmc_areas</code>)</p>
-<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb189-1" data-line-number="1"><span class="kw">stanplot</span>(m3, <span class="dt">type =</span> <span class="st">&quot;areas&quot;</span>, <span class="dt">prob =</span> <span class="fl">0.90</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="linear-models.html#cb196-1"></a><span class="kw">stanplot</span>(m3, <span class="dt">type =</span> <span class="st">&quot;areas&quot;</span>, <span class="dt">prob =</span> <span class="fl">0.90</span>)</span></code></pre></div>
+<pre><code>&gt;# Warning: Method &#39;stanplot&#39; is deprecated. Please use &#39;mcmc_plot&#39; instead.</code></pre>
+<pre><code>&gt;# Warning: `expand_scale()` is deprecated; use `expansion()` instead.</code></pre>
 <p><img src="07_linear_model_files/figure-html/plot-m3-1.png" width="672" /></p>
 <p>We can plot the data with two regression lines
-(left for <code>mom_hs</code> = “no” and right for <code>mom_hs</code> = &quot;yes):</p>
-<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb190-1" data-line-number="1"><span class="kw">plot</span>(</a>
-<a class="sourceLine" id="cb190-2" data-line-number="2">  <span class="kw">marginal_effects</span>(m3, <span class="dt">effects =</span> <span class="st">&quot;mom_iq_c&quot;</span>, </a>
-<a class="sourceLine" id="cb190-3" data-line-number="3">                   <span class="co"># Request two lines using `conditions`</span></a>
-<a class="sourceLine" id="cb190-4" data-line-number="4">                   <span class="dt">conditions =</span> <span class="kw">tibble</span>(<span class="dt">mom_hs =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>))), </a>
-<a class="sourceLine" id="cb190-5" data-line-number="5">  <span class="dt">points =</span> <span class="ot">TRUE</span>, <span class="dt">point_args =</span> <span class="kw">list</span>(<span class="dt">size =</span> <span class="fl">0.5</span>)</a>
-<a class="sourceLine" id="cb190-6" data-line-number="6">)</a></code></pre></div>
+(left for <code>mom_hs</code> = “no” and right for <code>mom_hs</code> = "yes):</p>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="linear-models.html#cb199-1"></a><span class="kw">plot</span>(</span>
+<span id="cb199-2"><a href="linear-models.html#cb199-2"></a>  <span class="kw">marginal_effects</span>(m3, <span class="dt">effects =</span> <span class="st">&quot;mom_iq_c&quot;</span>, </span>
+<span id="cb199-3"><a href="linear-models.html#cb199-3"></a>                   <span class="co"># Request two lines using `conditions`</span></span>
+<span id="cb199-4"><a href="linear-models.html#cb199-4"></a>                   <span class="dt">conditions =</span> <span class="kw">tibble</span>(<span class="dt">mom_hs =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>))), </span>
+<span id="cb199-5"><a href="linear-models.html#cb199-5"></a>  <span class="dt">points =</span> <span class="ot">TRUE</span>, <span class="dt">point_args =</span> <span class="kw">list</span>(<span class="dt">size =</span> <span class="fl">0.5</span>)</span>
+<span id="cb199-6"><a href="linear-models.html#cb199-6"></a>)</span></code></pre></div>
 <pre><code>&gt;# Warning: Method &#39;marginal_effects&#39; is deprecated. Please use
 &gt;# &#39;conditional_effects&#39; instead.</code></pre>
 <p><img src="07_linear_model_files/figure-html/marginal-m3-1.png" width="528" /></p>
 <p>Using the posterior mean, we have the following regression line
 <span class="math display">\[\widehat{\texttt{kid_score}} = 0.821 + 
-                                  0.561 \times \texttt{mom_iq_c} + 
+                                  0.562 \times \texttt{mom_iq_c} + 
                                   0.06 \times \texttt{mom_hs}\]</span>
 So, based on our model, if we observe two participants with 1 unit difference in
 <code>mom_iq_c</code>, and for both the mothers have high school degree (or both without),
-the child’s IQ score is expected to be different by 0.561 points, 95% CI [0.448, 0.683]. On the
+the child’s IQ score is expected to be different by 0.562 points, 95% CI [0.442, 0.679]. On the
 other hand, for two observations with the same <code>mom_iq_c</code>, our model predicted
 that the child’s IQ score when the mother has high school degree is higher by
-6.031 points, 95% CI [1.634, 10.407] on average.</p>
+5.999 points, 95% CI [1.723, 10.226] on average.</p>
 </div>
 <div id="interactions" class="section level3">
 <h3><span class="header-section-number">7.3.2</span> Interactions</h3>
@@ -942,20 +950,20 @@ relaxed by including an interaction term:
 Note that the prior scale is smaller for <span class="math inline">\(\beta_3\)</span>. This is chosen because
 generally the magnitude of an interaction effect is smaller than the main
 effect.</p>
-<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb192-1" data-line-number="1">m4 &lt;-<span class="st"> </span><span class="kw">brm</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_iq_c <span class="op">*</span><span class="st"> </span>mom_hs, <span class="dt">data =</span> kidiq100, </a>
-<a class="sourceLine" id="cb192-2" data-line-number="2">          <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </a>
-<a class="sourceLine" id="cb192-3" data-line-number="3">                    <span class="co"># set for all &quot;b&quot; coefficients</span></a>
-<a class="sourceLine" id="cb192-4" data-line-number="4">                    <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>),</a>
-<a class="sourceLine" id="cb192-5" data-line-number="5">                    <span class="co"># for interaction</span></a>
-<a class="sourceLine" id="cb192-6" data-line-number="6">                    <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="fl">0.5</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>, </a>
-<a class="sourceLine" id="cb192-7" data-line-number="7">                          <span class="dt">coef =</span> <span class="st">&quot;mom_iq_c:mom_hsyes&quot;</span>), </a>
-<a class="sourceLine" id="cb192-8" data-line-number="8">                    <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </a>
-<a class="sourceLine" id="cb192-9" data-line-number="9">          <span class="dt">seed =</span> <span class="dv">2302</span></a>
-<a class="sourceLine" id="cb192-10" data-line-number="10">)</a></code></pre></div>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="linear-models.html#cb201-1"></a>m4 &lt;-<span class="st"> </span><span class="kw">brm</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_iq_c <span class="op">*</span><span class="st"> </span>mom_hs, <span class="dt">data =</span> kidiq100, </span>
+<span id="cb201-2"><a href="linear-models.html#cb201-2"></a>          <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </span>
+<span id="cb201-3"><a href="linear-models.html#cb201-3"></a>                    <span class="co"># set for all &quot;b&quot; coefficients</span></span>
+<span id="cb201-4"><a href="linear-models.html#cb201-4"></a>                    <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>),</span>
+<span id="cb201-5"><a href="linear-models.html#cb201-5"></a>                    <span class="co"># for interaction</span></span>
+<span id="cb201-6"><a href="linear-models.html#cb201-6"></a>                    <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="fl">0.5</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>, </span>
+<span id="cb201-7"><a href="linear-models.html#cb201-7"></a>                          <span class="dt">coef =</span> <span class="st">&quot;mom_iq_c:mom_hsyes&quot;</span>), </span>
+<span id="cb201-8"><a href="linear-models.html#cb201-8"></a>                    <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </span>
+<span id="cb201-9"><a href="linear-models.html#cb201-9"></a>          <span class="dt">seed =</span> <span class="dv">2302</span></span>
+<span id="cb201-10"><a href="linear-models.html#cb201-10"></a>)</span></code></pre></div>
 <p><code>~ mom_iq_c * mom_hs</code> means including the interaction effect as well as the
 individual main effects. The chains have converged. We have the following
 results</p>
-<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb193-1" data-line-number="1"><span class="kw">summary</span>(m4)</a></code></pre></div>
+<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="linear-models.html#cb202-1"></a><span class="kw">summary</span>(m4)</span></code></pre></div>
 <pre><code>&gt;#  Family: gaussian 
 &gt;#   Links: mu = identity; sigma = identity 
 &gt;# Formula: kid_score ~ mom_iq_c * mom_hs 
@@ -965,23 +973,23 @@ results</p>
 &gt;# 
 &gt;# Population-Level Effects: 
 &gt;#                    Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-&gt;# Intercept              0.85      0.02     0.81     0.89 1.00     3118     2663
-&gt;# mom_iq_c               0.91      0.14     0.64     1.19 1.00     2385     2476
-&gt;# mom_hsyes              0.03      0.02    -0.01     0.08 1.00     3190     2792
-&gt;# mom_iq_c:mom_hsyes    -0.42      0.15    -0.73    -0.12 1.00     2399     2257
+&gt;# Intercept              0.85      0.02     0.80     0.89 1.00     2643     2505
+&gt;# mom_iq_c               0.91      0.14     0.63     1.19 1.00     2103     2092
+&gt;# mom_hsyes              0.03      0.02    -0.01     0.08 1.00     2822     2754
+&gt;# mom_iq_c:mom_hsyes    -0.42      0.16    -0.73    -0.11 1.00     2114     2057
 &gt;# 
 &gt;# Family Specific Parameters: 
 &gt;#       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-&gt;# sigma     0.18      0.01     0.17     0.19 1.00     3722     2436
+&gt;# sigma     0.18      0.01     0.17     0.19 1.00     3249     2175
 &gt;# 
-&gt;# Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
-&gt;# is a crude measure of effective sample size, and Rhat is the potential 
+&gt;# Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
+&gt;# and Tail_ESS are effective sample size measures, and Rhat is the potential
 &gt;# scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <p>Using the posterior median, we have the following regression line
-<span class="math display">\[\widehat{\texttt{kid_score}} = 0.85 + 
-                                 0.914 \times \texttt{mom_iq_c} + 
-                                 0.032 \times \texttt{mom_hs} + 
-                                 -0.423 \times \texttt{mom_iq_c} \times \texttt{mom_hs}\]</span></p>
+<span class="math display">\[\widehat{\texttt{kid_score}} = 0.849 + 
+                                 0.911 \times \texttt{mom_iq_c} + 
+                                 0.033 \times \texttt{mom_hs} + 
+                                 -0.419 \times \texttt{mom_iq_c} \times \texttt{mom_hs}\]</span></p>
 <p>Interaction effect is generally not easy to interpret. It would be easier to
 write the regression line for <code>mom_hs</code> = “no” (0) and <code>mom_hs</code> = “yes” (1). To
 do this, note that the regression line for <code>mom_hs</code> = “yes” is</p>
@@ -995,64 +1003,66 @@ means of <span class="math inline">\(\beta_0\)</span> and <span class="math inli
 posterior medians may be different, because the median is not a linear function
 of the posterior samples)</p>
 <p>When <code>mom_hs</code> = 0,
-<span class="math display">\[\widehat{\texttt{kid_score}} = 0.85 + 
-                                 0.914 \times \texttt{mom_iq_c}\]</span></p>
+<span class="math display">\[\widehat{\texttt{kid_score}} = 0.849 + 
+                                 0.911 \times \texttt{mom_iq_c}\]</span></p>
 <p>and when <code>mom_hs</code> = 1
 <span class="math display">\[\widehat{\texttt{kid_score}} = 0.882 + 
-                                 0.491 \times 
+                                 0.492 \times 
                                   \texttt{mom_iq_c}\]</span></p>
 <p>We can plot the data with two regression lines with the following code:</p>
-<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb195-1" data-line-number="1"><span class="kw">plot</span>(</a>
-<a class="sourceLine" id="cb195-2" data-line-number="2">  <span class="kw">marginal_effects</span>(m4, <span class="dt">effects =</span> <span class="st">&quot;mom_iq_c&quot;</span>, </a>
-<a class="sourceLine" id="cb195-3" data-line-number="3">                   <span class="co"># Request two lines using `conditions`</span></a>
-<a class="sourceLine" id="cb195-4" data-line-number="4">                   <span class="dt">conditions =</span> <span class="kw">tibble</span>(<span class="dt">mom_hs =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>))), </a>
-<a class="sourceLine" id="cb195-5" data-line-number="5">  <span class="dt">points =</span> <span class="ot">TRUE</span>, <span class="dt">point_args =</span> <span class="kw">list</span>(<span class="dt">size =</span> <span class="fl">0.5</span>)</a>
-<a class="sourceLine" id="cb195-6" data-line-number="6">)</a></code></pre></div>
+<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="linear-models.html#cb204-1"></a><span class="kw">plot</span>(</span>
+<span id="cb204-2"><a href="linear-models.html#cb204-2"></a>  <span class="kw">marginal_effects</span>(m4, <span class="dt">effects =</span> <span class="st">&quot;mom_iq_c&quot;</span>, </span>
+<span id="cb204-3"><a href="linear-models.html#cb204-3"></a>                   <span class="co"># Request two lines using `conditions`</span></span>
+<span id="cb204-4"><a href="linear-models.html#cb204-4"></a>                   <span class="dt">conditions =</span> <span class="kw">tibble</span>(<span class="dt">mom_hs =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>))), </span>
+<span id="cb204-5"><a href="linear-models.html#cb204-5"></a>  <span class="dt">points =</span> <span class="ot">TRUE</span>, <span class="dt">point_args =</span> <span class="kw">list</span>(<span class="dt">size =</span> <span class="fl">0.5</span>)</span>
+<span id="cb204-6"><a href="linear-models.html#cb204-6"></a>)</span></code></pre></div>
 <pre><code>&gt;# Warning: Method &#39;marginal_effects&#39; is deprecated. Please use
 &gt;# &#39;conditional_effects&#39; instead.</code></pre>
 <p><img src="07_linear_model_files/figure-html/marginal-m4-1.png" width="528" /></p>
 <p>We can get an <span class="math inline">\(R^2\)</span> effect size.</p>
-<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb197-1" data-line-number="1"><span class="kw">bayes_R2</span>(m4)</a></code></pre></div>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="linear-models.html#cb206-1"></a><span class="kw">bayes_R2</span>(m4)</span></code></pre></div>
 <pre><code>&gt;#    Estimate Est.Error  Q2.5 Q97.5
-&gt;# R2    0.227    0.0314 0.165 0.287</code></pre>
+&gt;# R2    0.227    0.0312 0.163 0.288</code></pre>
 <p>So the two predictors, plus the main effect, explained
-22.684%
+22.719%
 of the variance of <code>kid_score</code>. However, comparing to the model with only
 <code>mom_iq_c</code> as predictor, including <code>mom_hs</code> and the interaction increased
-the <span class="math inline">\(R^2\)</span> by <span class="math inline">\(2.762\%\)</span>.</p>
+the <span class="math inline">\(R^2\)</span> by <span class="math inline">\(2.777\%\)</span>.</p>
 <p>You can plot the density of the posterior distributions for the three <span class="math inline">\(\beta\)</span>s:</p>
-<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb199-1" data-line-number="1"><span class="co"># `pars = &quot;b&quot;` will include all regression coefficients</span></a>
-<a class="sourceLine" id="cb199-2" data-line-number="2"><span class="kw">stanplot</span>(m4, <span class="dt">type =</span> <span class="st">&quot;areas&quot;</span>, <span class="dt">pars =</span> <span class="st">&quot;b&quot;</span>, <span class="dt">prob =</span> <span class="fl">0.90</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="linear-models.html#cb208-1"></a><span class="co"># `pars = &quot;b&quot;` will include all regression coefficients</span></span>
+<span id="cb208-2"><a href="linear-models.html#cb208-2"></a><span class="kw">stanplot</span>(m4, <span class="dt">type =</span> <span class="st">&quot;areas&quot;</span>, <span class="dt">pars =</span> <span class="st">&quot;b&quot;</span>, <span class="dt">prob =</span> <span class="fl">0.90</span>)</span></code></pre></div>
+<pre><code>&gt;# Warning: Method &#39;stanplot&#39; is deprecated. Please use &#39;mcmc_plot&#39; instead.</code></pre>
+<pre><code>&gt;# Warning: `expand_scale()` is deprecated; use `expansion()` instead.</code></pre>
 <p><img src="07_linear_model_files/figure-html/areas-m4-1.png" width="672" /></p>
 <p>And below I plot the 90% predictive intervals and the variations of the
 regression lines, separated by the status of <code>mom_hs</code>. The R code is a bit
 cumbersome though.</p>
-<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb200-1" data-line-number="1"><span class="co"># Obtain the predictive intervals</span></a>
-<a class="sourceLine" id="cb200-2" data-line-number="2">pi_m4 &lt;-<span class="st"> </span><span class="kw">predictive_interval</span>(m4, <span class="dt">prob =</span> <span class="fl">0.9</span>)</a>
-<a class="sourceLine" id="cb200-3" data-line-number="3"><span class="kw">colnames</span>(pi_m4) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;lwr&quot;</span>, <span class="st">&quot;upr&quot;</span>)  <span class="co"># change the names for convenience</span></a>
-<a class="sourceLine" id="cb200-4" data-line-number="4"><span class="co"># Combine the PIs with the original data</span></a>
-<a class="sourceLine" id="cb200-5" data-line-number="5">df_plot &lt;-<span class="st"> </span><span class="kw">cbind</span>(kidiq100, pi_m4)</a>
-<a class="sourceLine" id="cb200-6" data-line-number="6"><span class="co"># Create a data frame for the regression lines</span></a>
-<a class="sourceLine" id="cb200-7" data-line-number="7">draws_m4 &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(m4)</a>
-<a class="sourceLine" id="cb200-8" data-line-number="8">df_lines &lt;-<span class="st"> </span><span class="kw">rbind</span>(<span class="kw">data.frame</span>(<span class="dt">mom_hs =</span> <span class="st">&quot;no&quot;</span>, <span class="dt">a =</span> draws_m4[ , <span class="dv">1</span>], </a>
-<a class="sourceLine" id="cb200-9" data-line-number="9">                             <span class="dt">b =</span> draws_m4[ , <span class="dv">2</span>]), </a>
-<a class="sourceLine" id="cb200-10" data-line-number="10">                  <span class="kw">data.frame</span>(<span class="dt">mom_hs =</span> <span class="st">&quot;yes&quot;</span>, <span class="dt">a =</span> draws_m4[ , <span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>draws_m4[ , <span class="dv">3</span>], </a>
-<a class="sourceLine" id="cb200-11" data-line-number="11">                             <span class="dt">b =</span> draws_m4[ , <span class="dv">2</span>] <span class="op">+</span><span class="st"> </span>draws_m4[ , <span class="dv">4</span>]))</a>
-<a class="sourceLine" id="cb200-12" data-line-number="12">df_mean_line &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">mom_hs =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>), </a>
-<a class="sourceLine" id="cb200-13" data-line-number="13">                             <span class="dt">a =</span> <span class="kw">c</span>(<span class="kw">fixef</span>(m4)[<span class="dv">1</span>, <span class="st">&quot;Estimate&quot;</span>], </a>
-<a class="sourceLine" id="cb200-14" data-line-number="14">                                   <span class="kw">sum</span>(<span class="kw">fixef</span>(m4)[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>), <span class="st">&quot;Estimate&quot;</span>])), </a>
-<a class="sourceLine" id="cb200-15" data-line-number="15">                             <span class="dt">b =</span> <span class="kw">c</span>(<span class="kw">fixef</span>(m4)[<span class="dv">2</span>, <span class="st">&quot;Estimate&quot;</span>], </a>
-<a class="sourceLine" id="cb200-16" data-line-number="16">                                   <span class="kw">sum</span>(<span class="kw">fixef</span>(m4)[<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">4</span>), <span class="st">&quot;Estimate&quot;</span>])))</a>
-<a class="sourceLine" id="cb200-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb200-18" data-line-number="18"><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> mom_iq_c, <span class="dt">y =</span> kid_score), <span class="dt">data =</span> df_plot) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb200-19" data-line-number="19"><span class="st">  </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>mom_hs) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb200-20" data-line-number="20"><span class="st">    </span><span class="co"># Add a layer of predictive intervals</span></a>
-<a class="sourceLine" id="cb200-21" data-line-number="21"><span class="st">  </span><span class="kw">geom_ribbon</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> lwr, <span class="dt">ymax =</span> upr),</a>
-<a class="sourceLine" id="cb200-22" data-line-number="22">              <span class="dt">fill =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb200-23" data-line-number="23"><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">data =</span> df_lines, <span class="kw">aes</span>(<span class="dt">intercept =</span> a, <span class="dt">slope =</span> b), </a>
-<a class="sourceLine" id="cb200-24" data-line-number="24">              <span class="dt">color =</span> <span class="st">&quot;skyblue&quot;</span>, <span class="dt">size =</span> <span class="fl">0.2</span>, <span class="dt">alpha =</span> <span class="fl">0.10</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb200-25" data-line-number="25"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="fl">0.7</span>, <span class="kw">aes</span>(<span class="dt">col =</span> <span class="kw">factor</span>(mom_hs))) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb200-26" data-line-number="26"><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">data =</span> df_mean_line, <span class="kw">aes</span>(<span class="dt">intercept =</span> a, <span class="dt">slope =</span> b))</a></code></pre></div>
+<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="linear-models.html#cb211-1"></a><span class="co"># Obtain the predictive intervals</span></span>
+<span id="cb211-2"><a href="linear-models.html#cb211-2"></a>pi_m4 &lt;-<span class="st"> </span><span class="kw">predictive_interval</span>(m4, <span class="dt">prob =</span> <span class="fl">0.9</span>)</span>
+<span id="cb211-3"><a href="linear-models.html#cb211-3"></a><span class="kw">colnames</span>(pi_m4) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;lwr&quot;</span>, <span class="st">&quot;upr&quot;</span>)  <span class="co"># change the names for convenience</span></span>
+<span id="cb211-4"><a href="linear-models.html#cb211-4"></a><span class="co"># Combine the PIs with the original data</span></span>
+<span id="cb211-5"><a href="linear-models.html#cb211-5"></a>df_plot &lt;-<span class="st"> </span><span class="kw">cbind</span>(kidiq100, pi_m4)</span>
+<span id="cb211-6"><a href="linear-models.html#cb211-6"></a><span class="co"># Create a data frame for the regression lines</span></span>
+<span id="cb211-7"><a href="linear-models.html#cb211-7"></a>draws_m4 &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(m4)</span>
+<span id="cb211-8"><a href="linear-models.html#cb211-8"></a>df_lines &lt;-<span class="st"> </span><span class="kw">rbind</span>(<span class="kw">data.frame</span>(<span class="dt">mom_hs =</span> <span class="st">&quot;no&quot;</span>, <span class="dt">a =</span> draws_m4[ , <span class="dv">1</span>], </span>
+<span id="cb211-9"><a href="linear-models.html#cb211-9"></a>                             <span class="dt">b =</span> draws_m4[ , <span class="dv">2</span>]), </span>
+<span id="cb211-10"><a href="linear-models.html#cb211-10"></a>                  <span class="kw">data.frame</span>(<span class="dt">mom_hs =</span> <span class="st">&quot;yes&quot;</span>, <span class="dt">a =</span> draws_m4[ , <span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>draws_m4[ , <span class="dv">3</span>], </span>
+<span id="cb211-11"><a href="linear-models.html#cb211-11"></a>                             <span class="dt">b =</span> draws_m4[ , <span class="dv">2</span>] <span class="op">+</span><span class="st"> </span>draws_m4[ , <span class="dv">4</span>]))</span>
+<span id="cb211-12"><a href="linear-models.html#cb211-12"></a>df_mean_line &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">mom_hs =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>), </span>
+<span id="cb211-13"><a href="linear-models.html#cb211-13"></a>                             <span class="dt">a =</span> <span class="kw">c</span>(<span class="kw">fixef</span>(m4)[<span class="dv">1</span>, <span class="st">&quot;Estimate&quot;</span>], </span>
+<span id="cb211-14"><a href="linear-models.html#cb211-14"></a>                                   <span class="kw">sum</span>(<span class="kw">fixef</span>(m4)[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>), <span class="st">&quot;Estimate&quot;</span>])), </span>
+<span id="cb211-15"><a href="linear-models.html#cb211-15"></a>                             <span class="dt">b =</span> <span class="kw">c</span>(<span class="kw">fixef</span>(m4)[<span class="dv">2</span>, <span class="st">&quot;Estimate&quot;</span>], </span>
+<span id="cb211-16"><a href="linear-models.html#cb211-16"></a>                                   <span class="kw">sum</span>(<span class="kw">fixef</span>(m4)[<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">4</span>), <span class="st">&quot;Estimate&quot;</span>])))</span>
+<span id="cb211-17"><a href="linear-models.html#cb211-17"></a></span>
+<span id="cb211-18"><a href="linear-models.html#cb211-18"></a><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> mom_iq_c, <span class="dt">y =</span> kid_score), <span class="dt">data =</span> df_plot) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb211-19"><a href="linear-models.html#cb211-19"></a><span class="st">  </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>mom_hs) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb211-20"><a href="linear-models.html#cb211-20"></a><span class="st">    </span><span class="co"># Add a layer of predictive intervals</span></span>
+<span id="cb211-21"><a href="linear-models.html#cb211-21"></a><span class="st">  </span><span class="kw">geom_ribbon</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> lwr, <span class="dt">ymax =</span> upr),</span>
+<span id="cb211-22"><a href="linear-models.html#cb211-22"></a>              <span class="dt">fill =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb211-23"><a href="linear-models.html#cb211-23"></a><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">data =</span> df_lines, <span class="kw">aes</span>(<span class="dt">intercept =</span> a, <span class="dt">slope =</span> b), </span>
+<span id="cb211-24"><a href="linear-models.html#cb211-24"></a>              <span class="dt">color =</span> <span class="st">&quot;skyblue&quot;</span>, <span class="dt">size =</span> <span class="fl">0.2</span>, <span class="dt">alpha =</span> <span class="fl">0.10</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb211-25"><a href="linear-models.html#cb211-25"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="fl">0.7</span>, <span class="kw">aes</span>(<span class="dt">col =</span> <span class="kw">factor</span>(mom_hs))) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb211-26"><a href="linear-models.html#cb211-26"></a><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">data =</span> df_mean_line, <span class="kw">aes</span>(<span class="dt">intercept =</span> a, <span class="dt">slope =</span> b))</span></code></pre></div>
 <p><img src="07_linear_model_files/figure-html/pi-m4-1.png" width="576" /></p>
 <p>And you can see the uncertainty is larger for <code>mom_hs</code> = 0. This makes sense
 because there are less participants in this group.</p>
@@ -1062,7 +1072,7 @@ because there are less participants in this group.</p>
 <h2><span class="header-section-number">7.4</span> Tabulating the Models</h2>
 <p>There is a handy function in the <code>sjPlot</code> package, <code>tab_model()</code>, which can
 show a neat summary of the various models:</p>
-<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb201-1" data-line-number="1">sjPlot<span class="op">::</span><span class="kw">tab_model</span>(m1c, m2, m3, m4)</a></code></pre></div>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="linear-models.html#cb212-1"></a>sjPlot<span class="op">::</span><span class="kw">tab_model</span>(m1c, m2, m3, m4)</span></code></pre></div>
 <table style="border-collapse:collapse; border:none;">
 <tr>
 <th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">
@@ -1118,13 +1128,13 @@ Intercept
 0.87
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.85 – 0.88
+0.85 – 0.89
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
 0.78
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.74 – 0.82
+0.73 – 0.81
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
 0.82
@@ -1136,7 +1146,7 @@ Intercept
 0.85
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9">
-0.81 – 0.89
+0.80 – 0.89
 </td>
 </tr>
 <tr>
@@ -1147,7 +1157,7 @@ mom.iq
 0.61
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
-0.50 – 0.72
+0.49 – 0.72
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">
 </td>
@@ -1157,13 +1167,13 @@ mom.iq
 0.56
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7">
-0.45 – 0.68
+0.44 – 0.68
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8">
 0.91
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9">
-0.64 – 1.19
+0.63 – 1.19
 </td>
 </tr>
 <tr>
@@ -1213,7 +1223,7 @@ mom_iq_c.mom_hsyes
 -0.42
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9">
--0.73 – -0.12
+-0.73 – -0.11
 </td>
 </tr>
 <tr>
@@ -1238,39 +1248,39 @@ Observations
 R<sup>2</sup> Bayes
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">
-0.201
+0.200
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">
 0.056
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">
-0.215
+0.214
 </td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">
-0.227
+0.228
 </td>
 </tr>
 </table>
 <p>However right now it only supports HTML. You can also use the following code:</p>
-<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb202-1" data-line-number="1"><span class="kw">source</span>(<span class="st">&quot;../codes/extract_brmsfit.R&quot;</span>)</a>
-<a class="sourceLine" id="cb202-2" data-line-number="2">texreg<span class="op">::</span><span class="kw">screenreg</span>(<span class="kw">map</span>(<span class="kw">list</span>(m1c, m2, m3, m4), extract_brmsfit))</a></code></pre></div>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="linear-models.html#cb213-1"></a><span class="kw">source</span>(<span class="st">&quot;../codes/extract_brmsfit.R&quot;</span>)</span>
+<span id="cb213-2"><a href="linear-models.html#cb213-2"></a>texreg<span class="op">::</span><span class="kw">screenreg</span>(<span class="kw">map</span>(<span class="kw">list</span>(m1c, m2, m3, m4), extract_brmsfit))</span></code></pre></div>
 <pre><code>&gt;# 
 &gt;# ============================================================================
 &gt;#                     Model 1       Model 2       Model 3       Model 4       
 &gt;# ----------------------------------------------------------------------------
 &gt;# Intercept              0.87 *        0.78 *        0.82 *        0.85 *     
-&gt;#                     [0.85; 0.88]  [0.74; 0.82]  [0.78; 0.86]  [ 0.81;  0.89]
+&gt;#                     [0.85; 0.88]  [0.73; 0.81]  [0.78; 0.86]  [ 0.80;  0.89]
 &gt;# mom_iq_c               0.61 *                      0.56 *        0.91 *     
-&gt;#                     [0.50; 0.73]                [0.45; 0.69]  [ 0.65;  1.20]
+&gt;#                     [0.49; 0.72]                [0.45; 0.68]  [ 0.64;  1.20]
 &gt;# mom_hsyes                            0.12 *        0.06 *        0.03       
-&gt;#                                   [0.08; 0.16]  [0.02; 0.10]  [-0.01;  0.08]
+&gt;#                                   [0.08; 0.17]  [0.02; 0.10]  [-0.01;  0.08]
 &gt;# mom_iq_c:mom_hsyes                                              -0.42 *     
-&gt;#                                                               [-0.73; -0.14]
+&gt;#                                                               [-0.75; -0.13]
 &gt;# ----------------------------------------------------------------------------
 &gt;# R^2                    0.20          0.06          0.21          0.23       
 &gt;# Num. obs.            434           434           434           434          
-&gt;# loo IC              -240.27       -167.74       -245.34       -252.21       
-&gt;# WAIC                -240.28       -167.75       -245.35       -252.22       
+&gt;# loo IC              -240.07       -167.76       -245.19       -252.03       
+&gt;# WAIC                -240.08       -167.77       -245.20       -252.05       
 &gt;# ============================================================================
 &gt;# * 0 outside the confidence interval</code></pre>
 <p>Replacing <code>texreg::screenreg()</code> by <code>texreg::texreg()</code> will generate table for
@@ -1334,7 +1344,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["notes_bookdown.pdf", "notes_bookdown.epub"],
+"download": ["notes_bookdown.epub"],
 "toc": {
 "collapse": "subsection"
 }

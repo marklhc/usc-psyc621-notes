@@ -507,9 +507,19 @@ posterior probability for every location. A rescaling step is needed to make
 sure that the area under the curve will be 1, which is usually performed by the
 software.
 
+
+```
+># Warning: `mapping` is not used by stat_function()
+```
+
 <img src="01_intro_files/figure-html/plane-post-1.png" width="456" />
 
 The following shows what happen with a stronger prior:
+
+
+```
+># Warning: `mapping` is not used by stat_function()
+```
 
 <img src="01_intro_files/figure-html/plane-strong-1.png" width="456" />
 

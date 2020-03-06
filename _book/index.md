@@ -1,12 +1,12 @@
 --- 
 title: "Course Handouts for Bayesian Data Analysis Class"
 author: "Mark Lai"
-date: "2019-12-14"
+date: "2020-03-06"
 bibliography:
 - ../notes/references.bib
 - packages.bib
 description: This is a collection of my course handouts for PSYC 621 class in 
-  the 2019 Spring semester. Please contact me [mailto:hokchiol@usc.edu] for any
+  the 2019 Fall semester. Please contact me [mailto:hokchiol@usc.edu] for any
   errors (as I'm sure there are plenty of them). 
 documentclass: book
 link-citations: yes

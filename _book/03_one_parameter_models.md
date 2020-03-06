@@ -421,10 +421,10 @@ print(m2, pars = c("log_lambda", "lambda"))
 ># post-warmup draws per chain=400, total post-warmup draws=800.
 ># 
 >#             mean se_mean   sd  2.5%   25%   50%   75% 97.5% n_eff Rhat
-># log_lambda -0.11       0 0.04 -0.19 -0.14 -0.11 -0.07 -0.02   282    1
-># lambda      0.90       0 0.04  0.82  0.87  0.90  0.93  0.98   287    1
+># log_lambda -0.11       0 0.04 -0.19 -0.14 -0.11 -0.08 -0.02   285 1.02
+># lambda      0.90       0 0.04  0.82  0.87  0.90  0.93  0.98   288 1.02
 ># 
-># Samples were drawn using NUTS(diag_e) at Sat Dec 14 16:06:00 2019.
+># Samples were drawn using NUTS(diag_e) at Fri Mar  6 10:07:09 2020.
 ># For each parameter, n_eff is a crude measure of effective sample size,
 ># and Rhat is the potential scale reduction factor on split chains (at 
 ># convergence, Rhat=1).
@@ -435,6 +435,10 @@ The posterior density and the 95% CI (credible interval) for $\lambda$ is
 
 ```r
 bayesplot::mcmc_areas(m2, pars = c("log_lambda", "lambda"), prob = 0.95)
+```
+
+```
+># Warning: `expand_scale()` is deprecated; use `expansion()` instead.
 ```
 
 <img src="03_one_parameter_models_files/figure-html/m2_plot_areas-1.png" width="672" />

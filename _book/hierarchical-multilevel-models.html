@@ -1,30 +1,30 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 10 Hierarchical &amp; Multilevel Models | Course Handouts for Bayesian Data Analysis Class</title>
-  <meta name="description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Spring semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
-  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
+  <meta name="description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Fall semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 10 Hierarchical &amp; Multilevel Models | Course Handouts for Bayesian Data Analysis Class" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Spring semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
+  <meta property="og:description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Fall semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
   
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 10 Hierarchical &amp; Multilevel Models | Course Handouts for Bayesian Data Analysis Class" />
   
-  <meta name="twitter:description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Spring semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
+  <meta name="twitter:description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Fall semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
   
 
 <meta name="author" content="Mark Lai" />
 
 
-<meta name="date" content="2019-12-14" />
+<meta name="date" content="2020-03-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,15 +51,15 @@
 
 
 <script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
-<script src="libs/viz-0.3/viz.js"></script>
+<script src="libs/viz-1.8.2/viz.js"></script>
 <link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
-<script src="libs/grViz-binding-1.0.1/grViz.js"></script>
+<script src="libs/grViz-binding-1.0.5/grViz.js"></script>
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
@@ -68,14 +68,16 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -84,9 +86,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -391,29 +393,29 @@ models with varying intercepts and slopes.</p>
 <h2><span class="header-section-number">10.1</span> ANOVA</h2>
 <p>We’ll use some demonstration data that usually corresponds to a typical
 psychological experiment that uses one-way ANOVA:</p>
-<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb290-1" data-line-number="1"><span class="co"># From http://personality-project.org/R/datasets/R.appendix1.data</span></a>
-<a class="sourceLine" id="cb290-2" data-line-number="2">alert &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">Dosage =</span> <span class="kw">factor</span>(<span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>), <span class="dt">each =</span> <span class="dv">6</span>)), </a>
-<a class="sourceLine" id="cb290-3" data-line-number="3">                <span class="dt">Alertness =</span> <span class="kw">c</span>(<span class="dv">30</span>, <span class="dv">38</span>, <span class="dv">35</span>, <span class="dv">41</span>, <span class="dv">27</span>, <span class="dv">24</span>, <span class="dv">32</span>, <span class="dv">26</span>, <span class="dv">31</span>, </a>
-<a class="sourceLine" id="cb290-4" data-line-number="4">                              <span class="dv">29</span>, <span class="dv">27</span>, <span class="dv">35</span>, <span class="dv">21</span>, <span class="dv">25</span>, <span class="dv">17</span>, <span class="dv">21</span>, <span class="dv">20</span>, <span class="dv">10</span>))</a>
-<a class="sourceLine" id="cb290-5" data-line-number="5"><span class="co"># Show barplot</span></a>
-<a class="sourceLine" id="cb290-6" data-line-number="6"><span class="kw">ggplot</span>(alert, <span class="kw">aes</span>(<span class="dt">x =</span> Dosage, <span class="dt">y =</span> Alertness)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb290-7" data-line-number="7"><span class="st">  </span><span class="co"># Mean + SE</span></a>
-<a class="sourceLine" id="cb290-8" data-line-number="8"><span class="st">  </span><span class="kw">stat_summary</span>()</a></code></pre></div>
-<pre><code>&gt;# No summary function supplied, defaulting to `mean_se()</code></pre>
+<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="hierarchical-multilevel-models.html#cb315-1"></a><span class="co"># From http://personality-project.org/R/datasets/R.appendix1.data</span></span>
+<span id="cb315-2"><a href="hierarchical-multilevel-models.html#cb315-2"></a>alert &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">Dosage =</span> <span class="kw">factor</span>(<span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>), <span class="dt">each =</span> <span class="dv">6</span>)), </span>
+<span id="cb315-3"><a href="hierarchical-multilevel-models.html#cb315-3"></a>                <span class="dt">Alertness =</span> <span class="kw">c</span>(<span class="dv">30</span>, <span class="dv">38</span>, <span class="dv">35</span>, <span class="dv">41</span>, <span class="dv">27</span>, <span class="dv">24</span>, <span class="dv">32</span>, <span class="dv">26</span>, <span class="dv">31</span>, </span>
+<span id="cb315-4"><a href="hierarchical-multilevel-models.html#cb315-4"></a>                              <span class="dv">29</span>, <span class="dv">27</span>, <span class="dv">35</span>, <span class="dv">21</span>, <span class="dv">25</span>, <span class="dv">17</span>, <span class="dv">21</span>, <span class="dv">20</span>, <span class="dv">10</span>))</span>
+<span id="cb315-5"><a href="hierarchical-multilevel-models.html#cb315-5"></a><span class="co"># Show barplot</span></span>
+<span id="cb315-6"><a href="hierarchical-multilevel-models.html#cb315-6"></a><span class="kw">ggplot</span>(alert, <span class="kw">aes</span>(<span class="dt">x =</span> Dosage, <span class="dt">y =</span> Alertness)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb315-7"><a href="hierarchical-multilevel-models.html#cb315-7"></a><span class="st">  </span><span class="co"># Mean + SE</span></span>
+<span id="cb315-8"><a href="hierarchical-multilevel-models.html#cb315-8"></a><span class="st">  </span><span class="kw">stat_summary</span>()</span></code></pre></div>
+<pre><code>&gt;# No summary function supplied, defaulting to `mean_se()`</code></pre>
 <p><img src="10_hierarchical_multilevel_models_files/figure-html/alert-1.png" width="672" /></p>
 <p>As can be seen, Dosage <code>c</code> has lower mean than others.</p>
 <div id="frequentist-anova" class="section level3">
 <h3><span class="header-section-number">10.1.1</span> “Frequentist” ANOVA</h3>
 <p>In frequentist analyses, we generally first perform an omnibus test:</p>
-<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb292-1" data-line-number="1"><span class="kw">summary</span>(<span class="kw">aov</span>(Alertness <span class="op">~</span><span class="st"> </span>Dosage, <span class="dt">data =</span> alert))</a></code></pre></div>
+<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="hierarchical-multilevel-models.html#cb317-1"></a><span class="kw">summary</span>(<span class="kw">aov</span>(Alertness <span class="op">~</span><span class="st"> </span>Dosage, <span class="dt">data =</span> alert))</span></code></pre></div>
 <pre><code>&gt;#             Df Sum Sq Mean Sq F value  Pr(&gt;F)    
 &gt;# Dosage       2    619   309.5    11.5 0.00094 ***
-&gt;# Residuals   15    404    26.9                    
+&gt;# Residuals   15    403    26.9                    
 &gt;# ---
 &gt;# Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>And then there will be post hoc comparisons with adjustment on <span class="math inline">\(p\)</span> values</p>
-<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb294-1" data-line-number="1"><span class="co"># Use Holm&#39;s procedure by default</span></a>
-<a class="sourceLine" id="cb294-2" data-line-number="2"><span class="kw">pairwise.t.test</span>(<span class="dt">x =</span> alert<span class="op">$</span>Alertness, <span class="dt">g =</span> alert<span class="op">$</span>Dosage)</a></code></pre></div>
+<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="hierarchical-multilevel-models.html#cb319-1"></a><span class="co"># Use Holm&#39;s procedure by default</span></span>
+<span id="cb319-2"><a href="hierarchical-multilevel-models.html#cb319-2"></a><span class="kw">pairwise.t.test</span>(<span class="dt">x =</span> alert<span class="op">$</span>Alertness, <span class="dt">g =</span> alert<span class="op">$</span>Dosage)</span></code></pre></div>
 <pre><code>&gt;# 
 &gt;#  Pairwise comparisons using t tests with pooled SD 
 &gt;# 
@@ -449,19 +451,19 @@ themselves have prior (hyperprior) distributions, this is also called
 Note that the Gamma prior was recommended in previous papers for hierarchical
 models, with the 8 in 1/8 being the prior belief of what the maximum value of
 <span class="math inline">\(\tau\)</span> can be.</p>
-<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb296-1" data-line-number="1">m1 &lt;-<span class="st"> </span><span class="kw">brm</span>(Alertness <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Dosage), <span class="dt">data =</span> alert, </a>
-<a class="sourceLine" id="cb296-2" data-line-number="2">          <span class="dt">prior =</span> <span class="kw">c</span>(<span class="co"># for gamma</span></a>
-<a class="sourceLine" id="cb296-3" data-line-number="3">            <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">50</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>),</a>
-<a class="sourceLine" id="cb296-4" data-line-number="4">            <span class="co"># for sigma</span></a>
-<a class="sourceLine" id="cb296-5" data-line-number="5">            <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">10</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>), </a>
-<a class="sourceLine" id="cb296-6" data-line-number="6">            <span class="co"># for tau</span></a>
-<a class="sourceLine" id="cb296-7" data-line-number="7">            <span class="kw">prior</span>(<span class="kw">gamma</span>(<span class="dv">2</span>, <span class="fl">0.125</span>), <span class="dt">class =</span> <span class="st">&quot;sd&quot;</span>, <span class="dt">coef =</span> <span class="st">&quot;Intercept&quot;</span>, </a>
-<a class="sourceLine" id="cb296-8" data-line-number="8">                  <span class="dt">group =</span> <span class="st">&quot;Dosage&quot;</span>)</a>
-<a class="sourceLine" id="cb296-9" data-line-number="9">          ), </a>
-<a class="sourceLine" id="cb296-10" data-line-number="10">          <span class="co"># Hierarchical models generally require smaller stepsize</span></a>
-<a class="sourceLine" id="cb296-11" data-line-number="11">          <span class="dt">control =</span> <span class="kw">list</span>(<span class="dt">adapt_delta =</span> <span class="fl">.99</span>))</a></code></pre></div>
-<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb297-1" data-line-number="1">broom<span class="op">::</span><span class="kw">tidy</span>(m1) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb297-2" data-line-number="2"><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="hierarchical-multilevel-models.html#cb321-1"></a>m1 &lt;-<span class="st"> </span><span class="kw">brm</span>(Alertness <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Dosage), <span class="dt">data =</span> alert, </span>
+<span id="cb321-2"><a href="hierarchical-multilevel-models.html#cb321-2"></a>          <span class="dt">prior =</span> <span class="kw">c</span>(<span class="co"># for gamma</span></span>
+<span id="cb321-3"><a href="hierarchical-multilevel-models.html#cb321-3"></a>            <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">50</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>),</span>
+<span id="cb321-4"><a href="hierarchical-multilevel-models.html#cb321-4"></a>            <span class="co"># for sigma</span></span>
+<span id="cb321-5"><a href="hierarchical-multilevel-models.html#cb321-5"></a>            <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">10</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>), </span>
+<span id="cb321-6"><a href="hierarchical-multilevel-models.html#cb321-6"></a>            <span class="co"># for tau</span></span>
+<span id="cb321-7"><a href="hierarchical-multilevel-models.html#cb321-7"></a>            <span class="kw">prior</span>(<span class="kw">gamma</span>(<span class="dv">2</span>, <span class="fl">0.125</span>), <span class="dt">class =</span> <span class="st">&quot;sd&quot;</span>, <span class="dt">coef =</span> <span class="st">&quot;Intercept&quot;</span>, </span>
+<span id="cb321-8"><a href="hierarchical-multilevel-models.html#cb321-8"></a>                  <span class="dt">group =</span> <span class="st">&quot;Dosage&quot;</span>)</span>
+<span id="cb321-9"><a href="hierarchical-multilevel-models.html#cb321-9"></a>          ), </span>
+<span id="cb321-10"><a href="hierarchical-multilevel-models.html#cb321-10"></a>          <span class="co"># Hierarchical models generally require smaller stepsize</span></span>
+<span id="cb321-11"><a href="hierarchical-multilevel-models.html#cb321-11"></a>          <span class="dt">control =</span> <span class="kw">list</span>(<span class="dt">adapt_delta =</span> <span class="fl">.99</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="hierarchical-multilevel-models.html#cb322-1"></a>broom<span class="op">::</span><span class="kw">tidy</span>(m1) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb322-2"><a href="hierarchical-multilevel-models.html#cb322-2"></a><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -475,83 +477,83 @@ models, with the 8 in 1/8 being the prior belief of what the maximum value of
 <tbody>
 <tr class="odd">
 <td align="left">b_Intercept</td>
-<td align="right">26.45</td>
-<td align="right">7.04</td>
-<td align="right">14.69</td>
-<td align="right">37.28</td>
+<td align="right">26.37</td>
+<td align="right">8.20</td>
+<td align="right">13.22</td>
+<td align="right">37.49</td>
 </tr>
 <tr class="even">
 <td align="left">sd_Dosage__Intercept</td>
-<td align="right">10.97</td>
-<td align="right">6.05</td>
-<td align="right">4.29</td>
-<td align="right">22.68</td>
+<td align="right">11.42</td>
+<td align="right">6.79</td>
+<td align="right">4.10</td>
+<td align="right">24.62</td>
 </tr>
 <tr class="odd">
 <td align="left">sigma</td>
-<td align="right">5.58</td>
-<td align="right">1.15</td>
-<td align="right">4.04</td>
-<td align="right">7.70</td>
+<td align="right">5.65</td>
+<td align="right">1.17</td>
+<td align="right">4.11</td>
+<td align="right">7.87</td>
 </tr>
 <tr class="even">
 <td align="left">r_Dosage[a,Intercept]</td>
-<td align="right">5.62</td>
-<td align="right">7.24</td>
-<td align="right">-5.21</td>
-<td align="right">17.93</td>
+<td align="right">5.63</td>
+<td align="right">8.32</td>
+<td align="right">-5.47</td>
+<td align="right">19.22</td>
 </tr>
 <tr class="odd">
 <td align="left">r_Dosage[b,Intercept]</td>
-<td align="right">3.28</td>
-<td align="right">7.14</td>
-<td align="right">-7.77</td>
-<td align="right">15.14</td>
+<td align="right">3.38</td>
+<td align="right">8.37</td>
+<td align="right">-8.07</td>
+<td align="right">17.18</td>
 </tr>
 <tr class="even">
 <td align="left">r_Dosage[c,Intercept]</td>
-<td align="right">-6.77</td>
-<td align="right">7.20</td>
-<td align="right">-18.15</td>
-<td align="right">4.91</td>
+<td align="right">-6.71</td>
+<td align="right">8.31</td>
+<td align="right">-18.71</td>
+<td align="right">6.29</td>
 </tr>
 <tr class="odd">
 <td align="left">lp__</td>
-<td align="right">-66.93</td>
-<td align="right">1.98</td>
-<td align="right">-70.63</td>
-<td align="right">-64.35</td>
+<td align="right">-67.08</td>
+<td align="right">2.13</td>
+<td align="right">-71.13</td>
+<td align="right">-64.33</td>
 </tr>
 </tbody>
 </table>
 <p>From the results, the posterior mean for <span class="math inline">\(\gamma\)</span> is
-26.455 (<em>SD</em> =
-7.045), which was the grand mean <code>Alertness</code>
+26.37 (<em>SD</em> =
+8.198), which was the grand mean <code>Alertness</code>
 level. The between-group <em>SD</em> was estimated to be <span class="math inline">\(\tau\)</span> =
-10.973, whereas the within-group
+11.416, whereas the within-group
 <em>SD</em> was estimated to be <span class="math inline">\(\sigma\)</span> =
-5.575.</p>
+5.654.</p>
 <p>You can get the posterior mean for the mean of each group (i.e., <span class="math inline">\(\mu_j\)</span>) using</p>
-<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb298-1" data-line-number="1"><span class="kw">coef</span>(m1)<span class="op">$</span>Dosage[ , , <span class="st">&quot;Intercept&quot;</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="hierarchical-multilevel-models.html#cb323-1"></a><span class="kw">coef</span>(m1)<span class="op">$</span>Dosage[ , , <span class="st">&quot;Intercept&quot;</span>]</span></code></pre></div>
 <pre><code>&gt;#   Estimate Est.Error Q2.5 Q97.5
-&gt;# a     32.1      2.31 27.4  36.7
-&gt;# b     29.7      2.27 25.4  34.2
-&gt;# c     19.7      2.32 15.3  24.4</code></pre>
+&gt;# a     32.0      2.36 27.2  36.6
+&gt;# b     29.7      2.29 25.2  34.2
+&gt;# c     19.7      2.42 15.0  24.6</code></pre>
 <div id="shrinkage" class="section level4">
 <h4><span class="header-section-number">10.1.2.1</span> Shrinkage</h4>
 <p>Note that in the above model, the Bayes estimates of the group means are
 different from the sample group means, as shown in the following graph:</p>
-<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb300-1" data-line-number="1"><span class="kw">ggplot</span>(alert, <span class="kw">aes</span>(<span class="dt">x =</span> Dosage, <span class="dt">y =</span> Alertness)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb300-2" data-line-number="2"><span class="st">  </span><span class="co"># Mean + SE</span></a>
-<a class="sourceLine" id="cb300-3" data-line-number="3"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="kw">aes</span>(<span class="dt">col =</span> <span class="st">&quot;sample means&quot;</span>)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb300-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_pointrange</span>(<span class="dt">data =</span> <span class="kw">as_tibble</span>(<span class="kw">coef</span>(m1)<span class="op">$</span>Dosage[ , , <span class="st">&quot;Intercept&quot;</span>], </a>
-<a class="sourceLine" id="cb300-5" data-line-number="5">                                   <span class="dt">rownames =</span> <span class="st">&quot;Dosage&quot;</span>), </a>
-<a class="sourceLine" id="cb300-6" data-line-number="6">                  <span class="kw">aes</span>(<span class="dt">x =</span> Dosage, <span class="dt">y =</span> Estimate, </a>
-<a class="sourceLine" id="cb300-7" data-line-number="7">                      <span class="dt">ymin =</span> Estimate <span class="op">-</span><span class="st"> </span>Est.Error, </a>
-<a class="sourceLine" id="cb300-8" data-line-number="8">                      <span class="dt">ymax =</span> Estimate <span class="op">+</span><span class="st"> </span>Est.Error, </a>
-<a class="sourceLine" id="cb300-9" data-line-number="9">                      <span class="dt">col =</span> <span class="st">&quot;Bayes means&quot;</span>), </a>
-<a class="sourceLine" id="cb300-10" data-line-number="10">                  <span class="dt">position =</span> <span class="kw">position_nudge</span>(<span class="dt">x =</span> <span class="fl">0.1</span>))</a></code></pre></div>
-<pre><code>&gt;# No summary function supplied, defaulting to `mean_se()</code></pre>
+<div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb325-1"><a href="hierarchical-multilevel-models.html#cb325-1"></a><span class="kw">ggplot</span>(alert, <span class="kw">aes</span>(<span class="dt">x =</span> Dosage, <span class="dt">y =</span> Alertness)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb325-2"><a href="hierarchical-multilevel-models.html#cb325-2"></a><span class="st">  </span><span class="co"># Mean + SE</span></span>
+<span id="cb325-3"><a href="hierarchical-multilevel-models.html#cb325-3"></a><span class="st">  </span><span class="kw">stat_summary</span>(<span class="kw">aes</span>(<span class="dt">col =</span> <span class="st">&quot;sample means&quot;</span>)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb325-4"><a href="hierarchical-multilevel-models.html#cb325-4"></a><span class="st">  </span><span class="kw">geom_pointrange</span>(<span class="dt">data =</span> <span class="kw">as_tibble</span>(<span class="kw">coef</span>(m1)<span class="op">$</span>Dosage[ , , <span class="st">&quot;Intercept&quot;</span>], </span>
+<span id="cb325-5"><a href="hierarchical-multilevel-models.html#cb325-5"></a>                                   <span class="dt">rownames =</span> <span class="st">&quot;Dosage&quot;</span>), </span>
+<span id="cb325-6"><a href="hierarchical-multilevel-models.html#cb325-6"></a>                  <span class="kw">aes</span>(<span class="dt">x =</span> Dosage, <span class="dt">y =</span> Estimate, </span>
+<span id="cb325-7"><a href="hierarchical-multilevel-models.html#cb325-7"></a>                      <span class="dt">ymin =</span> Estimate <span class="op">-</span><span class="st"> </span>Est.Error, </span>
+<span id="cb325-8"><a href="hierarchical-multilevel-models.html#cb325-8"></a>                      <span class="dt">ymax =</span> Estimate <span class="op">+</span><span class="st"> </span>Est.Error, </span>
+<span id="cb325-9"><a href="hierarchical-multilevel-models.html#cb325-9"></a>                      <span class="dt">col =</span> <span class="st">&quot;Bayes means&quot;</span>), </span>
+<span id="cb325-10"><a href="hierarchical-multilevel-models.html#cb325-10"></a>                  <span class="dt">position =</span> <span class="kw">position_nudge</span>(<span class="dt">x =</span> <span class="fl">0.1</span>))</span></code></pre></div>
+<pre><code>&gt;# No summary function supplied, defaulting to `mean_se()`</code></pre>
 <p><img src="10_hierarchical_multilevel_models_files/figure-html/plot-blup-1.png" width="480" /></p>
 <p>If you look more carefully, you can see that the Bayes estimates are closer to
 the middle. This <em>shrinkage</em> effect may seem odd at first, but it has a good
@@ -568,28 +570,29 @@ even though participants received different Dosage, there are something similar
 among them, so information from one group should provide some information for
 another group. And for many of our problems in research, hierarchical models
 have been shown to make better predictions and inferences, compared to
-traditional ANOVA. See <span class="citation">Kruschke and Liddell (<a href="#ref-Kruschke2018">2018</a>)</span> for some more discussion.</p>
+traditional ANOVA. See <span class="citation">Kruschke and Liddell (<a href="#ref-Kruschke2018" role="doc-biblioref">2018</a>)</span> for some more discussion.</p>
 </div>
 <div id="notes-on-multiple-comparisons" class="section level4">
 <h4><span class="header-section-number">10.1.2.2</span> Notes on multiple comparisons</h4>
 <p>With hierarchical models, the common recommendation is that no further control
-for multiple comparison is needed <span class="citation">(see Gelman, Hill, and Yajima <a href="#ref-Gelman2012">2012</a>)</span>. For one, we don’t use <span class="math inline">\(p\)</span>
+for multiple comparison is needed <span class="citation">(see Gelman, Hill, and Yajima <a href="#ref-Gelman2012" role="doc-biblioref">2012</a>)</span>. For one, we don’t use <span class="math inline">\(p\)</span>
 values in Bayesian. For the other, by shrinking the group means closer to the
 grand mean in a hierarchical model, the comparisons in some sense have already
 been adjusted. You can plot the estimated group means by:</p>
-<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb302-1" data-line-number="1"><span class="kw">mcmc_intervals</span>(<span class="kw">coef</span>(m1, <span class="dt">summary =</span> <span class="ot">FALSE</span>)<span class="op">$</span>Dosage[ , , <span class="st">&quot;Intercept&quot;</span>])</a></code></pre></div>
+<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="hierarchical-multilevel-models.html#cb327-1"></a><span class="kw">mcmc_intervals</span>(<span class="kw">coef</span>(m1, <span class="dt">summary =</span> <span class="ot">FALSE</span>)<span class="op">$</span>Dosage[ , , <span class="st">&quot;Intercept&quot;</span>])</span></code></pre></div>
 <p><img src="10_hierarchical_multilevel_models_files/figure-html/intervals-m1-1.png" width="672" /></p>
 <p>And below it shows the posterior of the differences:</p>
-<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb303-1" data-line-number="1">ranef_draws &lt;-<span class="st"> </span><span class="kw">coef</span>(m1, <span class="dt">summary =</span> <span class="ot">FALSE</span>)<span class="op">$</span>Dosage[ , , <span class="st">&quot;Intercept&quot;</span>]</a>
-<a class="sourceLine" id="cb303-2" data-line-number="2"><span class="co"># Find all comparisons:</span></a>
-<a class="sourceLine" id="cb303-3" data-line-number="3">m1_cont &lt;-<span class="st"> </span><span class="kw">combn</span>(<span class="kw">colnames</span>(ranef_draws), <span class="dv">2</span>, <span class="dt">simplify =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb303-4" data-line-number="4"><span class="co"># Compute mean differences</span></a>
-<a class="sourceLine" id="cb303-5" data-line-number="5">m1_cont_draws &lt;-<span class="st"> </span><span class="kw">map_dfc</span>(m1_cont,</a>
-<a class="sourceLine" id="cb303-6" data-line-number="6">                         <span class="op">~</span><span class="st"> </span><span class="kw">tibble</span>(ranef_draws[, .x[<span class="dv">1</span>]] <span class="op">-</span></a>
-<a class="sourceLine" id="cb303-7" data-line-number="7"><span class="st">                                    </span>ranef_draws[, .x[<span class="dv">2</span>]]) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb303-8" data-line-number="8"><span class="st">                           `</span><span class="dt">names&lt;-</span><span class="st">`</span>(<span class="kw">paste</span>(.x[<span class="dv">1</span>], .x[<span class="dv">2</span>], <span class="dt">sep =</span> <span class="st">&quot;-&quot;</span>)))</a>
-<a class="sourceLine" id="cb303-9" data-line-number="9"><span class="co"># Plot the contrasts</span></a>
-<a class="sourceLine" id="cb303-10" data-line-number="10"><span class="kw">mcmc_areas</span>(m1_cont_draws, <span class="dt">prob =</span> <span class="fl">.95</span>, <span class="dt">bw =</span> <span class="st">&quot;SJ&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="hierarchical-multilevel-models.html#cb328-1"></a>ranef_draws &lt;-<span class="st"> </span><span class="kw">coef</span>(m1, <span class="dt">summary =</span> <span class="ot">FALSE</span>)<span class="op">$</span>Dosage[ , , <span class="st">&quot;Intercept&quot;</span>]</span>
+<span id="cb328-2"><a href="hierarchical-multilevel-models.html#cb328-2"></a><span class="co"># Find all comparisons:</span></span>
+<span id="cb328-3"><a href="hierarchical-multilevel-models.html#cb328-3"></a>m1_cont &lt;-<span class="st"> </span><span class="kw">combn</span>(<span class="kw">colnames</span>(ranef_draws), <span class="dv">2</span>, <span class="dt">simplify =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb328-4"><a href="hierarchical-multilevel-models.html#cb328-4"></a><span class="co"># Compute mean differences</span></span>
+<span id="cb328-5"><a href="hierarchical-multilevel-models.html#cb328-5"></a>m1_cont_draws &lt;-<span class="st"> </span><span class="kw">map_dfc</span>(m1_cont,</span>
+<span id="cb328-6"><a href="hierarchical-multilevel-models.html#cb328-6"></a>                         <span class="op">~</span><span class="st"> </span><span class="kw">tibble</span>(ranef_draws[, .x[<span class="dv">1</span>]] <span class="op">-</span></span>
+<span id="cb328-7"><a href="hierarchical-multilevel-models.html#cb328-7"></a><span class="st">                                    </span>ranef_draws[, .x[<span class="dv">2</span>]]) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb328-8"><a href="hierarchical-multilevel-models.html#cb328-8"></a><span class="st">                           `</span><span class="dt">names&lt;-</span><span class="st">`</span>(<span class="kw">paste</span>(.x[<span class="dv">1</span>], .x[<span class="dv">2</span>], <span class="dt">sep =</span> <span class="st">&quot;-&quot;</span>)))</span>
+<span id="cb328-9"><a href="hierarchical-multilevel-models.html#cb328-9"></a><span class="co"># Plot the contrasts</span></span>
+<span id="cb328-10"><a href="hierarchical-multilevel-models.html#cb328-10"></a><span class="kw">mcmc_areas</span>(m1_cont_draws, <span class="dt">prob =</span> <span class="fl">.95</span>, <span class="dt">bw =</span> <span class="st">&quot;SJ&quot;</span>)</span></code></pre></div>
+<pre><code>&gt;# Warning: `expand_scale()` is deprecated; use `expansion()` instead.</code></pre>
 <p><img src="10_hierarchical_multilevel_models_files/figure-html/mcp-m1-1.png" width="672" /></p>
 <p>And the results in this example are similar to the post hoc comparisons.</p>
 </div>
@@ -640,7 +643,7 @@ within-person changes, as well as between-person differences of those changes.
 Techniques such as dependent-sample <span class="math inline">\(t\)</span>-test, repeated-measures ANOVA, growth
 curve modeling, and time-series analyses, can all be represented in the
 multilevel modeling framework. Therefore, some authors, such as
-<span class="citation">McElreath (<a href="#ref-mcelreath2016statistical">2016</a>)</span>, would suggest that MLM should be the default model
+<span class="citation">McElreath (<a href="#ref-mcelreath2016statistical" role="doc-biblioref">2016</a>)</span>, would suggest that MLM should be the default model
 that we use for analyses, rather than regression.</p>
 </div>
 <div id="data-1" class="section level3">
@@ -650,16 +653,16 @@ package for frequentist multilevel modeling. The data set contains 18
 participants, each with 10 observations. It examines the change in average
 reaction time per day with increasing sleep deprivation. See <code>?lme4::sleepstudy</code>
 for more of the description. Here is a plot of the data:</p>
-<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb304-1" data-line-number="1"><span class="kw">data</span>(sleepstudy, <span class="dt">package =</span> <span class="st">&quot;lme4&quot;</span>)  <span class="co"># call the data</span></a>
-<a class="sourceLine" id="cb304-2" data-line-number="2">psych<span class="op">::</span><span class="kw">pairs.panels</span>(sleepstudy[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>])</a></code></pre></div>
+<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="hierarchical-multilevel-models.html#cb330-1"></a><span class="kw">data</span>(sleepstudy, <span class="dt">package =</span> <span class="st">&quot;lme4&quot;</span>)  <span class="co"># call the data</span></span>
+<span id="cb330-2"><a href="hierarchical-multilevel-models.html#cb330-2"></a>psych<span class="op">::</span><span class="kw">pairs.panels</span>(sleepstudy[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>])</span></code></pre></div>
 <p><img src="10_hierarchical_multilevel_models_files/figure-html/pairs-sleepstudy-1.png" width="480" /></p>
 <p>This data set has clustering because it is repeated measures nested within
 persons. It is more useful to plot the change in the outcome:</p>
-<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb305-1" data-line-number="1"><span class="kw">ggplot</span>(sleepstudy, <span class="kw">aes</span>(<span class="dt">x =</span> Days, <span class="dt">y =</span> Reaction)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb305-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb305-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_smooth</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb305-4" data-line-number="4"><span class="st">  </span><span class="co"># presented by person</span></a>
-<a class="sourceLine" id="cb305-5" data-line-number="5"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>Subject, <span class="dt">ncol =</span> <span class="dv">6</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="hierarchical-multilevel-models.html#cb331-1"></a><span class="kw">ggplot</span>(sleepstudy, <span class="kw">aes</span>(<span class="dt">x =</span> Days, <span class="dt">y =</span> Reaction)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb331-2"><a href="hierarchical-multilevel-models.html#cb331-2"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb331-3"><a href="hierarchical-multilevel-models.html#cb331-3"></a><span class="st">  </span><span class="kw">geom_smooth</span>() <span class="op">+</span><span class="st"> </span></span>
+<span id="cb331-4"><a href="hierarchical-multilevel-models.html#cb331-4"></a><span class="st">  </span><span class="co"># presented by person</span></span>
+<span id="cb331-5"><a href="hierarchical-multilevel-models.html#cb331-5"></a><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>Subject, <span class="dt">ncol =</span> <span class="dv">6</span>)</span></code></pre></div>
 <pre><code>&gt;# `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</code></pre>
 <p><img src="10_hierarchical_multilevel_models_files/figure-html/traj-sleepstudy-1.png" width="624" /></p>
 <p>As you can see, most people experience increases in reaction time, although
@@ -685,10 +688,11 @@ different ICC levels:</p>
 As you can see, the higher the ICC, the higher the variations in the
 cluster means, relative to the within-cluster variations. Below is the graph
 for the <code>sleepstudy</code> data:</p>
-<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb307-1" data-line-number="1"><span class="kw">ggplot</span>(sleepstudy, <span class="kw">aes</span>(<span class="dt">x =</span> Subject, <span class="dt">y =</span> Reaction)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb307-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">width =</span> <span class="fl">0.1</span>, <span class="dt">col =</span> <span class="st">&quot;darkgrey&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb307-3" data-line-number="3"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">geom =</span> <span class="st">&quot;point&quot;</span>, <span class="dt">fun.y =</span> mean, </a>
-<a class="sourceLine" id="cb307-4" data-line-number="4">               <span class="dt">size =</span> <span class="dv">4</span>, <span class="dt">shape =</span> <span class="dv">24</span>, <span class="dt">fill =</span> <span class="st">&quot;red&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="hierarchical-multilevel-models.html#cb333-1"></a><span class="kw">ggplot</span>(sleepstudy, <span class="kw">aes</span>(<span class="dt">x =</span> Subject, <span class="dt">y =</span> Reaction)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb333-2"><a href="hierarchical-multilevel-models.html#cb333-2"></a><span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">width =</span> <span class="fl">0.1</span>, <span class="dt">col =</span> <span class="st">&quot;darkgrey&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb333-3"><a href="hierarchical-multilevel-models.html#cb333-3"></a><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">geom =</span> <span class="st">&quot;point&quot;</span>, <span class="dt">fun.y =</span> mean, </span>
+<span id="cb333-4"><a href="hierarchical-multilevel-models.html#cb333-4"></a>               <span class="dt">size =</span> <span class="dv">4</span>, <span class="dt">shape =</span> <span class="dv">24</span>, <span class="dt">fill =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<pre><code>&gt;# Warning: `fun.y` is deprecated. Use `fun` instead.</code></pre>
 <p><img src="10_hierarchical_multilevel_models_files/figure-html/plot-icc-data-1.png" width="528" /></p>
 <p>Which has substantial between-person variations.</p>
 <div id="computing-icc" class="section level4">
@@ -702,45 +706,45 @@ is the <em>varying intercept</em> model:
 where <span class="math inline">\(\mu_j\)</span> is the mean reaction for the <span class="math inline">\(j\)</span>th person, and <span class="math inline">\(i\)</span> indexes
 measurement occasions.</p>
 <p>We’ll rescale <code>Reaction</code> by 10:</p>
-<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb308-1" data-line-number="1">sleepstudy &lt;-<span class="st"> </span>sleepstudy <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb308-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Reaction10 =</span> Reaction <span class="op">/</span><span class="st"> </span><span class="dv">10</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="hierarchical-multilevel-models.html#cb335-1"></a>sleepstudy &lt;-<span class="st"> </span>sleepstudy <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb335-2"><a href="hierarchical-multilevel-models.html#cb335-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Reaction10 =</span> Reaction <span class="op">/</span><span class="st"> </span><span class="dv">10</span>)</span></code></pre></div>
 <p>To use weakly informative priors, we will set
 <span class="math display">\[\begin{align*}
   \gamma &amp; \sim \mathcal{N}(0, 50)  \\
   \sigma &amp; \sim t^+(4, 0, 5)  \\
   \tau &amp; \sim \textrm{Gamma}(2, 1 / 5)
 \end{align*}\]</span></p>
-<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb309-1" data-line-number="1">m2 &lt;-<span class="st"> </span><span class="kw">brm</span>(Reaction10 <span class="op">~</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Subject), <span class="dt">data =</span> sleepstudy, </a>
-<a class="sourceLine" id="cb309-2" data-line-number="2">          <span class="dt">prior =</span> <span class="kw">c</span>(<span class="co"># for intercept </span></a>
-<a class="sourceLine" id="cb309-3" data-line-number="3">            <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">50</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </a>
-<a class="sourceLine" id="cb309-4" data-line-number="4">            <span class="co"># for tau</span></a>
-<a class="sourceLine" id="cb309-5" data-line-number="5">            <span class="kw">prior</span>(<span class="kw">gamma</span>(<span class="dv">2</span>, <span class="fl">0.2</span>), <span class="dt">class =</span> <span class="st">&quot;sd&quot;</span>), </a>
-<a class="sourceLine" id="cb309-6" data-line-number="6">            <span class="co"># for sigma</span></a>
-<a class="sourceLine" id="cb309-7" data-line-number="7">            <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">5</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </a>
-<a class="sourceLine" id="cb309-8" data-line-number="8">          <span class="dt">control =</span> <span class="kw">list</span>(<span class="dt">adapt_delta =</span> <span class="fl">.95</span>), </a>
-<a class="sourceLine" id="cb309-9" data-line-number="9">          <span class="dt">cores =</span> 2L, </a>
-<a class="sourceLine" id="cb309-10" data-line-number="10">          <span class="dt">seed =</span> <span class="dv">2107</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="hierarchical-multilevel-models.html#cb336-1"></a>m2 &lt;-<span class="st"> </span><span class="kw">brm</span>(Reaction10 <span class="op">~</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Subject), <span class="dt">data =</span> sleepstudy, </span>
+<span id="cb336-2"><a href="hierarchical-multilevel-models.html#cb336-2"></a>          <span class="dt">prior =</span> <span class="kw">c</span>(<span class="co"># for intercept </span></span>
+<span id="cb336-3"><a href="hierarchical-multilevel-models.html#cb336-3"></a>            <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">50</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </span>
+<span id="cb336-4"><a href="hierarchical-multilevel-models.html#cb336-4"></a>            <span class="co"># for tau</span></span>
+<span id="cb336-5"><a href="hierarchical-multilevel-models.html#cb336-5"></a>            <span class="kw">prior</span>(<span class="kw">gamma</span>(<span class="dv">2</span>, <span class="fl">0.2</span>), <span class="dt">class =</span> <span class="st">&quot;sd&quot;</span>), </span>
+<span id="cb336-6"><a href="hierarchical-multilevel-models.html#cb336-6"></a>            <span class="co"># for sigma</span></span>
+<span id="cb336-7"><a href="hierarchical-multilevel-models.html#cb336-7"></a>            <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">5</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </span>
+<span id="cb336-8"><a href="hierarchical-multilevel-models.html#cb336-8"></a>          <span class="dt">control =</span> <span class="kw">list</span>(<span class="dt">adapt_delta =</span> <span class="fl">.95</span>), </span>
+<span id="cb336-9"><a href="hierarchical-multilevel-models.html#cb336-9"></a>          <span class="dt">cores =</span> 2L, </span>
+<span id="cb336-10"><a href="hierarchical-multilevel-models.html#cb336-10"></a>          <span class="dt">seed =</span> <span class="dv">2107</span>)</span></code></pre></div>
 <p>Now use the posterior draws of <span class="math inline">\(\tau\)</span> and <span class="math inline">\(\sigma\)</span> to compute the posterior for
 the ICC:</p>
-<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb310-1" data-line-number="1"><span class="co"># Computing ICC</span></a>
-<a class="sourceLine" id="cb310-2" data-line-number="2"><span class="co"># 1. Obtain posterior draws of tau and sigma</span></a>
-<a class="sourceLine" id="cb310-3" data-line-number="3">sd_m2 &lt;-<span class="st"> </span><span class="kw">VarCorr</span>(m2, <span class="dt">summary =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb310-4" data-line-number="4">draws_tau &lt;-<span class="st"> </span>sd_m2<span class="op">$</span>Subject<span class="op">$</span>sd[ , <span class="st">&quot;Intercept&quot;</span>]  <span class="co"># tau</span></a>
-<a class="sourceLine" id="cb310-5" data-line-number="5">draws_sigma &lt;-<span class="st"> </span>sd_m2<span class="op">$</span>residual__<span class="op">$</span>sd[ , <span class="dv">1</span>]  <span class="co">#sigma</span></a>
-<a class="sourceLine" id="cb310-6" data-line-number="6"><span class="co"># 2. Compute draws for ICC</span></a>
-<a class="sourceLine" id="cb310-7" data-line-number="7">draws_icc &lt;-<span class="st"> </span>draws_tau<span class="op">^</span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span>(draws_tau<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>draws_sigma<span class="op">^</span><span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb310-8" data-line-number="8"><span class="co"># Plot the ICC</span></a>
-<a class="sourceLine" id="cb310-9" data-line-number="9"><span class="kw">qplot</span>(draws_icc, <span class="dt">geom =</span> <span class="st">&quot;density&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;ICC&quot;</span>, <span class="dt">bw =</span> <span class="st">&quot;SJ&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="hierarchical-multilevel-models.html#cb337-1"></a><span class="co"># Computing ICC</span></span>
+<span id="cb337-2"><a href="hierarchical-multilevel-models.html#cb337-2"></a><span class="co"># 1. Obtain posterior draws of tau and sigma</span></span>
+<span id="cb337-3"><a href="hierarchical-multilevel-models.html#cb337-3"></a>sd_m2 &lt;-<span class="st"> </span><span class="kw">VarCorr</span>(m2, <span class="dt">summary =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb337-4"><a href="hierarchical-multilevel-models.html#cb337-4"></a>draws_tau &lt;-<span class="st"> </span>sd_m2<span class="op">$</span>Subject<span class="op">$</span>sd[ , <span class="st">&quot;Intercept&quot;</span>]  <span class="co"># tau</span></span>
+<span id="cb337-5"><a href="hierarchical-multilevel-models.html#cb337-5"></a>draws_sigma &lt;-<span class="st"> </span>sd_m2<span class="op">$</span>residual__<span class="op">$</span>sd[ , <span class="dv">1</span>]  <span class="co">#sigma</span></span>
+<span id="cb337-6"><a href="hierarchical-multilevel-models.html#cb337-6"></a><span class="co"># 2. Compute draws for ICC</span></span>
+<span id="cb337-7"><a href="hierarchical-multilevel-models.html#cb337-7"></a>draws_icc &lt;-<span class="st"> </span>draws_tau<span class="op">^</span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span>(draws_tau<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>draws_sigma<span class="op">^</span><span class="dv">2</span>)</span>
+<span id="cb337-8"><a href="hierarchical-multilevel-models.html#cb337-8"></a><span class="co"># Plot the ICC</span></span>
+<span id="cb337-9"><a href="hierarchical-multilevel-models.html#cb337-9"></a><span class="kw">qplot</span>(draws_icc, <span class="dt">geom =</span> <span class="st">&quot;density&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;ICC&quot;</span>, <span class="dt">bw =</span> <span class="st">&quot;SJ&quot;</span>)</span></code></pre></div>
 <p><img src="10_hierarchical_multilevel_models_files/figure-html/draws_icc-1.png" width="672" /></p>
-<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb311-1" data-line-number="1"><span class="co"># Summarize the ICC distribution</span></a>
-<a class="sourceLine" id="cb311-2" data-line-number="2">psych<span class="op">::</span><span class="kw">describe</span>(draws_icc)</a></code></pre></div>
+<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="hierarchical-multilevel-models.html#cb338-1"></a><span class="co"># Summarize the ICC distribution</span></span>
+<span id="cb338-2"><a href="hierarchical-multilevel-models.html#cb338-2"></a>psych<span class="op">::</span><span class="kw">describe</span>(draws_icc)</span></code></pre></div>
 <pre><code>&gt;#    vars    n mean  sd median trimmed mad  min  max range skew kurtosis se
-&gt;# X1    1 4000 0.43 0.1   0.43    0.43 0.1 0.16 0.78  0.62  0.2    -0.21  0</code></pre>
+&gt;# X1    1 4000 0.42 0.1   0.42    0.42 0.1 0.13 0.78  0.65 0.24    -0.19  0</code></pre>
 </div>
 <div id="interpretations" class="section level4">
 <h4><span class="header-section-number">10.2.3.2</span> Interpretations</h4>
-<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb313-1" data-line-number="1">broom<span class="op">::</span><span class="kw">tidy</span>(m2, <span class="dt">parameters =</span> <span class="kw">c</span>(<span class="st">&quot;b_Intercept&quot;</span>, <span class="st">&quot;sd&quot;</span>, <span class="st">&quot;sigma&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb313-2" data-line-number="2"><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="hierarchical-multilevel-models.html#cb340-1"></a>broom<span class="op">::</span><span class="kw">tidy</span>(m2, <span class="dt">parameters =</span> <span class="kw">c</span>(<span class="st">&quot;b_Intercept&quot;</span>, <span class="st">&quot;sd&quot;</span>, <span class="st">&quot;sigma&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb340-2"><a href="hierarchical-multilevel-models.html#cb340-2"></a><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -754,49 +758,49 @@ the ICC:</p>
 <tbody>
 <tr class="odd">
 <td align="left">b_Intercept</td>
-<td align="right">29.90</td>
-<td align="right">1.016</td>
-<td align="right">28.20</td>
-<td align="right">31.58</td>
+<td align="right">29.86</td>
+<td align="right">0.973</td>
+<td align="right">28.25</td>
+<td align="right">31.51</td>
 </tr>
 <tr class="even">
 <td align="left">sd_Subject__Intercept</td>
-<td align="right">3.93</td>
-<td align="right">0.838</td>
-<td align="right">2.75</td>
-<td align="right">5.45</td>
+<td align="right">3.88</td>
+<td align="right">0.824</td>
+<td align="right">2.71</td>
+<td align="right">5.38</td>
 </tr>
 <tr class="odd">
 <td align="left">sigma</td>
-<td align="right">4.46</td>
-<td align="right">0.248</td>
+<td align="right">4.45</td>
+<td align="right">0.253</td>
 <td align="right">4.06</td>
-<td align="right">4.88</td>
+<td align="right">4.89</td>
 </tr>
 </tbody>
 </table>
 <blockquote>
 <p>The model suggested that the average reaction time across individuals and
 measurement occasions was
-298.988 ms, 95% CI [278.958, 319.692]. It was estimated
-that 43.007%, 95% CI
-[24.463%,
-63.909%] of the variations in reaction time was
+298.629 ms, 95% CI [279.936, 317.770]. It was estimated
+that 42.477%, 95% CI
+[23.954%,
+63.417%] of the variations in reaction time was
 attributed to between-person differences.</p>
 </blockquote>
 </div>
 </div>
 <div id="is-mlm-needed" class="section level3">
 <h3><span class="header-section-number">10.2.4</span> Is MLM needed?</h3>
-<p>This is a commonly asked question. Based on <span class="citation">Lai and Kwok (<a href="#ref-Lai2015">2015</a>)</span>, you can compute the design
+<p>This is a commonly asked question. Based on <span class="citation">Lai and Kwok (<a href="#ref-Lai2015" role="doc-biblioref">2015</a>)</span>, you can compute the design
 effect index, which shows the inflation in variability of the estimates due to
 clustering. It is recommended to account for clustering if the design effect is
 larger than 1.1. It is defined as:
 <span class="math display">\[\mathit{Deff}= 1 + (n - 1) \rho\]</span>
 where <span class="math inline">\(n\)</span> is the (average) number of observations in each cluster, and in our
 case it is 10. Therefore, the design effect in <code>sleepstudy</code> for <code>Reaction</code> is
-<span class="math display">\[\mathit{Deff}= 1 + (10 - 1) (0.43)\]</span>
-which is 4.871, so we do need to account for the
+<span class="math display">\[\mathit{Deff}= 1 + (10 - 1) (0.425)\]</span>
+which is 4.823, so we do need to account for the
 clustering.</p>
 </div>
 </div>
@@ -846,21 +850,21 @@ where the <span class="math inline">\(\beta_{0j}\)</span>s follow a common norma
 intercept</em>, or the average intercept across persons, and <span class="math inline">\(\tau^{[\beta_0]}\)</span> is the
 <em>SD</em> of those intercepts.</p>
 <p>The model can be fitted in <code>brms</code>:</p>
-<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb314-1" data-line-number="1">m3 &lt;-<span class="st"> </span><span class="kw">brm</span>(Reaction10 <span class="op">~</span><span class="st"> </span>Days <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Subject), <span class="dt">data =</span> sleepstudy, </a>
-<a class="sourceLine" id="cb314-2" data-line-number="2">          <span class="dt">prior =</span> <span class="kw">c</span>(<span class="co"># for intercept </span></a>
-<a class="sourceLine" id="cb314-3" data-line-number="3">            <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">50</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </a>
-<a class="sourceLine" id="cb314-4" data-line-number="4">            <span class="co"># for slope</span></a>
-<a class="sourceLine" id="cb314-5" data-line-number="5">            <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">10</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>), </a>
-<a class="sourceLine" id="cb314-6" data-line-number="6">            <span class="co"># for tau</span></a>
-<a class="sourceLine" id="cb314-7" data-line-number="7">            <span class="kw">prior</span>(<span class="kw">gamma</span>(<span class="dv">2</span>, <span class="fl">0.2</span>), <span class="dt">class =</span> <span class="st">&quot;sd&quot;</span>), </a>
-<a class="sourceLine" id="cb314-8" data-line-number="8">            <span class="co"># for sigma</span></a>
-<a class="sourceLine" id="cb314-9" data-line-number="9">            <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">5</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </a>
-<a class="sourceLine" id="cb314-10" data-line-number="10">          <span class="dt">control =</span> <span class="kw">list</span>(<span class="dt">adapt_delta =</span> <span class="fl">.95</span>), </a>
-<a class="sourceLine" id="cb314-11" data-line-number="11">          <span class="dt">cores =</span> 2L, </a>
-<a class="sourceLine" id="cb314-12" data-line-number="12">          <span class="dt">seed =</span> <span class="dv">2107</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="hierarchical-multilevel-models.html#cb341-1"></a>m3 &lt;-<span class="st"> </span><span class="kw">brm</span>(Reaction10 <span class="op">~</span><span class="st"> </span>Days <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Subject), <span class="dt">data =</span> sleepstudy, </span>
+<span id="cb341-2"><a href="hierarchical-multilevel-models.html#cb341-2"></a>          <span class="dt">prior =</span> <span class="kw">c</span>(<span class="co"># for intercept </span></span>
+<span id="cb341-3"><a href="hierarchical-multilevel-models.html#cb341-3"></a>            <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">50</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </span>
+<span id="cb341-4"><a href="hierarchical-multilevel-models.html#cb341-4"></a>            <span class="co"># for slope</span></span>
+<span id="cb341-5"><a href="hierarchical-multilevel-models.html#cb341-5"></a>            <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">10</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>), </span>
+<span id="cb341-6"><a href="hierarchical-multilevel-models.html#cb341-6"></a>            <span class="co"># for tau</span></span>
+<span id="cb341-7"><a href="hierarchical-multilevel-models.html#cb341-7"></a>            <span class="kw">prior</span>(<span class="kw">gamma</span>(<span class="dv">2</span>, <span class="fl">0.2</span>), <span class="dt">class =</span> <span class="st">&quot;sd&quot;</span>), </span>
+<span id="cb341-8"><a href="hierarchical-multilevel-models.html#cb341-8"></a>            <span class="co"># for sigma</span></span>
+<span id="cb341-9"><a href="hierarchical-multilevel-models.html#cb341-9"></a>            <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">5</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </span>
+<span id="cb341-10"><a href="hierarchical-multilevel-models.html#cb341-10"></a>          <span class="dt">control =</span> <span class="kw">list</span>(<span class="dt">adapt_delta =</span> <span class="fl">.95</span>), </span>
+<span id="cb341-11"><a href="hierarchical-multilevel-models.html#cb341-11"></a>          <span class="dt">cores =</span> 2L, </span>
+<span id="cb341-12"><a href="hierarchical-multilevel-models.html#cb341-12"></a>          <span class="dt">seed =</span> <span class="dv">2107</span>)</span></code></pre></div>
 <p>Below is a summary table of the results</p>
-<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb315-1" data-line-number="1">broom<span class="op">::</span><span class="kw">tidy</span>(m3, <span class="dt">parameters =</span> <span class="kw">c</span>(<span class="st">&quot;b_&quot;</span>, <span class="st">&quot;sd&quot;</span>, <span class="st">&quot;sigma&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb315-2" data-line-number="2"><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="hierarchical-multilevel-models.html#cb342-1"></a>broom<span class="op">::</span><span class="kw">tidy</span>(m3, <span class="dt">parameters =</span> <span class="kw">c</span>(<span class="st">&quot;b_&quot;</span>, <span class="st">&quot;sd&quot;</span>, <span class="st">&quot;sigma&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb342-2"><a href="hierarchical-multilevel-models.html#cb342-2"></a><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -874,30 +878,30 @@ intercept</em>, or the average intercept across persons, and <span class="math i
 <tbody>
 <tr class="odd">
 <td align="left">b_Intercept</td>
-<td align="right">25.11</td>
-<td align="right">1.043</td>
-<td align="right">23.297</td>
-<td align="right">26.80</td>
+<td align="right">25.18</td>
+<td align="right">1.052</td>
+<td align="right">23.433</td>
+<td align="right">26.95</td>
 </tr>
 <tr class="even">
 <td align="left">b_Days</td>
-<td align="right">1.04</td>
-<td align="right">0.084</td>
-<td align="right">0.909</td>
-<td align="right">1.19</td>
+<td align="right">1.05</td>
+<td align="right">0.080</td>
+<td align="right">0.915</td>
+<td align="right">1.18</td>
 </tr>
 <tr class="odd">
 <td align="left">sd_Subject__Intercept</td>
-<td align="right">4.08</td>
-<td align="right">0.831</td>
-<td align="right">2.953</td>
-<td align="right">5.65</td>
+<td align="right">4.03</td>
+<td align="right">0.772</td>
+<td align="right">2.945</td>
+<td align="right">5.46</td>
 </tr>
 <tr class="even">
 <td align="left">sigma</td>
 <td align="right">3.12</td>
-<td align="right">0.178</td>
-<td align="right">2.845</td>
+<td align="right">0.176</td>
+<td align="right">2.854</td>
 <td align="right">3.43</td>
 </tr>
 </tbody>
@@ -906,14 +910,14 @@ intercept</em>, or the average intercept across persons, and <span class="math i
 to each individual specifically.</p>
 <div id="fit-of-overall-data" class="section level4">
 <h4><span class="header-section-number">10.3.1.1</span> Fit of Overall data</h4>
-<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb316-1" data-line-number="1"><span class="co"># Posterior mean of slope</span></a>
-<a class="sourceLine" id="cb316-2" data-line-number="2">coef_post &lt;-<span class="st"> </span><span class="kw">fixef</span>(m3, <span class="dt">summary =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb316-3" data-line-number="3"><span class="kw">ggplot</span>(sleepstudy, <span class="kw">aes</span>(<span class="dt">x =</span> Days, <span class="dt">y =</span> Reaction10)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb316-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">size =</span> <span class="fl">0.5</span>, <span class="dt">width =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb316-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">data =</span> <span class="kw">as_tibble</span>(coef_post), </a>
-<a class="sourceLine" id="cb316-6" data-line-number="6">              <span class="kw">aes</span>(<span class="dt">intercept =</span> Intercept, <span class="dt">slope =</span> Days), </a>
-<a class="sourceLine" id="cb316-7" data-line-number="7">              <span class="dt">color =</span> <span class="st">&quot;skyblue&quot;</span>, <span class="dt">size =</span> <span class="fl">0.2</span>, <span class="dt">alpha =</span> <span class="fl">0.01</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb316-8" data-line-number="8"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">se =</span> <span class="ot">FALSE</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="hierarchical-multilevel-models.html#cb343-1"></a><span class="co"># Posterior mean of slope</span></span>
+<span id="cb343-2"><a href="hierarchical-multilevel-models.html#cb343-2"></a>coef_post &lt;-<span class="st"> </span><span class="kw">fixef</span>(m3, <span class="dt">summary =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb343-3"><a href="hierarchical-multilevel-models.html#cb343-3"></a><span class="kw">ggplot</span>(sleepstudy, <span class="kw">aes</span>(<span class="dt">x =</span> Days, <span class="dt">y =</span> Reaction10)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb343-4"><a href="hierarchical-multilevel-models.html#cb343-4"></a><span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">size =</span> <span class="fl">0.5</span>, <span class="dt">width =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb343-5"><a href="hierarchical-multilevel-models.html#cb343-5"></a><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">data =</span> <span class="kw">as_tibble</span>(coef_post), </span>
+<span id="cb343-6"><a href="hierarchical-multilevel-models.html#cb343-6"></a>              <span class="kw">aes</span>(<span class="dt">intercept =</span> Intercept, <span class="dt">slope =</span> Days), </span>
+<span id="cb343-7"><a href="hierarchical-multilevel-models.html#cb343-7"></a>              <span class="dt">color =</span> <span class="st">&quot;skyblue&quot;</span>, <span class="dt">size =</span> <span class="fl">0.2</span>, <span class="dt">alpha =</span> <span class="fl">0.01</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb343-8"><a href="hierarchical-multilevel-models.html#cb343-8"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">se =</span> <span class="ot">FALSE</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 <pre><code>&gt;# `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</code></pre>
 <p><img src="10_hierarchical_multilevel_models_files/figure-html/traj-ave-m3-1.png" width="624" /></p>
 <p>As can be seen, the estimated coefficient for <code>Days</code>, which was assumed
@@ -922,24 +926,24 @@ individual?</p>
 </div>
 <div id="fit-of-individuals" class="section level4">
 <h4><span class="header-section-number">10.3.1.2</span> Fit of Individuals</h4>
-<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb318-1" data-line-number="1"><span class="co"># Posterior mean of slope</span></a>
-<a class="sourceLine" id="cb318-2" data-line-number="2">coef_post &lt;-<span class="st"> </span><span class="kw">coef</span>(m3, <span class="dt">summary =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb318-3" data-line-number="3">df_lines &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">Subject =</span> <span class="kw">colnames</span>(coef_post<span class="op">$</span>Subject), </a>
-<a class="sourceLine" id="cb318-4" data-line-number="4">                   <span class="dt">Intercept =</span> <span class="kw">colMeans</span>(coef_post<span class="op">$</span>Subject[ , , <span class="st">&quot;Intercept&quot;</span>]), </a>
-<a class="sourceLine" id="cb318-5" data-line-number="5">                   <span class="dt">Days =</span> <span class="kw">colMeans</span>(coef_post<span class="op">$</span>Subject[ , , <span class="st">&quot;Days&quot;</span>]))</a>
-<a class="sourceLine" id="cb318-6" data-line-number="6"><span class="kw">ggplot</span>(sleepstudy, <span class="kw">aes</span>(<span class="dt">x =</span> Days, <span class="dt">y =</span> Reaction10)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb318-7" data-line-number="7"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb318-8" data-line-number="8"><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">data =</span> df_lines, </a>
-<a class="sourceLine" id="cb318-9" data-line-number="9">              <span class="kw">aes</span>(<span class="dt">intercept =</span> Intercept, </a>
-<a class="sourceLine" id="cb318-10" data-line-number="10">                  <span class="dt">slope =</span> Days),</a>
-<a class="sourceLine" id="cb318-11" data-line-number="11">              <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">size =</span> <span class="fl">0.8</span>, <span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb318-12" data-line-number="12"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">se =</span> <span class="ot">FALSE</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">size =</span> <span class="fl">0.8</span>, <span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb318-13" data-line-number="13"><span class="st">  </span><span class="co"># Uncomment the following to show the uncertainty on the line</span></a>
-<a class="sourceLine" id="cb318-14" data-line-number="14"><span class="st">  </span><span class="co"># geom_abline(data = as_tibble(coef_post), </span></a>
-<a class="sourceLine" id="cb318-15" data-line-number="15"><span class="st">  </span><span class="co">#             aes(intercept = Intercept, slope = Days), </span></a>
-<a class="sourceLine" id="cb318-16" data-line-number="16"><span class="st">  </span><span class="co">#             color = &quot;skyblue&quot;, size = 0.2, alpha = 0.01) + </span></a>
-<a class="sourceLine" id="cb318-17" data-line-number="17"><span class="st">  </span><span class="co"># presented by person</span></a>
-<a class="sourceLine" id="cb318-18" data-line-number="18"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>Subject, <span class="dt">ncol =</span> <span class="dv">6</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="hierarchical-multilevel-models.html#cb345-1"></a><span class="co"># Posterior mean of slope</span></span>
+<span id="cb345-2"><a href="hierarchical-multilevel-models.html#cb345-2"></a>coef_post &lt;-<span class="st"> </span><span class="kw">coef</span>(m3, <span class="dt">summary =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb345-3"><a href="hierarchical-multilevel-models.html#cb345-3"></a>df_lines &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">Subject =</span> <span class="kw">colnames</span>(coef_post<span class="op">$</span>Subject), </span>
+<span id="cb345-4"><a href="hierarchical-multilevel-models.html#cb345-4"></a>                   <span class="dt">Intercept =</span> <span class="kw">colMeans</span>(coef_post<span class="op">$</span>Subject[ , , <span class="st">&quot;Intercept&quot;</span>]), </span>
+<span id="cb345-5"><a href="hierarchical-multilevel-models.html#cb345-5"></a>                   <span class="dt">Days =</span> <span class="kw">colMeans</span>(coef_post<span class="op">$</span>Subject[ , , <span class="st">&quot;Days&quot;</span>]))</span>
+<span id="cb345-6"><a href="hierarchical-multilevel-models.html#cb345-6"></a><span class="kw">ggplot</span>(sleepstudy, <span class="kw">aes</span>(<span class="dt">x =</span> Days, <span class="dt">y =</span> Reaction10)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb345-7"><a href="hierarchical-multilevel-models.html#cb345-7"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb345-8"><a href="hierarchical-multilevel-models.html#cb345-8"></a><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">data =</span> df_lines, </span>
+<span id="cb345-9"><a href="hierarchical-multilevel-models.html#cb345-9"></a>              <span class="kw">aes</span>(<span class="dt">intercept =</span> Intercept, </span>
+<span id="cb345-10"><a href="hierarchical-multilevel-models.html#cb345-10"></a>                  <span class="dt">slope =</span> Days),</span>
+<span id="cb345-11"><a href="hierarchical-multilevel-models.html#cb345-11"></a>              <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">size =</span> <span class="fl">0.8</span>, <span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span></span>
+<span id="cb345-12"><a href="hierarchical-multilevel-models.html#cb345-12"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">se =</span> <span class="ot">FALSE</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">size =</span> <span class="fl">0.8</span>, <span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb345-13"><a href="hierarchical-multilevel-models.html#cb345-13"></a><span class="st">  </span><span class="co"># Uncomment the following to show the uncertainty on the line</span></span>
+<span id="cb345-14"><a href="hierarchical-multilevel-models.html#cb345-14"></a><span class="st">  </span><span class="co"># geom_abline(data = as_tibble(coef_post), </span></span>
+<span id="cb345-15"><a href="hierarchical-multilevel-models.html#cb345-15"></a><span class="st">  </span><span class="co">#             aes(intercept = Intercept, slope = Days), </span></span>
+<span id="cb345-16"><a href="hierarchical-multilevel-models.html#cb345-16"></a><span class="st">  </span><span class="co">#             color = &quot;skyblue&quot;, size = 0.2, alpha = 0.01) + </span></span>
+<span id="cb345-17"><a href="hierarchical-multilevel-models.html#cb345-17"></a><span class="st">  </span><span class="co"># presented by person</span></span>
+<span id="cb345-18"><a href="hierarchical-multilevel-models.html#cb345-18"></a><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>Subject, <span class="dt">ncol =</span> <span class="dv">6</span>)</span></code></pre></div>
 <pre><code>&gt;# `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</code></pre>
 <p><img src="10_hierarchical_multilevel_models_files/figure-html/traj-m3-1.png" width="624" /></p>
 <p>Obviously it only fit a few individuals, but not all. So let’s also allow
@@ -1005,28 +1009,39 @@ favors a matrix closer to an identity matrix so that the correlations are
 closer to zero, and <span class="math inline">\(\eta \leq 1\)</span> favors a matrix with larger correlations. For
 a 2 <span class="math inline">\(\times\)</span> 2 matrix, the distribution of the correlation, <span class="math inline">\(\rho\)</span>, with
 different <span class="math inline">\(\eta\)</span> values are shown in the graph below:</p>
-<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb320-1" data-line-number="1">dlkjcorr2 &lt;-<span class="st"> </span><span class="cf">function</span>(rho, <span class="dt">eta =</span> <span class="dv">1</span>, <span class="dt">log =</span> <span class="ot">FALSE</span>) {</a>
-<a class="sourceLine" id="cb320-2" data-line-number="2">  <span class="co"># Function to compute the LKJ density given a correlation</span></a>
-<a class="sourceLine" id="cb320-3" data-line-number="3">  out &lt;-<span class="st"> </span>(eta <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span><span class="kw">log</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>rho<span class="op">^</span><span class="dv">2</span>) <span class="op">-</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb320-4" data-line-number="4"><span class="st">    </span><span class="dv">1</span> <span class="op">/</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">log</span>(pi) <span class="op">-</span><span class="st"> </span><span class="kw">lgamma</span>(eta) <span class="op">+</span><span class="st"> </span><span class="kw">lgamma</span>(eta <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">/</span><span class="st"> </span><span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb320-5" data-line-number="5">  <span class="cf">if</span> (<span class="op">!</span>log) out &lt;-<span class="st"> </span><span class="kw">exp</span>(out)</a>
-<a class="sourceLine" id="cb320-6" data-line-number="6">  out</a>
-<a class="sourceLine" id="cb320-7" data-line-number="7">}</a>
-<a class="sourceLine" id="cb320-8" data-line-number="8"><span class="kw">ggplot</span>(<span class="kw">tibble</span>(<span class="dt">rho =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)), <span class="kw">aes</span>(<span class="dt">x =</span> rho)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb320-9" data-line-number="9"><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> dlkjcorr2, <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">eta =</span> <span class="fl">0.1</span>), </a>
-<a class="sourceLine" id="cb320-10" data-line-number="10">                <span class="kw">aes</span>(<span class="dt">col =</span> <span class="st">&quot;0.1&quot;</span>), <span class="dt">n =</span> <span class="dv">501</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb320-11" data-line-number="11"><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> dlkjcorr2, <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">eta =</span> <span class="fl">0.5</span>), </a>
-<a class="sourceLine" id="cb320-12" data-line-number="12">                <span class="kw">aes</span>(<span class="dt">col =</span> <span class="st">&quot;0.5&quot;</span>), <span class="dt">n =</span> <span class="dv">501</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb320-13" data-line-number="13"><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> dlkjcorr2, <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">eta =</span> <span class="dv">1</span>), </a>
-<a class="sourceLine" id="cb320-14" data-line-number="14">                <span class="kw">aes</span>(<span class="dt">col =</span> <span class="st">&quot;1&quot;</span>), <span class="dt">n =</span> <span class="dv">501</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb320-15" data-line-number="15"><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> dlkjcorr2, <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">eta =</span> <span class="dv">2</span>), </a>
-<a class="sourceLine" id="cb320-16" data-line-number="16">                <span class="kw">aes</span>(<span class="dt">col =</span> <span class="st">&quot;2&quot;</span>), <span class="dt">n =</span> <span class="dv">501</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb320-17" data-line-number="17"><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> dlkjcorr2, <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">eta =</span> <span class="dv">10</span>), </a>
-<a class="sourceLine" id="cb320-18" data-line-number="18">                <span class="kw">aes</span>(<span class="dt">col =</span> <span class="st">&quot;10&quot;</span>), <span class="dt">n =</span> <span class="dv">501</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb320-19" data-line-number="19"><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> dlkjcorr2, <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">eta =</span> <span class="dv">100</span>), </a>
-<a class="sourceLine" id="cb320-20" data-line-number="20">                <span class="kw">aes</span>(<span class="dt">col =</span> <span class="st">&quot;100&quot;</span>), <span class="dt">n =</span> <span class="dv">501</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb320-21" data-line-number="21"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">col =</span> <span class="kw">expression</span>(eta), <span class="dt">x =</span> <span class="kw">expression</span>(rho), <span class="dt">y =</span> <span class="st">&quot;Density&quot;</span>)</a></code></pre></div>
-<pre><code>&gt;# Warning: Removed 2 rows containing missing values (geom_path).</code></pre>
+<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="hierarchical-multilevel-models.html#cb347-1"></a>dlkjcorr2 &lt;-<span class="st"> </span><span class="cf">function</span>(rho, <span class="dt">eta =</span> <span class="dv">1</span>, <span class="dt">log =</span> <span class="ot">FALSE</span>) {</span>
+<span id="cb347-2"><a href="hierarchical-multilevel-models.html#cb347-2"></a>  <span class="co"># Function to compute the LKJ density given a correlation</span></span>
+<span id="cb347-3"><a href="hierarchical-multilevel-models.html#cb347-3"></a>  out &lt;-<span class="st"> </span>(eta <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span><span class="kw">log</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>rho<span class="op">^</span><span class="dv">2</span>) <span class="op">-</span><span class="st"> </span></span>
+<span id="cb347-4"><a href="hierarchical-multilevel-models.html#cb347-4"></a><span class="st">    </span><span class="dv">1</span> <span class="op">/</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">log</span>(pi) <span class="op">-</span><span class="st"> </span><span class="kw">lgamma</span>(eta) <span class="op">+</span><span class="st"> </span><span class="kw">lgamma</span>(eta <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">/</span><span class="st"> </span><span class="dv">2</span>)</span>
+<span id="cb347-5"><a href="hierarchical-multilevel-models.html#cb347-5"></a>  <span class="cf">if</span> (<span class="op">!</span>log) out &lt;-<span class="st"> </span><span class="kw">exp</span>(out)</span>
+<span id="cb347-6"><a href="hierarchical-multilevel-models.html#cb347-6"></a>  out</span>
+<span id="cb347-7"><a href="hierarchical-multilevel-models.html#cb347-7"></a>}</span>
+<span id="cb347-8"><a href="hierarchical-multilevel-models.html#cb347-8"></a><span class="kw">ggplot</span>(<span class="kw">tibble</span>(<span class="dt">rho =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)), <span class="kw">aes</span>(<span class="dt">x =</span> rho)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb347-9"><a href="hierarchical-multilevel-models.html#cb347-9"></a><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> dlkjcorr2, <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">eta =</span> <span class="fl">0.1</span>), </span>
+<span id="cb347-10"><a href="hierarchical-multilevel-models.html#cb347-10"></a>                <span class="kw">aes</span>(<span class="dt">col =</span> <span class="st">&quot;0.1&quot;</span>), <span class="dt">n =</span> <span class="dv">501</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb347-11"><a href="hierarchical-multilevel-models.html#cb347-11"></a><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> dlkjcorr2, <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">eta =</span> <span class="fl">0.5</span>), </span>
+<span id="cb347-12"><a href="hierarchical-multilevel-models.html#cb347-12"></a>                <span class="kw">aes</span>(<span class="dt">col =</span> <span class="st">&quot;0.5&quot;</span>), <span class="dt">n =</span> <span class="dv">501</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb347-13"><a href="hierarchical-multilevel-models.html#cb347-13"></a><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> dlkjcorr2, <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">eta =</span> <span class="dv">1</span>), </span>
+<span id="cb347-14"><a href="hierarchical-multilevel-models.html#cb347-14"></a>                <span class="kw">aes</span>(<span class="dt">col =</span> <span class="st">&quot;1&quot;</span>), <span class="dt">n =</span> <span class="dv">501</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb347-15"><a href="hierarchical-multilevel-models.html#cb347-15"></a><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> dlkjcorr2, <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">eta =</span> <span class="dv">2</span>), </span>
+<span id="cb347-16"><a href="hierarchical-multilevel-models.html#cb347-16"></a>                <span class="kw">aes</span>(<span class="dt">col =</span> <span class="st">&quot;2&quot;</span>), <span class="dt">n =</span> <span class="dv">501</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb347-17"><a href="hierarchical-multilevel-models.html#cb347-17"></a><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> dlkjcorr2, <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">eta =</span> <span class="dv">10</span>), </span>
+<span id="cb347-18"><a href="hierarchical-multilevel-models.html#cb347-18"></a>                <span class="kw">aes</span>(<span class="dt">col =</span> <span class="st">&quot;10&quot;</span>), <span class="dt">n =</span> <span class="dv">501</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb347-19"><a href="hierarchical-multilevel-models.html#cb347-19"></a><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> dlkjcorr2, <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">eta =</span> <span class="dv">100</span>), </span>
+<span id="cb347-20"><a href="hierarchical-multilevel-models.html#cb347-20"></a>                <span class="kw">aes</span>(<span class="dt">col =</span> <span class="st">&quot;100&quot;</span>), <span class="dt">n =</span> <span class="dv">501</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb347-21"><a href="hierarchical-multilevel-models.html#cb347-21"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">col =</span> <span class="kw">expression</span>(eta), <span class="dt">x =</span> <span class="kw">expression</span>(rho), <span class="dt">y =</span> <span class="st">&quot;Density&quot;</span>)</span></code></pre></div>
+<pre><code>&gt;# Warning: `mapping` is not used by stat_function()
+
+&gt;# Warning: `mapping` is not used by stat_function()
+
+&gt;# Warning: `mapping` is not used by stat_function()
+
+&gt;# Warning: `mapping` is not used by stat_function()
+
+&gt;# Warning: `mapping` is not used by stat_function()
+
+&gt;# Warning: `mapping` is not used by stat_function()</code></pre>
+<pre><code>&gt;# Warning: Removed 2 row(s) containing missing values (geom_path).</code></pre>
 <p><img src="10_hierarchical_multilevel_models_files/figure-html/plot-lkj-1.png" width="480" /></p>
 <p>As you can see, when <span class="math inline">\(\eta\)</span> increases, the correlation is more concentrated to
 zero.</p>
@@ -1056,24 +1071,24 @@ large, using <span class="math inline">\(\eta\)</span> = 2 is reasonable.</p>
   \boldsymbol{\mathbf{\Omega }}&amp; \sim \mathrm{LKJ}(1) \\
   \sigma &amp; \sim t^+(4, 0, 5)
 \end{align}\]</span></p>
-<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb322-1" data-line-number="1">m4 &lt;-<span class="st"> </span><span class="kw">brm</span>(Reaction10 <span class="op">~</span><span class="st"> </span>Days <span class="op">+</span><span class="st"> </span>(Days <span class="op">|</span><span class="st"> </span>Subject),  </a>
-<a class="sourceLine" id="cb322-2" data-line-number="2">          <span class="dt">data =</span> sleepstudy, </a>
-<a class="sourceLine" id="cb322-3" data-line-number="3">          <span class="dt">prior =</span> <span class="kw">c</span>(<span class="co"># for intercept</span></a>
-<a class="sourceLine" id="cb322-4" data-line-number="4">            <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">50</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>),</a>
-<a class="sourceLine" id="cb322-5" data-line-number="5">            <span class="co"># for slope</span></a>
-<a class="sourceLine" id="cb322-6" data-line-number="6">            <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">10</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>),</a>
-<a class="sourceLine" id="cb322-7" data-line-number="7">            <span class="co"># for tau_beta0 and tau_beta1</span></a>
-<a class="sourceLine" id="cb322-8" data-line-number="8">            <span class="kw">prior</span>(<span class="kw">gamma</span>(<span class="dv">2</span>, <span class="fl">0.2</span>), <span class="dt">class =</span> <span class="st">&quot;sd&quot;</span>, <span class="dt">group =</span> <span class="st">&quot;Subject&quot;</span>),</a>
-<a class="sourceLine" id="cb322-9" data-line-number="9">            <span class="co"># for correlation</span></a>
-<a class="sourceLine" id="cb322-10" data-line-number="10">            <span class="kw">prior</span>(<span class="kw">lkj</span>(<span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;cor&quot;</span>), </a>
-<a class="sourceLine" id="cb322-11" data-line-number="11">            <span class="co"># for sigma</span></a>
-<a class="sourceLine" id="cb322-12" data-line-number="12">            <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">5</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)),</a>
-<a class="sourceLine" id="cb322-13" data-line-number="13">          <span class="dt">control =</span> <span class="kw">list</span>(<span class="dt">adapt_delta =</span> <span class="fl">.95</span>), </a>
-<a class="sourceLine" id="cb322-14" data-line-number="14">          <span class="dt">cores =</span> 2L, </a>
-<a class="sourceLine" id="cb322-15" data-line-number="15">          <span class="dt">seed =</span> <span class="dv">2107</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="hierarchical-multilevel-models.html#cb350-1"></a>m4 &lt;-<span class="st"> </span><span class="kw">brm</span>(Reaction10 <span class="op">~</span><span class="st"> </span>Days <span class="op">+</span><span class="st"> </span>(Days <span class="op">|</span><span class="st"> </span>Subject),  </span>
+<span id="cb350-2"><a href="hierarchical-multilevel-models.html#cb350-2"></a>          <span class="dt">data =</span> sleepstudy, </span>
+<span id="cb350-3"><a href="hierarchical-multilevel-models.html#cb350-3"></a>          <span class="dt">prior =</span> <span class="kw">c</span>(<span class="co"># for intercept</span></span>
+<span id="cb350-4"><a href="hierarchical-multilevel-models.html#cb350-4"></a>            <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">50</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>),</span>
+<span id="cb350-5"><a href="hierarchical-multilevel-models.html#cb350-5"></a>            <span class="co"># for slope</span></span>
+<span id="cb350-6"><a href="hierarchical-multilevel-models.html#cb350-6"></a>            <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">10</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>),</span>
+<span id="cb350-7"><a href="hierarchical-multilevel-models.html#cb350-7"></a>            <span class="co"># for tau_beta0 and tau_beta1</span></span>
+<span id="cb350-8"><a href="hierarchical-multilevel-models.html#cb350-8"></a>            <span class="kw">prior</span>(<span class="kw">gamma</span>(<span class="dv">2</span>, <span class="fl">0.2</span>), <span class="dt">class =</span> <span class="st">&quot;sd&quot;</span>, <span class="dt">group =</span> <span class="st">&quot;Subject&quot;</span>),</span>
+<span id="cb350-9"><a href="hierarchical-multilevel-models.html#cb350-9"></a>            <span class="co"># for correlation</span></span>
+<span id="cb350-10"><a href="hierarchical-multilevel-models.html#cb350-10"></a>            <span class="kw">prior</span>(<span class="kw">lkj</span>(<span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;cor&quot;</span>), </span>
+<span id="cb350-11"><a href="hierarchical-multilevel-models.html#cb350-11"></a>            <span class="co"># for sigma</span></span>
+<span id="cb350-12"><a href="hierarchical-multilevel-models.html#cb350-12"></a>            <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">5</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)),</span>
+<span id="cb350-13"><a href="hierarchical-multilevel-models.html#cb350-13"></a>          <span class="dt">control =</span> <span class="kw">list</span>(<span class="dt">adapt_delta =</span> <span class="fl">.95</span>), </span>
+<span id="cb350-14"><a href="hierarchical-multilevel-models.html#cb350-14"></a>          <span class="dt">cores =</span> 2L, </span>
+<span id="cb350-15"><a href="hierarchical-multilevel-models.html#cb350-15"></a>          <span class="dt">seed =</span> <span class="dv">2107</span>)</span></code></pre></div>
 <p>Below is a summary table of the results</p>
-<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb323-1" data-line-number="1">broom<span class="op">::</span><span class="kw">tidy</span>(m4, <span class="dt">parameters =</span> <span class="kw">c</span>(<span class="st">&quot;b_&quot;</span>, <span class="st">&quot;sd&quot;</span>, <span class="st">&quot;sigma&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb323-2" data-line-number="2"><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="hierarchical-multilevel-models.html#cb351-1"></a>broom<span class="op">::</span><span class="kw">tidy</span>(m4, <span class="dt">parameters =</span> <span class="kw">c</span>(<span class="st">&quot;b_&quot;</span>, <span class="st">&quot;sd&quot;</span>, <span class="st">&quot;sigma&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb351-2"><a href="hierarchical-multilevel-models.html#cb351-2"></a><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1087,78 +1102,80 @@ large, using <span class="math inline">\(\eta\)</span> = 2 is reasonable.</p>
 <tbody>
 <tr class="odd">
 <td align="left">b_Intercept</td>
-<td align="right">25.14</td>
-<td align="right">0.781</td>
-<td align="right">23.894</td>
-<td align="right">26.413</td>
+<td align="right">25.135</td>
+<td align="right">0.798</td>
+<td align="right">23.811</td>
+<td align="right">26.428</td>
 </tr>
 <tr class="even">
 <td align="left">b_Days</td>
-<td align="right">1.04</td>
-<td align="right">0.183</td>
-<td align="right">0.751</td>
-<td align="right">1.339</td>
+<td align="right">1.048</td>
+<td align="right">0.179</td>
+<td align="right">0.754</td>
+<td align="right">1.341</td>
 </tr>
 <tr class="odd">
 <td align="left">sd_Subject__Intercept</td>
-<td align="right">2.83</td>
-<td align="right">0.721</td>
-<td align="right">1.812</td>
-<td align="right">4.138</td>
+<td align="right">2.865</td>
+<td align="right">0.752</td>
+<td align="right">1.823</td>
+<td align="right">4.252</td>
 </tr>
 <tr class="even">
 <td align="left">sd_Subject__Days</td>
-<td align="right">0.69</td>
-<td align="right">0.167</td>
-<td align="right">0.462</td>
-<td align="right">0.996</td>
+<td align="right">0.693</td>
+<td align="right">0.163</td>
+<td align="right">0.467</td>
+<td align="right">0.991</td>
 </tr>
 <tr class="odd">
 <td align="left">sigma</td>
-<td align="right">2.59</td>
-<td align="right">0.153</td>
-<td align="right">2.351</td>
-<td align="right">2.860</td>
+<td align="right">2.583</td>
+<td align="right">0.151</td>
+<td align="right">2.350</td>
+<td align="right">2.846</td>
 </tr>
 </tbody>
 </table>
 </div>
 <div id="fit-of-individuals-1" class="section level4">
 <h4><span class="header-section-number">10.3.2.2</span> Fit of Individuals</h4>
-<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb324-1" data-line-number="1"><span class="co"># Posterior mean of slope</span></a>
-<a class="sourceLine" id="cb324-2" data-line-number="2">coef_post &lt;-<span class="st"> </span><span class="kw">coef</span>(m4, <span class="dt">summary =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb324-3" data-line-number="3">df_lines &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">Subject =</span> <span class="kw">colnames</span>(coef_post<span class="op">$</span>Subject), </a>
-<a class="sourceLine" id="cb324-4" data-line-number="4">                   <span class="dt">Intercept =</span> <span class="kw">colMeans</span>(coef_post<span class="op">$</span>Subject[ , , <span class="st">&quot;Intercept&quot;</span>]), </a>
-<a class="sourceLine" id="cb324-5" data-line-number="5">                   <span class="dt">Days =</span> <span class="kw">colMeans</span>(coef_post<span class="op">$</span>Subject[ , , <span class="st">&quot;Days&quot;</span>]))</a>
-<a class="sourceLine" id="cb324-6" data-line-number="6"><span class="kw">ggplot</span>(sleepstudy, <span class="kw">aes</span>(<span class="dt">x =</span> Days, <span class="dt">y =</span> Reaction10)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb324-7" data-line-number="7"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb324-8" data-line-number="8"><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">data =</span> df_lines, </a>
-<a class="sourceLine" id="cb324-9" data-line-number="9">              <span class="kw">aes</span>(<span class="dt">intercept =</span> Intercept, </a>
-<a class="sourceLine" id="cb324-10" data-line-number="10">                  <span class="dt">slope =</span> Days),</a>
-<a class="sourceLine" id="cb324-11" data-line-number="11">              <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">size =</span> <span class="fl">0.8</span>, <span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb324-12" data-line-number="12"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">se =</span> <span class="ot">FALSE</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">size =</span> <span class="fl">0.8</span>, <span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb324-13" data-line-number="13"><span class="st">  </span><span class="co"># presented by person</span></a>
-<a class="sourceLine" id="cb324-14" data-line-number="14"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>Subject, <span class="dt">ncol =</span> <span class="dv">6</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="hierarchical-multilevel-models.html#cb352-1"></a><span class="co"># Posterior mean of slope</span></span>
+<span id="cb352-2"><a href="hierarchical-multilevel-models.html#cb352-2"></a>coef_post &lt;-<span class="st"> </span><span class="kw">coef</span>(m4, <span class="dt">summary =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb352-3"><a href="hierarchical-multilevel-models.html#cb352-3"></a>df_lines &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">Subject =</span> <span class="kw">colnames</span>(coef_post<span class="op">$</span>Subject), </span>
+<span id="cb352-4"><a href="hierarchical-multilevel-models.html#cb352-4"></a>                   <span class="dt">Intercept =</span> <span class="kw">colMeans</span>(coef_post<span class="op">$</span>Subject[ , , <span class="st">&quot;Intercept&quot;</span>]), </span>
+<span id="cb352-5"><a href="hierarchical-multilevel-models.html#cb352-5"></a>                   <span class="dt">Days =</span> <span class="kw">colMeans</span>(coef_post<span class="op">$</span>Subject[ , , <span class="st">&quot;Days&quot;</span>]))</span>
+<span id="cb352-6"><a href="hierarchical-multilevel-models.html#cb352-6"></a><span class="kw">ggplot</span>(sleepstudy, <span class="kw">aes</span>(<span class="dt">x =</span> Days, <span class="dt">y =</span> Reaction10)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb352-7"><a href="hierarchical-multilevel-models.html#cb352-7"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb352-8"><a href="hierarchical-multilevel-models.html#cb352-8"></a><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">data =</span> df_lines, </span>
+<span id="cb352-9"><a href="hierarchical-multilevel-models.html#cb352-9"></a>              <span class="kw">aes</span>(<span class="dt">intercept =</span> Intercept, </span>
+<span id="cb352-10"><a href="hierarchical-multilevel-models.html#cb352-10"></a>                  <span class="dt">slope =</span> Days),</span>
+<span id="cb352-11"><a href="hierarchical-multilevel-models.html#cb352-11"></a>              <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">size =</span> <span class="fl">0.8</span>, <span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span></span>
+<span id="cb352-12"><a href="hierarchical-multilevel-models.html#cb352-12"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">se =</span> <span class="ot">FALSE</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">size =</span> <span class="fl">0.8</span>, <span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb352-13"><a href="hierarchical-multilevel-models.html#cb352-13"></a><span class="st">  </span><span class="co"># presented by person</span></span>
+<span id="cb352-14"><a href="hierarchical-multilevel-models.html#cb352-14"></a><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>Subject, <span class="dt">ncol =</span> <span class="dv">6</span>)</span></code></pre></div>
 <pre><code>&gt;# `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</code></pre>
 <p><img src="10_hierarchical_multilevel_models_files/figure-html/traj-m4-1.png" width="624" /></p>
 <p>You can see that the fit is better. You can also visualize the varying
 regression lines:</p>
-<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb326-1" data-line-number="1"><span class="kw">ggplot</span>(sleepstudy, <span class="kw">aes</span>(<span class="dt">x =</span> Days, <span class="dt">y =</span> Reaction10, <span class="dt">col =</span> Subject)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb326-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">size =</span> <span class="fl">0.5</span>, <span class="dt">width =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb326-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">data =</span> df_lines,</a>
-<a class="sourceLine" id="cb326-4" data-line-number="4">              <span class="kw">aes</span>(<span class="dt">intercept =</span> Intercept, <span class="dt">slope =</span> Days, <span class="dt">col =</span> Subject), </a>
-<a class="sourceLine" id="cb326-5" data-line-number="5">              <span class="dt">size =</span> <span class="fl">0.8</span>, <span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb326-6" data-line-number="6"><span class="st">  </span><span class="co"># Suppress legend</span></a>
-<a class="sourceLine" id="cb326-7" data-line-number="7"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">col =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb354-1"><a href="hierarchical-multilevel-models.html#cb354-1"></a><span class="kw">ggplot</span>(sleepstudy, <span class="kw">aes</span>(<span class="dt">x =</span> Days, <span class="dt">y =</span> Reaction10, <span class="dt">col =</span> Subject)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb354-2"><a href="hierarchical-multilevel-models.html#cb354-2"></a><span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">size =</span> <span class="fl">0.5</span>, <span class="dt">width =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb354-3"><a href="hierarchical-multilevel-models.html#cb354-3"></a><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">data =</span> df_lines,</span>
+<span id="cb354-4"><a href="hierarchical-multilevel-models.html#cb354-4"></a>              <span class="kw">aes</span>(<span class="dt">intercept =</span> Intercept, <span class="dt">slope =</span> Days, <span class="dt">col =</span> Subject), </span>
+<span id="cb354-5"><a href="hierarchical-multilevel-models.html#cb354-5"></a>              <span class="dt">size =</span> <span class="fl">0.8</span>, <span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span></span>
+<span id="cb354-6"><a href="hierarchical-multilevel-models.html#cb354-6"></a><span class="st">  </span><span class="co"># Suppress legend</span></span>
+<span id="cb354-7"><a href="hierarchical-multilevel-models.html#cb354-7"></a><span class="st">  </span><span class="kw">guides</span>(<span class="dt">col =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
 <p><img src="10_hierarchical_multilevel_models_files/figure-html/varying-slopes-1.png" width="672" /></p>
 <p>Or using the <code>sjPlot</code> package:</p>
-<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb327-1" data-line-number="1">sjPlot<span class="op">::</span><span class="kw">plot_model</span>(m4, <span class="dt">type =</span> <span class="st">&quot;pred&quot;</span>, </a>
-<a class="sourceLine" id="cb327-2" data-line-number="2">                   <span class="co"># Put in the predictor first, and then grouping variable</span></a>
-<a class="sourceLine" id="cb327-3" data-line-number="3">                   <span class="dt">terms =</span> <span class="kw">c</span>(<span class="st">&quot;Days&quot;</span>, <span class="st">&quot;Subject&quot;</span>), </a>
-<a class="sourceLine" id="cb327-4" data-line-number="4">                   <span class="dt">pred.type =</span> <span class="st">&quot;re&quot;</span>, </a>
-<a class="sourceLine" id="cb327-5" data-line-number="5">                   <span class="co"># Grayscale color</span></a>
-<a class="sourceLine" id="cb327-6" data-line-number="6">                   <span class="dt">colors =</span> <span class="st">&quot;gs&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb327-7" data-line-number="7"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">col =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb355-1"><a href="hierarchical-multilevel-models.html#cb355-1"></a>sjPlot<span class="op">::</span><span class="kw">plot_model</span>(m4, <span class="dt">type =</span> <span class="st">&quot;pred&quot;</span>, </span>
+<span id="cb355-2"><a href="hierarchical-multilevel-models.html#cb355-2"></a>                   <span class="co"># Put in the predictor first, and then grouping variable</span></span>
+<span id="cb355-3"><a href="hierarchical-multilevel-models.html#cb355-3"></a>                   <span class="dt">terms =</span> <span class="kw">c</span>(<span class="st">&quot;Days&quot;</span>, <span class="st">&quot;Subject&quot;</span>), </span>
+<span id="cb355-4"><a href="hierarchical-multilevel-models.html#cb355-4"></a>                   <span class="dt">pred.type =</span> <span class="st">&quot;re&quot;</span>, </span>
+<span id="cb355-5"><a href="hierarchical-multilevel-models.html#cb355-5"></a>                   <span class="co"># Grayscale color</span></span>
+<span id="cb355-6"><a href="hierarchical-multilevel-models.html#cb355-6"></a>                   <span class="dt">colors =</span> <span class="st">&quot;gs&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb355-7"><a href="hierarchical-multilevel-models.html#cb355-7"></a><span class="st">  </span><span class="kw">guides</span>(<span class="dt">col =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<pre><code>&gt;# Warning: posterior_linpred(transform = TRUE) is deprecated. Please use
+&gt;# pp_expect() instead, without the &#39;transform&#39; argument.</code></pre>
 <pre><code>&gt;# Note: uncertainty of error terms are not taken into account. You may want to use `rstantools::posterior_predict()`.</code></pre>
 <p><img src="10_hierarchical_multilevel_models_files/figure-html/sjPlot-varying-1.png" width="672" /></p>
 </div>
@@ -1169,44 +1186,44 @@ different person, which can be modelled by including an interaction with the
 categorical <code>Subject</code> predictor. This is referred to as the <em>fixed-effect</em>
 model, as opposed to <em>random-effect</em> model used to describe hierarchical models
 with partial pooling. Below is an example:</p>
-<div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb329-1" data-line-number="1">m4_fixed &lt;-<span class="st"> </span><span class="kw">brm</span>(Reaction10 <span class="op">~</span><span class="st"> </span>Days <span class="op">*</span><span class="st"> </span><span class="kw">I</span>(<span class="kw">factor</span>(Subject)),  </a>
-<a class="sourceLine" id="cb329-2" data-line-number="2">          <span class="dt">data =</span> sleepstudy, </a>
-<a class="sourceLine" id="cb329-3" data-line-number="3">          <span class="dt">prior =</span> <span class="kw">c</span>(<span class="co"># for intercept</span></a>
-<a class="sourceLine" id="cb329-4" data-line-number="4">            <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">50</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>),</a>
-<a class="sourceLine" id="cb329-5" data-line-number="5">            <span class="co"># for slope</span></a>
-<a class="sourceLine" id="cb329-6" data-line-number="6">            <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">10</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>),</a>
-<a class="sourceLine" id="cb329-7" data-line-number="7">            <span class="co"># for sigma</span></a>
-<a class="sourceLine" id="cb329-8" data-line-number="8">            <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">5</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)),</a>
-<a class="sourceLine" id="cb329-9" data-line-number="9">          <span class="dt">control =</span> <span class="kw">list</span>(<span class="dt">adapt_delta =</span> <span class="fl">.95</span>), </a>
-<a class="sourceLine" id="cb329-10" data-line-number="10">          <span class="dt">cores =</span> 2L, </a>
-<a class="sourceLine" id="cb329-11" data-line-number="11">          <span class="dt">seed =</span> <span class="dv">2107</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb358-1"><a href="hierarchical-multilevel-models.html#cb358-1"></a>m4_fixed &lt;-<span class="st"> </span><span class="kw">brm</span>(Reaction10 <span class="op">~</span><span class="st"> </span>Days <span class="op">*</span><span class="st"> </span><span class="kw">I</span>(<span class="kw">factor</span>(Subject)),  </span>
+<span id="cb358-2"><a href="hierarchical-multilevel-models.html#cb358-2"></a>          <span class="dt">data =</span> sleepstudy, </span>
+<span id="cb358-3"><a href="hierarchical-multilevel-models.html#cb358-3"></a>          <span class="dt">prior =</span> <span class="kw">c</span>(<span class="co"># for intercept</span></span>
+<span id="cb358-4"><a href="hierarchical-multilevel-models.html#cb358-4"></a>            <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">50</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>),</span>
+<span id="cb358-5"><a href="hierarchical-multilevel-models.html#cb358-5"></a>            <span class="co"># for slope</span></span>
+<span id="cb358-6"><a href="hierarchical-multilevel-models.html#cb358-6"></a>            <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">10</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>),</span>
+<span id="cb358-7"><a href="hierarchical-multilevel-models.html#cb358-7"></a>            <span class="co"># for sigma</span></span>
+<span id="cb358-8"><a href="hierarchical-multilevel-models.html#cb358-8"></a>            <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">5</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)),</span>
+<span id="cb358-9"><a href="hierarchical-multilevel-models.html#cb358-9"></a>          <span class="dt">control =</span> <span class="kw">list</span>(<span class="dt">adapt_delta =</span> <span class="fl">.95</span>), </span>
+<span id="cb358-10"><a href="hierarchical-multilevel-models.html#cb358-10"></a>          <span class="dt">cores =</span> 2L, </span>
+<span id="cb358-11"><a href="hierarchical-multilevel-models.html#cb358-11"></a>          <span class="dt">seed =</span> <span class="dv">2107</span>)</span></code></pre></div>
 <p>You can compare the two models using LOO-IC:</p>
-<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb330-1" data-line-number="1"><span class="kw">loo</span>(m4, m4_fixed)</a></code></pre></div>
+<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="hierarchical-multilevel-models.html#cb359-1"></a><span class="kw">loo</span>(m4, m4_fixed)</span></code></pre></div>
 <pre><code>&gt;# Warning: Found 3 observations with a pareto_k &gt; 0.7 in model &#39;m4&#39;. It is
 &gt;# recommended to set &#39;reloo = TRUE&#39; in order to calculate the ELPD without the
 &gt;# assumption that these observations are negligible. This will refit the model 3
 &gt;# times to compute the ELPDs for the problematic observations directly.</code></pre>
-<pre><code>&gt;# Warning: Found 5 observations with a pareto_k &gt; 0.7 in model &#39;m4_fixed&#39;. It is
+<pre><code>&gt;# Warning: Found 4 observations with a pareto_k &gt; 0.7 in model &#39;m4_fixed&#39;. It is
 &gt;# recommended to set &#39;reloo = TRUE&#39; in order to calculate the ELPD without the
-&gt;# assumption that these observations are negligible. This will refit the model 5
+&gt;# assumption that these observations are negligible. This will refit the model 4
 &gt;# times to compute the ELPDs for the problematic observations directly.</code></pre>
 <pre><code>&gt;# Output of model &#39;m4&#39;:
 &gt;# 
 &gt;# Computed from 4000 by 180 log-likelihood matrix
 &gt;# 
 &gt;#          Estimate   SE
-&gt;# elpd_loo   -445.9 22.1
-&gt;# p_loo        33.6  8.1
-&gt;# looic       891.8 44.1
+&gt;# elpd_loo   -446.3 22.5
+&gt;# p_loo        34.2  8.4
+&gt;# looic       892.5 44.9
 &gt;# ------
 &gt;# Monte Carlo SE of elpd_loo is NA.
 &gt;# 
 &gt;# Pareto k diagnostic values:
 &gt;#                          Count Pct.    Min. n_eff
-&gt;# (-Inf, 0.5]   (good)     170   94.4%   887       
-&gt;#  (0.5, 0.7]   (ok)         7    3.9%   545       
-&gt;#    (0.7, 1]   (bad)        3    1.7%   25        
-&gt;#    (1, Inf)   (very bad)   0    0.0%   &lt;NA&gt;      
+&gt;# (-Inf, 0.5]   (good)     175   97.2%   899       
+&gt;#  (0.5, 0.7]   (ok)         2    1.1%   493       
+&gt;#    (0.7, 1]   (bad)        2    1.1%   31        
+&gt;#    (1, Inf)   (very bad)   1    0.6%   15        
 &gt;# See help(&#39;pareto-k-diagnostic&#39;) for details.
 &gt;# 
 &gt;# Output of model &#39;m4_fixed&#39;:
@@ -1214,24 +1231,24 @@ with partial pooling. Below is an example:</p>
 &gt;# Computed from 4000 by 180 log-likelihood matrix
 &gt;# 
 &gt;#          Estimate   SE
-&gt;# elpd_loo   -448.9 23.1
-&gt;# p_loo        38.7  9.1
-&gt;# looic       897.8 46.3
+&gt;# elpd_loo   -450.0 23.7
+&gt;# p_loo        40.1  9.8
+&gt;# looic       900.1 47.5
 &gt;# ------
 &gt;# Monte Carlo SE of elpd_loo is NA.
 &gt;# 
 &gt;# Pareto k diagnostic values:
 &gt;#                          Count Pct.    Min. n_eff
-&gt;# (-Inf, 0.5]   (good)     167   92.8%   357       
-&gt;#  (0.5, 0.7]   (ok)         8    4.4%   711       
-&gt;#    (0.7, 1]   (bad)        4    2.2%   20        
-&gt;#    (1, Inf)   (very bad)   1    0.6%   15        
+&gt;# (-Inf, 0.5]   (good)     165   91.7%   251       
+&gt;#  (0.5, 0.7]   (ok)        11    6.1%   210       
+&gt;#    (0.7, 1]   (bad)        1    0.6%   721       
+&gt;#    (1, Inf)   (very bad)   3    1.7%   5         
 &gt;# See help(&#39;pareto-k-diagnostic&#39;) for details.
 &gt;# 
 &gt;# Model comparisons:
 &gt;#          elpd_diff se_diff
 &gt;# m4        0.0       0.0   
-&gt;# m4_fixed -3.0       2.6</code></pre>
+&gt;# m4_fixed -3.8       2.6</code></pre>
 <p>As you can see, in this case the hierarchical approach yields a lower LOO (but
 there was a warning message, so be careful), and estimated less number of
 parameters. With more clusters and with lower ICC, hierarchical models will have
@@ -1258,19 +1275,19 @@ where <span class="math inline">\(X_j\)</span> is a person-level predictor.</p>
 </div>
 <div id="interpretations-1" class="section level4">
 <h4><span class="header-section-number">10.3.2.4</span> Interpretations</h4>
-<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb334-1" data-line-number="1">tau_m4 &lt;-<span class="st"> </span><span class="kw">VarCorr</span>(m4)<span class="op">$</span>Subject<span class="op">$</span>sd</a></code></pre></div>
+<div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb363-1"><a href="hierarchical-multilevel-models.html#cb363-1"></a>tau_m4 &lt;-<span class="st"> </span><span class="kw">VarCorr</span>(m4)<span class="op">$</span>Subject<span class="op">$</span>sd</span></code></pre></div>
 <blockquote>
 <p>Based on the model, at Day 0, the average reaction time across individuals was
-251.417 ms, 95% CI [236.109, 266.954], and the <em>SD</em> at Day 0
-was 28.278ms, 95% CI
-[16.561ms,
-44.749ms].</p>
+251.348 ms, 95% CI [235.577, 267.109], and the <em>SD</em> at Day 0
+was 28.646ms, 95% CI
+[16.698ms,
+45.883ms].</p>
 </blockquote>
 <blockquote>
 <p>The average growth rate per day in reaction time across individuals was
-10.427 ms, 95% CI [6.789, 14.064], and the <em>SD</em> at Day 0
-was 6.904ms, 95% CI
-[4.272ms, 10.769ms], as
+10.477 ms, 95% CI [6.938, 14.178], and the <em>SD</em> at Day 0
+was 6.93ms, 95% CI
+[4.371ms, 10.886ms], as
 shown in the figure.</p>
 </blockquote>
 </div>
@@ -1284,7 +1301,7 @@ outcome. Examples include fluctuations in mood, as two people with the same
 mean level of mood may fluctuate very differently, and mood swing can be an
 important outcome to assess. There has been some interesting applications in
 health research using ecological momentary assessment data. For an overview,
-see the paper by <span class="citation">Hedeker, Mermelstein, and Demirtas (<a href="#ref-Hedeker2008">2008</a>)</span>.</p>
+see the paper by <span class="citation">Hedeker, Mermelstein, and Demirtas (<a href="#ref-Hedeker2008" role="doc-biblioref">2008</a>)</span>.</p>
 <p>Without going into the details, here is the model and the priors:</p>
 <p><span class="math display">\[\begin{align}
 \text{Repeated-measure level:}  \\
@@ -1311,33 +1328,33 @@ see the paper by <span class="citation">Hedeker, Mermelstein, and Demirtas (<a h
   \tau^{[s]} &amp; \sim \mathrm{Gamma}(2, 0.625) \\
   \boldsymbol{\mathbf{\Omega }}&amp; \sim \mathrm{LKJ}(1)
 \end{align}\]</span></p>
-<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb335-1" data-line-number="1"><span class="co"># Use |c| to estimate the covariance between the sigma and beta random effects</span></a>
-<a class="sourceLine" id="cb335-2" data-line-number="2">m5 &lt;-<span class="st"> </span><span class="kw">brm</span>(<span class="kw">bf</span>(Reaction10 <span class="op">~</span><span class="st"> </span>Days <span class="op">+</span><span class="st"> </span>(Days <span class="op">|</span>c<span class="op">|</span><span class="st"> </span>Subject), </a>
-<a class="sourceLine" id="cb335-3" data-line-number="3">             sigma <span class="op">~</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span>c<span class="op">|</span><span class="st"> </span>Subject)), </a>
-<a class="sourceLine" id="cb335-4" data-line-number="4">          <span class="dt">data =</span> sleepstudy, </a>
-<a class="sourceLine" id="cb335-5" data-line-number="5">          <span class="dt">prior =</span> <span class="kw">c</span>(<span class="co"># for intercept</span></a>
-<a class="sourceLine" id="cb335-6" data-line-number="6">            <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">50</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>),</a>
-<a class="sourceLine" id="cb335-7" data-line-number="7">            <span class="co"># for slope</span></a>
-<a class="sourceLine" id="cb335-8" data-line-number="8">            <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">10</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>),</a>
-<a class="sourceLine" id="cb335-9" data-line-number="9">            <span class="co"># for tau_beta0</span></a>
-<a class="sourceLine" id="cb335-10" data-line-number="10">            <span class="kw">prior</span>(<span class="kw">gamma</span>(<span class="dv">2</span>, <span class="fl">0.2</span>), <span class="dt">class =</span> <span class="st">&quot;sd&quot;</span>, <span class="dt">coef =</span> <span class="st">&quot;Intercept&quot;</span>, </a>
-<a class="sourceLine" id="cb335-11" data-line-number="11">                  <span class="dt">group =</span> <span class="st">&quot;Subject&quot;</span>),</a>
-<a class="sourceLine" id="cb335-12" data-line-number="12">            <span class="co"># for tau_beta1</span></a>
-<a class="sourceLine" id="cb335-13" data-line-number="13">            <span class="kw">prior</span>(<span class="kw">gamma</span>(<span class="dv">2</span>, <span class="fl">0.2</span>), <span class="dt">class =</span> <span class="st">&quot;sd&quot;</span>, <span class="dt">coef =</span> <span class="st">&quot;Days&quot;</span>, </a>
-<a class="sourceLine" id="cb335-14" data-line-number="14">                  <span class="dt">group =</span> <span class="st">&quot;Subject&quot;</span>),</a>
-<a class="sourceLine" id="cb335-15" data-line-number="15">            <span class="co"># for correlation</span></a>
-<a class="sourceLine" id="cb335-16" data-line-number="16">            <span class="kw">prior</span>(<span class="kw">lkj</span>(<span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;cor&quot;</span>), </a>
-<a class="sourceLine" id="cb335-17" data-line-number="17">            <span class="co"># for sigma</span></a>
-<a class="sourceLine" id="cb335-18" data-line-number="18">            <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="fl">1.6</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>, <span class="dt">dpar =</span> <span class="st">&quot;sigma&quot;</span>), </a>
-<a class="sourceLine" id="cb335-19" data-line-number="19">            <span class="co"># for tau_sigma</span></a>
-<a class="sourceLine" id="cb335-20" data-line-number="20">            <span class="kw">prior</span>(<span class="kw">gamma</span>(<span class="dv">2</span>, <span class="fl">0.625</span>), <span class="dt">class =</span> <span class="st">&quot;sd&quot;</span>, <span class="dt">coef =</span> <span class="st">&quot;Intercept&quot;</span>, </a>
-<a class="sourceLine" id="cb335-21" data-line-number="21">                  <span class="dt">group =</span> <span class="st">&quot;Subject&quot;</span>, <span class="dt">dpar =</span> <span class="st">&quot;sigma&quot;</span>)),</a>
-<a class="sourceLine" id="cb335-22" data-line-number="22">          <span class="dt">control =</span> <span class="kw">list</span>(<span class="dt">adapt_delta =</span> <span class="fl">.95</span>), </a>
-<a class="sourceLine" id="cb335-23" data-line-number="23">          <span class="dt">cores =</span> 2L, </a>
-<a class="sourceLine" id="cb335-24" data-line-number="24">          <span class="dt">seed =</span> <span class="dv">2107</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb364"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb364-1"><a href="hierarchical-multilevel-models.html#cb364-1"></a><span class="co"># Use |c| to estimate the covariance between the sigma and beta random effects</span></span>
+<span id="cb364-2"><a href="hierarchical-multilevel-models.html#cb364-2"></a>m5 &lt;-<span class="st"> </span><span class="kw">brm</span>(<span class="kw">bf</span>(Reaction10 <span class="op">~</span><span class="st"> </span>Days <span class="op">+</span><span class="st"> </span>(Days <span class="op">|</span>c<span class="op">|</span><span class="st"> </span>Subject), </span>
+<span id="cb364-3"><a href="hierarchical-multilevel-models.html#cb364-3"></a>             sigma <span class="op">~</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span>c<span class="op">|</span><span class="st"> </span>Subject)), </span>
+<span id="cb364-4"><a href="hierarchical-multilevel-models.html#cb364-4"></a>          <span class="dt">data =</span> sleepstudy, </span>
+<span id="cb364-5"><a href="hierarchical-multilevel-models.html#cb364-5"></a>          <span class="dt">prior =</span> <span class="kw">c</span>(<span class="co"># for intercept</span></span>
+<span id="cb364-6"><a href="hierarchical-multilevel-models.html#cb364-6"></a>            <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">50</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>),</span>
+<span id="cb364-7"><a href="hierarchical-multilevel-models.html#cb364-7"></a>            <span class="co"># for slope</span></span>
+<span id="cb364-8"><a href="hierarchical-multilevel-models.html#cb364-8"></a>            <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">10</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>),</span>
+<span id="cb364-9"><a href="hierarchical-multilevel-models.html#cb364-9"></a>            <span class="co"># for tau_beta0</span></span>
+<span id="cb364-10"><a href="hierarchical-multilevel-models.html#cb364-10"></a>            <span class="kw">prior</span>(<span class="kw">gamma</span>(<span class="dv">2</span>, <span class="fl">0.2</span>), <span class="dt">class =</span> <span class="st">&quot;sd&quot;</span>, <span class="dt">coef =</span> <span class="st">&quot;Intercept&quot;</span>, </span>
+<span id="cb364-11"><a href="hierarchical-multilevel-models.html#cb364-11"></a>                  <span class="dt">group =</span> <span class="st">&quot;Subject&quot;</span>),</span>
+<span id="cb364-12"><a href="hierarchical-multilevel-models.html#cb364-12"></a>            <span class="co"># for tau_beta1</span></span>
+<span id="cb364-13"><a href="hierarchical-multilevel-models.html#cb364-13"></a>            <span class="kw">prior</span>(<span class="kw">gamma</span>(<span class="dv">2</span>, <span class="fl">0.2</span>), <span class="dt">class =</span> <span class="st">&quot;sd&quot;</span>, <span class="dt">coef =</span> <span class="st">&quot;Days&quot;</span>, </span>
+<span id="cb364-14"><a href="hierarchical-multilevel-models.html#cb364-14"></a>                  <span class="dt">group =</span> <span class="st">&quot;Subject&quot;</span>),</span>
+<span id="cb364-15"><a href="hierarchical-multilevel-models.html#cb364-15"></a>            <span class="co"># for correlation</span></span>
+<span id="cb364-16"><a href="hierarchical-multilevel-models.html#cb364-16"></a>            <span class="kw">prior</span>(<span class="kw">lkj</span>(<span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;cor&quot;</span>), </span>
+<span id="cb364-17"><a href="hierarchical-multilevel-models.html#cb364-17"></a>            <span class="co"># for sigma</span></span>
+<span id="cb364-18"><a href="hierarchical-multilevel-models.html#cb364-18"></a>            <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="fl">1.6</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>, <span class="dt">dpar =</span> <span class="st">&quot;sigma&quot;</span>), </span>
+<span id="cb364-19"><a href="hierarchical-multilevel-models.html#cb364-19"></a>            <span class="co"># for tau_sigma</span></span>
+<span id="cb364-20"><a href="hierarchical-multilevel-models.html#cb364-20"></a>            <span class="kw">prior</span>(<span class="kw">gamma</span>(<span class="dv">2</span>, <span class="fl">0.625</span>), <span class="dt">class =</span> <span class="st">&quot;sd&quot;</span>, <span class="dt">coef =</span> <span class="st">&quot;Intercept&quot;</span>, </span>
+<span id="cb364-21"><a href="hierarchical-multilevel-models.html#cb364-21"></a>                  <span class="dt">group =</span> <span class="st">&quot;Subject&quot;</span>, <span class="dt">dpar =</span> <span class="st">&quot;sigma&quot;</span>)),</span>
+<span id="cb364-22"><a href="hierarchical-multilevel-models.html#cb364-22"></a>          <span class="dt">control =</span> <span class="kw">list</span>(<span class="dt">adapt_delta =</span> <span class="fl">.95</span>), </span>
+<span id="cb364-23"><a href="hierarchical-multilevel-models.html#cb364-23"></a>          <span class="dt">cores =</span> 2L, </span>
+<span id="cb364-24"><a href="hierarchical-multilevel-models.html#cb364-24"></a>          <span class="dt">seed =</span> <span class="dv">2107</span>)</span></code></pre></div>
 <p>Below is a summary table of the results</p>
-<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb336-1" data-line-number="1">broom<span class="op">::</span><span class="kw">tidy</span>(m5, <span class="dt">parameters =</span> <span class="kw">c</span>(<span class="st">&quot;b_&quot;</span>, <span class="st">&quot;sd_Subject&quot;</span>, <span class="st">&quot;cor&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb336-2" data-line-number="2"><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb365-1"><a href="hierarchical-multilevel-models.html#cb365-1"></a>broom<span class="op">::</span><span class="kw">tidy</span>(m5, <span class="dt">parameters =</span> <span class="kw">c</span>(<span class="st">&quot;b_&quot;</span>, <span class="st">&quot;sd_Subject&quot;</span>, <span class="st">&quot;cor&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb365-2"><a href="hierarchical-multilevel-models.html#cb365-2"></a><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1351,72 +1368,72 @@ see the paper by <span class="citation">Hedeker, Mermelstein, and Demirtas (<a h
 <tbody>
 <tr class="odd">
 <td align="left">b_Intercept</td>
-<td align="right">25.156</td>
-<td align="right">0.839</td>
-<td align="right">23.773</td>
-<td align="right">26.553</td>
+<td align="right">25.158</td>
+<td align="right">0.838</td>
+<td align="right">23.816</td>
+<td align="right">26.581</td>
 </tr>
 <tr class="even">
 <td align="left">b_sigma_Intercept</td>
-<td align="right">0.734</td>
-<td align="right">0.138</td>
-<td align="right">0.511</td>
-<td align="right">0.965</td>
+<td align="right">0.727</td>
+<td align="right">0.137</td>
+<td align="right">0.504</td>
+<td align="right">0.949</td>
 </tr>
 <tr class="odd">
 <td align="left">b_Days</td>
-<td align="right">1.042</td>
-<td align="right">0.179</td>
-<td align="right">0.747</td>
-<td align="right">1.332</td>
+<td align="right">1.037</td>
+<td align="right">0.186</td>
+<td align="right">0.741</td>
+<td align="right">1.346</td>
 </tr>
 <tr class="even">
 <td align="left">sd_Subject__Intercept</td>
-<td align="right">3.184</td>
-<td align="right">0.722</td>
-<td align="right">2.187</td>
-<td align="right">4.499</td>
+<td align="right">3.140</td>
+<td align="right">0.695</td>
+<td align="right">2.183</td>
+<td align="right">4.418</td>
 </tr>
 <tr class="odd">
 <td align="left">sd_Subject__Days</td>
-<td align="right">0.708</td>
+<td align="right">0.704</td>
 <td align="right">0.159</td>
-<td align="right">0.493</td>
-<td align="right">1.019</td>
+<td align="right">0.490</td>
+<td align="right">0.993</td>
 </tr>
 <tr class="even">
 <td align="left">sd_Subject__sigma_Intercept</td>
-<td align="right">0.512</td>
-<td align="right">0.124</td>
-<td align="right">0.340</td>
-<td align="right">0.739</td>
+<td align="right">0.507</td>
+<td align="right">0.123</td>
+<td align="right">0.338</td>
+<td align="right">0.737</td>
 </tr>
 <tr class="odd">
 <td align="left">cor_Subject__Intercept__Days</td>
-<td align="right">0.000</td>
-<td align="right">0.280</td>
-<td align="right">-0.465</td>
-<td align="right">0.463</td>
+<td align="right">0.004</td>
+<td align="right">0.270</td>
+<td align="right">-0.438</td>
+<td align="right">0.451</td>
 </tr>
 <tr class="even">
 <td align="left">cor_Subject__Intercept__sigma_Intercept</td>
-<td align="right">0.243</td>
+<td align="right">0.251</td>
 <td align="right">0.297</td>
-<td align="right">-0.278</td>
-<td align="right">0.706</td>
+<td align="right">-0.284</td>
+<td align="right">0.697</td>
 </tr>
 <tr class="odd">
 <td align="left">cor_Subject__Days__sigma_Intercept</td>
-<td align="right">0.444</td>
-<td align="right">0.263</td>
-<td align="right">-0.044</td>
-<td align="right">0.810</td>
+<td align="right">0.438</td>
+<td align="right">0.255</td>
+<td align="right">-0.032</td>
+<td align="right">0.794</td>
 </tr>
 </tbody>
 </table>
 <p>And the posterior predictive check:</p>
-<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb337-1" data-line-number="1"><span class="kw">pp_check</span>(m5, <span class="dt">type =</span> <span class="st">&quot;ribbon_grouped&quot;</span>, <span class="dt">group =</span> <span class="st">&quot;Subject&quot;</span>, </a>
-<a class="sourceLine" id="cb337-2" data-line-number="2">         <span class="dt">facet_args =</span> <span class="kw">list</span>(<span class="dt">ncol =</span> <span class="dv">6</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb366-1"><a href="hierarchical-multilevel-models.html#cb366-1"></a><span class="kw">pp_check</span>(m5, <span class="dt">type =</span> <span class="st">&quot;ribbon_grouped&quot;</span>, <span class="dt">group =</span> <span class="st">&quot;Subject&quot;</span>, </span>
+<span id="cb366-2"><a href="hierarchical-multilevel-models.html#cb366-2"></a>         <span class="dt">facet_args =</span> <span class="kw">list</span>(<span class="dt">ncol =</span> <span class="dv">6</span>))</span></code></pre></div>
 <pre><code>&gt;# Using all posterior samples for ppc type &#39;ribbon_grouped&#39; by default.</code></pre>
 <p><img src="10_hierarchical_multilevel_models_files/figure-html/ppc-m5-1.png" width="768" /></p>
 </div>
@@ -1433,33 +1450,33 @@ used to compare models with different level-2 predictors.</p>
 <p>The problem is illustrated in this blog post: <a href="https://deepthoughtsandsilliness.blogspot.com/2007/12/focus-on-dic.html" class="uri">https://deepthoughtsandsilliness.blogspot.com/2007/12/focus-on-dic.html</a> in the
 context of DIC.</p>
 <p>Here’s the table for the several models:</p>
-<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb339-1" data-line-number="1"><span class="kw">source</span>(<span class="st">&quot;../codes/extract_brmsfit.R&quot;</span>)</a>
-<a class="sourceLine" id="cb339-2" data-line-number="2">ext_m3 &lt;-<span class="st"> </span><span class="kw">extract_brmsfit</span>(m3)</a>
-<a class="sourceLine" id="cb339-3" data-line-number="3">ext_m3<span class="op">@</span>gof.names[<span class="dv">1</span>] &lt;-<span class="st"> &quot;SD(Intercept): Subject&quot;</span></a>
-<a class="sourceLine" id="cb339-4" data-line-number="4">ext_m4 &lt;-<span class="st"> </span><span class="kw">extract_brmsfit</span>(m4)</a></code></pre></div>
+<div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb368-1"><a href="hierarchical-multilevel-models.html#cb368-1"></a><span class="kw">source</span>(<span class="st">&quot;../codes/extract_brmsfit.R&quot;</span>)</span>
+<span id="cb368-2"><a href="hierarchical-multilevel-models.html#cb368-2"></a>ext_m3 &lt;-<span class="st"> </span><span class="kw">extract_brmsfit</span>(m3)</span>
+<span id="cb368-3"><a href="hierarchical-multilevel-models.html#cb368-3"></a>ext_m3<span class="op">@</span>gof.names[<span class="dv">1</span>] &lt;-<span class="st"> &quot;SD(Intercept): Subject&quot;</span></span>
+<span id="cb368-4"><a href="hierarchical-multilevel-models.html#cb368-4"></a>ext_m4 &lt;-<span class="st"> </span><span class="kw">extract_brmsfit</span>(m4)</span></code></pre></div>
 <pre><code>&gt;# Warning: Found 3 observations with a pareto_k &gt; 0.7 in model &#39;model&#39;. It is
 &gt;# recommended to set &#39;reloo = TRUE&#39; in order to calculate the ELPD without the
 &gt;# assumption that these observations are negligible. This will refit the model 3
 &gt;# times to compute the ELPDs for the problematic observations directly.</code></pre>
-<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb341-1" data-line-number="1">ext_m4<span class="op">@</span>gof.names[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>] &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;SD(Intercept): Subject&quot;</span>, </a>
-<a class="sourceLine" id="cb341-2" data-line-number="2">                           <span class="st">&quot;SD(Days): Subject&quot;</span>, </a>
-<a class="sourceLine" id="cb341-3" data-line-number="3">                           <span class="st">&quot;Cor(Intercept,Days): Subject&quot;</span>)</a>
-<a class="sourceLine" id="cb341-4" data-line-number="4">ext_m5 &lt;-<span class="st"> </span><span class="kw">extract_brmsfit</span>(m5)</a></code></pre></div>
-<pre><code>&gt;# Warning: Found 14 observations with a pareto_k &gt; 0.7 in model &#39;model&#39;. With this
+<div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb370-1"><a href="hierarchical-multilevel-models.html#cb370-1"></a>ext_m4<span class="op">@</span>gof.names[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>] &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;SD(Intercept): Subject&quot;</span>, </span>
+<span id="cb370-2"><a href="hierarchical-multilevel-models.html#cb370-2"></a>                           <span class="st">&quot;SD(Days): Subject&quot;</span>, </span>
+<span id="cb370-3"><a href="hierarchical-multilevel-models.html#cb370-3"></a>                           <span class="st">&quot;Cor(Intercept,Days): Subject&quot;</span>)</span>
+<span id="cb370-4"><a href="hierarchical-multilevel-models.html#cb370-4"></a>ext_m5 &lt;-<span class="st"> </span><span class="kw">extract_brmsfit</span>(m5)</span></code></pre></div>
+<pre><code>&gt;# Warning: Found 13 observations with a pareto_k &gt; 0.7 in model &#39;model&#39;. With this
 &gt;# many problematic observations, it may be more appropriate to use &#39;kfold&#39; with
 &gt;# argument &#39;K = 10&#39; to perform 10-fold cross-validation rather than LOO.</code></pre>
-<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb343-1" data-line-number="1">ext_m5<span class="op">@</span>gof.names[<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>] &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;SD(Intercept): Subject&quot;</span>, </a>
-<a class="sourceLine" id="cb343-2" data-line-number="2">                           <span class="st">&quot;SD(Days): Subject&quot;</span>, </a>
-<a class="sourceLine" id="cb343-3" data-line-number="3">                           <span class="st">&quot;SD(log[sigma]): Subject&quot;</span>, </a>
-<a class="sourceLine" id="cb343-4" data-line-number="4">                           <span class="st">&quot;Cor(Intercept,Days): Subject&quot;</span>, </a>
-<a class="sourceLine" id="cb343-5" data-line-number="5">                           <span class="st">&quot;Cor(Intercept,log[sigma]): Subject&quot;</span>, </a>
-<a class="sourceLine" id="cb343-6" data-line-number="6">                           <span class="st">&quot;Cor(Days,log[sigma]): Subject&quot;</span>)</a>
-<a class="sourceLine" id="cb343-7" data-line-number="7">texreg<span class="op">::</span><span class="kw">htmlreg</span>(<span class="kw">list</span>(ext_m3, ext_m4, ext_m5), </a>
-<a class="sourceLine" id="cb343-8" data-line-number="8">                <span class="dt">custom.model.names =</span> <span class="kw">c</span>(<span class="st">&quot;Varying Intercepts + Days&quot;</span>, </a>
-<a class="sourceLine" id="cb343-9" data-line-number="9">                                       <span class="st">&quot;Varying Intercepts and Slopes&quot;</span>, </a>
-<a class="sourceLine" id="cb343-10" data-line-number="10">                                       <span class="st">&quot;Varying Variances&quot;</span>), </a>
-<a class="sourceLine" id="cb343-11" data-line-number="11">                <span class="dt">reorder.gof =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">7</span>, <span class="dv">9</span>, <span class="dv">10</span>, <span class="dv">2</span><span class="op">:</span><span class="dv">5</span>), </a>
-<a class="sourceLine" id="cb343-12" data-line-number="12">                <span class="dt">doctype =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb372"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb372-1"><a href="hierarchical-multilevel-models.html#cb372-1"></a>ext_m5<span class="op">@</span>gof.names[<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>] &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;SD(Intercept): Subject&quot;</span>, </span>
+<span id="cb372-2"><a href="hierarchical-multilevel-models.html#cb372-2"></a>                           <span class="st">&quot;SD(Days): Subject&quot;</span>, </span>
+<span id="cb372-3"><a href="hierarchical-multilevel-models.html#cb372-3"></a>                           <span class="st">&quot;SD(log[sigma]): Subject&quot;</span>, </span>
+<span id="cb372-4"><a href="hierarchical-multilevel-models.html#cb372-4"></a>                           <span class="st">&quot;Cor(Intercept,Days): Subject&quot;</span>, </span>
+<span id="cb372-5"><a href="hierarchical-multilevel-models.html#cb372-5"></a>                           <span class="st">&quot;Cor(Intercept,log[sigma]): Subject&quot;</span>, </span>
+<span id="cb372-6"><a href="hierarchical-multilevel-models.html#cb372-6"></a>                           <span class="st">&quot;Cor(Days,log[sigma]): Subject&quot;</span>)</span>
+<span id="cb372-7"><a href="hierarchical-multilevel-models.html#cb372-7"></a>texreg<span class="op">::</span><span class="kw">htmlreg</span>(<span class="kw">list</span>(ext_m3, ext_m4, ext_m5), </span>
+<span id="cb372-8"><a href="hierarchical-multilevel-models.html#cb372-8"></a>                <span class="dt">custom.model.names =</span> <span class="kw">c</span>(<span class="st">&quot;Varying Intercepts + Days&quot;</span>, </span>
+<span id="cb372-9"><a href="hierarchical-multilevel-models.html#cb372-9"></a>                                       <span class="st">&quot;Varying Intercepts and Slopes&quot;</span>, </span>
+<span id="cb372-10"><a href="hierarchical-multilevel-models.html#cb372-10"></a>                                       <span class="st">&quot;Varying Variances&quot;</span>), </span>
+<span id="cb372-11"><a href="hierarchical-multilevel-models.html#cb372-11"></a>                <span class="dt">reorder.gof =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">7</span>, <span class="dv">9</span>, <span class="dv">10</span>, <span class="dv">2</span><span class="op">:</span><span class="dv">5</span>), </span>
+<span id="cb372-12"><a href="hierarchical-multilevel-models.html#cb372-12"></a>                <span class="dt">doctype =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
 <table cellspacing="0" align="center" style="border: none;">
 <caption align="bottom" style="margin-top:0.3em;">
 Statistical models
@@ -1483,10 +1500,10 @@ Statistical models
 Intercept
 </td>
 <td style="padding-right: 12px; border: none;">
-25.11<sup style="vertical-align: 0px;">*</sup>
+25.18<sup style="vertical-align: 0px;">*</sup>
 </td>
 <td style="padding-right: 12px; border: none;">
-25.14<sup style="vertical-align: 0px;">*</sup>
+25.13<sup style="vertical-align: 0px;">*</sup>
 </td>
 <td style="padding-right: 12px; border: none;">
 25.16<sup style="vertical-align: 0px;">*</sup>
@@ -1496,13 +1513,13 @@ Intercept
 <td style="padding-right: 12px; border: none;">
 </td>
 <td style="padding-right: 12px; border: none;">
-[22.99; 27.08]
+[23.12; 27.30]
 </td>
 <td style="padding-right: 12px; border: none;">
-[23.60; 26.67]
+[23.59; 26.72]
 </td>
 <td style="padding-right: 12px; border: none;">
-[23.55; 26.91]
+[23.57; 26.86]
 </td>
 </tr>
 <tr>
@@ -1513,7 +1530,7 @@ Days
 1.05<sup style="vertical-align: 0px;">*</sup>
 </td>
 <td style="padding-right: 12px; border: none;">
-1.04<sup style="vertical-align: 0px;">*</sup>
+1.05<sup style="vertical-align: 0px;">*</sup>
 </td>
 <td style="padding-right: 12px; border: none;">
 1.04<sup style="vertical-align: 0px;">*</sup>
@@ -1523,13 +1540,13 @@ Days
 <td style="padding-right: 12px; border: none;">
 </td>
 <td style="padding-right: 12px; border: none;">
-[0.89; 1.21]
+[0.90; 1.21]
 </td>
 <td style="padding-right: 12px; border: none;">
-[0.68; 1.41]
+[0.66; 1.38]
 </td>
 <td style="padding-right: 12px; border: none;">
-[0.70; 1.39]
+[0.68; 1.42]
 </td>
 </tr>
 <tr>
@@ -1552,7 +1569,7 @@ sigma_Intercept
 <td style="padding-right: 12px; border: none;">
 </td>
 <td style="padding-right: 12px; border: none;">
-[0.45; 1.00]
+[0.47; 1.00]
 </td>
 </tr>
 <tr>
@@ -1560,13 +1577,13 @@ sigma_Intercept
 SD(Intercept): Subject
 </td>
 <td style="border-top: 1px solid black;">
-4.08
+4.03
 </td>
 <td style="border-top: 1px solid black;">
-2.83
+2.86
 </td>
 <td style="border-top: 1px solid black;">
-3.18
+3.14
 </td>
 </tr>
 <tr>
@@ -1579,7 +1596,7 @@ SD(Days): Subject
 0.69
 </td>
 <td style="padding-right: 12px; border: none;">
-0.71
+0.70
 </td>
 </tr>
 <tr>
@@ -1601,10 +1618,10 @@ Cor(Intercept,Days): Subject
 <td style="padding-right: 12px; border: none;">
 </td>
 <td style="padding-right: 12px; border: none;">
-0.06
+0.05
 </td>
 <td style="padding-right: 12px; border: none;">
--0.00
+0.00
 </td>
 </tr>
 <tr>
@@ -1616,7 +1633,7 @@ Cor(Intercept,log[sigma]): Subject
 <td style="padding-right: 12px; border: none;">
 </td>
 <td style="padding-right: 12px; border: none;">
-0.24
+0.25
 </td>
 </tr>
 <tr>
@@ -1664,13 +1681,13 @@ Num. obs.
 loo IC
 </td>
 <td style="padding-right: 12px; border: none;">
-941.42
+941.06
 </td>
 <td style="padding-right: 12px; border: none;">
-891.80
+892.55
 </td>
 <td style="padding-right: 12px; border: none;">
-839.34
+838.70
 </td>
 </tr>
 <tr>
@@ -1678,13 +1695,13 @@ loo IC
 WAIC
 </td>
 <td style="border-bottom: 2px solid black;">
-940.93
+940.73
 </td>
 <td style="border-bottom: 2px solid black;">
-890.66
+889.81
 </td>
 <td style="border-bottom: 2px solid black;">
-828.38
+827.78
 </td>
 </tr>
 <tr>
@@ -1763,7 +1780,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["notes_bookdown.pdf", "notes_bookdown.epub"],
+"download": ["notes_bookdown.epub"],
 "toc": {
 "collapse": "subsection"
 }

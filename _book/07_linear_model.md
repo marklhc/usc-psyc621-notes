@@ -222,6 +222,13 @@ We will be using the prior distributions:
 which are similar to the ones in the group comparison example. The half-$t$
 distribution is recommended by @Gelman2006 and has the following shape:
 
+
+```
+># Warning: `mapping` is not used by stat_function()
+
+># Warning: `mapping` is not used by stat_function()
+```
+
 <img src="07_linear_model_files/figure-html/half-t-1.png" width="672" />
 
 As you can see, there is more density towards zero, but the tail is still quite 
@@ -295,15 +302,15 @@ summary(m1, prob = 0.95)  # prob = 0.95 is the default
 ># 
 ># Population-Level Effects: 
 >#           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-># Intercept     0.26      0.06     0.14     0.38 1.00     3642     2826
-># mom_iq        0.61      0.06     0.49     0.72 1.00     3638     2758
+># Intercept     0.26      0.06     0.15     0.38 1.00     3331     2414
+># mom_iq        0.61      0.06     0.49     0.72 1.00     3248     2385
 ># 
 ># Family Specific Parameters: 
 >#       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-># sigma     0.18      0.01     0.17     0.20 1.00     3565     2810
+># sigma     0.18      0.01     0.17     0.20 1.00     4069     2777
 ># 
-># Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
-># is a crude measure of effective sample size, and Rhat is the potential 
+># Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
+># and Tail_ESS are effective sample size measures, and Rhat is the potential
 ># scale reduction factor on split chains (at convergence, Rhat = 1).
 ```
 
@@ -316,10 +323,10 @@ broom::tidy(m1, conf.method = "HPDinterval", conf.level = .90)
 
 ```
 >#          term estimate std.error   lower   upper
-># 1 b_Intercept    0.261   0.05904   0.163   0.359
-># 2    b_mom_iq    0.607   0.05845   0.511   0.703
-># 3       sigma    0.183   0.00645   0.173   0.194
-># 4        lp__  117.094   1.26376 114.572 118.450
+># 1 b_Intercept    0.261   0.05862   0.165   0.358
+># 2    b_mom_iq    0.607   0.05789   0.511   0.702
+># 3       sigma    0.183   0.00604   0.174   0.193
+># 4        lp__  117.176   1.18197 114.843 118.463
 ```
 
 You can plot the density and mixing of the posterior distributions:
@@ -357,7 +364,7 @@ $$\widehat{\texttt{kid_score}} = 0.261 +
 
 So, based on our model, if we observe two participants with 1 unit difference in
 `mom_iq`, the child's IQ score is expected to be different by 
-0.607 points, 95% CI [0.493, 0.723]. As `mom_iq` and `kid_score` are on similar scale,
+0.607 points, 95% CI [0.494, 0.720]. As `mom_iq` and `kid_score` are on similar scale,
 there seems to be strong heritability for IQ.
 
 However, in Bayesian statistics, we want to be explicit about the uncertainty
@@ -439,12 +446,16 @@ bayes_R2(m1)  # Bayesian R^2
 
 ```
 >#    Estimate Est.Error Q2.5 Q97.5
-># R2    0.199    0.0304 0.14 0.259
+># R2    0.199    0.0302 0.14 0.258
 ```
 
 ```r
 bayes_R2(m1, summary = FALSE) %>% 
   mcmc_areas(prob = .90)  # showing density and 95% CI
+```
+
+```
+># Warning: `expand_scale()` is deprecated; use `expansion()` instead.
 ```
 
 <img src="07_linear_model_files/figure-html/r2-m1-1.png" width="672" />
@@ -454,9 +465,9 @@ bayes_R2(m1, summary = FALSE) %>%
 
 This is interpreted as:
 
-> Based on the model, 19.922% of the variance of 
+> Based on the model, 19.942% of the variance of 
 kid's score can be predicted by mother's IQ, 95% CI [
-13.992%, 25.924%]. 
+14.025%, 25.8%]. 
 
 Note that $R^2$ is commonly referred to variance explained, but as "explained"
 usually implies causation this only makes sense when causal inference is the 
@@ -502,15 +513,15 @@ broom::tidy(m1c)
 
 ```
 >#          term estimate std.error   lower   upper
-># 1 b_Intercept    0.868   0.00875   0.854   0.882
-># 2  b_mom_iq_c    0.610   0.05820   0.516   0.707
-># 3       sigma    0.183   0.00606   0.174   0.193
-># 4        lp__  117.158   1.20882 114.819 118.455
+># 1 b_Intercept    0.868   0.00871   0.853   0.882
+># 2  b_mom_iq_c    0.607   0.05865   0.512   0.702
+># 3       sigma    0.183   0.00638   0.173   0.194
+># 4        lp__  117.109   1.24779 114.517 118.465
 ```
 
 Now, we can interpret the intercept as the predicted average `kid_score` when
 `mom_iq` = 100 (or 1 in the rescaled version) for participants whose mother does not have a high school 
-degree, which is 86.797 points, 95% CI [85.035, 88.438].
+degree, which is 86.771 points, 95% CI [85.059, 88.541].
 
 > Centering is especially important when evaluating interaction models. 
 
@@ -578,17 +589,17 @@ broom::tidy(m2)
 
 ```
 >#          term estimate std.error   lower  upper
-># 1 b_Intercept    0.776   0.02010  0.7435  0.809
-># 2 b_mom_hsyes    0.117   0.02287  0.0798  0.155
-># 3       sigma    0.199   0.00678  0.1879  0.211
-># 4        lp__   81.247   1.25133 78.7915 82.558
+># 1 b_Intercept    0.775   0.02027  0.7424  0.808
+># 2 b_mom_hsyes    0.118   0.02320  0.0805  0.156
+># 3       sigma    0.199   0.00678  0.1886  0.211
+># 4        lp__   81.244   1.24461 78.8563 82.565
 ```
 
 The chains have converged. Using the posterior medians, the estimated child's 
-IQ score is 77.582 points, 95% CI [73.641, 81.519] for the group whose
+IQ score is 77.506 points, 95% CI [73.464, 81.449] for the group whose
 mother does not have a high school degree, and the estimated average difference
 between the group whose mother has a high school degree and those who does not
-on `kid_score` is 11.746 points, 95% CI [7.243, 16.094]. We can also obtain
+on `kid_score` is 11.800 points, 95% CI [7.200, 16.306]. We can also obtain
 the posterior distribution for the mean of the `mom_hs = 1` group by adding
 up the posterior draws of $\beta_0$ and $\beta_1$:
 
@@ -601,8 +612,8 @@ psych::describe(yhat_hs)
 ```
 
 ```
->#    vars    n mean   sd median trimmed  mad  min  max range  skew kurtosis se
-># X1    1 4000 0.89 0.01   0.89    0.89 0.01 0.85 0.93  0.09 -0.01     0.15  0
+>#    vars    n mean   sd median trimmed  mad  min  max range skew kurtosis se
+># X1    1 4000 0.89 0.01   0.89    0.89 0.01 0.85 0.94  0.08 0.03     0.15  0
 ```
 
 You can also use `marginal_effects()`:
@@ -727,8 +738,8 @@ psych::describe(m1_r2)
 ```
 
 ```
->#    vars    n mean   sd median trimmed  mad min  max range skew kurtosis se
-># X1    1 4000  0.2 0.03    0.2     0.2 0.03 0.1 0.31  0.21 0.02     0.16  0
+>#    vars    n mean   sd median trimmed  mad min max range skew kurtosis se
+># X1    1 4000  0.2 0.03    0.2     0.2 0.03 0.1 0.3   0.2 0.04    -0.09  0
 ```
 
 ## Multiple Regression
@@ -772,6 +783,14 @@ The chains have converged. We have the following results (with `mcmc_areas`)
 stanplot(m3, type = "areas", prob = 0.90)
 ```
 
+```
+># Warning: Method 'stanplot' is deprecated. Please use 'mcmc_plot' instead.
+```
+
+```
+># Warning: `expand_scale()` is deprecated; use `expansion()` instead.
+```
+
 <img src="07_linear_model_files/figure-html/plot-m3-1.png" width="672" />
 
 We can plot the data with two regression lines
@@ -796,14 +815,14 @@ plot(
 
 Using the posterior mean, we have the following regression line
 $$\widehat{\texttt{kid_score}} = 0.821 + 
-                                  0.561 \times \texttt{mom_iq_c} + 
+                                  0.562 \times \texttt{mom_iq_c} + 
                                   0.06 \times \texttt{mom_hs}$$
 So, based on our model, if we observe two participants with 1 unit difference in
 `mom_iq_c`, and for both the mothers have high school degree (or both without),
-the child's IQ score is expected to be different by 0.561 points, 95% CI [0.448, 0.683]. On the
+the child's IQ score is expected to be different by 0.562 points, 95% CI [0.442, 0.679]. On the
 other hand, for two observations with the same `mom_iq_c`, our model predicted
 that the child's IQ score when the mother has high school degree is higher by 
-6.031 points, 95% CI [1.634, 10.407] on average.
+5.999 points, 95% CI [1.723, 10.226] on average.
 
 ### Interactions
 
@@ -861,25 +880,25 @@ summary(m4)
 ># 
 ># Population-Level Effects: 
 >#                    Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-># Intercept              0.85      0.02     0.81     0.89 1.00     3118     2663
-># mom_iq_c               0.91      0.14     0.64     1.19 1.00     2385     2476
-># mom_hsyes              0.03      0.02    -0.01     0.08 1.00     3190     2792
-># mom_iq_c:mom_hsyes    -0.42      0.15    -0.73    -0.12 1.00     2399     2257
+># Intercept              0.85      0.02     0.80     0.89 1.00     2643     2505
+># mom_iq_c               0.91      0.14     0.63     1.19 1.00     2103     2092
+># mom_hsyes              0.03      0.02    -0.01     0.08 1.00     2822     2754
+># mom_iq_c:mom_hsyes    -0.42      0.16    -0.73    -0.11 1.00     2114     2057
 ># 
 ># Family Specific Parameters: 
 >#       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-># sigma     0.18      0.01     0.17     0.19 1.00     3722     2436
+># sigma     0.18      0.01     0.17     0.19 1.00     3249     2175
 ># 
-># Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
-># is a crude measure of effective sample size, and Rhat is the potential 
+># Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
+># and Tail_ESS are effective sample size measures, and Rhat is the potential
 ># scale reduction factor on split chains (at convergence, Rhat = 1).
 ```
 
 Using the posterior median, we have the following regression line
-$$\widehat{\texttt{kid_score}} = 0.85 + 
-                                 0.914 \times \texttt{mom_iq_c} + 
-                                 0.032 \times \texttt{mom_hs} + 
-                                 -0.423 \times \texttt{mom_iq_c} \times \texttt{mom_hs}$$
+$$\widehat{\texttt{kid_score}} = 0.849 + 
+                                 0.911 \times \texttt{mom_iq_c} + 
+                                 0.033 \times \texttt{mom_hs} + 
+                                 -0.419 \times \texttt{mom_iq_c} \times \texttt{mom_hs}$$
 
 Interaction effect is generally not easy to interpret. It would be easier to
 write the regression line for `mom_hs` = "no" (0) and `mom_hs` = "yes" (1). To
@@ -897,12 +916,12 @@ posterior medians may be different, because the median is not a linear function
 of the posterior samples)
 
 When `mom_hs` = 0, 
-$$\widehat{\texttt{kid_score}} = 0.85 + 
-                                 0.914 \times \texttt{mom_iq_c}$$
+$$\widehat{\texttt{kid_score}} = 0.849 + 
+                                 0.911 \times \texttt{mom_iq_c}$$
 
 and when `mom_hs` = 1
 $$\widehat{\texttt{kid_score}} = 0.882 + 
-                                 0.491 \times 
+                                 0.492 \times 
                                   \texttt{mom_iq_c}$$
 
 We can plot the data with two regression lines with the following code:
@@ -933,14 +952,14 @@ bayes_R2(m4)
 
 ```
 >#    Estimate Est.Error  Q2.5 Q97.5
-># R2    0.227    0.0314 0.165 0.287
+># R2    0.227    0.0312 0.163 0.288
 ```
 
 So the two predictors, plus the main effect, explained 
-22.684%
+22.719%
 of the variance of `kid_score`. However, comparing to the model with only 
 `mom_iq_c` as predictor, including `mom_hs` and the interaction increased 
-the $R^2$ by $2.762\%$. 
+the $R^2$ by $2.777\%$. 
 
 You can plot the density of the posterior distributions for the three $\beta$s:
 
@@ -948,6 +967,14 @@ You can plot the density of the posterior distributions for the three $\beta$s:
 ```r
 # `pars = "b"` will include all regression coefficients
 stanplot(m4, type = "areas", pars = "b", prob = 0.90)
+```
+
+```
+># Warning: Method 'stanplot' is deprecated. Please use 'mcmc_plot' instead.
+```
+
+```
+># Warning: `expand_scale()` is deprecated; use `expansion()` instead.
 ```
 
 <img src="07_linear_model_files/figure-html/areas-m4-1.png" width="672" />
@@ -1023,24 +1050,24 @@ sjPlot::tab_model(m1c, m2, m3, m4)
 <tr>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">Intercept</td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.87</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.85&nbsp;&ndash;&nbsp;0.88</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.85&nbsp;&ndash;&nbsp;0.89</td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.78</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.74&nbsp;&ndash;&nbsp;0.82</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.73&nbsp;&ndash;&nbsp;0.81</td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.82</td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7">0.78&nbsp;&ndash;&nbsp;0.86</td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8">0.85</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9">0.81&nbsp;&ndash;&nbsp;0.89</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9">0.80&nbsp;&ndash;&nbsp;0.89</td>
 </tr>
 <tr>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">mom.iq</td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.61</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.50&nbsp;&ndash;&nbsp;0.72</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.49&nbsp;&ndash;&nbsp;0.72</td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.56</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7">0.45&nbsp;&ndash;&nbsp;0.68</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7">0.44&nbsp;&ndash;&nbsp;0.68</td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8">0.91</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9">0.64&nbsp;&ndash;&nbsp;1.19</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9">0.63&nbsp;&ndash;&nbsp;1.19</td>
 </tr>
 <tr>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">mom_hs: yes</td>
@@ -1062,7 +1089,7 @@ sjPlot::tab_model(m1c, m2, m3, m4)
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"></td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8">-0.42</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9">-0.73&nbsp;&ndash;&nbsp;-0.12</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9">-0.73&nbsp;&ndash;&nbsp;-0.11</td>
 </tr>
 <tr>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">Observations</td>
@@ -1073,10 +1100,10 @@ sjPlot::tab_model(m1c, m2, m3, m4)
 </tr>
 <tr>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">R<sup>2</sup> Bayes</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">0.201</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">0.200</td>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">0.056</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">0.215</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">0.227</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">0.214</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">0.228</td>
 </tr>
 
 </table>
@@ -1095,18 +1122,18 @@ texreg::screenreg(map(list(m1c, m2, m3, m4), extract_brmsfit))
 >#                     Model 1       Model 2       Model 3       Model 4       
 ># ----------------------------------------------------------------------------
 ># Intercept              0.87 *        0.78 *        0.82 *        0.85 *     
->#                     [0.85; 0.88]  [0.74; 0.82]  [0.78; 0.86]  [ 0.81;  0.89]
+>#                     [0.85; 0.88]  [0.73; 0.81]  [0.78; 0.86]  [ 0.80;  0.89]
 ># mom_iq_c               0.61 *                      0.56 *        0.91 *     
->#                     [0.50; 0.73]                [0.45; 0.69]  [ 0.65;  1.20]
+>#                     [0.49; 0.72]                [0.45; 0.68]  [ 0.64;  1.20]
 ># mom_hsyes                            0.12 *        0.06 *        0.03       
->#                                   [0.08; 0.16]  [0.02; 0.10]  [-0.01;  0.08]
+>#                                   [0.08; 0.17]  [0.02; 0.10]  [-0.01;  0.08]
 ># mom_iq_c:mom_hsyes                                              -0.42 *     
->#                                                               [-0.73; -0.14]
+>#                                                               [-0.75; -0.13]
 ># ----------------------------------------------------------------------------
 ># R^2                    0.20          0.06          0.21          0.23       
 ># Num. obs.            434           434           434           434          
-># loo IC              -240.27       -167.74       -245.34       -252.21       
-># WAIC                -240.28       -167.75       -245.35       -252.22       
+># loo IC              -240.07       -167.76       -245.19       -252.03       
+># WAIC                -240.08       -167.77       -245.20       -252.05       
 ># ============================================================================
 ># * 0 outside the confidence interval
 ```

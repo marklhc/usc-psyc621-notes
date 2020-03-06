@@ -170,8 +170,8 @@ gridExtra::grid.arrange(p1, p2, p3, nrow = 2)
 
 #### Model Diagram
 
-<!--html_preserve--><div id="htmlwidget-25d9fd4f1cf9d229ad2f" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-25d9fd4f1cf9d229ad2f">{"x":{"diagram":"\ndigraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # data\n  node [shape = box, fixedsize = true]\n  Y1 [label = <y<FONT POINT-SIZE=\"8\"><SUB>i1<\/SUB><\/FONT>>]\n  Y2 [label = <y<FONT POINT-SIZE=\"8\"><SUB>i2<\/SUB><\/FONT>>]\n  \n  # parameters\n  node [shape = circle]\n  mu1 [label = <&mu;<FONT POINT-SIZE=\"8\"><SUB>1<\/SUB><\/FONT>>]\n  beta [label = \"&beta;\"]\n  sigma [label = \"&sigma;\"]\n  \n  # transformed parameters\n  node [shape = circle, peripheries = 2]\n  mu2 [label = <&mu;<FONT POINT-SIZE=\"8\"><SUB>2<\/SUB><\/FONT>>]\n  \n  # fixed values in prior\n  node [shape = circle, peripheries = 1]\n  mu_mu1 [label = <&mu;<FONT POINT-SIZE=\"8\"><SUB>&mu;<FONT POINT-SIZE=\"8\"><SUB>1<\/SUB><\/FONT><\/SUB><\/FONT>>]\n  sigma_mu1 [label = <&sigma;<FONT POINT-SIZE=\"8\"><SUB>&mu;<FONT POINT-SIZE=\"8\"><SUB>1<\/SUB><\/FONT><\/SUB><\/FONT>>]\n  mu_beta [label = <&mu;<FONT POINT-SIZE=\"8\"><SUB>&beta;<\/SUB><\/FONT>>]\n  sigma_beta [label = <&sigma;<FONT POINT-SIZE=\"8\"><SUB>&beta;<\/SUB><\/FONT>>]\n  nu_sigma [label = <&nu;<FONT POINT-SIZE=\"8\"><SUB>&sigma;<\/SUB><\/FONT>>]\n  mu_sigma [label = <&mu;<FONT POINT-SIZE=\"8\"><SUB>&sigma;<\/SUB><\/FONT>>];\n  sigma_sigma [label = <&sigma;<FONT POINT-SIZE=\"8\"><SUB>&sigma;<\/SUB><\/FONT>>]\n\n  # paths\n  nu_sigma -> sigma;\n  mu_sigma -> sigma;\n  sigma_sigma -> sigma;\n  mu_mu1 -> mu1;\n  sigma_mu1 -> mu1;\n  mu_beta -> beta;\n  sigma_beta -> beta;\n  mu1 -> mu2;\n  beta -> mu2;\n  mu1 -> Y1;\n  mu2 -> Y2;\n  sigma -> Y1;\n  sigma -> Y2;\n  \n  # fine tuning\n  {rank = same; Y1; Y2;}\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
+<!--html_preserve--><div id="htmlwidget-de9777f83c40b0c9682e" style="width:672px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-de9777f83c40b0c9682e">{"x":{"diagram":"\ndigraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # data\n  node [shape = box, fixedsize = true]\n  Y1 [label = <y<FONT POINT-SIZE=\"8\"><SUB>i1<\/SUB><\/FONT>>]\n  Y2 [label = <y<FONT POINT-SIZE=\"8\"><SUB>i2<\/SUB><\/FONT>>]\n  \n  # parameters\n  node [shape = circle]\n  mu1 [label = <&mu;<FONT POINT-SIZE=\"8\"><SUB>1<\/SUB><\/FONT>>]\n  beta [label = \"&beta;\"]\n  sigma [label = \"&sigma;\"]\n  \n  # transformed parameters\n  node [shape = circle, peripheries = 2]\n  mu2 [label = <&mu;<FONT POINT-SIZE=\"8\"><SUB>2<\/SUB><\/FONT>>]\n  \n  # fixed values in prior\n  node [shape = circle, peripheries = 1]\n  mu_mu1 [label = <&mu;<FONT POINT-SIZE=\"8\"><SUB>&mu;<FONT POINT-SIZE=\"8\"><SUB>1<\/SUB><\/FONT><\/SUB><\/FONT>>]\n  sigma_mu1 [label = <&sigma;<FONT POINT-SIZE=\"8\"><SUB>&mu;<FONT POINT-SIZE=\"8\"><SUB>1<\/SUB><\/FONT><\/SUB><\/FONT>>]\n  mu_beta [label = <&mu;<FONT POINT-SIZE=\"8\"><SUB>&beta;<\/SUB><\/FONT>>]\n  sigma_beta [label = <&sigma;<FONT POINT-SIZE=\"8\"><SUB>&beta;<\/SUB><\/FONT>>]\n  nu_sigma [label = <&nu;<FONT POINT-SIZE=\"8\"><SUB>&sigma;<\/SUB><\/FONT>>]\n  mu_sigma [label = <&mu;<FONT POINT-SIZE=\"8\"><SUB>&sigma;<\/SUB><\/FONT>>];\n  sigma_sigma [label = <&sigma;<FONT POINT-SIZE=\"8\"><SUB>&sigma;<\/SUB><\/FONT>>]\n\n  # paths\n  nu_sigma -> sigma;\n  mu_sigma -> sigma;\n  sigma_sigma -> sigma;\n  mu_mu1 -> mu1;\n  sigma_mu1 -> mu1;\n  mu_beta -> beta;\n  sigma_beta -> beta;\n  mu1 -> mu2;\n  beta -> mu2;\n  mu1 -> Y1;\n  mu2 -> Y2;\n  sigma -> Y1;\n  sigma -> Y2;\n  \n  # fine tuning\n  {rank = same; Y1; Y2;}\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
 
 #### STAN
 
@@ -243,10 +243,10 @@ broom::tidy(m1, pars = c("mu_1", "mu_2", "beta", "sigma"),
 ># # A tibble: 4 x 5
 >#   term  estimate std.error conf.low conf.high
 >#   <chr>    <dbl>     <dbl>    <dbl>     <dbl>
-># 1 mu_1     1.81     0.104     1.60      2.01 
-># 2 mu_2     1.30     0.0714    1.15      1.43 
-># 3 beta    -0.511    0.128    -0.760    -0.261
-># 4 sigma    0.461    0.0437    0.385     0.557
+># 1 mu_1     1.81     0.0999    1.61      2.00 
+># 2 mu_2     1.30     0.0724    1.15      1.44 
+># 3 beta    -0.511    0.125    -0.759    -0.265
+># 4 sigma    0.463    0.0427    0.388     0.557
 ```
 
 ```r
@@ -296,6 +296,10 @@ bayesplot::mcmc_areas(post_sam, pars = "cohen_d",
                       prob = .90)
 ```
 
+```
+># Warning: `expand_scale()` is deprecated; use `expansion()` instead.
+```
+
 <img src="05_group_comparisons_files/figure-html/post_sam-1.png" width="336" />
 
 ```r
@@ -306,19 +310,19 @@ HPDinterval(as.mcmc(post_sam))
 
 ```
 >#          lower  upper
-># beta    -0.763 -0.266
-># sigma    0.379  0.549
-># cohen_d -1.684 -0.522
+># beta    -0.756 -0.264
+># sigma    0.379  0.544
+># cohen_d -1.709 -0.563
 ># attr(,"Probability")
 ># [1] 0.95
 ```
 
 > From the normal model, it was estimated that the mean RT for man was 
-1.806 seconds, 95% CI [1.603, 2.011].
+1.809 seconds, 95% CI [1.614, 1.997].
 On average women had faster RT when asked to tell lies in Dutch than man, with
 an estimated difference of -0.511 seconds, 95% CI 
-[-0.760, -0.261], _d_ = -1.118, 95% CI 
-[-1.714, -0.543].
+[-0.759, -0.265], _d_ = -1.116, 95% CI 
+[-1.697, -0.546].
 
 #### Posterior Predictive Check
 
@@ -438,13 +442,6 @@ codes for running it on our example.
 
 #### Shifted Lognormal Distributions
 
-
-```
-># Registered S3 method overwritten by 'xts':
->#   method     from
->#   as.zoo.xts zoo
-```
-
 <img src="05_group_comparisons_files/figure-html/shifted-lognormal-1.png" width="432" />
 
 #### STAN
@@ -515,11 +512,11 @@ broom::tidy(m3, pars = c("mu_1", "mu_2", "beta_mu", "sigma",
 
 term       estimate   std.error   conf.low   conf.high
 --------  ---------  ----------  ---------  ----------
-mu_1           0.15        0.21      -0.25        0.53
-mu_2           0.03        0.12      -0.20        0.24
-beta_mu       -0.12        0.19      -0.47        0.27
-sigma          0.40        0.06       0.29        0.52
-ndt_1          0.55        0.21       0.13        0.90
+mu_1           0.15        0.21      -0.25        0.54
+mu_2           0.03        0.12      -0.21        0.24
+beta_mu       -0.12        0.19      -0.48        0.26
+sigma          0.40        0.06       0.30        0.52
+ndt_1          0.54        0.21       0.14        0.91
 ndt_2          0.18        0.09       0.02        0.36
 
 #### Difference in $\mu$ and in `ndt`
@@ -538,6 +535,10 @@ post_sam$ndt_diff <- post_sam$ndt_2 - post_sam$ndt_1
 # Posterior density
 bayesplot::mcmc_areas(post_sam, pars = c("dt_diff", "ndt_diff"), 
                       prob = .90)
+```
+
+```
+># Warning: `expand_scale()` is deprecated; use `expansion()` instead.
 ```
 
 <img src="05_group_comparisons_files/figure-html/post_sam-ndt-1.png" width="336" />
@@ -756,12 +757,12 @@ broom::tidy(m4, pars = c("mu_1", "mu_2", "beta", "sigma", "tau", "cohen_d"),
 ># # A tibble: 6 x 5
 >#   term    estimate std.error conf.low conf.high
 >#   <chr>      <dbl>     <dbl>    <dbl>     <dbl>
-># 1 mu_1       1.16     0.0635    1.04      1.29 
-># 2 mu_2       1.47     0.0632    1.35      1.60 
-># 3 beta       0.308    0.0344    0.242     0.377
-># 4 sigma      0.195    0.0184    0.162     0.234
-># 5 tau        0.443    0.0454    0.362     0.540
-># 6 cohen_d    0.640    0.0880    0.476     0.828
+># 1 mu_1       1.16     0.0604    1.04      1.28 
+># 2 mu_2       1.47     0.0606    1.35      1.59 
+># 3 beta       0.308    0.0346    0.240     0.377
+># 4 sigma      0.194    0.0177    0.163     0.233
+># 5 tau        0.441    0.0453    0.364     0.539
+># 6 cohen_d    0.644    0.0906    0.471     0.828
 ```
 
 ```r
@@ -781,11 +782,11 @@ plot(m4, pars = c("mu_1", "mu_2", "beta", "sigma", "tau", "cohen_d"))
 
 
 > From the normal model, it was estimated that the mean RT for truth was 
-1.161 seconds, 95% CI [1.038, 1.289].
+1.159 seconds, 95% CI [1.040, 1.279].
 On average women had faster RT when asked to tell lies in Dutch than man, with
 an estimated difference of 0.308 seconds, 95% CI 
-[0.242, 0.377], _d_ = 0.64, 95% CI 
-[0.476, 0.828].
+[0.240, 0.377], _d_ = 0.644, 95% CI 
+[0.471, 0.828].
 
 #### Posterior Predictive Check
 
@@ -883,20 +884,20 @@ m2_brm
 ># Group-Level Effects: 
 ># ~PP (Number of levels: 63) 
 >#               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-># sd(Intercept)     0.41      0.04     0.34     0.51 1.01      678     1230
+># sd(Intercept)     0.41      0.04     0.34     0.50 1.01      732     1417
 ># 
 ># Population-Level Effects: 
 >#               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-># Intercept         1.45      0.06     1.33     1.57 1.02      312      738
-># veracityTDMRT    -0.30      0.03    -0.37    -0.24 1.00     4141     3015
+># Intercept         1.45      0.06     1.33     1.56 1.01      361      801
+># veracityTDMRT    -0.30      0.03    -0.36    -0.24 1.00     4341     2787
 ># 
 ># Family Specific Parameters: 
 >#       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-># sigma     0.14      0.02     0.10     0.19 1.00     1100     1943
-># nu        6.00      5.14     2.06    20.34 1.00     1300     1649
+># sigma     0.14      0.02     0.10     0.19 1.00     1110     1694
+># nu        5.75      4.77     2.08    19.49 1.00     1603     1783
 ># 
-># Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
-># is a crude measure of effective sample size, and Rhat is the potential 
+># Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
+># and Tail_ESS are effective sample size measures, and Rhat is the potential
 ># scale reduction factor on split chains (at convergence, Rhat = 1).
 ```
 
@@ -1004,7 +1005,7 @@ brms::posterior_interval(m3_brm, pars = "b_languageLEMRT")
 
 ```
 >#                    2.5%  97.5%
-># b_languageLEMRT -0.0398 0.0409
+># b_languageLEMRT -0.0405 0.0399
 ```
 
 So we can see that the 95% CI is completely inside the ROPE. Therefore, we would
@@ -1024,7 +1025,7 @@ mean(beta_sam < .05 & beta_sam > -.05)
 ```
 
 ```
-># [1] 0.985
+># [1] 0.982
 ```
 
 which shows that there is a `mean(beta_sam < .05 & beta_sam > -.05) * 100`%

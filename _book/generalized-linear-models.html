@@ -1,30 +1,30 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 11 Generalized Linear Models | Course Handouts for Bayesian Data Analysis Class</title>
-  <meta name="description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Spring semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
-  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
+  <meta name="description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Fall semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 11 Generalized Linear Models | Course Handouts for Bayesian Data Analysis Class" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Spring semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
+  <meta property="og:description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Fall semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
   
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 11 Generalized Linear Models | Course Handouts for Bayesian Data Analysis Class" />
   
-  <meta name="twitter:description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Spring semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
+  <meta name="twitter:description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Fall semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
   
 
 <meta name="author" content="Mark Lai" />
 
 
-<meta name="date" content="2019-12-14" />
+<meta name="date" content="2020-03-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,15 +51,15 @@
 
 
 <script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
-<script src="libs/viz-0.3/viz.js"></script>
+<script src="libs/viz-1.8.2/viz.js"></script>
 <link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
-<script src="libs/grViz-binding-1.0.1/grViz.js"></script>
+<script src="libs/grViz-binding-1.0.5/grViz.js"></script>
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
@@ -68,14 +68,16 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -84,9 +86,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -392,42 +394,42 @@ conditional mean of an outcome variable <span class="math inline">\(Y\)</span>; 
 denoted as <span class="math inline">\(\mu\)</span>. Indeed, the linear model we have discussed is a special
 case of GLM. To see what’s different in other GLMs, let’s apply the normal
 regression model to categorical outcomes, and see what problems there are.</p>
-<p>We will use an example from <span class="citation">Pritschet, Powell, and Horne (<a href="#ref-pritschet2016marginally">2016</a>)</span>, which examines how common
+<p>We will use an example from <span class="citation">Pritschet, Powell, and Horne (<a href="#ref-pritschet2016marginally" role="doc-biblioref">2016</a>)</span>, which examines how common
 it was for researchers to report marginal <span class="math inline">\(p\)</span> values (i.e., .05 &lt; <span class="math inline">\(p\)</span> <span class="math inline">\(\leq\)</span>
 .10). The outcome is whether a study reported one or more marginal <span class="math inline">\(p\)</span> values
 (1 = Yes, 0 = No). The researchers also categorized the studies into three
 subfields (Cognitive Psychology, Developmental Psychology, Social Psychology),
 and there were a total of 1,535 studies examined from 1970 to 2010.</p>
 <p>Let’s read in the data and plot the proportions:</p>
-<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb344-1" data-line-number="1"><span class="co"># readxl package can be used to import excel files</span></a>
-<a class="sourceLine" id="cb344-2" data-line-number="2">marginalp &lt;-<span class="st"> </span>readxl<span class="op">::</span><span class="kw">read_excel</span>(<span class="st">&quot;../data/marginals psych science revision_corrections.xlsx&quot;</span>)</a>
-<a class="sourceLine" id="cb344-3" data-line-number="3"><span class="co"># Recode `Field` into a factor</span></a>
-<a class="sourceLine" id="cb344-4" data-line-number="4">marginalp &lt;-<span class="st"> </span>marginalp <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb344-5" data-line-number="5"><span class="st">  </span><span class="co"># Filter out studies without any experiments</span></a>
-<a class="sourceLine" id="cb344-6" data-line-number="6"><span class="st">  </span><span class="kw">filter</span>(<span class="st">`</span><span class="dt">Number of Experiments</span><span class="st">`</span> <span class="op">&gt;=</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb344-7" data-line-number="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Field =</span> <span class="kw">factor</span>(Field, </a>
-<a class="sourceLine" id="cb344-8" data-line-number="8">                        <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Cognitive Psychology&quot;</span>, </a>
-<a class="sourceLine" id="cb344-9" data-line-number="9">                                   <span class="st">&quot;Developmental Psychology&quot;</span>, </a>
-<a class="sourceLine" id="cb344-10" data-line-number="10">                                   <span class="st">&quot;Social Psychology&quot;</span>))) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb344-11" data-line-number="11"><span class="st">  </span><span class="co"># Rename the outcome</span></a>
-<a class="sourceLine" id="cb344-12" data-line-number="12"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">marginal_p =</span> <span class="st">`</span><span class="dt">Marginals Yes/No</span><span class="st">`</span>)</a>
-<a class="sourceLine" id="cb344-13" data-line-number="13"><span class="co"># Proportion of marginal p in each subfield across Years</span></a>
-<a class="sourceLine" id="cb344-14" data-line-number="14">marginalp <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb344-15" data-line-number="15"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Year, <span class="dt">y =</span> marginal_p)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb344-16" data-line-number="16"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> Field), <span class="dt">geom =</span> <span class="st">&quot;ribbon&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.3</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb344-17" data-line-number="17"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="kw">aes</span>(<span class="dt">col =</span> Field), <span class="dt">geom =</span> <span class="st">&quot;line&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb344-18" data-line-number="18"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="kw">aes</span>(<span class="dt">col =</span> Field), <span class="dt">geom =</span> <span class="st">&quot;point&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb344-19" data-line-number="19"><span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.7</span>)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb344-20" data-line-number="20"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>Field)</a></code></pre></div>
-<pre><code>&gt;# No summary function supplied, defaulting to `mean_se()
-&gt;# No summary function supplied, defaulting to `mean_se()
-&gt;# No summary function supplied, defaulting to `mean_se()
-&gt;# No summary function supplied, defaulting to `mean_se()
-&gt;# No summary function supplied, defaulting to `mean_se()
-&gt;# No summary function supplied, defaulting to `mean_se()
-&gt;# No summary function supplied, defaulting to `mean_se()
-&gt;# No summary function supplied, defaulting to `mean_se()
-&gt;# No summary function supplied, defaulting to `mean_se()</code></pre>
+<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb373-1"><a href="generalized-linear-models.html#cb373-1"></a><span class="co"># readxl package can be used to import excel files</span></span>
+<span id="cb373-2"><a href="generalized-linear-models.html#cb373-2"></a>marginalp &lt;-<span class="st"> </span>readxl<span class="op">::</span><span class="kw">read_excel</span>(<span class="st">&quot;../data/marginals psych science revision_corrections.xlsx&quot;</span>)</span>
+<span id="cb373-3"><a href="generalized-linear-models.html#cb373-3"></a><span class="co"># Recode `Field` into a factor</span></span>
+<span id="cb373-4"><a href="generalized-linear-models.html#cb373-4"></a>marginalp &lt;-<span class="st"> </span>marginalp <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb373-5"><a href="generalized-linear-models.html#cb373-5"></a><span class="st">  </span><span class="co"># Filter out studies without any experiments</span></span>
+<span id="cb373-6"><a href="generalized-linear-models.html#cb373-6"></a><span class="st">  </span><span class="kw">filter</span>(<span class="st">`</span><span class="dt">Number of Experiments</span><span class="st">`</span> <span class="op">&gt;=</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb373-7"><a href="generalized-linear-models.html#cb373-7"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Field =</span> <span class="kw">factor</span>(Field, </span>
+<span id="cb373-8"><a href="generalized-linear-models.html#cb373-8"></a>                        <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Cognitive Psychology&quot;</span>, </span>
+<span id="cb373-9"><a href="generalized-linear-models.html#cb373-9"></a>                                   <span class="st">&quot;Developmental Psychology&quot;</span>, </span>
+<span id="cb373-10"><a href="generalized-linear-models.html#cb373-10"></a>                                   <span class="st">&quot;Social Psychology&quot;</span>))) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb373-11"><a href="generalized-linear-models.html#cb373-11"></a><span class="st">  </span><span class="co"># Rename the outcome</span></span>
+<span id="cb373-12"><a href="generalized-linear-models.html#cb373-12"></a><span class="st">  </span><span class="kw">rename</span>(<span class="dt">marginal_p =</span> <span class="st">`</span><span class="dt">Marginals Yes/No</span><span class="st">`</span>)</span>
+<span id="cb373-13"><a href="generalized-linear-models.html#cb373-13"></a><span class="co"># Proportion of marginal p in each subfield across Years</span></span>
+<span id="cb373-14"><a href="generalized-linear-models.html#cb373-14"></a>marginalp <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb373-15"><a href="generalized-linear-models.html#cb373-15"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Year, <span class="dt">y =</span> marginal_p)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb373-16"><a href="generalized-linear-models.html#cb373-16"></a><span class="st">  </span><span class="kw">stat_summary</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> Field), <span class="dt">geom =</span> <span class="st">&quot;ribbon&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.3</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb373-17"><a href="generalized-linear-models.html#cb373-17"></a><span class="st">  </span><span class="kw">stat_summary</span>(<span class="kw">aes</span>(<span class="dt">col =</span> Field), <span class="dt">geom =</span> <span class="st">&quot;line&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb373-18"><a href="generalized-linear-models.html#cb373-18"></a><span class="st">  </span><span class="kw">stat_summary</span>(<span class="kw">aes</span>(<span class="dt">col =</span> Field), <span class="dt">geom =</span> <span class="st">&quot;point&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb373-19"><a href="generalized-linear-models.html#cb373-19"></a><span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.7</span>)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb373-20"><a href="generalized-linear-models.html#cb373-20"></a><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>Field)</span></code></pre></div>
+<pre><code>&gt;# No summary function supplied, defaulting to `mean_se()`
+&gt;# No summary function supplied, defaulting to `mean_se()`
+&gt;# No summary function supplied, defaulting to `mean_se()`
+&gt;# No summary function supplied, defaulting to `mean_se()`
+&gt;# No summary function supplied, defaulting to `mean_se()`
+&gt;# No summary function supplied, defaulting to `mean_se()`
+&gt;# No summary function supplied, defaulting to `mean_se()`
+&gt;# No summary function supplied, defaulting to `mean_se()`
+&gt;# No summary function supplied, defaulting to `mean_se()`</code></pre>
 <p><img src="11_generalized_linear_models_files/figure-html/marginalp_describe-1.png" width="720" /></p>
 <p>The error bar is pretty high for Cognitive Psychology, because only
 5.922% of the articles in
@@ -435,10 +437,10 @@ the data set were from that field.</p>
 <p>We can first try a normal linear model to use <code>Year</code> to predict <code>marginal_p</code>.
 First recode year into 0 to 4 so that every unit corresponds to 10 years, and
 0 means 1970:</p>
-<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb346-1" data-line-number="1">marginalp &lt;-<span class="st"> </span>marginalp <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb346-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Year10 =</span> (Year <span class="op">-</span><span class="st"> </span><span class="dv">1970</span>) <span class="op">/</span><span class="st"> </span><span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb346-3" data-line-number="3"><span class="co"># Check the recode</span></a>
-<a class="sourceLine" id="cb346-4" data-line-number="4"><span class="kw">distinct</span>(marginalp, Year, Year10)</a></code></pre></div>
+<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="generalized-linear-models.html#cb375-1"></a>marginalp &lt;-<span class="st"> </span>marginalp <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb375-2"><a href="generalized-linear-models.html#cb375-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Year10 =</span> (Year <span class="op">-</span><span class="st"> </span><span class="dv">1970</span>) <span class="op">/</span><span class="st"> </span><span class="dv">10</span>)</span>
+<span id="cb375-3"><a href="generalized-linear-models.html#cb375-3"></a><span class="co"># Check the recode</span></span>
+<span id="cb375-4"><a href="generalized-linear-models.html#cb375-4"></a><span class="kw">distinct</span>(marginalp, Year, Year10)</span></code></pre></div>
 <pre><code>&gt;# # A tibble: 5 x 2
 &gt;#    Year Year10
 &gt;#   &lt;dbl&gt;  &lt;dbl&gt;
@@ -448,17 +450,17 @@ First recode year into 0 to 4 so that every unit corresponds to 10 years, and
 &gt;# 4  1990      2
 &gt;# 5  2010      4</code></pre>
 <p>Now fit a normal linear model:</p>
-<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb348-1" data-line-number="1">m1_norm &lt;-<span class="st"> </span><span class="kw">brm</span>(marginal_p <span class="op">~</span><span class="st"> </span>Year10, </a>
-<a class="sourceLine" id="cb348-2" data-line-number="2">               <span class="dt">data =</span> marginalp, </a>
-<a class="sourceLine" id="cb348-3" data-line-number="3">               <span class="dt">prior =</span> <span class="kw">c</span>(<span class="co"># for intercept </span></a>
-<a class="sourceLine" id="cb348-4" data-line-number="4">                 <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </a>
-<a class="sourceLine" id="cb348-5" data-line-number="5">                 <span class="co"># for slope</span></a>
-<a class="sourceLine" id="cb348-6" data-line-number="6">                 <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>), </a>
-<a class="sourceLine" id="cb348-7" data-line-number="7">                 <span class="co"># for sigma</span></a>
-<a class="sourceLine" id="cb348-8" data-line-number="8">                 <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </a>
-<a class="sourceLine" id="cb348-9" data-line-number="9">               <span class="dt">seed =</span> <span class="dv">1340</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb377-1"><a href="generalized-linear-models.html#cb377-1"></a>m1_norm &lt;-<span class="st"> </span><span class="kw">brm</span>(marginal_p <span class="op">~</span><span class="st"> </span>Year10, </span>
+<span id="cb377-2"><a href="generalized-linear-models.html#cb377-2"></a>               <span class="dt">data =</span> marginalp, </span>
+<span id="cb377-3"><a href="generalized-linear-models.html#cb377-3"></a>               <span class="dt">prior =</span> <span class="kw">c</span>(<span class="co"># for intercept </span></span>
+<span id="cb377-4"><a href="generalized-linear-models.html#cb377-4"></a>                 <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </span>
+<span id="cb377-5"><a href="generalized-linear-models.html#cb377-5"></a>                 <span class="co"># for slope</span></span>
+<span id="cb377-6"><a href="generalized-linear-models.html#cb377-6"></a>                 <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>), </span>
+<span id="cb377-7"><a href="generalized-linear-models.html#cb377-7"></a>                 <span class="co"># for sigma</span></span>
+<span id="cb377-8"><a href="generalized-linear-models.html#cb377-8"></a>                 <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </span>
+<span id="cb377-9"><a href="generalized-linear-models.html#cb377-9"></a>               <span class="dt">seed =</span> <span class="dv">1340</span>)</span></code></pre></div>
 <p>Now let’s check the model. First a posterior predictive check:</p>
-<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb349-1" data-line-number="1"><span class="kw">pp_check</span>(m1_norm, <span class="dt">nsamples =</span> <span class="dv">100</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb378"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb378-1"><a href="generalized-linear-models.html#cb378-1"></a><span class="kw">pp_check</span>(m1_norm, <span class="dt">nsamples =</span> <span class="dv">100</span>)</span></code></pre></div>
 <div class="figure">
 <img src="11_generalized_linear_models_files/figure-html/ppc_normal_hist-1.png" alt="Posterior predictive graphical check with the normal regression model of Year predicting whether a marginal $p$ value was reported." width="672" />
 <p class="caption">
@@ -466,8 +468,12 @@ First recode year into 0 to 4 so that every unit corresponds to 10 years, and
 </p>
 </div>
 <p>Then the marginal model plot:</p>
-<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb350-1" data-line-number="1"><span class="kw">mmp_brm</span>(m1_norm, <span class="dt">x =</span> <span class="st">&quot;Year10&quot;</span>, <span class="dt">plot_pi =</span> <span class="ot">TRUE</span>, <span class="dt">jitter =</span> <span class="ot">TRUE</span>, </a>
-<a class="sourceLine" id="cb350-2" data-line-number="2">        <span class="dt">smooth_method =</span> <span class="st">&quot;loess&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb379-1"><a href="generalized-linear-models.html#cb379-1"></a><span class="kw">mmp_brm</span>(m1_norm, <span class="dt">x =</span> <span class="st">&quot;Year10&quot;</span>, <span class="dt">plot_pi =</span> <span class="ot">TRUE</span>, <span class="dt">jitter =</span> <span class="ot">TRUE</span>, </span>
+<span id="cb379-2"><a href="generalized-linear-models.html#cb379-2"></a>        <span class="dt">smooth_method =</span> <span class="st">&quot;loess&quot;</span>)</span></code></pre></div>
+<pre><code>&gt;# `geom_smooth()` using formula &#39;y ~ x&#39;
+&gt;# `geom_smooth()` using formula &#39;y ~ x&#39;
+&gt;# `geom_smooth()` using formula &#39;y ~ x&#39;
+&gt;# `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <div class="figure">
 <img src="11_generalized_linear_models_files/figure-html/pi_m1-1.png" alt="Marginal model plot of the normal regression model of Year predicting whether a marginal $p$ value was reported." width="672" />
 <p class="caption">
@@ -534,13 +540,13 @@ of getting a head).</p>
 map <span class="math inline">\(\mu_i\)</span> to <span class="math inline">\(\eta_i\)</span>. There are many possible choices, but for binary
 outcomes a common choice is the <em>logit link</em>, meaning <span class="math inline">\(\eta_i = g(\mu_i) = \operatorname{logit}(\mu_i) = \log [\mu_i / (1 - \mu_i)]\)</span>. The logit link convert
 probabilities to log odds. You can see the logit link in the left figure below:</p>
-<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb351-1" data-line-number="1">p1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)), <span class="kw">aes</span>(x)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb351-2" data-line-number="2"><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> qlogis, <span class="dt">n =</span> <span class="dv">501</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb351-3" data-line-number="3"><span class="st">  </span><span class="kw">xlab</span>(<span class="kw">expression</span>(mu)) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="kw">expression</span>(eta))</a>
-<a class="sourceLine" id="cb351-4" data-line-number="4">p2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">6</span>, <span class="dv">6</span>)), <span class="kw">aes</span>(x)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb351-5" data-line-number="5"><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> plogis, <span class="dt">n =</span> <span class="dv">501</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb351-6" data-line-number="6"><span class="st">  </span><span class="kw">ylab</span>(<span class="kw">expression</span>(mu)) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="kw">expression</span>(eta))</a>
-<a class="sourceLine" id="cb351-7" data-line-number="7"><span class="kw">grid.arrange</span>(p1, p2, <span class="dt">nrow =</span> <span class="dv">1</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb381"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb381-1"><a href="generalized-linear-models.html#cb381-1"></a>p1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)), <span class="kw">aes</span>(x)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb381-2"><a href="generalized-linear-models.html#cb381-2"></a><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> qlogis, <span class="dt">n =</span> <span class="dv">501</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb381-3"><a href="generalized-linear-models.html#cb381-3"></a><span class="st">  </span><span class="kw">xlab</span>(<span class="kw">expression</span>(mu)) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="kw">expression</span>(eta))</span>
+<span id="cb381-4"><a href="generalized-linear-models.html#cb381-4"></a>p2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">6</span>, <span class="dv">6</span>)), <span class="kw">aes</span>(x)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb381-5"><a href="generalized-linear-models.html#cb381-5"></a><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> plogis, <span class="dt">n =</span> <span class="dv">501</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb381-6"><a href="generalized-linear-models.html#cb381-6"></a><span class="st">  </span><span class="kw">ylab</span>(<span class="kw">expression</span>(mu)) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="kw">expression</span>(eta))</span>
+<span id="cb381-7"><a href="generalized-linear-models.html#cb381-7"></a><span class="kw">grid.arrange</span>(p1, p2, <span class="dt">nrow =</span> <span class="dv">1</span>)</span></code></pre></div>
 <div class="figure">
 <img src="11_generalized_linear_models_files/figure-html/logit_link-1.png" alt="(Left) Logit link of $\eta = \logit(\mu)$; (Right) inverse logit link of $\mu = \logit^{-1}(\eta)$." width="576" />
 <p class="caption">
@@ -565,7 +571,7 @@ inverse link function. For our example I can also write
 <div id="choice-of-priors" class="section level3">
 <h3><span class="header-section-number">11.2.2</span> Choice of Priors</h3>
 <p>There has been previous literature on what choices of prior on the <span class="math inline">\(\beta\)</span>
-coefficients for logistic regressions would be appropriate <span class="citation">(see Gelman et al. <a href="#ref-gelman2008weakly">2008</a>)</span>. <span class="math inline">\(\beta\)</span> coefficients in logistic regression can be
+coefficients for logistic regressions would be appropriate <span class="citation">(see Gelman et al. <a href="#ref-gelman2008weakly" role="doc-biblioref">2008</a>)</span>. <span class="math inline">\(\beta\)</span> coefficients in logistic regression can be
 relatively large, unlike in normal regression. Therefore, it’s pointed out that
 a heavy tail distribution, like Cauchy and <span class="math inline">\(t\)</span>, would be more appropriate.
 Recent discussions have settled on priors such as <span class="math inline">\(t\)</span> distributions with a small
@@ -574,13 +580,13 @@ sampling, so I will use <span class="math inline">\(t(4, 0, .875)\)</span>, wher
 divided by the standard deviation of the predictor, for the priors for logistic
 regression.</p>
 <p>To run this model, we can specify the <code>family</code> argument in <code>stan_glm</code>:</p>
-<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb352-1" data-line-number="1">m1_bern &lt;-<span class="st"> </span><span class="kw">brm</span>(marginal_p <span class="op">~</span><span class="st"> </span>Year10, </a>
-<a class="sourceLine" id="cb352-2" data-line-number="2">               <span class="dt">data =</span> marginalp, </a>
-<a class="sourceLine" id="cb352-3" data-line-number="3">               <span class="dt">family =</span> <span class="kw">bernoulli</span>(<span class="dt">link =</span> <span class="st">&quot;logit&quot;</span>), </a>
-<a class="sourceLine" id="cb352-4" data-line-number="4">               <span class="dt">prior =</span> <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="fl">.875</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>), </a>
-<a class="sourceLine" id="cb352-5" data-line-number="5">               <span class="co"># Note: no sigma </span></a>
-<a class="sourceLine" id="cb352-6" data-line-number="6">               <span class="dt">seed =</span> <span class="dv">1340</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb353-1" data-line-number="1"><span class="kw">plot</span>(m1_bern)</a></code></pre></div>
+<div class="sourceCode" id="cb382"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb382-1"><a href="generalized-linear-models.html#cb382-1"></a>m1_bern &lt;-<span class="st"> </span><span class="kw">brm</span>(marginal_p <span class="op">~</span><span class="st"> </span>Year10, </span>
+<span id="cb382-2"><a href="generalized-linear-models.html#cb382-2"></a>               <span class="dt">data =</span> marginalp, </span>
+<span id="cb382-3"><a href="generalized-linear-models.html#cb382-3"></a>               <span class="dt">family =</span> <span class="kw">bernoulli</span>(<span class="dt">link =</span> <span class="st">&quot;logit&quot;</span>), </span>
+<span id="cb382-4"><a href="generalized-linear-models.html#cb382-4"></a>               <span class="dt">prior =</span> <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="fl">.875</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>), </span>
+<span id="cb382-5"><a href="generalized-linear-models.html#cb382-5"></a>               <span class="co"># Note: no sigma </span></span>
+<span id="cb382-6"><a href="generalized-linear-models.html#cb382-6"></a>               <span class="dt">seed =</span> <span class="dv">1340</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb383"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb383-1"><a href="generalized-linear-models.html#cb383-1"></a><span class="kw">plot</span>(m1_bern)</span></code></pre></div>
 <p><img src="11_generalized_linear_models_files/figure-html/plot_m1_bern-1.png" width="528" /></p>
 <p>Note that in <code>brms</code> we used <code>family = bernoulli()</code>. In other R functions, such
 as <code>glm</code>, they do not distinguish between bernoulli and Binomial and only
@@ -597,35 +603,36 @@ the coefficients in logistic regressions are no exceptions.</p>
 <span class="math display">\[\operatorname{logit}(\mu_i) = \beta_0.\]</span>
 Therefore, the intercept is the log odds that a study reported a marginally
 significant <span class="math inline">\(p\)</span> value when <code>Year10</code> = 0 (i.e, in 1970), which was estimated to
-be -1.350 , 95% CI [-1.551, -1.149]. As log odds are not as
+be -1.348 , 95% CI [-1.552, -1.150]. As log odds are not as
 intuitive as probability, it is common to instead interpret <span class="math inline">\(\hat{\mu} = \operatorname{logistic}(\beta_0)\)</span>, which is the conditional probability of being <code>marginal_p</code>
 = 1 in 1970. For Bayesian, that means obtaining the posterior distribution of
 <span class="math inline">\(\operatorname{logistic}(\beta_0)\)</span>, which can be done by</p>
-<div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb354-1" data-line-number="1">draws_beta0 &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(m1_bern, <span class="dt">pars =</span> <span class="st">&quot;b_Intercept&quot;</span>)</a>
-<a class="sourceLine" id="cb354-2" data-line-number="2">logistic_beta0 &lt;-<span class="st"> </span><span class="kw">plogis</span>(draws_beta0)</a>
-<a class="sourceLine" id="cb354-3" data-line-number="3"><span class="co"># Summarize the posterior distribution</span></a>
-<a class="sourceLine" id="cb354-4" data-line-number="4">psych<span class="op">::</span><span class="kw">describe</span>(logistic_beta0)</a></code></pre></div>
+<div class="sourceCode" id="cb384"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb384-1"><a href="generalized-linear-models.html#cb384-1"></a>draws_beta0 &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(m1_bern, <span class="dt">pars =</span> <span class="st">&quot;b_Intercept&quot;</span>)</span>
+<span id="cb384-2"><a href="generalized-linear-models.html#cb384-2"></a>logistic_beta0 &lt;-<span class="st"> </span><span class="kw">plogis</span>(draws_beta0)</span>
+<span id="cb384-3"><a href="generalized-linear-models.html#cb384-3"></a><span class="co"># Summarize the posterior distribution</span></span>
+<span id="cb384-4"><a href="generalized-linear-models.html#cb384-4"></a>psych<span class="op">::</span><span class="kw">describe</span>(logistic_beta0)</span></code></pre></div>
 <pre><code>&gt;#    vars    n mean   sd median trimmed  mad  min  max range skew kurtosis se
-&gt;# X1    1 4000 0.21 0.02   0.21    0.21 0.02 0.16 0.27  0.11 0.15     -0.2  0</code></pre>
+&gt;# X1    1 4000 0.21 0.02   0.21    0.21 0.02 0.15 0.27  0.12 0.13        0  0</code></pre>
 <p>The <code>bayesplot</code> package allow you to plot transformed parameters quickly:</p>
-<div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb356-1" data-line-number="1"><span class="kw">mcmc_areas</span>(m1_bern, <span class="dt">pars =</span> <span class="st">&quot;b_Intercept&quot;</span>, </a>
-<a class="sourceLine" id="cb356-2" data-line-number="2">           <span class="dt">transformations =</span> <span class="kw">list</span>(<span class="st">&quot;b_Intercept&quot;</span> =<span class="st"> &quot;plogis&quot;</span>), <span class="dt">bw =</span> <span class="st">&quot;SJ&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb386"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb386-1"><a href="generalized-linear-models.html#cb386-1"></a><span class="kw">mcmc_areas</span>(m1_bern, <span class="dt">pars =</span> <span class="st">&quot;b_Intercept&quot;</span>, </span>
+<span id="cb386-2"><a href="generalized-linear-models.html#cb386-2"></a>           <span class="dt">transformations =</span> <span class="kw">list</span>(<span class="st">&quot;b_Intercept&quot;</span> =<span class="st"> &quot;plogis&quot;</span>), <span class="dt">bw =</span> <span class="st">&quot;SJ&quot;</span>)</span></code></pre></div>
+<pre><code>&gt;# Warning: `expand_scale()` is deprecated; use `expansion()` instead.</code></pre>
 <p><img src="11_generalized_linear_models_files/figure-html/areas_logistic_beta0-1.png" width="672" /></p>
 <p>A simpler but not precise method is to directly obtain an estimate of
-<span class="math inline">\(\operatorname{logistic}(\beta_0)\)</span> as <span class="math inline">\(\operatorname{logistic}(-1.35) = 0.206\)</span> by directly transforming the posterior
+<span class="math inline">\(\operatorname{logistic}(\beta_0)\)</span> as <span class="math inline">\(\operatorname{logistic}(-1.348) = 0.206\)</span> by directly transforming the posterior
 mean and the credible interval of <span class="math inline">\(\beta_0\)</span>. This usually is okay for large
 sample sizes and probability close to 0.5, but can give big discrepancies
 otherwise. Generally I recommend directly obtaining the posterior distribution
 of <span class="math inline">\(\operatorname{logistic}(\beta_0)\)</span> instead.</p>
 <p>Below illustrates the discrepancy:</p>
-<div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb357-1" data-line-number="1"><span class="co"># Directly from the posterior of logistic(beta0):</span></a>
-<a class="sourceLine" id="cb357-2" data-line-number="2"><span class="kw">quantile</span>(logistic_beta0, <span class="dt">probs =</span> <span class="kw">c</span>(.<span class="dv">05</span>, <span class="fl">.95</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb388-1"><a href="generalized-linear-models.html#cb388-1"></a><span class="co"># Directly from the posterior of logistic(beta0):</span></span>
+<span id="cb388-2"><a href="generalized-linear-models.html#cb388-2"></a><span class="kw">quantile</span>(logistic_beta0, <span class="dt">probs =</span> <span class="kw">c</span>(.<span class="dv">05</span>, <span class="fl">.95</span>))</span></code></pre></div>
 <pre><code>&gt;#    5%   95% 
-&gt;# 0.180 0.234</code></pre>
-<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb359-1" data-line-number="1"><span class="co"># Transform the credible interval limits of beta0:</span></a>
-<a class="sourceLine" id="cb359-2" data-line-number="2"><span class="kw">plogis</span>(<span class="kw">posterior_interval</span>(m1_bern, <span class="dt">pars =</span> <span class="st">&quot;Intercept&quot;</span>))</a></code></pre></div>
+&gt;# 0.180 0.235</code></pre>
+<div class="sourceCode" id="cb390"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb390-1"><a href="generalized-linear-models.html#cb390-1"></a><span class="co"># Transform the credible interval limits of beta0:</span></span>
+<span id="cb390-2"><a href="generalized-linear-models.html#cb390-2"></a><span class="kw">plogis</span>(<span class="kw">posterior_interval</span>(m1_bern, <span class="dt">pars =</span> <span class="st">&quot;Intercept&quot;</span>))</span></code></pre></div>
 <pre><code>&gt;#              2.5% 97.5%
-&gt;# b_Intercept 0.175 0.241</code></pre>
+&gt;# b_Intercept 0.175  0.24</code></pre>
 </div>
 <div id="interpreting-expbeta_1-as-odds-ratio" class="section level4">
 <h4><span class="header-section-number">11.2.3.2</span> Interpreting <span class="math inline">\(\exp(\beta_1)\)</span> As Odds Ratio</h4>
@@ -645,24 +652,24 @@ odds of 1.0 means that the probability of success and failure is equal; an odds
 <span class="math inline">\(&gt; 1\)</span> means success is more likely than failures; and an odds <span class="math inline">\(&lt; 1\)</span> means
 success is less likely than failures. Again, for Bayesian, we need to obtain the
 posterior distribution of <span class="math inline">\(\exp(\beta_1)\)</span> by</p>
-<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb361-1" data-line-number="1">draws_beta1 &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(m1_bern, <span class="dt">pars =</span> <span class="st">&quot;b_Year10&quot;</span>)</a>
-<a class="sourceLine" id="cb361-2" data-line-number="2">exp_beta1 &lt;-<span class="st"> </span><span class="kw">exp</span>(draws_beta1)</a>
-<a class="sourceLine" id="cb361-3" data-line-number="3"><span class="co"># Summarize the posterior distribution</span></a>
-<a class="sourceLine" id="cb361-4" data-line-number="4">psych<span class="op">::</span><span class="kw">describe</span>(exp_beta1)</a></code></pre></div>
+<div class="sourceCode" id="cb392"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb392-1"><a href="generalized-linear-models.html#cb392-1"></a>draws_beta1 &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(m1_bern, <span class="dt">pars =</span> <span class="st">&quot;b_Year10&quot;</span>)</span>
+<span id="cb392-2"><a href="generalized-linear-models.html#cb392-2"></a>exp_beta1 &lt;-<span class="st"> </span><span class="kw">exp</span>(draws_beta1)</span>
+<span id="cb392-3"><a href="generalized-linear-models.html#cb392-3"></a><span class="co"># Summarize the posterior distribution</span></span>
+<span id="cb392-4"><a href="generalized-linear-models.html#cb392-4"></a>psych<span class="op">::</span><span class="kw">describe</span>(exp_beta1)</span></code></pre></div>
 <pre><code>&gt;#    vars    n mean   sd median trimmed  mad  min  max range skew kurtosis se
-&gt;# X1    1 4000 1.43 0.06   1.43    1.43 0.06 1.24 1.62  0.38 0.08    -0.05  0</code></pre>
+&gt;# X1    1 4000 1.43 0.06   1.43    1.43 0.06 1.21 1.63  0.41  0.1    -0.03  0</code></pre>
 <p>Using the posterior mean, we predict that the odds of reporting a marginal <span class="math inline">\(p\)</span>
 value for a study that is 10 years later is multiplied by
-1.429 times.</p>
+1.428 times.</p>
 <p>And we can again compute a 90% credible interval by:</p>
-<div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb363-1" data-line-number="1"><span class="co"># Directly from the posterior of exp(beta):</span></a>
-<a class="sourceLine" id="cb363-2" data-line-number="2"><span class="kw">quantile</span>(exp_beta1, <span class="dt">probs =</span> <span class="kw">c</span>(.<span class="dv">05</span>, <span class="fl">.95</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb394"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb394-1"><a href="generalized-linear-models.html#cb394-1"></a><span class="co"># Directly from the posterior of exp(beta):</span></span>
+<span id="cb394-2"><a href="generalized-linear-models.html#cb394-2"></a><span class="kw">quantile</span>(exp_beta1, <span class="dt">probs =</span> <span class="kw">c</span>(.<span class="dv">05</span>, <span class="fl">.95</span>))</span></code></pre></div>
 <pre><code>&gt;#   5%  95% 
-&gt;# 1.33 1.53</code></pre>
-<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb365-1" data-line-number="1"><span class="co"># Or you can exponentiate the credible interval of beta:</span></a>
-<a class="sourceLine" id="cb365-2" data-line-number="2"><span class="kw">exp</span>(<span class="kw">posterior_interval</span>(m1_bern, <span class="dt">pars =</span> <span class="st">&quot;Year10&quot;</span>))</a></code></pre></div>
+&gt;# 1.34 1.53</code></pre>
+<div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb396-1"><a href="generalized-linear-models.html#cb396-1"></a><span class="co"># Or you can exponentiate the credible interval of beta:</span></span>
+<span id="cb396-2"><a href="generalized-linear-models.html#cb396-2"></a><span class="kw">exp</span>(<span class="kw">posterior_interval</span>(m1_bern, <span class="dt">pars =</span> <span class="st">&quot;Year10&quot;</span>))</span></code></pre></div>
 <pre><code>&gt;#          2.5% 97.5%
-&gt;# b_Year10 1.32  1.55</code></pre>
+&gt;# b_Year10 1.32  1.54</code></pre>
 <p>Odds ratio (OR) is popular as the multiplicative effect is constant, thus making
 interpretations easier. Also, in medical research and some other research areas,
 OR can be an excellent approximation of the relative risk, which is the
@@ -680,7 +687,9 @@ predicted probability is a non-linear function of the predictors, a one unit
 difference in the predictor has different meanings depending on the values on
 <span class="math inline">\(X\)</span> you chose for interpretations. Take a look on the predicted values based on
 our model below:</p>
-<div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb367-1" data-line-number="1"><span class="kw">mmp_brm</span>(m1_bern, <span class="dt">x =</span> <span class="st">&quot;Year10&quot;</span>, <span class="dt">plot_pi =</span> <span class="ot">FALSE</span>, <span class="dt">jitter =</span> <span class="ot">TRUE</span>, <span class="dt">smooth_method =</span> <span class="st">&quot;loess&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb398"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb398-1"><a href="generalized-linear-models.html#cb398-1"></a><span class="kw">mmp_brm</span>(m1_bern, <span class="dt">x =</span> <span class="st">&quot;Year10&quot;</span>, <span class="dt">plot_pi =</span> <span class="ot">FALSE</span>, <span class="dt">jitter =</span> <span class="ot">TRUE</span>, <span class="dt">smooth_method =</span> <span class="st">&quot;loess&quot;</span>)</span></code></pre></div>
+<pre><code>&gt;# `geom_smooth()` using formula &#39;y ~ x&#39;
+&gt;# `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <div class="figure">
 <img src="11_generalized_linear_models_files/figure-html/pi_m1_bern-1.png" alt="Marginal model plot of the binary logistic regression model of Year predicting whether a marginal $p$ value was reported." width="672" />
 <p class="caption">
@@ -691,9 +700,9 @@ our model below:</p>
 <span class="math inline">\(p\)</span> value with <code>Year10</code> = 0 (1970) and <code>Year10</code> = 1 (1980) respectively:</p>
 <ul>
 <li>When <code>Year10</code> = 0, <span class="math inline">\(P\)</span>(<code>marginal_p</code> = 1) = <span class="math inline">\(\operatorname{logistic}(\beta_0)\)</span>,
-posterior mean = 0.206.</li>
+posterior mean = 0.207.</li>
 <li>When <code>Year10</code> = 1, <span class="math inline">\(P\)</span>(<code>marginal_p</code> = 1) = <span class="math inline">\(\operatorname{logistic}(\beta_0 + \beta_1)\)</span>,
-posterior mean = 0.27.</li>
+posterior mean = 0.271.</li>
 </ul>
 <p>So between 1970 to 1980, 10 years of time is associated with an increase in the
 predicted probability of reporting marginal <span class="math inline">\(p\)</span> by
@@ -735,21 +744,21 @@ will be problematic because it may lead to out of bound probabilities, but when
 the probabilities are mostly within 20% to 80%, it is generally a pretty good
 approximation. The nice thing is it gives direct interpretation on probability
 unit. Without going into details of the priors, below is how it’s fitted:</p>
-<div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb368-1" data-line-number="1">m1_bern_id &lt;-<span class="st"> </span><span class="kw">brm</span>(marginal_p <span class="op">~</span><span class="st"> </span>Year10, </a>
-<a class="sourceLine" id="cb368-2" data-line-number="2">                  <span class="dt">data =</span> marginalp, </a>
-<a class="sourceLine" id="cb368-3" data-line-number="3">                  <span class="dt">family =</span> <span class="kw">bernoulli</span>(<span class="dt">link =</span> <span class="st">&quot;identity&quot;</span>), </a>
-<a class="sourceLine" id="cb368-4" data-line-number="4">                  <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="fl">0.5</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>, </a>
-<a class="sourceLine" id="cb368-5" data-line-number="5">                                  <span class="dt">lb =</span> <span class="dv">-1</span>, <span class="dt">ub =</span> <span class="dv">1</span>), </a>
-<a class="sourceLine" id="cb368-6" data-line-number="6">                            <span class="kw">prior</span>(<span class="kw">uniform</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>)), </a>
-<a class="sourceLine" id="cb368-7" data-line-number="7">                  <span class="co"># Note: no sigma </span></a>
-<a class="sourceLine" id="cb368-8" data-line-number="8">                  <span class="dt">seed =</span> <span class="dv">1340</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb369-1" data-line-number="1"><span class="kw">loo</span>(m1_bern, m1_bern_id)</a></code></pre></div>
+<div class="sourceCode" id="cb400"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb400-1"><a href="generalized-linear-models.html#cb400-1"></a>m1_bern_id &lt;-<span class="st"> </span><span class="kw">brm</span>(marginal_p <span class="op">~</span><span class="st"> </span>Year10, </span>
+<span id="cb400-2"><a href="generalized-linear-models.html#cb400-2"></a>                  <span class="dt">data =</span> marginalp, </span>
+<span id="cb400-3"><a href="generalized-linear-models.html#cb400-3"></a>                  <span class="dt">family =</span> <span class="kw">bernoulli</span>(<span class="dt">link =</span> <span class="st">&quot;identity&quot;</span>), </span>
+<span id="cb400-4"><a href="generalized-linear-models.html#cb400-4"></a>                  <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="fl">0.5</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>, </span>
+<span id="cb400-5"><a href="generalized-linear-models.html#cb400-5"></a>                                  <span class="dt">lb =</span> <span class="dv">-1</span>, <span class="dt">ub =</span> <span class="dv">1</span>), </span>
+<span id="cb400-6"><a href="generalized-linear-models.html#cb400-6"></a>                            <span class="kw">prior</span>(<span class="kw">uniform</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>)), </span>
+<span id="cb400-7"><a href="generalized-linear-models.html#cb400-7"></a>                  <span class="co"># Note: no sigma </span></span>
+<span id="cb400-8"><a href="generalized-linear-models.html#cb400-8"></a>                  <span class="dt">seed =</span> <span class="dv">1340</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="generalized-linear-models.html#cb401-1"></a><span class="kw">loo</span>(m1_bern, m1_bern_id)</span></code></pre></div>
 <pre><code>&gt;# Output of model &#39;m1_bern&#39;:
 &gt;# 
 &gt;# Computed from 4000 by 1469 log-likelihood matrix
 &gt;# 
 &gt;#          Estimate   SE
-&gt;# elpd_loo   -910.1 13.8
+&gt;# elpd_loo   -910.0 13.8
 &gt;# p_loo         2.0  0.1
 &gt;# looic      1820.1 27.6
 &gt;# ------
@@ -763,9 +772,9 @@ unit. Without going into details of the priors, below is how it’s fitted:</p>
 &gt;# Computed from 4000 by 1469 log-likelihood matrix
 &gt;# 
 &gt;#          Estimate   SE
-&gt;# elpd_loo   -908.2 14.1
-&gt;# p_loo         2.1  0.1
-&gt;# looic      1816.5 28.2
+&gt;# elpd_loo   -908.1 14.1
+&gt;# p_loo         2.0  0.1
+&gt;# looic      1816.3 28.2
 &gt;# ------
 &gt;# Monte Carlo SE of elpd_loo is 0.0.
 &gt;# 
@@ -775,9 +784,9 @@ unit. Without going into details of the priors, below is how it’s fitted:</p>
 &gt;# Model comparisons:
 &gt;#            elpd_diff se_diff
 &gt;# m1_bern_id  0.0       0.0   
-&gt;# m1_bern    -1.8       0.7</code></pre>
+&gt;# m1_bern    -1.9       0.7</code></pre>
 <p>As you can see, the identity link actually fits better. The model estimates are</p>
-<div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb371-1" data-line-number="1"><span class="kw">summary</span>(m1_bern_id)</a></code></pre></div>
+<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="generalized-linear-models.html#cb403-1"></a><span class="kw">summary</span>(m1_bern_id)</span></code></pre></div>
 <pre><code>&gt;#  Family: bernoulli 
 &gt;#   Links: mu = identity 
 &gt;# Formula: marginal_p ~ Year10 
@@ -787,18 +796,20 @@ unit. Without going into details of the priors, below is how it’s fitted:</p>
 &gt;# 
 &gt;# Population-Level Effects: 
 &gt;#           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-&gt;# Intercept     0.19      0.02     0.16     0.23 1.00     3542     2573
-&gt;# Year10        0.08      0.01     0.06     0.10 1.00     2999     2355
+&gt;# Intercept     0.19      0.02     0.16     0.23 1.00     4013     2924
+&gt;# Year10        0.08      0.01     0.06     0.10 1.00     2917     2479
 &gt;# 
-&gt;# Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
-&gt;# is a crude measure of effective sample size, and Rhat is the potential 
+&gt;# Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
+&gt;# and Tail_ESS are effective sample size measures, and Rhat is the potential
 &gt;# scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <p>So it suggested that every 10 years, the proportion of studies reporting
-marginal <span class="math inline">\(p\)</span> values increases by 8.068%. If this model
+marginal <span class="math inline">\(p\)</span> values increases by 8.078%. If this model
 fits close to or better than the logistic model, it may be useful for
 interepretation as opposed to odds ratio or non-linear effects.</p>
 <p>Here is the model implied relationship:</p>
-<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb373-1" data-line-number="1"><span class="kw">mmp_brm</span>(m1_bern_id, <span class="dt">x =</span> <span class="st">&quot;Year10&quot;</span>, <span class="dt">plot_pi =</span> <span class="ot">FALSE</span>, <span class="dt">jitter =</span> <span class="ot">TRUE</span>, <span class="dt">smooth_method =</span> <span class="st">&quot;loess&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="generalized-linear-models.html#cb405-1"></a><span class="kw">mmp_brm</span>(m1_bern_id, <span class="dt">x =</span> <span class="st">&quot;Year10&quot;</span>, <span class="dt">plot_pi =</span> <span class="ot">FALSE</span>, <span class="dt">jitter =</span> <span class="ot">TRUE</span>, <span class="dt">smooth_method =</span> <span class="st">&quot;loess&quot;</span>)</span></code></pre></div>
+<pre><code>&gt;# `geom_smooth()` using formula &#39;y ~ x&#39;
+&gt;# `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <div class="figure">
 <img src="11_generalized_linear_models_files/figure-html/pi_m1_id-1.png" alt="Marginal model plot of the Bernoulli regression model with identity link of Year predicting whether a marginal $p$ value was reported." width="672" />
 <p class="caption">
@@ -806,7 +817,7 @@ interepretation as opposed to odds ratio or non-linear effects.</p>
 </p>
 </div>
 <p>Also using marginal effects in <code>brms</code>:</p>
-<div class="sourceCode" id="cb374"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb374-1" data-line-number="1"><span class="kw">marginal_effects</span>(m1_bern_id)</a></code></pre></div>
+<div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb407-1"><a href="generalized-linear-models.html#cb407-1"></a><span class="kw">marginal_effects</span>(m1_bern_id)</span></code></pre></div>
 <pre><code>&gt;# Warning: Method &#39;marginal_effects&#39; is deprecated. Please use
 &gt;# &#39;conditional_effects&#39; instead.</code></pre>
 <p><img src="11_generalized_linear_models_files/figure-html/marg_eff_m1_bern_id-1.png" width="672" /></p>
@@ -838,7 +849,7 @@ showing <span class="math inline">\(\tilde y - y\)</span>, where <span class="ma
 posterior predictive distributions, and <span class="math inline">\(y\)</span> is the observed data. Note that we
 need the binned residuals or predictive errors, as the prediction error is
 either 0 or 1, as shown in the Figure below.</p>
-<div class="sourceCode" id="cb376"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb376-1" data-line-number="1"><span class="kw">pp_check</span>(m1_bern_id, <span class="dt">type =</span> <span class="st">&quot;error_binned&quot;</span>, <span class="dt">nsamples =</span> <span class="dv">9</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb409"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb409-1"><a href="generalized-linear-models.html#cb409-1"></a><span class="kw">pp_check</span>(m1_bern_id, <span class="dt">type =</span> <span class="st">&quot;error_binned&quot;</span>, <span class="dt">nsamples =</span> <span class="dv">9</span>)</span></code></pre></div>
 <div class="figure">
 <img src="11_generalized_linear_models_files/figure-html/ppc_m1_bern_id-1.png" alt="Binned residual plots in replicated data of $\tilde y - y$." width="624" />
 <p class="caption">
@@ -861,74 +872,74 @@ than <span class="math inline">\(\pi_0\)</span> to have a value of 1, and to ass
 probabilities smaller than <span class="math inline">\(\pi_0\)</span> to have a value of 0, where <span class="math inline">\(\pi_0\)</span> is some
 chosen cutoff, and is usually chosen as the proportion of 1s in the sample. For
 example, for our model,</p>
-<div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb377-1" data-line-number="1">m1_pred &lt;-<span class="st"> </span><span class="kw">predict</span>(m1_bern_id, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>)[ , <span class="st">&quot;Estimate&quot;</span>]</a>
-<a class="sourceLine" id="cb377-2" data-line-number="2">m1_pred &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(m1_pred <span class="op">&gt;</span><span class="st"> </span><span class="kw">mean</span>(marginalp<span class="op">$</span>marginal_p))</a>
-<a class="sourceLine" id="cb377-3" data-line-number="3"><span class="co"># Classification table</span></a>
-<a class="sourceLine" id="cb377-4" data-line-number="4">(classtab_m1 &lt;-<span class="st"> </span><span class="kw">table</span>(<span class="dt">predicted =</span> m1_pred, <span class="dt">observed =</span> marginalp<span class="op">$</span>marginal_p))</a></code></pre></div>
+<div class="sourceCode" id="cb410"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb410-1"><a href="generalized-linear-models.html#cb410-1"></a>m1_pred &lt;-<span class="st"> </span><span class="kw">predict</span>(m1_bern_id, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>)[ , <span class="st">&quot;Estimate&quot;</span>]</span>
+<span id="cb410-2"><a href="generalized-linear-models.html#cb410-2"></a>m1_pred &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(m1_pred <span class="op">&gt;</span><span class="st"> </span><span class="kw">mean</span>(marginalp<span class="op">$</span>marginal_p))</span>
+<span id="cb410-3"><a href="generalized-linear-models.html#cb410-3"></a><span class="co"># Classification table</span></span>
+<span id="cb410-4"><a href="generalized-linear-models.html#cb410-4"></a>(classtab_m1 &lt;-<span class="st"> </span><span class="kw">table</span>(<span class="dt">predicted =</span> m1_pred, <span class="dt">observed =</span> marginalp<span class="op">$</span>marginal_p))</span></code></pre></div>
 <pre><code>&gt;#          observed
 &gt;# predicted   0   1
-&gt;#         0 535 164
-&gt;#         1 423 347</code></pre>
-<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb379-1" data-line-number="1"><span class="co"># Average classification accuracy</span></a>
-<a class="sourceLine" id="cb379-2" data-line-number="2">(acc_m1 &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">diag</span>(classtab_m1)) <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(classtab_m1))</a></code></pre></div>
-<pre><code>&gt;# [1] 0.6</code></pre>
-<div class="sourceCode" id="cb381"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb381-1" data-line-number="1"><span class="co"># so the classification is not particularly impressive.</span></a></code></pre></div>
+&gt;#         0 522 157
+&gt;#         1 436 354</code></pre>
+<div class="sourceCode" id="cb412"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb412-1"><a href="generalized-linear-models.html#cb412-1"></a><span class="co"># Average classification accuracy</span></span>
+<span id="cb412-2"><a href="generalized-linear-models.html#cb412-2"></a>(acc_m1 &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">diag</span>(classtab_m1)) <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(classtab_m1))</span></code></pre></div>
+<pre><code>&gt;# [1] 0.596</code></pre>
+<div class="sourceCode" id="cb414"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb414-1"><a href="generalized-linear-models.html#cb414-1"></a><span class="co"># so the classification is not particularly impressive.</span></span></code></pre></div>
 <p>So from a <span class="math inline">\(2 \times 2\)</span> contingency table, the prediction is correct when the
 predicted and the observed values are the same (i.e., the two cells in
 the diagonal), and the prediction is incorrect otherwise. In this example, the
-classification accuracy is 60.041%.
+classification accuracy is 59.632%.
 We can consider adding more predictors and re-evaluate the classification error
 again:</p>
-<div class="sourceCode" id="cb382"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb382-1" data-line-number="1"><span class="co"># We can add more predictors (interaction with Field), and use a hierarchical </span></a>
-<a class="sourceLine" id="cb382-2" data-line-number="2"><span class="co"># model:</span></a>
-<a class="sourceLine" id="cb382-3" data-line-number="3">m2_bern &lt;-<span class="st"> </span><span class="kw">brm</span>(marginal_p <span class="op">~</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Field) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Year10), </a>
-<a class="sourceLine" id="cb382-4" data-line-number="4">               <span class="dt">data =</span> marginalp, </a>
-<a class="sourceLine" id="cb382-5" data-line-number="5">               <span class="dt">family =</span> <span class="kw">bernoulli</span>(<span class="dt">link =</span> <span class="st">&quot;logit&quot;</span>), </a>
-<a class="sourceLine" id="cb382-6" data-line-number="6">               <span class="co"># Just default priors for quickness</span></a>
-<a class="sourceLine" id="cb382-7" data-line-number="7">               <span class="dt">control =</span> <span class="kw">list</span>(<span class="dt">adapt_delta =</span> <span class="fl">.995</span>, <span class="dt">max_treedepth =</span> <span class="dv">12</span>), </a>
-<a class="sourceLine" id="cb382-8" data-line-number="8">               <span class="dt">seed =</span> <span class="dv">1340</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb383"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb383-1" data-line-number="1">m2_pred &lt;-<span class="st"> </span><span class="kw">predict</span>(m2_bern, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>)[ , <span class="st">&quot;Estimate&quot;</span>]</a>
-<a class="sourceLine" id="cb383-2" data-line-number="2">m2_pred &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(m2_pred <span class="op">&gt;</span><span class="st"> </span><span class="kw">mean</span>(marginalp<span class="op">$</span>marginal_p))</a>
-<a class="sourceLine" id="cb383-3" data-line-number="3"><span class="co"># Classification table</span></a>
-<a class="sourceLine" id="cb383-4" data-line-number="4">(classtab_m2 &lt;-<span class="st"> </span><span class="kw">table</span>(<span class="dt">predicted =</span> m2_pred, <span class="dt">observed =</span> marginalp<span class="op">$</span>marginal_p))</a></code></pre></div>
+<div class="sourceCode" id="cb415"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb415-1"><a href="generalized-linear-models.html#cb415-1"></a><span class="co"># We can add more predictors (interaction with Field), and use a hierarchical </span></span>
+<span id="cb415-2"><a href="generalized-linear-models.html#cb415-2"></a><span class="co"># model:</span></span>
+<span id="cb415-3"><a href="generalized-linear-models.html#cb415-3"></a>m2_bern &lt;-<span class="st"> </span><span class="kw">brm</span>(marginal_p <span class="op">~</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Field) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Year10), </span>
+<span id="cb415-4"><a href="generalized-linear-models.html#cb415-4"></a>               <span class="dt">data =</span> marginalp, </span>
+<span id="cb415-5"><a href="generalized-linear-models.html#cb415-5"></a>               <span class="dt">family =</span> <span class="kw">bernoulli</span>(<span class="dt">link =</span> <span class="st">&quot;logit&quot;</span>), </span>
+<span id="cb415-6"><a href="generalized-linear-models.html#cb415-6"></a>               <span class="co"># Just default priors for quickness</span></span>
+<span id="cb415-7"><a href="generalized-linear-models.html#cb415-7"></a>               <span class="dt">control =</span> <span class="kw">list</span>(<span class="dt">adapt_delta =</span> <span class="fl">.995</span>, <span class="dt">max_treedepth =</span> <span class="dv">12</span>), </span>
+<span id="cb415-8"><a href="generalized-linear-models.html#cb415-8"></a>               <span class="dt">seed =</span> <span class="dv">1340</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb416"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb416-1"><a href="generalized-linear-models.html#cb416-1"></a>m2_pred &lt;-<span class="st"> </span><span class="kw">predict</span>(m2_bern, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>)[ , <span class="st">&quot;Estimate&quot;</span>]</span>
+<span id="cb416-2"><a href="generalized-linear-models.html#cb416-2"></a>m2_pred &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(m2_pred <span class="op">&gt;</span><span class="st"> </span><span class="kw">mean</span>(marginalp<span class="op">$</span>marginal_p))</span>
+<span id="cb416-3"><a href="generalized-linear-models.html#cb416-3"></a><span class="co"># Classification table</span></span>
+<span id="cb416-4"><a href="generalized-linear-models.html#cb416-4"></a>(classtab_m2 &lt;-<span class="st"> </span><span class="kw">table</span>(<span class="dt">predicted =</span> m2_pred, <span class="dt">observed =</span> marginalp<span class="op">$</span>marginal_p))</span></code></pre></div>
 <pre><code>&gt;#          observed
 &gt;# predicted   0   1
-&gt;#         0 594 177
-&gt;#         1 364 334</code></pre>
-<div class="sourceCode" id="cb385"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb385-1" data-line-number="1"><span class="co"># Average classification accuracy</span></a>
-<a class="sourceLine" id="cb385-2" data-line-number="2">(acc_m2 &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">diag</span>(classtab_m2)) <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(classtab_m2))</a></code></pre></div>
-<pre><code>&gt;# [1] 0.632</code></pre>
+&gt;#         0 603 177
+&gt;#         1 355 334</code></pre>
+<div class="sourceCode" id="cb418"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb418-1"><a href="generalized-linear-models.html#cb418-1"></a><span class="co"># Average classification accuracy</span></span>
+<span id="cb418-2"><a href="generalized-linear-models.html#cb418-2"></a>(acc_m2 &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">diag</span>(classtab_m2)) <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(classtab_m2))</span></code></pre></div>
+<pre><code>&gt;# [1] 0.638</code></pre>
 <p>Note that unlike information criteria, as the classification error is evaluated
 on the same sample, you should not be choosing models based on which model has
 the smallest classification error, as that would generally choose the most
 complex one that is most prone to overfitting (just like using <span class="math inline">\(R^2\)</span> to choose
 models in normal regression). One should use information criteria to compare
 models instead:</p>
-<div class="sourceCode" id="cb387"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb387-1" data-line-number="1"><span class="co"># Classification now improves; however, one should be interested in </span></a>
-<a class="sourceLine" id="cb387-2" data-line-number="2"><span class="co"># out-of-sample prediction. Let&#39;s check the LOO-IC too:</span></a>
-<a class="sourceLine" id="cb387-3" data-line-number="3"><span class="kw">loo</span>(m2_bern)</a></code></pre></div>
+<div class="sourceCode" id="cb420"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb420-1"><a href="generalized-linear-models.html#cb420-1"></a><span class="co"># Classification now improves; however, one should be interested in </span></span>
+<span id="cb420-2"><a href="generalized-linear-models.html#cb420-2"></a><span class="co"># out-of-sample prediction. Let&#39;s check the LOO-IC too:</span></span>
+<span id="cb420-3"><a href="generalized-linear-models.html#cb420-3"></a><span class="kw">loo</span>(m2_bern)</span></code></pre></div>
 <pre><code>&gt;# 
 &gt;# Computed from 4000 by 1469 log-likelihood matrix
 &gt;# 
 &gt;#          Estimate   SE
-&gt;# elpd_loo   -885.7 15.1
-&gt;# p_loo         6.9  0.2
-&gt;# looic      1771.4 30.2
+&gt;# elpd_loo   -885.8 15.1
+&gt;# p_loo         7.1  0.2
+&gt;# looic      1771.7 30.3
 &gt;# ------
 &gt;# Monte Carlo SE of elpd_loo is 0.0.
 &gt;# 
 &gt;# All Pareto k estimates are good (k &lt; 0.5).
 &gt;# See help(&#39;pareto-k-diagnostic&#39;) for details.</code></pre>
-<div class="sourceCode" id="cb389"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb389-1" data-line-number="1"><span class="co"># So adding predictors helps</span></a></code></pre></div>
+<div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb422-1"><a href="generalized-linear-models.html#cb422-1"></a><span class="co"># So adding predictors helps</span></span></code></pre></div>
 <p>Finally, one can consider varying the cutoff <span class="math inline">\(\pi_0\)</span>, and plots the true
 positive and true negative rates to obtain an ROC curve. This is beyond the
 scope of this note, but see, for example,
 <a href="https://www.r-bloggers.com/roc-curves-in-two-lines-of-r-code/" class="uri">https://www.r-bloggers.com/roc-curves-in-two-lines-of-r-code/</a>. Below I will
 show you the code for getting the ROC curve:</p>
-<div class="sourceCode" id="cb390"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb390-1" data-line-number="1"><span class="co"># Using the pROC package</span></a>
-<a class="sourceLine" id="cb390-2" data-line-number="2">pROC<span class="op">::</span><span class="kw">roc</span>(<span class="dt">response =</span> marginalp<span class="op">$</span>marginal_p, </a>
-<a class="sourceLine" id="cb390-3" data-line-number="3">          <span class="dt">predictor =</span> <span class="kw">predict</span>(m2_bern, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>)[ , <span class="st">&quot;Estimate&quot;</span>], </a>
-<a class="sourceLine" id="cb390-4" data-line-number="4">          <span class="dt">plot =</span> <span class="ot">TRUE</span>, <span class="dt">print.auc =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb423"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb423-1"><a href="generalized-linear-models.html#cb423-1"></a><span class="co"># Using the pROC package</span></span>
+<span id="cb423-2"><a href="generalized-linear-models.html#cb423-2"></a>pROC<span class="op">::</span><span class="kw">roc</span>(<span class="dt">response =</span> marginalp<span class="op">$</span>marginal_p, </span>
+<span id="cb423-3"><a href="generalized-linear-models.html#cb423-3"></a>          <span class="dt">predictor =</span> <span class="kw">predict</span>(m2_bern, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>)[ , <span class="st">&quot;Estimate&quot;</span>], </span>
+<span id="cb423-4"><a href="generalized-linear-models.html#cb423-4"></a>          <span class="dt">plot =</span> <span class="ot">TRUE</span>, <span class="dt">print.auc =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <pre><code>&gt;# Setting levels: control = 0, case = 1</code></pre>
 <pre><code>&gt;# Setting direction: controls &lt; cases</code></pre>
 <p><img src="11_generalized_linear_models_files/figure-html/roc_m2-1.png" width="432" /></p>
@@ -937,7 +948,7 @@ show you the code for getting the ROC curve:</p>
 &gt;# roc.default(response = marginalp$marginal_p, predictor = predict(m2_bern,     type = &quot;response&quot;)[, &quot;Estimate&quot;], plot = TRUE, print.auc = TRUE)
 &gt;# 
 &gt;# Data: predict(m2_bern, type = &quot;response&quot;)[, &quot;Estimate&quot;] in 958 controls (marginalp$marginal_p 0) &lt; 511 cases (marginalp$marginal_p 1).
-&gt;# Area under the curve: 0.679</code></pre>
+&gt;# Area under the curve: 0.683</code></pre>
 </div>
 </div>
 <div id="complete-separation" class="section level3">
@@ -946,15 +957,15 @@ show you the code for getting the ROC curve:</p>
 all of the <span class="math inline">\(Y\)</span> values are 1. If you run frequentist logistic regression, you
 will get warning messages with crazy coefficients and extremely large standard
 errors:</p>
-<div class="sourceCode" id="cb394"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb394-1" data-line-number="1">sep_dat &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">y =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), </a>
-<a class="sourceLine" id="cb394-2" data-line-number="2">                  <span class="dt">x1 =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">10</span>, <span class="dv">11</span>), </a>
-<a class="sourceLine" id="cb394-3" data-line-number="3">                  <span class="dt">x2 =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">-1</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">7</span>, <span class="dv">3</span>, <span class="dv">4</span>))</a>
-<a class="sourceLine" id="cb394-4" data-line-number="4"><span class="co"># Scale the predictors to SD 1</span></a>
-<a class="sourceLine" id="cb394-5" data-line-number="5">sep_dat &lt;-<span class="st"> </span>sep_dat <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb394-6" data-line-number="6"><span class="st">  </span><span class="kw">mutate_at</span>(<span class="kw">vars</span>(x1, x2),  <span class="op">~</span><span class="st"> </span>. <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(.))</a>
-<a class="sourceLine" id="cb394-7" data-line-number="7">m_freq &lt;-<span class="st"> </span><span class="kw">glm</span>(y <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, <span class="dt">data =</span> sep_dat, <span class="dt">family =</span> binomial)</a></code></pre></div>
+<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb427-1"><a href="generalized-linear-models.html#cb427-1"></a>sep_dat &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">y =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), </span>
+<span id="cb427-2"><a href="generalized-linear-models.html#cb427-2"></a>                  <span class="dt">x1 =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">10</span>, <span class="dv">11</span>), </span>
+<span id="cb427-3"><a href="generalized-linear-models.html#cb427-3"></a>                  <span class="dt">x2 =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">-1</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">7</span>, <span class="dv">3</span>, <span class="dv">4</span>))</span>
+<span id="cb427-4"><a href="generalized-linear-models.html#cb427-4"></a><span class="co"># Scale the predictors to SD 1</span></span>
+<span id="cb427-5"><a href="generalized-linear-models.html#cb427-5"></a>sep_dat &lt;-<span class="st"> </span>sep_dat <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb427-6"><a href="generalized-linear-models.html#cb427-6"></a><span class="st">  </span><span class="kw">mutate_at</span>(<span class="kw">vars</span>(x1, x2),  <span class="op">~</span><span class="st"> </span>. <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(.))</span>
+<span id="cb427-7"><a href="generalized-linear-models.html#cb427-7"></a>m_freq &lt;-<span class="st"> </span><span class="kw">glm</span>(y <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, <span class="dt">data =</span> sep_dat, <span class="dt">family =</span> binomial)</span></code></pre></div>
 <pre><code>&gt;# Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
-<div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb396-1" data-line-number="1"><span class="kw">summary</span>(m_freq)</a></code></pre></div>
+<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="generalized-linear-models.html#cb429-1"></a><span class="kw">summary</span>(m_freq)</span></code></pre></div>
 <pre><code>&gt;# 
 &gt;# Call:
 &gt;# glm(formula = y ~ x1 + x2, family = binomial, data = sep_dat)
@@ -979,14 +990,14 @@ errors:</p>
 <p>On the other hand, use of priors, even relatively weak priors, can <em>regularize</em>
 the coefficients so that they are more sensible. See the results below, and note
 the more reasonable coefficients with smaller posterior standard deviations:</p>
-<div class="sourceCode" id="cb398"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb398-1" data-line-number="1"><span class="co"># Weakly informative priors can help in Bayesian</span></a>
-<a class="sourceLine" id="cb398-2" data-line-number="2">m_bayes &lt;-<span class="st"> </span><span class="kw">brm</span>(y <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, <span class="dt">data =</span> sep_dat, </a>
-<a class="sourceLine" id="cb398-3" data-line-number="3">               <span class="dt">family =</span> bernoulli, </a>
-<a class="sourceLine" id="cb398-4" data-line-number="4">               <span class="dt">prior =</span> <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="fl">1.25</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>), </a>
-<a class="sourceLine" id="cb398-5" data-line-number="5">               <span class="dt">seed =</span> <span class="dv">1340</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb431-1"><a href="generalized-linear-models.html#cb431-1"></a><span class="co"># Weakly informative priors can help in Bayesian</span></span>
+<span id="cb431-2"><a href="generalized-linear-models.html#cb431-2"></a>m_bayes &lt;-<span class="st"> </span><span class="kw">brm</span>(y <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, <span class="dt">data =</span> sep_dat, </span>
+<span id="cb431-3"><a href="generalized-linear-models.html#cb431-3"></a>               <span class="dt">family =</span> bernoulli, </span>
+<span id="cb431-4"><a href="generalized-linear-models.html#cb431-4"></a>               <span class="dt">prior =</span> <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="fl">1.25</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>), </span>
+<span id="cb431-5"><a href="generalized-linear-models.html#cb431-5"></a>               <span class="dt">seed =</span> <span class="dv">1340</span>)</span></code></pre></div>
 <pre><code>&gt;# Compiling the C++ model</code></pre>
 <pre><code>&gt;# Start sampling</code></pre>
-<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb401-1" data-line-number="1">m_bayes</a></code></pre></div>
+<div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb434-1"><a href="generalized-linear-models.html#cb434-1"></a>m_bayes</span></code></pre></div>
 <pre><code>&gt;#  Family: bernoulli 
 &gt;#   Links: mu = logit 
 &gt;# Formula: y ~ x1 + x2 
@@ -996,12 +1007,12 @@ the more reasonable coefficients with smaller posterior standard deviations:</p>
 &gt;# 
 &gt;# Population-Level Effects: 
 &gt;#           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-&gt;# Intercept    -3.21      2.77   -10.40     0.39 1.00     1161      570
-&gt;# x1            3.17      2.70     0.24    10.32 1.01      998      515
-&gt;# x2            0.15      0.82    -1.40     1.78 1.00     2168     1938
+&gt;# Intercept    -3.00      2.27    -8.67     0.49 1.00     2053     1491
+&gt;# x1            2.94      2.11     0.21     8.28 1.00     1701     1254
+&gt;# x2            0.15      0.79    -1.34     1.77 1.00     2033     1996
 &gt;# 
-&gt;# Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
-&gt;# is a crude measure of effective sample size, and Rhat is the potential 
+&gt;# Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
+&gt;# and Tail_ESS are effective sample size measures, and Rhat is the potential
 &gt;# scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 </div>
@@ -1018,10 +1029,10 @@ data, we have the binary logistic model:</p>
   \mu_i &amp; = \mathrm{logistic}(\beta_0 + \beta_1 \texttt{Year10}_i).
 \end{align*}\]</span></p>
 <p>However, sometimes the data may come in the form:</p>
-<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb403-1" data-line-number="1">marginalp_agg &lt;-<span class="st"> </span></a>
-<a class="sourceLine" id="cb403-2" data-line-number="2"><span class="st">  </span><span class="kw">summarise</span>(<span class="kw">group_by</span>(marginalp, Year10), </a>
-<a class="sourceLine" id="cb403-3" data-line-number="3">            <span class="dt">marginal_p =</span> <span class="kw">sum</span>(marginal_p), <span class="dt">n =</span> <span class="kw">n</span>())</a>
-<a class="sourceLine" id="cb403-4" data-line-number="4"><span class="kw">head</span>(marginalp_agg)</a></code></pre></div>
+<div class="sourceCode" id="cb436"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb436-1"><a href="generalized-linear-models.html#cb436-1"></a>marginalp_agg &lt;-<span class="st"> </span></span>
+<span id="cb436-2"><a href="generalized-linear-models.html#cb436-2"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="kw">group_by</span>(marginalp, Year10), </span>
+<span id="cb436-3"><a href="generalized-linear-models.html#cb436-3"></a>            <span class="dt">marginal_p =</span> <span class="kw">sum</span>(marginal_p), <span class="dt">n =</span> <span class="kw">n</span>())</span>
+<span id="cb436-4"><a href="generalized-linear-models.html#cb436-4"></a><span class="kw">head</span>(marginalp_agg)</span></code></pre></div>
 <pre><code>&gt;# # A tibble: 5 x 3
 &gt;#   Year10 marginal_p     n
 &gt;#    &lt;dbl&gt;      &lt;dbl&gt; &lt;int&gt;
@@ -1041,18 +1052,18 @@ will be using a binomial distribution for the outcome, instead of Bernoulli:</p>
   \texttt{marginal_p}_j &amp; \sim \mathrm{Bin}(n_j, \mu_j)  \\
   \mu_j &amp; = \mathrm{logistic}(\beta_0 + \beta_1 \texttt{Year10}_j).
 \end{align*}\]</span></p>
-<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb405-1" data-line-number="1">m1_bin &lt;-<span class="st"> </span><span class="kw">brm</span>(marginal_p <span class="op">|</span><span class="st"> </span><span class="kw">trials</span>(n) <span class="op">~</span><span class="st"> </span>Year10, </a>
-<a class="sourceLine" id="cb405-2" data-line-number="2">              <span class="dt">data =</span> marginalp_agg, </a>
-<a class="sourceLine" id="cb405-3" data-line-number="3">              <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link =</span> <span class="st">&quot;logit&quot;</span>), </a>
-<a class="sourceLine" id="cb405-4" data-line-number="4">              <span class="dt">prior =</span> <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="fl">.875</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>), </a>
-<a class="sourceLine" id="cb405-5" data-line-number="5">              <span class="co"># Note: no sigma </span></a>
-<a class="sourceLine" id="cb405-6" data-line-number="6">              <span class="dt">seed =</span> <span class="dv">1340</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb438"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb438-1"><a href="generalized-linear-models.html#cb438-1"></a>m1_bin &lt;-<span class="st"> </span><span class="kw">brm</span>(marginal_p <span class="op">|</span><span class="st"> </span><span class="kw">trials</span>(n) <span class="op">~</span><span class="st"> </span>Year10, </span>
+<span id="cb438-2"><a href="generalized-linear-models.html#cb438-2"></a>              <span class="dt">data =</span> marginalp_agg, </span>
+<span id="cb438-3"><a href="generalized-linear-models.html#cb438-3"></a>              <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link =</span> <span class="st">&quot;logit&quot;</span>), </span>
+<span id="cb438-4"><a href="generalized-linear-models.html#cb438-4"></a>              <span class="dt">prior =</span> <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="fl">.875</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>), </span>
+<span id="cb438-5"><a href="generalized-linear-models.html#cb438-5"></a>              <span class="co"># Note: no sigma </span></span>
+<span id="cb438-6"><a href="generalized-linear-models.html#cb438-6"></a>              <span class="dt">seed =</span> <span class="dv">1340</span>)</span></code></pre></div>
 <p>The results are essentially the same, as in this case the binomial and the
 Bernoulli model are the same model. And we can look at the good at the
 goodness-of-fit by comparing the predicted and observed counts in groups. Now,
 because there are multiple observations for each level of , we
 can naturally use the five  groups:</p>
-<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb406-1" data-line-number="1"><span class="kw">pp_check</span>(m1_bin, <span class="dt">type =</span> <span class="st">&quot;intervals&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb439"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb439-1"><a href="generalized-linear-models.html#cb439-1"></a><span class="kw">pp_check</span>(m1_bin, <span class="dt">type =</span> <span class="st">&quot;intervals&quot;</span>)</span></code></pre></div>
 <pre><code>&gt;# Using all posterior samples for ppc type &#39;intervals&#39; by default.</code></pre>
 <div class="figure">
 <img src="11_generalized_linear_models_files/figure-html/ppc-m1_bin-1.png" alt="Posterior predictive check using the predicted and observed counts." width="672" />
@@ -1067,7 +1078,7 @@ can naturally use the five  groups:</p>
 <p>Just note that the logit link is not the only choice for binary/binomial data.
 You’ve seen the identity link: <span class="math inline">\(g(\mu) = \mu\)</span>. Another popular choice is <span class="math inline">\(g(\mu) = \Phi^{-1}(\mu)\)</span>, where <span class="math inline">\(\Phi^{-1}(\cdot)\)</span> is the normal quantile function (or
 inverse cumulative density function,which can be obtained with <code>qnorm</code> in R).
-You can simply change the link to <code>family = binomial(link = &quot;probit&quot;)</code> in R.
+You can simply change the link to <code>family = binomial(link = "probit")</code> in R.
 Practically, using the logit link or the probit gives basically identical
 results, so it’s a matter of ease of interpretations and conventions between the
 two.</p>
@@ -1084,16 +1095,16 @@ need a link function that can map <span class="math inline">\(\eta\)</span> from
 non-negative numbers; by far the most commonly used link function is the
 logarithmic transformation, <span class="math inline">\(g(\mu) = \log(\mu)\)</span> (what’s the inverse
 link function?):</p>
-<div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb408-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">100</span>)), <span class="kw">aes</span>(x)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb408-2" data-line-number="2"><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> log, <span class="dt">n =</span> <span class="dv">501</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb408-3" data-line-number="3"><span class="st">  </span><span class="kw">xlab</span>(<span class="kw">expression</span>(mu)) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="kw">expression</span>(eta))</a></code></pre></div>
+<div class="sourceCode" id="cb441"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb441-1"><a href="generalized-linear-models.html#cb441-1"></a><span class="kw">ggplot</span>(<span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">100</span>)), <span class="kw">aes</span>(x)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb441-2"><a href="generalized-linear-models.html#cb441-2"></a><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> log, <span class="dt">n =</span> <span class="dv">501</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb441-3"><a href="generalized-linear-models.html#cb441-3"></a><span class="st">  </span><span class="kw">xlab</span>(<span class="kw">expression</span>(mu)) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="kw">expression</span>(eta))</span></code></pre></div>
 <div class="figure">
 <img src="11_generalized_linear_models_files/figure-html/log_link-1.png" alt="Link of $\eta = \log(\mu)$." width="672" />
 <p class="caption">
 (#fig:log_link)Link of <span class="math inline">\(\eta = \log(\mu)\)</span>.
 </p>
 </div>
-<div class="sourceCode" id="cb409"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb409-1" data-line-number="1">redcard_dat &lt;-<span class="st"> </span>readr<span class="op">::</span><span class="kw">read_csv</span>(<span class="st">&quot;../data/redcard_data.zip&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="generalized-linear-models.html#cb442-1"></a>redcard_dat &lt;-<span class="st"> </span>readr<span class="op">::</span><span class="kw">read_csv</span>(<span class="st">&quot;../data/redcard_data.zip&quot;</span>)</span></code></pre></div>
 <p>Let’s use the example you’ve seen on studying the distribution of number of
 red cards, which we first learned the Poisson distribution. Here, however, we’re
 interested in what predicts the number of red cards a referee will give. In the
@@ -1105,29 +1116,29 @@ variables: <code>player_dark</code>, which is the average skin rating of the pla
 the referee had in the data (0 = very light skin to 1 = very dark skin), and
 <code>meanExp</code>, the mean explicit bias score (using a racial thermometer task) for
 referee country.</p>
-<div class="sourceCode" id="cb410"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb410-1" data-line-number="1">redcard_ref &lt;-<span class="st"> </span>redcard_dat <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb410-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(refNum) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb410-3" data-line-number="3"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">redCards =</span> <span class="kw">sum</span>(redCards), </a>
-<a class="sourceLine" id="cb410-4" data-line-number="4">            <span class="dt">player_dark =</span> (<span class="kw">weighted.mean</span>(rater1, games) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb410-5" data-line-number="5"><span class="st">                             </span><span class="kw">weighted.mean</span>(rater2, games)) <span class="op">/</span><span class="st"> </span><span class="dv">2</span>, </a>
-<a class="sourceLine" id="cb410-6" data-line-number="6">            <span class="dt">refCountry =</span> refCountry[<span class="dv">1</span>], </a>
-<a class="sourceLine" id="cb410-7" data-line-number="7">            <span class="dt">meanExp =</span> meanExp[<span class="dv">1</span>], </a>
-<a class="sourceLine" id="cb410-8" data-line-number="8">            <span class="dt">games =</span> <span class="kw">sum</span>(games))</a></code></pre></div>
+<div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="generalized-linear-models.html#cb443-1"></a>redcard_ref &lt;-<span class="st"> </span>redcard_dat <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb443-2"><a href="generalized-linear-models.html#cb443-2"></a><span class="st">  </span><span class="kw">group_by</span>(refNum) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb443-3"><a href="generalized-linear-models.html#cb443-3"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">redCards =</span> <span class="kw">sum</span>(redCards), </span>
+<span id="cb443-4"><a href="generalized-linear-models.html#cb443-4"></a>            <span class="dt">player_dark =</span> (<span class="kw">weighted.mean</span>(rater1, games) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb443-5"><a href="generalized-linear-models.html#cb443-5"></a><span class="st">                             </span><span class="kw">weighted.mean</span>(rater2, games)) <span class="op">/</span><span class="st"> </span><span class="dv">2</span>, </span>
+<span id="cb443-6"><a href="generalized-linear-models.html#cb443-6"></a>            <span class="dt">refCountry =</span> refCountry[<span class="dv">1</span>], </span>
+<span id="cb443-7"><a href="generalized-linear-models.html#cb443-7"></a>            <span class="dt">meanExp =</span> meanExp[<span class="dv">1</span>], </span>
+<span id="cb443-8"><a href="generalized-linear-models.html#cb443-8"></a>            <span class="dt">games =</span> <span class="kw">sum</span>(games))</span></code></pre></div>
 <p>First check the distribution of the counts:</p>
-<div class="sourceCode" id="cb411"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb411-1" data-line-number="1"><span class="kw">ggplot</span>(redcard_ref, <span class="kw">aes</span>(<span class="dt">x =</span> redCards)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb411-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_bar</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb444-1"><a href="generalized-linear-models.html#cb444-1"></a><span class="kw">ggplot</span>(redcard_ref, <span class="kw">aes</span>(<span class="dt">x =</span> redCards)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb444-2"><a href="generalized-linear-models.html#cb444-2"></a><span class="st">  </span><span class="kw">geom_bar</span>()</span></code></pre></div>
 <p><img src="11_generalized_linear_models_files/figure-html/bar-redcard_ref-1.png" width="672" /></p>
 <p>You can see a lot of zeros. Below are the scatterplots against the predictors:</p>
-<div class="sourceCode" id="cb412"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb412-1" data-line-number="1"><span class="kw">ggplot</span>(redcard_ref, <span class="kw">aes</span>(<span class="dt">x =</span> player_dark, <span class="dt">y =</span> redCards)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb412-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">width =</span> <span class="fl">0.05</span>, <span class="dt">height =</span> <span class="fl">0.5</span>, <span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb412-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_smooth</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb445"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb445-1"><a href="generalized-linear-models.html#cb445-1"></a><span class="kw">ggplot</span>(redcard_ref, <span class="kw">aes</span>(<span class="dt">x =</span> player_dark, <span class="dt">y =</span> redCards)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb445-2"><a href="generalized-linear-models.html#cb445-2"></a><span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">width =</span> <span class="fl">0.05</span>, <span class="dt">height =</span> <span class="fl">0.5</span>, <span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb445-3"><a href="generalized-linear-models.html#cb445-3"></a><span class="st">  </span><span class="kw">geom_smooth</span>()</span></code></pre></div>
 <pre><code>&gt;# `geom_smooth()` using method = &#39;gam&#39; and formula &#39;y ~ s(x, bs = &quot;cs&quot;)&#39;</code></pre>
 <pre><code>&gt;# Warning: Removed 1855 rows containing non-finite values (stat_smooth).</code></pre>
 <pre><code>&gt;# Warning: Removed 1855 rows containing missing values (geom_point).</code></pre>
 <p><img src="11_generalized_linear_models_files/figure-html/plot-redcard_ref-1.png" width="672" /></p>
-<div class="sourceCode" id="cb416"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb416-1" data-line-number="1"><span class="kw">ggplot</span>(redcard_ref, <span class="kw">aes</span>(<span class="dt">x =</span> meanExp, <span class="dt">y =</span> redCards)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb416-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">width =</span> <span class="fl">0.05</span>, <span class="dt">height =</span> <span class="fl">0.5</span>, <span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb416-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_smooth</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb449"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb449-1"><a href="generalized-linear-models.html#cb449-1"></a><span class="kw">ggplot</span>(redcard_ref, <span class="kw">aes</span>(<span class="dt">x =</span> meanExp, <span class="dt">y =</span> redCards)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb449-2"><a href="generalized-linear-models.html#cb449-2"></a><span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">width =</span> <span class="fl">0.05</span>, <span class="dt">height =</span> <span class="fl">0.5</span>, <span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb449-3"><a href="generalized-linear-models.html#cb449-3"></a><span class="st">  </span><span class="kw">geom_smooth</span>()</span></code></pre></div>
 <pre><code>&gt;# `geom_smooth()` using method = &#39;gam&#39; and formula &#39;y ~ s(x, bs = &quot;cs&quot;)&#39;</code></pre>
 <pre><code>&gt;# Warning: Removed 11 rows containing non-finite values (stat_smooth).</code></pre>
 <pre><code>&gt;# Warning: Removed 11 rows containing missing values (geom_point).</code></pre>
@@ -1163,24 +1174,26 @@ And I will use these priors:
   \tau^{[\beta_m]} &amp; \sim \mathrm{Gamma}(2, 0.2), \; m = 0, 1 \\
   \boldsymbol{\mathbf{\Omega }}&amp; \sim \mathrm{LKJ}(1)
 \end{align*}\]</span></p>
-<div class="sourceCode" id="cb420"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb420-1" data-line-number="1">m4 &lt;-<span class="st"> </span><span class="kw">brm</span>(redCards <span class="op">~</span><span class="st"> </span>player_dark <span class="op">*</span><span class="st"> </span>meanExp <span class="op">+</span><span class="st"> </span><span class="kw">offset</span>(<span class="kw">log</span>(games)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb420-2" data-line-number="2"><span class="st">            </span>(player_dark <span class="op">|</span><span class="st"> </span>refCountry), </a>
-<a class="sourceLine" id="cb420-3" data-line-number="3">          <span class="dt">family =</span> <span class="kw">poisson</span>(), </a>
-<a class="sourceLine" id="cb420-4" data-line-number="4">          <span class="dt">data =</span> redcard_ref, </a>
-<a class="sourceLine" id="cb420-5" data-line-number="5">          <span class="dt">prior =</span> <span class="kw">c</span>(<span class="co"># for intercept</span></a>
-<a class="sourceLine" id="cb420-6" data-line-number="6">            <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">5</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>),</a>
-<a class="sourceLine" id="cb420-7" data-line-number="7">            <span class="co"># for slope</span></a>
-<a class="sourceLine" id="cb420-8" data-line-number="8">            <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="fl">2.5</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>),</a>
-<a class="sourceLine" id="cb420-9" data-line-number="9">            <span class="co"># for tau_beta0</span></a>
-<a class="sourceLine" id="cb420-10" data-line-number="10">            <span class="kw">prior</span>(<span class="kw">gamma</span>(<span class="dv">2</span>, <span class="fl">0.2</span>), <span class="dt">class =</span> <span class="st">&quot;sd&quot;</span>, <span class="dt">group =</span> <span class="st">&quot;refCountry&quot;</span>),</a>
-<a class="sourceLine" id="cb420-11" data-line-number="11">            <span class="co"># for correlation</span></a>
-<a class="sourceLine" id="cb420-12" data-line-number="12">            <span class="kw">prior</span>(<span class="kw">lkj</span>(<span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;cor&quot;</span>)), </a>
-<a class="sourceLine" id="cb420-13" data-line-number="13">          <span class="dt">cores =</span> 2L, </a>
-<a class="sourceLine" id="cb420-14" data-line-number="14">          <span class="dt">control =</span> <span class="kw">list</span>(<span class="dt">adapt_delta =</span> <span class="fl">.95</span>), </a>
-<a class="sourceLine" id="cb420-15" data-line-number="15">          <span class="dt">seed =</span> <span class="dv">1340</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb453"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb453-1"><a href="generalized-linear-models.html#cb453-1"></a>m4 &lt;-<span class="st"> </span><span class="kw">brm</span>(redCards <span class="op">~</span><span class="st"> </span>player_dark <span class="op">*</span><span class="st"> </span>meanExp <span class="op">+</span><span class="st"> </span><span class="kw">offset</span>(<span class="kw">log</span>(games)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb453-2"><a href="generalized-linear-models.html#cb453-2"></a><span class="st">            </span>(player_dark <span class="op">|</span><span class="st"> </span>refCountry), </span>
+<span id="cb453-3"><a href="generalized-linear-models.html#cb453-3"></a>          <span class="dt">family =</span> <span class="kw">poisson</span>(), </span>
+<span id="cb453-4"><a href="generalized-linear-models.html#cb453-4"></a>          <span class="dt">data =</span> redcard_ref, </span>
+<span id="cb453-5"><a href="generalized-linear-models.html#cb453-5"></a>          <span class="dt">prior =</span> <span class="kw">c</span>(<span class="co"># for intercept</span></span>
+<span id="cb453-6"><a href="generalized-linear-models.html#cb453-6"></a>            <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">5</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>),</span>
+<span id="cb453-7"><a href="generalized-linear-models.html#cb453-7"></a>            <span class="co"># for slope</span></span>
+<span id="cb453-8"><a href="generalized-linear-models.html#cb453-8"></a>            <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="fl">2.5</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>),</span>
+<span id="cb453-9"><a href="generalized-linear-models.html#cb453-9"></a>            <span class="co"># for tau_beta0</span></span>
+<span id="cb453-10"><a href="generalized-linear-models.html#cb453-10"></a>            <span class="kw">prior</span>(<span class="kw">gamma</span>(<span class="dv">2</span>, <span class="fl">0.2</span>), <span class="dt">class =</span> <span class="st">&quot;sd&quot;</span>, <span class="dt">group =</span> <span class="st">&quot;refCountry&quot;</span>),</span>
+<span id="cb453-11"><a href="generalized-linear-models.html#cb453-11"></a>            <span class="co"># for correlation</span></span>
+<span id="cb453-12"><a href="generalized-linear-models.html#cb453-12"></a>            <span class="kw">prior</span>(<span class="kw">lkj</span>(<span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;cor&quot;</span>)), </span>
+<span id="cb453-13"><a href="generalized-linear-models.html#cb453-13"></a>          <span class="dt">cores =</span> 2L, </span>
+<span id="cb453-14"><a href="generalized-linear-models.html#cb453-14"></a>          <span class="dt">control =</span> <span class="kw">list</span>(<span class="dt">adapt_delta =</span> <span class="fl">.95</span>), </span>
+<span id="cb453-15"><a href="generalized-linear-models.html#cb453-15"></a>          <span class="dt">seed =</span> <span class="dv">1340</span>)</span></code></pre></div>
 <pre><code>&gt;# Warning: Rows containing NAs were excluded from the model.</code></pre>
 <p>The coefficients were shown in the graph below:</p>
-<div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb422-1" data-line-number="1"><span class="kw">stanplot</span>(m4, <span class="dt">type =</span> <span class="st">&quot;areas&quot;</span>, <span class="dt">bw =</span> <span class="st">&quot;SJ&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb455"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb455-1"><a href="generalized-linear-models.html#cb455-1"></a><span class="kw">stanplot</span>(m4, <span class="dt">type =</span> <span class="st">&quot;areas&quot;</span>, <span class="dt">bw =</span> <span class="st">&quot;SJ&quot;</span>)</span></code></pre></div>
+<pre><code>&gt;# Warning: Method &#39;stanplot&#39; is deprecated. Please use &#39;mcmc_plot&#39; instead.</code></pre>
+<pre><code>&gt;# Warning: `expand_scale()` is deprecated; use `expansion()` instead.</code></pre>
 <p><img src="11_generalized_linear_models_files/figure-html/mcmc-areas-m4-1.png" width="672" /></p>
 <div id="interpretations-2" class="section level3">
 <h3><span class="header-section-number">11.5.1</span> Interpretations</h3>
@@ -1190,7 +1203,7 @@ the coefficients. Consider if there is only one predictor, we have
 predicted mean counts being <strong>multiplied</strong> by <span class="math inline">\(\exp(\beta_1)\)</span> times.</p>
 <p>With the interaction the results are even harder to directly interpret.
 Therefore it is best to plot the associations based on the model:</p>
-<div class="sourceCode" id="cb423"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb423-1" data-line-number="1"><span class="kw">plot</span>(<span class="kw">marginal_effects</span>(m4), <span class="dt">ask =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb458-1"><a href="generalized-linear-models.html#cb458-1"></a><span class="kw">plot</span>(<span class="kw">marginal_effects</span>(m4), <span class="dt">ask =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
 <pre><code>&gt;# Warning: Method &#39;marginal_effects&#39; is deprecated. Please use
 &gt;# &#39;conditional_effects&#39; instead.</code></pre>
 <p><img src="11_generalized_linear_models_files/figure-html/marginal_effects-m4-1.png" width="672" /><img src="11_generalized_linear_models_files/figure-html/marginal_effects-m4-2.png" width="672" /><img src="11_generalized_linear_models_files/figure-html/marginal_effects-m4-3.png" width="672" /></p>
@@ -1208,19 +1221,19 @@ against the fitted values. From the plots below, it is obvious that the Poisson
 model does not fit the data, as the variability of the data is much larger
 than what can be predicted by the Poisson model, with excessive zeros. The
 predictive intervals failed to cover a large number of data.</p>
-<div class="sourceCode" id="cb425"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb425-1" data-line-number="1">ppc_dens_pois &lt;-<span class="st"> </span><span class="kw">pp_check</span>(m4)</a></code></pre></div>
+<div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb460-1"><a href="generalized-linear-models.html#cb460-1"></a>ppc_dens_pois &lt;-<span class="st"> </span><span class="kw">pp_check</span>(m4)</span></code></pre></div>
 <pre><code>&gt;# Using 10 posterior samples for ppc type &#39;dens_overlay&#39; by default.</code></pre>
-<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb427-1" data-line-number="1">ppc_max_pois &lt;-<span class="st"> </span><span class="kw">pp_check</span>(m4, <span class="dt">type =</span> <span class="st">&quot;stat&quot;</span>, <span class="dt">stat =</span> <span class="st">&quot;max&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb462"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb462-1"><a href="generalized-linear-models.html#cb462-1"></a>ppc_max_pois &lt;-<span class="st"> </span><span class="kw">pp_check</span>(m4, <span class="dt">type =</span> <span class="st">&quot;stat&quot;</span>, <span class="dt">stat =</span> <span class="st">&quot;max&quot;</span>)</span></code></pre></div>
 <pre><code>&gt;# Using all posterior samples for ppc type &#39;stat&#39; by default.</code></pre>
-<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb429-1" data-line-number="1">var_mean_ratio &lt;-<span class="st"> </span><span class="cf">function</span>(y) <span class="kw">var</span>(y) <span class="op">/</span><span class="st"> </span><span class="kw">mean</span>(y)</a>
-<a class="sourceLine" id="cb429-2" data-line-number="2">ppc_vm_ratio_pois &lt;-<span class="st"> </span><span class="kw">pp_check</span>(m4, <span class="dt">type =</span> <span class="st">&quot;stat&quot;</span>, </a>
-<a class="sourceLine" id="cb429-3" data-line-number="3">                              <span class="dt">stat =</span> <span class="st">&quot;var_mean_ratio&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb464"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb464-1"><a href="generalized-linear-models.html#cb464-1"></a>var_mean_ratio &lt;-<span class="st"> </span><span class="cf">function</span>(y) <span class="kw">var</span>(y) <span class="op">/</span><span class="st"> </span><span class="kw">mean</span>(y)</span>
+<span id="cb464-2"><a href="generalized-linear-models.html#cb464-2"></a>ppc_vm_ratio_pois &lt;-<span class="st"> </span><span class="kw">pp_check</span>(m4, <span class="dt">type =</span> <span class="st">&quot;stat&quot;</span>, </span>
+<span id="cb464-3"><a href="generalized-linear-models.html#cb464-3"></a>                              <span class="dt">stat =</span> <span class="st">&quot;var_mean_ratio&quot;</span>)</span></code></pre></div>
 <pre><code>&gt;# Using all posterior samples for ppc type &#39;stat&#39; by default.</code></pre>
-<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb431-1" data-line-number="1">prop_zero &lt;-<span class="st"> </span><span class="cf">function</span>(y) <span class="kw">mean</span>(y <span class="op">==</span><span class="st"> </span><span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb431-2" data-line-number="2">ppc_pzero_pois &lt;-<span class="st"> </span><span class="kw">pp_check</span>(m4, <span class="dt">type =</span> <span class="st">&quot;stat&quot;</span>, <span class="dt">stat =</span> <span class="st">&quot;prop_zero&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb466"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb466-1"><a href="generalized-linear-models.html#cb466-1"></a>prop_zero &lt;-<span class="st"> </span><span class="cf">function</span>(y) <span class="kw">mean</span>(y <span class="op">==</span><span class="st"> </span><span class="dv">0</span>)</span>
+<span id="cb466-2"><a href="generalized-linear-models.html#cb466-2"></a>ppc_pzero_pois &lt;-<span class="st"> </span><span class="kw">pp_check</span>(m4, <span class="dt">type =</span> <span class="st">&quot;stat&quot;</span>, <span class="dt">stat =</span> <span class="st">&quot;prop_zero&quot;</span>)</span></code></pre></div>
 <pre><code>&gt;# Using all posterior samples for ppc type &#39;stat&#39; by default.</code></pre>
-<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb433-1" data-line-number="1"><span class="kw">grid.arrange</span>(ppc_dens_pois, ppc_max_pois, ppc_vm_ratio_pois, ppc_pzero_pois, </a>
-<a class="sourceLine" id="cb433-2" data-line-number="2">             <span class="dt">nrow =</span> <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb468"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb468-1"><a href="generalized-linear-models.html#cb468-1"></a><span class="kw">grid.arrange</span>(ppc_dens_pois, ppc_max_pois, ppc_vm_ratio_pois, ppc_pzero_pois, </span>
+<span id="cb468-2"><a href="generalized-linear-models.html#cb468-2"></a>             <span class="dt">nrow =</span> <span class="dv">2</span>)</span></code></pre></div>
 <pre><code>&gt;# `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <pre><code>&gt;# `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 &gt;# `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
@@ -1232,7 +1245,7 @@ total number of games. Also we aggregated the data by referees, but because
 many different referees also gave red cards to the same players, the
 player-level clustering hasn’t been accounted for.</p>
 <p>And as we saw in Chapter 3, we can also look at the rootogram:</p>
-<div class="sourceCode" id="cb436"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb436-1" data-line-number="1"><span class="kw">pp_check</span>(m4, <span class="dt">type =</span> <span class="st">&quot;rootogram&quot;</span>, <span class="dt">style =</span> <span class="st">&quot;hanging&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb471"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb471-1"><a href="generalized-linear-models.html#cb471-1"></a><span class="kw">pp_check</span>(m4, <span class="dt">type =</span> <span class="st">&quot;rootogram&quot;</span>, <span class="dt">style =</span> <span class="st">&quot;hanging&quot;</span>)</span></code></pre></div>
 <pre><code>&gt;# Using all posterior samples for ppc type &#39;rootogram&#39; by default.</code></pre>
 <p><img src="11_generalized_linear_models_files/figure-html/ppc-rootogram-m4-1.png" width="672" /></p>
 </div>
@@ -1257,10 +1270,10 @@ information.</p>
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-gelman2008weakly">
-<p>Gelman, Andrew, Aleks Jakulin, Maria Grazia Pittau, and Yu-Sung Su. 2008. “A Weakly Informative Default Prior Distribution for Logistic and Other Regression Models.” <em>The Annals of Applied Statistics</em>. JSTOR, 1360–83.</p>
+<p>Gelman, Andrew, Aleks Jakulin, Maria Grazia Pittau, and Yu-Sung Su. 2008. “A Weakly Informative Default Prior Distribution for Logistic and Other Regression Models.” <em>The Annals of Applied Statistics</em>, 1360–83.</p>
 </div>
 <div id="ref-pritschet2016marginally">
-<p>Pritschet, Laura, Derek Powell, and Zachary Horne. 2016. “Marginally Significant Effects as Evidence for Hypotheses: Changing Attitudes over Four Decades.” <em>Psychological Science</em> 27 (7). Sage Publications Sage CA: Los Angeles, CA: 1036–42.</p>
+<p>Pritschet, Laura, Derek Powell, and Zachary Horne. 2016. “Marginally Significant Effects as Evidence for Hypotheses: Changing Attitudes over Four Decades.” <em>Psychological Science</em> 27 (7): 1036–42.</p>
 </div>
 </div>
             </section>
@@ -1311,7 +1324,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["notes_bookdown.pdf", "notes_bookdown.epub"],
+"download": ["notes_bookdown.epub"],
 "toc": {
 "collapse": "subsection"
 }

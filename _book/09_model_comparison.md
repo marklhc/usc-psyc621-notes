@@ -216,6 +216,14 @@ ggplot(data.frame(x = c(-3, 9)), aes(x = x)) +
   labs(x = "y", y = "density")
 ```
 
+```
+># Warning: `mapping` is not used by stat_function()
+
+># Warning: `mapping` is not used by stat_function()
+
+># Warning: `mapping` is not used by stat_function()
+```
+
 <div class="figure">
 <img src="09_model_comparison_files/figure-html/divergence-1.png" alt="Density for $M_0$, $M_1$, and $M_2$" width="384" />
 <p class="caption">(\#fig:divergence)Density for $M_0$, $M_1$, and $M_2$</p>
@@ -391,8 +399,8 @@ dev_df %>%
 ```
 
 ```
-># No summary function supplied, defaulting to `mean_se()
-># No summary function supplied, defaulting to `mean_se()
+># No summary function supplied, defaulting to `mean_se()`
+># No summary function supplied, defaulting to `mean_se()`
 ```
 
 <img src="09_model_comparison_files/figure-html/dev_df-plot-1.png" width="480" />
@@ -483,7 +491,7 @@ dic_brmsfit(m1)
 
 ```
 >#          elpd_dic p_dic  dic
-># Estimate      120  2.92 -240
+># Estimate      120  3.01 -240
 ```
 
 ### Watanabe-Akaike Information Criteria (WAIC)
@@ -511,9 +519,9 @@ waic(m1)  # built-in function in brms
 ># Computed from 4000 by 434 log-likelihood matrix
 ># 
 >#           Estimate   SE
-># elpd_waic    120.1 14.5
-># p_waic         2.8  0.3
-># waic        -240.3 29.0
+># elpd_waic    120.0 14.5
+># p_waic         2.9  0.3
+># waic        -240.1 28.9
 ```
 
 ### Leave-One-Out Cross Validation
@@ -548,7 +556,7 @@ mean(log_lik(m1_no286, newdata = kidiq100[286, ]))
 ```
 
 ```
-># [1] -4.19
+># [1] -4.2
 ```
 
 Because LOO-IC requires fitting the model $N$ times, it is generally very
@@ -571,9 +579,9 @@ loo(m1)
 ># Computed from 4000 by 434 log-likelihood matrix
 ># 
 >#          Estimate   SE
-># elpd_loo    120.1 14.5
-># p_loo         2.8  0.3
-># looic      -240.3 29.0
+># elpd_loo    120.0 14.5
+># p_loo         2.9  0.3
+># looic      -240.1 28.9
 ># ------
 ># Monte Carlo SE of elpd_loo is 0.0.
 ># 
@@ -627,7 +635,7 @@ loo_compare(m1, m2, m3, m4)
 ```
 >#    elpd_diff se_diff
 ># m3  0.0       0.0   
-># m4 -0.5       1.1   
+># m4 -0.4       1.1   
 ># m2 -3.4       2.5   
 ># m1 -6.0       3.9
 ```
@@ -648,9 +656,9 @@ loo(m1, m2, m3, m4)
 ># Computed from 4000 by 434 log-likelihood matrix
 ># 
 >#          Estimate   SE
-># elpd_loo    120.1 14.5
-># p_loo         2.8  0.3
-># looic      -240.3 29.0
+># elpd_loo    120.0 14.5
+># p_loo         2.9  0.3
+># looic      -240.1 28.9
 ># ------
 ># Monte Carlo SE of elpd_loo is 0.0.
 ># 
@@ -662,9 +670,9 @@ loo(m1, m2, m3, m4)
 ># Computed from 4000 by 434 log-likelihood matrix
 ># 
 >#          Estimate   SE
-># elpd_loo    122.7 14.2
-># p_loo         3.9  0.4
-># looic      -245.3 28.4
+># elpd_loo    122.6 14.2
+># p_loo         4.0  0.4
+># looic      -245.2 28.4
 ># ------
 ># Monte Carlo SE of elpd_loo is 0.0.
 ># 
@@ -676,9 +684,9 @@ loo(m1, m2, m3, m4)
 ># Computed from 4000 by 434 log-likelihood matrix
 ># 
 >#          Estimate   SE
-># elpd_loo    126.1 14.3
-># p_loo         4.8  0.5
-># looic      -252.2 28.7
+># elpd_loo    126.0 14.3
+># p_loo         4.9  0.5
+># looic      -252.0 28.7
 ># ------
 ># Monte Carlo SE of elpd_loo is 0.0.
 ># 
@@ -690,9 +698,9 @@ loo(m1, m2, m3, m4)
 ># Computed from 4000 by 434 log-likelihood matrix
 ># 
 >#          Estimate   SE
-># elpd_loo    125.6 14.4
-># p_loo         6.0  0.6
-># looic      -251.1 28.9
+># elpd_loo    125.7 14.4
+># p_loo         5.9  0.6
+># looic      -251.3 28.8
 ># ------
 ># Monte Carlo SE of elpd_loo is 0.0.
 ># 
@@ -702,7 +710,7 @@ loo(m1, m2, m3, m4)
 ># Model comparisons:
 >#    elpd_diff se_diff
 ># m3  0.0       0.0   
-># m4 -0.5       1.1   
+># m4 -0.4       1.1   
 ># m2 -3.4       2.5   
 ># m1 -6.0       3.9
 ```
@@ -796,9 +804,9 @@ loo_compare(m1, m2, m3, m4)
 ```
 >#    elpd_diff se_diff
 ># m3  0.0       0.0   
-># m4 -0.9       1.1   
-># m2 -3.7       2.4   
-># m1 -6.3       3.9
+># m4 -0.6       1.2   
+># m1 -6.2       3.9   
+># m2 -6.2       3.9
 ```
 
 So it makes sense that if we're to assign weights, `m3` should get most weights.
@@ -816,13 +824,13 @@ round(cbind(waic_wts, pbma_wts), 3)
 
 ```
 >#    waic_wts pbma_wts
-># m1    0.001    0.050
-># m2    0.018    0.078
-># m3    0.687    0.566
-># m4    0.294    0.307
+># m1    0.001    0.049
+># m2    0.001    0.073
+># m3    0.641    0.522
+># m4    0.356    0.356
 ```
 
-You can see `m3` would get the highest weight, but it's only 0.687 and
+You can see `m3` would get the highest weight, but it's only 0.641 and
 thus less than half of the weights when all four models are considered together.
 
 In Bayesian, we want to preserve all the uncertainty in our analyses. Therefore,
@@ -860,10 +868,10 @@ pbma_draws <- pbma_brm_lm(m1, m2, m3, m4)
 ># Method: pseudo-BMA+ with Bayesian bootstrap
 ># ------
 >#    weight
-># m1 0.043 
-># m2 0.067 
-># m3 0.577 
-># m4 0.313
+># m1 0.048 
+># m2 0.074 
+># m3 0.528 
+># m4 0.349
 ```
 
 ```r
@@ -873,11 +881,11 @@ posterior_summary(pbma_draws)
 
 ```
 >#                    Estimate Est.Error     Q2.5   Q97.5
-># Intercept            0.8443    0.0144  0.81614  0.8718
-># mom_iq_c             0.8738    0.0966  0.68313  1.0595
-># mom_hsyes            0.0320    0.0156  0.00227  0.0625
-># mom_iq_c:mom_hsyes  -0.3725    0.1043 -0.57323 -0.1658
-># mom_age_c            0.0106    0.0106 -0.01000  0.0318
+># Intercept            0.8442    0.0145  0.81585  0.8718
+># mom_iq_c             0.8791    0.0878  0.71526  1.0589
+># mom_hsyes            0.0311    0.0153  0.00146  0.0612
+># mom_iq_c:mom_hsyes  -0.3783    0.0952 -0.56835 -0.1972
+># mom_age_c            0.0120    0.0114 -0.00945  0.0344
 ```
 
 ```r
@@ -887,10 +895,10 @@ fixef(m3)
 
 ```
 >#                    Estimate Est.Error    Q2.5   Q97.5
-># Intercept            0.8488    0.0215  0.8070  0.8891
-># mom_iq_c             0.9060    0.1440  0.6291  1.1745
-># mom_hsyes            0.0336    0.0235 -0.0104  0.0804
-># mom_iq_c:mom_hsyes  -0.4126    0.1563 -0.7138 -0.1130
+># Intercept             0.849    0.0213  0.8092  0.8912
+># mom_iq_c              0.914    0.1386  0.6580  1.1873
+># mom_hsyes             0.033    0.0235 -0.0119  0.0763
+># mom_iq_c:mom_hsyes   -0.422    0.1524 -0.7179 -0.1390
 ```
 
 ```r
@@ -899,12 +907,12 @@ fixef(m4)
 ```
 
 ```
->#                    Estimate Est.Error    Q2.5   Q97.5
-># Intercept            0.8375    0.0250  0.7881  0.8856
-># mom_iq_c             0.9165    0.1490  0.6424  1.2135
-># mom_hsyes            0.0276    0.0246 -0.0194  0.0762
-># mom_age_c            0.0340    0.0338 -0.0319  0.1014
-># mom_iq_c:mom_hsyes  -0.4288    0.1599 -0.7433 -0.1186
+>#                    Estimate Est.Error   Q2.5   Q97.5
+># Intercept            0.8383    0.0246  0.790  0.8860
+># mom_iq_c             0.9312    0.1430  0.662  1.2208
+># mom_hsyes            0.0265    0.0243 -0.022  0.0733
+># mom_age_c            0.0344    0.0325 -0.027  0.0985
+># mom_iq_c:mom_hsyes  -0.4448    0.1541 -0.766 -0.1502
 ```
 
 As you can see, the coefficients from the pseudo-BMA is smaller (i.e., being
@@ -991,6 +999,13 @@ number of parameters. However, say one put a very strong prior on one of the
 regression coefficients, which has about 9 times the weights of the information
 contributed by the data:
 
+
+```
+># Warning: `mapping` is not used by stat_function()
+
+># Warning: `mapping` is not used by stat_function()
+```
+
 <img src="09_model_comparison_files/figure-html/prior-data-weight-1.png" width="672" />
 
 Then the posterior for the parameter only uses 1/10 of the information from the 
@@ -1049,7 +1064,7 @@ zero. Below is the implication of the prior on the shrinkage of $\beta$:
 
 
 ```
-># Warning: Removed 1 rows containing missing values (geom_path).
+># Warning: Removed 1 row(s) containing missing values (geom_path).
 ```
 
 <img src="09_model_comparison_files/figure-html/unnamed-chunk-1-1.png" width="672" />
@@ -1079,6 +1094,12 @@ ggplot(data.frame(x = c(-6, 6)), aes(x = x)) +
   scale_color_manual("", values = c("red", "black"),
                      labels = c("horseshoe(3)", "N(0, 1)")) +
     xlab("y") + ylab("density") + ylim(0, 0.75)
+```
+
+```
+># Warning: `mapping` is not used by stat_function()
+
+># Warning: `mapping` is not used by stat_function()
 ```
 
 <div class="figure">
@@ -1149,6 +1170,10 @@ stanplot(m_hs) +
   geom_vline(xintercept = c(-.05, .05), col = "red")
 ```
 
+```
+># Warning: Method 'stanplot' is deprecated. Please use 'mcmc_plot' instead.
+```
+
 <img src="09_model_comparison_files/figure-html/interval-m_hs-1.png" width="432" />
 
 An arbitrary cutoff is to select only coefficients with posterior means 
@@ -1168,20 +1193,13 @@ loo(m5, m_hs)
 ># Computed from 1000 by 434 log-likelihood matrix
 ># 
 >#          Estimate   SE
-># elpd_loo   -567.8 14.3
-># p_loo        13.3  1.4
-># looic      1135.5 28.7
+># elpd_loo   -567.6 14.4
+># p_loo        13.1  1.4
+># looic      1135.1 28.8
 ># ------
 ># Monte Carlo SE of elpd_loo is 0.1.
 ># 
-># Pareto k diagnostic values:
->#                          Count Pct.    Min. n_eff
-># (-Inf, 0.5]   (good)     429   98.8%   265       
->#  (0.5, 0.7]   (ok)         5    1.2%   1378      
->#    (0.7, 1]   (bad)        0    0.0%   <NA>      
->#    (1, Inf)   (very bad)   0    0.0%   <NA>      
-># 
-># All Pareto k estimates are ok (k < 0.7).
+># All Pareto k estimates are good (k < 0.5).
 ># See help('pareto-k-diagnostic') for details.
 ># 
 ># Output of model 'm_hs':
@@ -1189,9 +1207,9 @@ loo(m5, m_hs)
 ># Computed from 1000 by 434 log-likelihood matrix
 ># 
 >#          Estimate   SE
-># elpd_loo   -565.1 14.4
+># elpd_loo   -565.1 14.5
 ># p_loo         8.4  1.0
-># looic      1130.3 28.9
+># looic      1130.1 28.9
 ># ------
 ># Monte Carlo SE of elpd_loo is 0.1.
 ># 
@@ -1201,7 +1219,7 @@ loo(m5, m_hs)
 ># Model comparisons:
 >#      elpd_diff se_diff
 ># m_hs  0.0       0.0   
-># m5   -2.6       2.3
+># m5   -2.5       2.4
 ```
 
 And also that the effective number of parameters was smaller in `m_hs`. 
@@ -1220,14 +1238,22 @@ importance of various variables in terms of their importance for prediction:
 library(projpred)
 # Variable selection:
 vs <- varsel(m_hs)
+```
+
+```
+># Warning: posterior_linpred(transform = TRUE) is deprecated. Please use
+># pp_expect() instead, without the 'transform' argument.
+```
+
+```r
 vs$vind  # variables ordered as they enter during the search
 ```
 
 ```
 >#           mom_iq    mom_hs:mom_iq  mom_hs:mom_work mom_work:mom_age 
 >#                2                5                6               10 
->#           mom_hs  mom_iq:mom_work          mom_age   mom_hs:mom_age 
->#                1                8                4                7 
+>#           mom_hs  mom_iq:mom_work   mom_hs:mom_age          mom_age 
+>#                1                8                7                4 
 >#   mom_iq:mom_age         mom_work 
 >#                9                3
 ```
@@ -1247,6 +1273,14 @@ variables should be included:
 # With cross-validation
 cvs <- cv_varsel(m_hs, 
                  verbose = FALSE)  # not printing progress
+```
+
+```
+># Warning: posterior_linpred(transform = TRUE) is deprecated. Please use
+># pp_expect() instead, without the 'transform' argument.
+```
+
+```r
 # model size suggested by the program
 suggest_size(cvs)
 ```

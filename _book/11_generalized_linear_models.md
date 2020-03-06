@@ -51,15 +51,15 @@ marginalp %>%
 ```
 
 ```
-># No summary function supplied, defaulting to `mean_se()
-># No summary function supplied, defaulting to `mean_se()
-># No summary function supplied, defaulting to `mean_se()
-># No summary function supplied, defaulting to `mean_se()
-># No summary function supplied, defaulting to `mean_se()
-># No summary function supplied, defaulting to `mean_se()
-># No summary function supplied, defaulting to `mean_se()
-># No summary function supplied, defaulting to `mean_se()
-># No summary function supplied, defaulting to `mean_se()
+># No summary function supplied, defaulting to `mean_se()`
+># No summary function supplied, defaulting to `mean_se()`
+># No summary function supplied, defaulting to `mean_se()`
+># No summary function supplied, defaulting to `mean_se()`
+># No summary function supplied, defaulting to `mean_se()`
+># No summary function supplied, defaulting to `mean_se()`
+># No summary function supplied, defaulting to `mean_se()`
+># No summary function supplied, defaulting to `mean_se()`
+># No summary function supplied, defaulting to `mean_se()`
 ```
 
 <img src="11_generalized_linear_models_files/figure-html/marginalp_describe-1.png" width="720" />
@@ -124,6 +124,13 @@ Then the marginal model plot:
 ```r
 mmp_brm(m1_norm, x = "Year10", plot_pi = TRUE, jitter = TRUE, 
         smooth_method = "loess")
+```
+
+```
+># `geom_smooth()` using formula 'y ~ x'
+># `geom_smooth()` using formula 'y ~ x'
+># `geom_smooth()` using formula 'y ~ x'
+># `geom_smooth()` using formula 'y ~ x'
 ```
 
 <div class="figure">
@@ -281,7 +288,7 @@ From the equation, when all predictors are zero, we have
 $$\logit(\mu_i) = \beta_0.$$
 Therefore, the intercept is the log odds that a study reported a marginally
 significant $p$ value when `Year10` = 0 (i.e, in 1970), which was estimated to
-be -1.350 , 95% CI [-1.551, -1.149]. As log odds are not as
+be -1.348 , 95% CI [-1.552, -1.150]. As log odds are not as
 intuitive as probability, it is common to instead interpret $\hat{\mu} =
 \logistic(\beta_0)$, which is the conditional probability of being `marginal_p`
 = 1 in 1970. For Bayesian, that means obtaining the posterior distribution of
@@ -297,7 +304,7 @@ psych::describe(logistic_beta0)
 
 ```
 >#    vars    n mean   sd median trimmed  mad  min  max range skew kurtosis se
-># X1    1 4000 0.21 0.02   0.21    0.21 0.02 0.16 0.27  0.11 0.15     -0.2  0
+># X1    1 4000 0.21 0.02   0.21    0.21 0.02 0.15 0.27  0.12 0.13        0  0
 ```
 
 The `bayesplot` package allow you to plot transformed parameters quickly:
@@ -308,10 +315,14 @@ mcmc_areas(m1_bern, pars = "b_Intercept",
            transformations = list("b_Intercept" = "plogis"), bw = "SJ")
 ```
 
+```
+># Warning: `expand_scale()` is deprecated; use `expansion()` instead.
+```
+
 <img src="11_generalized_linear_models_files/figure-html/areas_logistic_beta0-1.png" width="672" />
 
 A simpler but not precise method is to directly obtain an estimate of 
-$\logistic(\beta_0)$ as $\logistic(-1.35) = 
+$\logistic(\beta_0)$ as $\logistic(-1.348) = 
 0.206$ by directly transforming the posterior
 mean and the credible interval of $\beta_0$. This usually is okay for large 
 sample sizes and probability close to 0.5, but can give big discrepancies 
@@ -328,7 +339,7 @@ quantile(logistic_beta0, probs = c(.05, .95))
 
 ```
 >#    5%   95% 
-># 0.180 0.234
+># 0.180 0.235
 ```
 
 ```r
@@ -338,7 +349,7 @@ plogis(posterior_interval(m1_bern, pars = "Intercept"))
 
 ```
 >#              2.5% 97.5%
-># b_Intercept 0.175 0.241
+># b_Intercept 0.175  0.24
 ```
 
 #### Interpreting $\exp(\beta_1)$ As Odds Ratio
@@ -373,12 +384,12 @@ psych::describe(exp_beta1)
 
 ```
 >#    vars    n mean   sd median trimmed  mad  min  max range skew kurtosis se
-># X1    1 4000 1.43 0.06   1.43    1.43 0.06 1.24 1.62  0.38 0.08    -0.05  0
+># X1    1 4000 1.43 0.06   1.43    1.43 0.06 1.21 1.63  0.41  0.1    -0.03  0
 ```
 
 Using the posterior mean, we predict that the odds of reporting a marginal $p$
 value for a study that is 10 years later is multiplied by 
-1.429 times. 
+1.428 times. 
 
 And we can again compute a 90% credible interval by:
 
@@ -390,7 +401,7 @@ quantile(exp_beta1, probs = c(.05, .95))
 
 ```
 >#   5%  95% 
-># 1.33 1.53
+># 1.34 1.53
 ```
 
 ```r
@@ -400,7 +411,7 @@ exp(posterior_interval(m1_bern, pars = "Year10"))
 
 ```
 >#          2.5% 97.5%
-># b_Year10 1.32  1.55
+># b_Year10 1.32  1.54
 ```
 
 Odds ratio (OR) is popular as the multiplicative effect is constant, thus making
@@ -426,6 +437,11 @@ our model below:
 mmp_brm(m1_bern, x = "Year10", plot_pi = FALSE, jitter = TRUE, smooth_method = "loess")
 ```
 
+```
+># `geom_smooth()` using formula 'y ~ x'
+># `geom_smooth()` using formula 'y ~ x'
+```
+
 <div class="figure">
 <img src="11_generalized_linear_models_files/figure-html/pi_m1_bern-1.png" alt="Marginal model plot of the binary logistic regression model of Year predicting whether a marginal $p$ value was reported." width="672" />
 <p class="caption">(\#fig:pi_m1_bern)Marginal model plot of the binary logistic regression model of Year predicting whether a marginal $p$ value was reported.</p>
@@ -435,9 +451,9 @@ Now, consider the change in the predicted probability of reporting a marginal
 $p$ value with `Year10` = 0 (1970) and `Year10` = 1 (1980) respectively:
 
 - When `Year10` = 0, $P$(`marginal_p` = 1) = $\logistic(\beta_0)$, 
-posterior mean = 0.206.
+posterior mean = 0.207.
 - When `Year10` = 1, $P$(`marginal_p` = 1) = $\logistic(\beta_0 + \beta_1)$, 
-posterior mean = 0.27.
+posterior mean = 0.271.
 
 So between 1970 to 1980, 10 years of time is associated with an increase in the
 predicted probability of reporting marginal $p$ by
@@ -504,7 +520,7 @@ loo(m1_bern, m1_bern_id)
 ># Computed from 4000 by 1469 log-likelihood matrix
 ># 
 >#          Estimate   SE
-># elpd_loo   -910.1 13.8
+># elpd_loo   -910.0 13.8
 ># p_loo         2.0  0.1
 ># looic      1820.1 27.6
 ># ------
@@ -518,9 +534,9 @@ loo(m1_bern, m1_bern_id)
 ># Computed from 4000 by 1469 log-likelihood matrix
 ># 
 >#          Estimate   SE
-># elpd_loo   -908.2 14.1
-># p_loo         2.1  0.1
-># looic      1816.5 28.2
+># elpd_loo   -908.1 14.1
+># p_loo         2.0  0.1
+># looic      1816.3 28.2
 ># ------
 ># Monte Carlo SE of elpd_loo is 0.0.
 ># 
@@ -530,7 +546,7 @@ loo(m1_bern, m1_bern_id)
 ># Model comparisons:
 >#            elpd_diff se_diff
 ># m1_bern_id  0.0       0.0   
-># m1_bern    -1.8       0.7
+># m1_bern    -1.9       0.7
 ```
 
 As you can see, the identity link actually fits better. The model estimates are
@@ -550,16 +566,16 @@ summary(m1_bern_id)
 ># 
 ># Population-Level Effects: 
 >#           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-># Intercept     0.19      0.02     0.16     0.23 1.00     3542     2573
-># Year10        0.08      0.01     0.06     0.10 1.00     2999     2355
+># Intercept     0.19      0.02     0.16     0.23 1.00     4013     2924
+># Year10        0.08      0.01     0.06     0.10 1.00     2917     2479
 ># 
-># Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
-># is a crude measure of effective sample size, and Rhat is the potential 
+># Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
+># and Tail_ESS are effective sample size measures, and Rhat is the potential
 ># scale reduction factor on split chains (at convergence, Rhat = 1).
 ```
 
 So it suggested that every 10 years, the proportion of studies reporting 
-marginal $p$ values increases by 8.068%. If this model 
+marginal $p$ values increases by 8.078%. If this model 
 fits close to or better than the logistic model, it may be useful for 
 interepretation as opposed to odds ratio or non-linear effects. 
 
@@ -568,6 +584,11 @@ Here is the model implied relationship:
 
 ```r
 mmp_brm(m1_bern_id, x = "Year10", plot_pi = FALSE, jitter = TRUE, smooth_method = "loess")
+```
+
+```
+># `geom_smooth()` using formula 'y ~ x'
+># `geom_smooth()` using formula 'y ~ x'
 ```
 
 <div class="figure">
@@ -657,8 +678,8 @@ m1_pred <- as.numeric(m1_pred > mean(marginalp$marginal_p))
 ```
 >#          observed
 ># predicted   0   1
->#         0 535 164
->#         1 423 347
+>#         0 522 157
+>#         1 436 354
 ```
 
 ```r
@@ -667,7 +688,7 @@ m1_pred <- as.numeric(m1_pred > mean(marginalp$marginal_p))
 ```
 
 ```
-># [1] 0.6
+># [1] 0.596
 ```
 
 ```r
@@ -677,7 +698,7 @@ m1_pred <- as.numeric(m1_pred > mean(marginalp$marginal_p))
 So from a $2 \times 2$ contingency table, the prediction is correct when the 
 predicted and the observed values are the same (i.e., the two cells in 
 the diagonal), and the prediction is incorrect otherwise. In this example, the
-classification accuracy is 60.041%.
+classification accuracy is 59.632%.
 We can consider adding more predictors and re-evaluate the classification error
 again:
 
@@ -704,8 +725,8 @@ m2_pred <- as.numeric(m2_pred > mean(marginalp$marginal_p))
 ```
 >#          observed
 ># predicted   0   1
->#         0 594 177
->#         1 364 334
+>#         0 603 177
+>#         1 355 334
 ```
 
 ```r
@@ -714,7 +735,7 @@ m2_pred <- as.numeric(m2_pred > mean(marginalp$marginal_p))
 ```
 
 ```
-># [1] 0.632
+># [1] 0.638
 ```
 
 Note that unlike information criteria, as the classification error is evaluated
@@ -736,9 +757,9 @@ loo(m2_bern)
 ># Computed from 4000 by 1469 log-likelihood matrix
 ># 
 >#          Estimate   SE
-># elpd_loo   -885.7 15.1
-># p_loo         6.9  0.2
-># looic      1771.4 30.2
+># elpd_loo   -885.8 15.1
+># p_loo         7.1  0.2
+># looic      1771.7 30.3
 ># ------
 ># Monte Carlo SE of elpd_loo is 0.0.
 ># 
@@ -780,7 +801,7 @@ pROC::roc(response = marginalp$marginal_p,
 ># roc.default(response = marginalp$marginal_p, predictor = predict(m2_bern,     type = "response")[, "Estimate"], plot = TRUE, print.auc = TRUE)
 ># 
 ># Data: predict(m2_bern, type = "response")[, "Estimate"] in 958 controls (marginalp$marginal_p 0) < 511 cases (marginalp$marginal_p 1).
-># Area under the curve: 0.679
+># Area under the curve: 0.683
 ```
 
 ### Complete Separation
@@ -872,12 +893,12 @@ m_bayes
 ># 
 ># Population-Level Effects: 
 >#           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-># Intercept    -3.21      2.77   -10.40     0.39 1.00     1161      570
-># x1            3.17      2.70     0.24    10.32 1.01      998      515
-># x2            0.15      0.82    -1.40     1.78 1.00     2168     1938
+># Intercept    -3.00      2.27    -8.67     0.49 1.00     2053     1491
+># x1            2.94      2.11     0.21     8.28 1.00     1701     1254
+># x2            0.15      0.79    -1.34     1.77 1.00     2033     1996
 ># 
-># Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
-># is a crude measure of effective sample size, and Rhat is the potential 
+># Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
+># and Tail_ESS are effective sample size measures, and Rhat is the potential
 ># scale reduction factor on split chains (at convergence, Rhat = 1).
 ```
 
@@ -1144,6 +1165,14 @@ The coefficients were shown in the graph below:
 
 ```r
 stanplot(m4, type = "areas", bw = "SJ")
+```
+
+```
+># Warning: Method 'stanplot' is deprecated. Please use 'mcmc_plot' instead.
+```
+
+```
+># Warning: `expand_scale()` is deprecated; use `expansion()` instead.
 ```
 
 <img src="11_generalized_linear_models_files/figure-html/mcmc-areas-m4-1.png" width="672" />
