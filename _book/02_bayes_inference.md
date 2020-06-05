@@ -91,7 +91,7 @@ library(psych)
 pairs.panels(Aids2_sub, ellipses = FALSE)
 ```
 
-<img src="02_bayes_inference_files/figure-html/Aids2_sub-1.png" width="720" />
+![](02_bayes_inference_files/figure-epub3/Aids2_sub-1.png)<!-- -->
 
 ## Choosing a Model
 
@@ -230,7 +230,7 @@ for (i in 1:4) {
 gridExtra::grid.arrange(grobs = plist, nrow = 2)
 ```
 
-<img src="02_bayes_inference_files/figure-html/fig_binom-1.png" width="672" />
+![](02_bayes_inference_files/figure-epub3/fig_binom-1.png)<!-- -->
 
 Note in the above that the possible values of $y$ are $\{0, 1, \ldots, 10\}$, 
 and one can get the probability of each value. 
@@ -294,7 +294,7 @@ ggplot(tibble(x = c(0, 1)),
        y = "likelihood")
 ```
 
-<img src="02_bayes_inference_files/figure-html/likelihood-1.png" width="384" />
+![](02_bayes_inference_files/figure-epub3/likelihood-1.png)<!-- -->
 
 ## Specifying Priors
 
@@ -305,7 +305,7 @@ take any value from 0 to 1. For a continuous parameter there are infinitely
 many possible values, and it is impossible to specify our beliefs for each 
 value. We can specify something like:
 
-<img src="02_bayes_inference_files/figure-html/step_prior-1.png" width="384" />
+![](02_bayes_inference_files/figure-epub3/step_prior-1.png)<!-- -->
 
 to express a belief that $\theta$ is most likely to be in the range $[.40, .60)$
 and is 5 times more likely than any values outside of that range. Bayesian 
@@ -325,7 +325,7 @@ $$P(\theta) \sim \text{Beta}(a, b)$$
 
 $a$ and $b$ are the two parameters. Here are a few examples:
 
-<img src="02_bayes_inference_files/figure-html/plot_beta-1.png" width="672" />
+![](02_bayes_inference_files/figure-epub3/plot_beta-1.png)<!-- -->
 
 You will notice that when $a > b$, there will be more density closer to the 
 right region (i.e., larger $\theta$), and vice versa. Also, when $a$ and $b$
@@ -388,7 +388,7 @@ information equaled to 78 observations.
 <!-- prior success rate is 0.1 / 1.1 = 0.091), with an amount of information  -->
 <!-- being equal to 1.1 data points.  -->
 
-<img src="02_bayes_inference_files/figure-html/weak_beta_prior-1.png" width="432" />
+![](02_bayes_inference_files/figure-epub3/weak_beta_prior-1.png)<!-- -->
 
 The business of choosing a suitable prior distribution is not trivial. Luckily, 
 with more and more researchers and methodologists using Bayesian analyses, there
@@ -497,7 +497,7 @@ p2 <- ggplot(grid_dat, aes(x = theta)) +
 gridExtra::grid.arrange(p1, p2, nrow = 1)
 ```
 
-<img src="02_bayes_inference_files/figure-html/plot_grid_approx-1.png" width="864" />
+![](02_bayes_inference_files/figure-epub3/plot_grid_approx-1.png)<!-- -->
 
 The blue line above on the left graph shows an approximation of the posterior
 distribution.
@@ -623,7 +623,7 @@ ggplot(tibble(x = c(0, 1)), aes(x = x)) +
 ># Warning: `mapping` is not used by stat_function()
 ```
 
-<img src="02_bayes_inference_files/figure-html/plot_Laplace-1.png" width="528" />
+![](02_bayes_inference_files/figure-epub3/plot_Laplace-1.png)<!-- -->
 
 The advantage of using Laplace approximation is mainly computational, as it is
 generally much easier to obtain the maximum point of a function than to get the 
@@ -690,7 +690,7 @@ p2 <- ggplot(tibble(th = post), aes(x = th)) +
 gridExtra::grid.arrange(p1, p2, nrow = 1)
 ```
 
-<img src="02_bayes_inference_files/figure-html/sample_mcmc-1.png" width="672" />
+![](02_bayes_inference_files/figure-epub3/sample_mcmc-1.png)<!-- -->
 
 With MCMC, one needs to check for _convergence_ to make sure that the samples
 approximates the posterior well enough. We will discuss this in a later lecture.
@@ -720,7 +720,7 @@ likelihood estimates in frequentist statistics when the prior is non-informative
 However, it can be far away from the center when the distribution is skewed, or
 when it is not unimodal. 
 
-<img src="02_bayes_inference_files/figure-html/post-mean-median-mode-1.png" width="720" />
+![](02_bayes_inference_files/figure-epub3/post-mean-median-mode-1.png)<!-- -->
 
 As you can see, when the distribution is highly skewed, the three central 
 tendency measures can be quite different. In general, _it is recommended to
@@ -821,7 +821,7 @@ have a C% (e.g., 90% or 95%) probability of containing the true parameter value.
 For example, the blue region in both graphs below are 50% credible intervals of
 the $\mathrm{Beta}(52, 38)$ distribution.
 
-<img src="02_bayes_inference_files/figure-html/cred-int-1.png" width="672" />
+![](02_bayes_inference_files/figure-epub3/cred-int-1.png)<!-- -->
 
 However, there are some principles to help us choose which interval to use. The
 first one is to choose a interval such that every value included in the interval
@@ -831,13 +831,13 @@ given posterior distribution, and such interval is called a _highest posterior
 density interval (HPDI)_. The graph on the left below is the 50% HPDI for a
 $\mathrm{Beta}(52, 38)$ distribution.
 
-<img src="02_bayes_inference_files/figure-html/cred-int-2-1.png" width="672" />
+![](02_bayes_inference_files/figure-epub3/cred-int-2-1.png)<!-- -->
 
 Because the posterior distribution is close to symmetric in the above example,
 the HPDI and the equal-tailed CI are very similar. They can be quite different,
 however, when the posterior distribution is skewed, like the following:
 
-<img src="02_bayes_inference_files/figure-html/cred-int-3-1.png" width="672" />
+![](02_bayes_inference_files/figure-epub3/cred-int-3-1.png)<!-- -->
 
 
 Another advantage of the HPDI is that among all credible intervals, it will
@@ -889,7 +889,7 @@ with our binomial model and with an estimated $\theta$ of 0.578, if
 we were to obtain 10 more observations, we expect the number of deaths to have
 the following probability distribution:
 
-<img src="02_bayes_inference_files/figure-html/ppd-1.png" width="240" />
+![](02_bayes_inference_files/figure-epub3/ppd-1.png)<!-- -->
 
 Notation-wise, we can write this distribution as $P(\tilde y | \theta =  
 \theta_1)$, where $\tilde y$ represents a new data point that is different from
@@ -899,7 +899,7 @@ uncertainty in the results. Therefore, as $\theta_1$ is nothing but one
 possible value for $\theta$, we should include every value of $\theta$ for our
 prediction. The following are a few more examples:
 
-<img src="02_bayes_inference_files/figure-html/pred-possibility-1.png" width="720" />
+![](02_bayes_inference_files/figure-epub3/pred-possibility-1.png)<!-- -->
 
 So to get the best prediction, we can "average" across the predictions across 
 different values of $\theta$. However, we should not be treating each value of
@@ -919,7 +919,7 @@ which is just a straight-forward extension of the approximation of the posterior
 distribution of $\theta$. We will discuss more in later chapters; for now, 
 note that the posterior predictive distribution for our example is:
 
-<img src="02_bayes_inference_files/figure-html/ppd-ex-1.png" width="384" />
+![](02_bayes_inference_files/figure-epub3/ppd-ex-1.png)<!-- -->
 
 The bar in blue highlights the observed sample. 
 
@@ -932,7 +932,7 @@ is the most likely among all options, which says that our model fits the data
 well in that regard. Another common check is to plot a few simulated samples 
 of the predicted data, and compared those to the data observed: 
 
-<img src="02_bayes_inference_files/figure-html/ppc-graphs-1.png" width="672" />
+![](02_bayes_inference_files/figure-epub3/ppc-graphs-1.png)<!-- -->
 
 The example is overly simple so there is not much to tell aside from checking
 whether the graphs look similar, and in this case we don't see systematic

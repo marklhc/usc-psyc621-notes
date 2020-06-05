@@ -182,10 +182,10 @@ print(m3, pars = c("lambda", "log_lambda"))
 ># post-warmup draws per chain=1000, total post-warmup draws=4000.
 ># 
 >#             mean se_mean   sd  2.5%   25%   50%   75% 97.5% n_eff Rhat
-># lambda     27.67       0 0.12 27.42 27.59 27.67 27.75 27.89  1156    1
-># log_lambda  3.32       0 0.00  3.31  3.32  3.32  3.32  3.33  1155    1
+># lambda     27.66       0 0.12 27.43 27.59 27.67 27.74 27.88  1405    1
+># log_lambda  3.32       0 0.00  3.31  3.32  3.32  3.32  3.33  1404    1
 ># 
-># Samples were drawn using NUTS(diag_e) at Fri Mar  6 10:07:20 2020.
+># Samples were drawn using NUTS(diag_e) at Fri Mar  6 09:12:42 2020.
 ># For each parameter, n_eff is a crude measure of effective sample size,
 ># and Rhat is the potential scale reduction factor on split chains (at 
 ># convergence, Rhat=1).

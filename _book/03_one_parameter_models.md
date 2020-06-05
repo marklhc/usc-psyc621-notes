@@ -59,7 +59,7 @@ a Bernoulli/Binomial model, one common reparameterization is to define $\varphi
 
 Here is the relationship between $\varphi$ and $\theta$:
 
-<img src="03_one_parameter_models_files/figure-html/phi-theta-1.png" width="288" />
+![](03_one_parameter_models_files/figure-epub3/phi-theta-1.png)<!-- -->
 
 This reparameterization is popular because it is commonly used in logistic
 regression, and is actually a naturally parameter for a binomial distribution
@@ -90,7 +90,7 @@ ggplot(tibble(phi = phi_samples), aes(x = phi)) +
   labs(x = expression(varphi))
 ```
 
-<img src="03_one_parameter_models_files/figure-html/prior-phi-1.png" width="288" />
+![](03_one_parameter_models_files/figure-epub3/prior-phi-1.png)<!-- -->
 
 which assigns more density to $\varphi = 0$. Although generally you will get
 very similar results using either a non-informative prior on $\theta$ or 
@@ -105,7 +105,7 @@ $\varphi$ for a $\norm(0, 10)$ prior on $\varphi$. They match pretty well.
 
 
 
-<img src="03_one_parameter_models_files/figure-html/m1-density-1.png" width="480" />
+![](03_one_parameter_models_files/figure-epub3/m1-density-1.png)<!-- -->
 
 ***
 
@@ -140,7 +140,7 @@ categories are
 Now, we can generate some predictions from our posterior distribution and our
 model. 
 
-<img src="03_one_parameter_models_files/figure-html/ppd-1-1.png" width="672" />
+![](03_one_parameter_models_files/figure-epub3/ppd-1-1.png)<!-- -->
 
 So the observed data (the first subgraph) look similar to the simulated data. We
 can also conduct a posterior predictive check by defining a test statistic, here
@@ -152,7 +152,7 @@ death rate across the 4 state categories:
 ># `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 ```
 
-<img src="03_one_parameter_models_files/figure-html/ppc-max-min-1.png" width="384" />
+![](03_one_parameter_models_files/figure-epub3/ppc-max-min-1.png)<!-- -->
 
 The posterior predictive _p_-value (_ppp_) using a test statistic of the ratio 
 between the highest death rate and the lowest death rate among the 4 state
@@ -181,7 +181,7 @@ Bayesian inference.
 
 ### Sensitivity to different priors
 
-<img src="03_one_parameter_models_files/figure-html/sensitivity-1.png" width="672" />
+![](03_one_parameter_models_files/figure-epub3/sensitivity-1.png)<!-- -->
 
 You can see one needs a very strong prior (equivalent to 600 data points) 
 and with the prior and the data not agreeing to get a substantially different
@@ -213,7 +213,7 @@ The Poisson distribution has one rate parameter, usually denote as $\lambda$,
 which is also the mean of a Poisson distribution. Below are a few examples of
 Poisson distributions with different $\lambda$:
 
-<img src="03_one_parameter_models_files/figure-html/Pois-dist-1.png" width="432" />
+![](03_one_parameter_models_files/figure-epub3/Pois-dist-1.png)<!-- -->
 
 As you can see, the larger $\lambda$ is, the closer the distribution is to 
 a normal distribution. 
@@ -263,7 +263,7 @@ of the data (i.e., 0.9.
 >#                     NA's   :178
 ```
 
-<img src="03_one_parameter_models_files/figure-html/plot-redcard_dat-1.png" width="480" />
+![](03_one_parameter_models_files/figure-epub3/plot-redcard_dat-1.png)<!-- -->
 
 As you can see, the Poisson distribution describes the skewness of the data
 reasonably well, but there are more zeros in the data than what the Poisson
@@ -323,7 +323,7 @@ p2 <- ggplot(tibble(lambda = c(0, 20)), aes(x = lambda)) +
 gridExtra::grid.arrange(p1, p2, nrow = 1)
 ```
 
-<img src="03_one_parameter_models_files/figure-html/gamma-dist-1.png" width="75%" />
+<img src="03_one_parameter_models_files/figure-epub3/gamma-dist-1.png" width="75%" />
 
 Here is a graphical sketch of the model and the prior using the R package 
 `DiagrammeR`:
@@ -362,8 +362,7 @@ digraph boxes_and_circles {
 ")
 ```
 
-<!--html_preserve--><div id="htmlwidget-a4f1c79fa0875741aeb2" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-a4f1c79fa0875741aeb2">{"x":{"diagram":"\ndigraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # data\n  node [shape = box, fixedsize = true]\n  Y [label = <y<FONT POINT-SIZE=\"8\"><SUB>i<\/SUB><\/FONT>>]\n  \n  # parameters\n  node [shape = circle]\n  loglambda [label = \"log(&lambda;)\"]\n  \n  # transformed parameters\n  node [shape = circle, peripheries = 2]\n  lambda [label = \"&lambda;\"]\n  \n  # fixed values in prior\n  node [shape = circle, peripheries = 1]\n  mu_loglambda [label = <&mu;<FONT POINT-SIZE=\"8\"><SUB>log(&lambda;)<\/SUB><\/FONT>>];\n  sigma_loglambda [label = <&sigma;<FONT POINT-SIZE=\"8\"><SUB>log(&lambda;)<\/SUB><\/FONT>>]\n\n  # paths\n  mu_loglambda -> loglambda;\n  sigma_loglambda -> loglambda;\n  loglambda -> lambda;\n  lambda -> Y;\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
+![](03_one_parameter_models_files/figure-epub3/diagram-pois-1.png)<!-- -->
 
 Note that there currently is not a widely accepted standard for drawing these
 kinds of graphs, but as long as you have a reasonable and consistent way to 
@@ -421,10 +420,10 @@ print(m2, pars = c("log_lambda", "lambda"))
 ># post-warmup draws per chain=400, total post-warmup draws=800.
 ># 
 >#             mean se_mean   sd  2.5%   25%   50%   75% 97.5% n_eff Rhat
-># log_lambda -0.11       0 0.04 -0.19 -0.14 -0.11 -0.08 -0.02   285 1.02
-># lambda      0.90       0 0.04  0.82  0.87  0.90  0.93  0.98   288 1.02
+># log_lambda -0.12       0 0.04 -0.20 -0.14 -0.11 -0.09 -0.03   341    1
+># lambda      0.89       0 0.04  0.82  0.87  0.89  0.92  0.97   344    1
 ># 
-># Samples were drawn using NUTS(diag_e) at Fri Mar  6 10:07:09 2020.
+># Samples were drawn using NUTS(diag_e) at Fri Mar  6 09:12:31 2020.
 ># For each parameter, n_eff is a crude measure of effective sample size,
 ># and Rhat is the potential scale reduction factor on split chains (at 
 ># convergence, Rhat=1).
@@ -437,11 +436,7 @@ The posterior density and the 95% CI (credible interval) for $\lambda$ is
 bayesplot::mcmc_areas(m2, pars = c("log_lambda", "lambda"), prob = 0.95)
 ```
 
-```
-># Warning: `expand_scale()` is deprecated; use `expansion()` instead.
-```
-
-<img src="03_one_parameter_models_files/figure-html/m2_plot_areas-1.png" width="672" />
+![](03_one_parameter_models_files/figure-epub3/m2_plot_areas-1.png)<!-- -->
 
 The frequentist maximum likelihood estimate for $\lambda$ is the mean of the
 data, which is $\hat \lambda = 0.897$, and
@@ -459,7 +454,7 @@ bayesplot::ppc_bars(redcard_dat$redCards,
                     yrep = as.matrix(m2, pars = "yrep"))
 ```
 
-<img src="03_one_parameter_models_files/figure-html/ppc-redcard-1-1.png" width="432" />
+![](03_one_parameter_models_files/figure-epub3/ppc-redcard-1-1.png)<!-- -->
 
 There's also a useful graphical tool, rootogram, for diagnosing count models
 
@@ -470,7 +465,7 @@ bayesplot::ppc_rootogram(redcard_dat$redCards,
                          style = "hanging")
 ```
 
-<img src="03_one_parameter_models_files/figure-html/rootogram-redcard-1.png" width="432" />
+![](03_one_parameter_models_files/figure-epub3/rootogram-redcard-1.png)<!-- -->
 
 
 As can be seen, the predicted counts were off a little bit. Things that can

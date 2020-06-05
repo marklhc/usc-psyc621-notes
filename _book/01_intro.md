@@ -182,7 +182,7 @@ as illustrated below:
 
 And we can plot the relative frequency of "1"s in the trials:
 
-<img src="01_intro_files/figure-html/rel-freq-1.png" width="672" />
+![](01_intro_files/figure-epub3/rel-freq-1.png)<!-- -->
 
 As you can see, with more trials, the relative frequency approaches 1 / 6. It's
 the reason why in introductory statistics, many of the concepts require you to
@@ -478,14 +478,14 @@ We start with our prior. Assume that we have some rough idea that the plane
 should be, so we express our belief in a probability distribution like the 
 following:
 
-<img src="01_intro_files/figure-html/plane-prob-1.png" width="336" />
+![](01_intro_files/figure-epub3/plane-prob-1.png)<!-- -->
 
 which says that our belief is that the plane is about twice more likely to be
 towards the east than towards the west. Below are two other options for priors
 (out of infinitely many), one providing virtually no information and the other 
 encoding stronger information:
 
-<img src="01_intro_files/figure-html/plane-priors-1.png" width="624" />
+![](01_intro_files/figure-epub3/plane-priors-1.png)<!-- -->
 
 The prior is chosen to reflect the researcher's belief, so it is likely that
 different researchers will formulate a different prior for the same problem, and
@@ -495,7 +495,7 @@ priors generally make only a negligible differences.
 
 Now, assume that we have collected debris in the locations shown in the graph, 
 
-<img src="01_intro_files/figure-html/plane-data-1.png" width="336" />
+![](01_intro_files/figure-epub3/plane-data-1.png)<!-- -->
 
 Now, from Bayes's Theorem,
 
@@ -512,7 +512,7 @@ software.
 ># Warning: `mapping` is not used by stat_function()
 ```
 
-<img src="01_intro_files/figure-html/plane-post-1.png" width="456" />
+![](01_intro_files/figure-epub3/plane-post-1.png)<!-- -->
 
 The following shows what happen with a stronger prior:
 
@@ -521,7 +521,7 @@ The following shows what happen with a stronger prior:
 ># Warning: `mapping` is not used by stat_function()
 ```
 
-<img src="01_intro_files/figure-html/plane-strong-1.png" width="456" />
+![](01_intro_files/figure-epub3/plane-strong-1.png)<!-- -->
 
 ***
 

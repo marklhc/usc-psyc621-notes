@@ -46,11 +46,11 @@ $\mathrm{Beta}$ distribution (in red).
 ># `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 ```
 
-<img src="06_mcmc_files/figure-html/mc-convergence-1.png" width="672" />
+![](06_mcmc_files/figure-epub3/mc-convergence-1.png)<!-- -->
 
 The figure below shows the values when drawing 100 samples in time order:
 
-<img src="06_mcmc_files/figure-html/beta-converge-1.png" width="384" />
+![](06_mcmc_files/figure-epub3/beta-converge-1.png)<!-- -->
 
 So we can say that when the number of posterior samples is very large, the
 sample distribution _converges_ to the population density. The Monte Carlo
@@ -63,7 +63,7 @@ will converge to the corresponding values of the true posterior distribution.
 The graphs below showed how the mean, median, _SD_, and skewness converge to the
 true value (red dashed lines) when the number of simulation samples increases.
 
-<img src="06_mcmc_files/figure-html/beta-converge-stat-1.png" width="672" />
+![](06_mcmc_files/figure-epub3/beta-converge-stat-1.png)<!-- -->
 
 ## Markov Chain Monte Carlo (MCMC) With One Parameter 
 
@@ -164,7 +164,7 @@ you need to check after running an MCMC sampling. You will see that consecutive
 samples tend to be closer or the same. Compare this with the one in a previous
 section using `rbeta`.
 
-<img src="06_mcmc_files/figure-html/traceplot-1.png" width="576" />
+![](06_mcmc_files/figure-epub3/traceplot-1.png)<!-- -->
 
 The graph on the right panel is an autocorrelation plot, which shows the 
 correlations between sampled values that are $l$ iterations apart. The table
@@ -226,7 +226,7 @@ Monte Carlo simulation with independent samples. As you can see below, with
 1,000 samples, the summary statistics are still not very close to the true
 values.
 
-<img src="06_mcmc_files/figure-html/mcmc-chains-1.png" width="672" />
+![](06_mcmc_files/figure-epub3/mcmc-chains-1.png)<!-- -->
 
 ## Effective Sample Size ($n_\text{eff}$)
 
@@ -265,7 +265,7 @@ multiparameter problems, it usually takes hundreds or thousands of iterations to
 get there, as shown in the graph below (for approximating a $N[15, 2]$
 distribution).
 
-<img src="06_mcmc_files/figure-html/mcmc-trace-1.png" width="576" />
+![](06_mcmc_files/figure-epub3/mcmc-trace-1.png)<!-- -->
 
 Iterations obtained before a Markov chain reaches the stationary distribution
 are called burn-in in WinBUGS and warmup in Stan. As they are not considered
@@ -300,7 +300,7 @@ the trace plot. Look at the three examples below:
 
 
 
-<img src="06_mcmc_files/figure-html/trace-acf-1.png" width="672" /><img src="06_mcmc_files/figure-html/trace-acf-2.png" width="672" /><img src="06_mcmc_files/figure-html/trace-acf-3.png" width="672" />
+![](06_mcmc_files/figure-epub3/trace-acf-1.png)<!-- -->![](06_mcmc_files/figure-epub3/trace-acf-2.png)<!-- -->![](06_mcmc_files/figure-epub3/trace-acf-3.png)<!-- -->
 
 When multiple chains were run, each with a different initial value, it was
 recently recommended that researchers examine the rank plot (see [this
@@ -358,13 +358,13 @@ time). The plot below, however, shows an unhealthy chain.
 ># Warning: The following arguments were unrecognized and ignored: n_warmup
 ```
 
-<img src="06_mcmc_files/figure-html/rank-plots-1.png" width="672" />
+![](06_mcmc_files/figure-epub3/rank-plots-1.png)<!-- -->
 
 ```
 ># Warning: The following arguments were unrecognized and ignored: n_warmup
 ```
 
-<img src="06_mcmc_files/figure-html/rank-plots-2.png" width="672" />
+![](06_mcmc_files/figure-epub3/rank-plots-2.png)<!-- -->
 
 #### $\hat{R}$, a.k.a Potential Scale Reduction Factor
 
@@ -406,12 +406,12 @@ samples, we want to get more points in the regions with higher density.
 
 It's helpful to understand this with an example. Look at the 3D plot below:
 
-<img src="06_mcmc_files/figure-html/persp-2d-1.png" width="672" />
+![](06_mcmc_files/figure-epub3/persp-2d-1.png)<!-- -->
 
 Another way to show the joint distribution of two variables is to use a
 _contour plot_ to show the lines at different density levels:
 
-<img src="06_mcmc_files/figure-html/contour-plot-1.png" width="384" />
+![](06_mcmc_files/figure-epub3/contour-plot-1.png)<!-- -->
 
 With multiple parameters, one can still use the Metropolis/MH algorithm.
 However, one will need a multidimensional proposal distribution, and it is
@@ -460,11 +460,11 @@ So now, how does HMC work? First, consider a two-dimensional posterior below,
 which is based on a real data example of a hierarchical model, with two of the
 parameters $(\mu, \tau)$.
 
-<img src="06_mcmc_files/figure-html/persp-hlm-1.png" width="672" />
+![](06_mcmc_files/figure-epub3/persp-hlm-1.png)<!-- -->
 
 For illustration of HMC, let's turn it upside down:
 
-<img src="06_mcmc_files/figure-html/persp-hlm-flip-1.png" width="672" />
+![](06_mcmc_files/figure-epub3/persp-hlm-flip-1.png)<!-- -->
 
 HMC requires you to think of the inverted posterior density a park for ice
 skating. Imagine if you stand on a certain point of a slope and does not move

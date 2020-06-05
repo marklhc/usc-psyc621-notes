@@ -50,7 +50,7 @@ ggplot(aes(x = mom_iq, y = kid_score), data = kidiq) +
   xlim(range(kidiq$mom_iq))
 ```
 
-<img src="09_model_comparison_files/figure-html/plot-kidiq-sub-1.png" width="336" />
+![](09_model_comparison_files/figure-epub3/plot-kidiq-sub-1.png)<!-- -->
 
 When using `mom_iq` to predict `kid_score`, we can use beyond a linear
 regression line by using higher order _polynomials_. For example, a second-order
@@ -92,7 +92,7 @@ do.call(grid.arrange, c(p_list, nrow = 2))
 ```
 
 <div class="figure">
-<img src="09_model_comparison_files/figure-html/overfit-data-1.png" alt="Fit of models on the 10 random cases. Top panel: linear, quadratic, and cubic; bottom panel: 4th, 5th, and 6th degree polynomials" width="720" />
+<img src="09_model_comparison_files/figure-epub3/overfit-data-1.png" alt="Fit of models on the 10 random cases. Top panel: linear, quadratic, and cubic; bottom panel: 4th, 5th, and 6th degree polynomials"  />
 <p class="caption">(\#fig:overfit-data)Fit of models on the 10 random cases. Top panel: linear, quadratic, and cubic; bottom panel: 4th, 5th, and 6th degree polynomials</p>
 </div>
 
@@ -138,7 +138,7 @@ do.call(grid.arrange, c(p_list2, nrow = 2))
 ```
 
 <div class="figure">
-<img src="09_model_comparison_files/figure-html/overfit-generalize-1.png" alt="Using the regression lines based on 10 random cases to predict the remaining 424 cases. Top panel: linear, quadratic, and cubic; bottom panel: 4th, 5th, and 6th degree polynomials" width="720" />
+<img src="09_model_comparison_files/figure-epub3/overfit-generalize-1.png" alt="Using the regression lines based on 10 random cases to predict the remaining 424 cases. Top panel: linear, quadratic, and cubic; bottom panel: 4th, 5th, and 6th degree polynomials"  />
 <p class="caption">(\#fig:overfit-generalize)Using the regression lines based on 10 random cases to predict the remaining 424 cases. Top panel: linear, quadratic, and cubic; bottom panel: 4th, 5th, and 6th degree polynomials</p>
 </div>
 
@@ -225,7 +225,7 @@ ggplot(data.frame(x = c(-3, 9)), aes(x = x)) +
 ```
 
 <div class="figure">
-<img src="09_model_comparison_files/figure-html/divergence-1.png" alt="Density for $M_0$, $M_1$, and $M_2$" width="384" />
+<img src="09_model_comparison_files/figure-epub3/divergence-1.png" alt="Density for $M_0$, $M_1$, and $M_2$"  />
 <p class="caption">(\#fig:divergence)Density for $M_0$, $M_1$, and $M_2$</p>
 </div>
 
@@ -403,7 +403,7 @@ dev_df %>%
 ># No summary function supplied, defaulting to `mean_se()`
 ```
 
-<img src="09_model_comparison_files/figure-html/dev_df-plot-1.png" width="480" />
+![](09_model_comparison_files/figure-epub3/dev_df-plot-1.png)<!-- -->
 
 As you can see, the in-sample deviance (red line) keeps decreasing, indicating
 that a more complex model fit the data better, which is always the case. So if
@@ -860,7 +860,7 @@ of the parameters that are weighted averages from the original models.
 
 
 ```r
-source("../codes/pbma_brm_lm.R")
+source("pbma_brm_lm.R")
 pbma_draws <- pbma_brm_lm(m1, m2, m3, m4)
 ```
 
@@ -962,7 +962,7 @@ ggplot(tibble(stacking = pred_stacking[ , "Estimate"],
   geom_abline(intercept = 0, slope = 1)
 ```
 
-<img src="09_model_comparison_files/figure-html/pred-stacking-pbma-1.png" width="672" />
+![](09_model_comparison_files/figure-epub3/pred-stacking-pbma-1.png)<!-- -->
 
 As can be seen, in this example the two methods give very similar predictions.
 
@@ -973,7 +973,7 @@ Consider a kid whose mother's IQ is 120 (`mom_iq` = .2), mother's age is 40,
 did not work in first three years of child's life (`mom_work` = 1). Then the 
 prediction based on the various models are:
 
-<img src="09_model_comparison_files/figure-html/newkid-predict-1.png" width="672" />
+![](09_model_comparison_files/figure-epub3/newkid-predict-1.png)<!-- -->
 
 Check out this blog post https://mc-stan.org/loo/articles/loo2-weights.html for 
 more information on stacking and BMA. 
@@ -1006,7 +1006,7 @@ contributed by the data:
 ># Warning: `mapping` is not used by stat_function()
 ```
 
-<img src="09_model_comparison_files/figure-html/prior-data-weight-1.png" width="672" />
+![](09_model_comparison_files/figure-epub3/prior-data-weight-1.png)<!-- -->
 
 Then the posterior for the parameter only uses 1/10 of the information from the 
 data! Therefore, it would make more sense to count this as 0.1 parameter, 
@@ -1067,7 +1067,7 @@ zero. Below is the implication of the prior on the shrinkage of $\beta$:
 ># Warning: Removed 1 row(s) containing missing values (geom_path).
 ```
 
-<img src="09_model_comparison_files/figure-html/unnamed-chunk-1-1.png" width="672" />
+![](09_model_comparison_files/figure-epub3/unnamed-chunk-1-1.png)<!-- -->
 
 The U-shape here means that, for coefficients that are weakly supported by the
 data, the horseshoe will shrink it to very close to zero, whereas for
@@ -1103,7 +1103,7 @@ ggplot(data.frame(x = c(-6, 6)), aes(x = x)) +
 ```
 
 <div class="figure">
-<img src="09_model_comparison_files/figure-html/unnamed-chunk-2-1.png" alt="Density for the Finnish horseshoe prior with 3 degrees of freedom" width="672" />
+<img src="09_model_comparison_files/figure-epub3/unnamed-chunk-2-1.png" alt="Density for the Finnish horseshoe prior with 3 degrees of freedom"  />
 <p class="caption">(\#fig:unnamed-chunk-2)Density for the Finnish horseshoe prior with 3 degrees of freedom</p>
 </div>
 
@@ -1174,7 +1174,7 @@ stanplot(m_hs) +
 ># Warning: Method 'stanplot' is deprecated. Please use 'mcmc_plot' instead.
 ```
 
-<img src="09_model_comparison_files/figure-html/interval-m_hs-1.png" width="432" />
+![](09_model_comparison_files/figure-epub3/interval-m_hs-1.png)<!-- -->
 
 An arbitrary cutoff is to select only coefficients with posterior means 
 larger than .05, in which case only `mom_iq` and `mom_hs` and their interaction
@@ -1236,13 +1236,24 @@ importance of various variables in terms of their importance for prediction:
 
 ```r
 library(projpred)
+```
+
+```
+># This is projpred version 1.1.6.
+```
+
+```r
 # Variable selection:
 vs <- varsel(m_hs)
 ```
 
 ```
+># Warning: Method 'parse_bf' is deprecated. Please use 'brmsterms' instead.
+```
+
+```
 ># Warning: posterior_linpred(transform = TRUE) is deprecated. Please use
-># pp_expect() instead, without the 'transform' argument.
+># posterior_epred() instead, without the 'transform' argument.
 ```
 
 ```r
@@ -1263,7 +1274,7 @@ vs$vind  # variables ordered as they enter during the search
 varsel_plot(vs, stats = c("elpd", "rmse"))
 ```
 
-<img src="09_model_comparison_files/figure-html/vs-1.png" width="576" />
+![](09_model_comparison_files/figure-epub3/vs-1.png)<!-- -->
 
 We then use the `cv_varsel` method to perform cross-validation to see how many
 variables should be included:
@@ -1276,8 +1287,12 @@ cvs <- cv_varsel(m_hs,
 ```
 
 ```
+># Warning: Method 'parse_bf' is deprecated. Please use 'brmsterms' instead.
+```
+
+```
 ># Warning: posterior_linpred(transform = TRUE) is deprecated. Please use
-># pp_expect() instead, without the 'transform' argument.
+># posterior_epred() instead, without the 'transform' argument.
 ```
 
 ```r
@@ -1294,7 +1309,7 @@ suggest_size(cvs)
 varsel_plot(cvs, stats = c("elpd", "rmse"), deltas = TRUE)
 ```
 
-<img src="09_model_comparison_files/figure-html/cvs-1.png" width="576" />
+![](09_model_comparison_files/figure-epub3/cvs-1.png)<!-- -->
 
 Here it suggests to include only `mom_iq` and its interaction with `mom_hs`. 
 However, we generally prefers to also include the main effect of `mom_hs`. 
@@ -1345,4 +1360,4 @@ mcmc_intervals(as.matrix(proj)) +
 ># Warning: Removed 1 rows containing missing values (geom_point).
 ```
 
-<img src="09_model_comparison_files/figure-html/proj-interval-1.png" width="672" />
+![](09_model_comparison_files/figure-epub3/proj-interval-1.png)<!-- -->

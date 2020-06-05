@@ -77,7 +77,7 @@ demo_data <- tibble(y = y, x = x,
 ```
 
 <div class="figure">
-<img src="12_missing_data_files/figure-html/mechanism-plots-1.png" alt="Scatter plots for different types of missing data" width="624" />
+<img src="12_missing_data_files/figure-epub3/mechanism-plots-1.png" alt="Scatter plots for different types of missing data"  />
 <p class="caption">(\#fig:mechanism-plots)Scatter plots for different types of missing data</p>
 </div>
 
@@ -95,8 +95,7 @@ explain.
 
 ### MCAR (Missing Completely at Random)
 
-<!--html_preserve--><div id="htmlwidget-748157f64609652d122e" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-748157f64609652d122e">{"x":{"diagram":"\ndigraph mcar {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  node [shape = plaintext]\n  Y; X; \n  Ystar [label = \"Y*\"]\n  RY [label = <R<FONT POINT-SIZE=\"8\"><SUB>Y<\/SUB><\/FONT>>]\n\n  # paths\n  X -> Ystar;\n  Ystar -> Y;\n  RY -> Y;\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
+![](12_missing_data_files/figure-epub3/diag-mcar-1.png)<!-- -->
 
 `MCAR` means that the probability of a missing response (denoted as $R$) is
 unrelated to anything of interest in the research question. For example, for the
@@ -123,8 +122,7 @@ partial information.
 
 ### MAR (Missing At Random)
 
-<!--html_preserve--><div id="htmlwidget-a08941f42e8ad93d0338" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-a08941f42e8ad93d0338">{"x":{"diagram":"\ndigraph mar {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  node [shape = plaintext]\n  Y; X; \n  Ystar [label = \"Y*\"]\n  RY [label = <R<FONT POINT-SIZE=\"8\"><SUB>Y<\/SUB><\/FONT>>]\n\n  # paths\n  X -> Ystar;\n  X -> RY;\n  Ystar -> Y;\n  RY -> Y;\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
+![](12_missing_data_files/figure-epub3/diag-mar-1.png)<!-- -->
 
 It's probably not the most intuitive naming, but `MAR` refers to the condition 
 that the probability of a missing observation ($R$) can be explained by the
@@ -149,8 +147,7 @@ errors.
 
 ### NMAR (Not Missing At Random)
 
-<!--html_preserve--><div id="htmlwidget-0f7405d6c60f62578b83" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-0f7405d6c60f62578b83">{"x":{"diagram":"\ndigraph nmar {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  node [shape = plaintext]\n  Y; X; \n  Ystar [label = \"Y*\"]\n  RY [label = <R<FONT POINT-SIZE=\"8\"><SUB>Y<\/SUB><\/FONT>>]\n\n  # paths\n  X -> Ystar;\n  X -> RY;\n  Ystar -> Y;\n  Ystar -> RY;\n  RY -> Y;\n  {rank = same; Ystar; RY;}\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
+![](12_missing_data_files/figure-epub3/diag-nmar-1.png)<!-- -->
 
 `NMAR` is sometimes called *missing not at random* or *non-ignorable 
 missingness*, and as the name suggested it refers to conditions where MAR does 
@@ -416,7 +413,7 @@ grid.arrange(p1, p2, p3, nrow = 2)
 ># Warning: Removed 239 rows containing missing values (geom_point).
 ```
 
-<img src="12_missing_data_files/figure-html/kidiq100-missing-scatter-1.png" width="720" />
+![](12_missing_data_files/figure-epub3/kidiq100-missing-scatter-1.png)<!-- -->
 
 When eyeballing it doesn't appear that the data are very different, but the 
 regression slopes are affected by the different missing data mechanisms. We'll
@@ -435,7 +432,7 @@ kidiq100_mar$mom_hs <- factor(kidiq100_mar$mom_hs, labels = c("no", "yes"))
 md.pattern(kidiq100_mar, rotate.names = TRUE)
 ```
 
-<img src="12_missing_data_files/figure-html/md-pattern-mar-1.png" width="480" />
+![](12_missing_data_files/figure-epub3/md-pattern-mar-1.png)<!-- -->
 
 ```
 >#     mom_work mom_age mom_hs mom_iq_c kid_score    
@@ -567,14 +564,14 @@ qplot(kid_score_R, mom_iq_c, data = kidiq100_mar_R, geom = "boxplot")
 ># Warning: Removed 94 rows containing non-finite values (stat_boxplot).
 ```
 
-<img src="12_missing_data_files/figure-html/missing_dist1-1.png" width="672" />
+![](12_missing_data_files/figure-epub3/missing_dist1-1.png)<!-- -->
 
 ```r
 ggplot(data = kidiq100_mar_R, aes(x = kid_score_R)) + 
   geom_bar(aes(fill = factor(mom_hs)), position = position_dodge())
 ```
 
-<img src="12_missing_data_files/figure-html/missing_dist1-2.png" width="672" />
+![](12_missing_data_files/figure-epub3/missing_dist1-2.png)<!-- -->
 
 As we already knew, missingness of `kid_score` is related to both `mom_iq_c` 
 and `mom_hs`, in that those with higher `mom_iq_c` and those whose mother had
@@ -684,7 +681,7 @@ mcmc_areas_ridges(draws_ymis[ , 1:10], bw = "SJ")
 ```
 
 <div class="figure">
-<img src="12_missing_data_files/figure-html/m3-stan-dens-1.png" alt="Posterior density plots of the first two missing values of \texttt{kid_score}" width="672" />
+<img src="12_missing_data_files/figure-epub3/m3-stan-dens-1.png" alt="Posterior density plots of the first two missing values of \texttt{kid_score}"  />
 <p class="caption">(\#fig:m3-stan-dens)Posterior density plots of the first two missing values of \texttt{kid_score}</p>
 </div>
 
@@ -841,7 +838,7 @@ We should also look at convergence:
 plot(kidiq100_imp)
 ```
 
-<img src="12_missing_data_files/figure-html/plot-kidiq100_imp-1.png" width="624" />
+![](12_missing_data_files/figure-epub3/plot-kidiq100_imp-1.png)<!-- -->
 
 These are basically Markov chains in regular Bayesian analyses. So if you see 
 some chains are constantly above or below others then it's problematic. 
@@ -893,13 +890,13 @@ m3_imp
 ># 
 ># Population-Level Effects: 
 >#           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-># Intercept     0.80      0.02     0.76     0.85 1.15      170      783
-># mom_iq_c      0.67      0.10     0.48     0.86 1.40       84      328
-># mom_hsyes     0.07      0.03     0.02     0.13 1.18      144      653
+># Intercept     0.80      0.02     0.76     0.85 1.15      169      806
+># mom_iq_c      0.67      0.10     0.48     0.85 1.39       85      340
+># mom_hsyes     0.07      0.03     0.02     0.13 1.18      144      677
 ># 
 ># Family Specific Parameters: 
 >#       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-># sigma     0.19      0.01     0.18     0.21 1.20      135      246
+># sigma     0.19      0.01     0.18     0.21 1.20      136      250
 ># 
 ># Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
 ># and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -917,26 +914,26 @@ m3_imp$rhats
 
 ```
 >#    b_Intercept b_mom_iq_c b_mom_hsyes sigma  lp__
-># 1        1.002      1.000       1.002 1.003 1.002
-># 2        0.999      1.001       0.999 1.000 1.000
-># 3        1.000      0.999       1.000 1.002 0.999
-># 4        0.999      0.999       0.999 1.001 1.004
-># 5        1.001      1.001       1.002 1.003 1.001
-># 6        1.000      1.001       1.001 1.001 0.999
-># 7        1.000      1.000       1.000 1.001 1.000
-># 8        1.000      1.000       1.000 1.000 1.002
-># 9        1.000      0.999       1.001 0.999 1.002
-># 10       0.999      1.000       0.999 1.000 1.003
-># 11       0.999      1.001       0.999 1.000 1.000
-># 12       0.999      1.000       0.999 0.999 1.000
-># 13       1.000      1.000       1.000 1.000 1.000
-># 14       1.001      1.000       1.000 0.999 1.001
-># 15       1.001      1.000       1.001 1.000 1.000
-># 16       0.999      1.000       0.999 0.999 1.001
-># 17       1.001      1.000       1.003 0.999 1.000
-># 18       1.000      1.000       1.000 0.999 0.999
-># 19       1.000      0.999       1.001 0.999 1.000
-># 20       1.001      1.000       1.001 1.002 1.003
+># 1        1.000      1.000       0.999 0.999 1.003
+># 2        1.001      1.002       1.000 1.000 0.999
+># 3        0.999      1.000       0.999 0.999 1.003
+># 4        1.000      0.999       0.999 1.000 1.000
+># 5        1.001      1.002       1.000 0.999 1.001
+># 6        0.999      0.999       0.999 1.001 1.001
+># 7        0.999      0.999       1.000 0.999 1.000
+># 8        0.999      0.999       0.999 1.001 1.007
+># 9        1.000      1.000       1.000 0.999 1.001
+># 10       1.000      0.999       1.000 0.999 1.000
+># 11       1.000      1.000       0.999 0.999 1.005
+># 12       0.999      0.999       0.999 1.000 1.000
+># 13       1.001      1.002       1.001 1.000 1.000
+># 14       0.999      0.999       0.999 0.999 1.001
+># 15       1.000      0.999       1.000 1.000 1.002
+># 16       0.999      1.000       0.999 1.004 1.000
+># 17       1.000      1.000       1.000 1.000 0.999
+># 18       0.999      1.000       0.999 1.000 1.001
+># 19       0.999      0.999       0.999 1.000 1.001
+># 20       1.000      1.001       1.000 1.000 1.003
 ```
 
 So the chains have converged for each individual data set. 
@@ -945,7 +942,7 @@ Now, put the results together:
 
 
 ```r
-source("../codes/extract_brmsfit.R")
+source("extract_brmsfit.R")
 texreg::screenreg(map(list(m3, m3_ld, m3_imp), 
                       extract_brmsfit, 
                       # LOO-IC and WAIC not meaningful for comparing different
@@ -976,14 +973,14 @@ texreg::screenreg(map(list(m3, m3_ld, m3_imp),
 ># Intercept    0.82 *        0.81 *         0.80 *    
 >#            [0.78; 0.86]  [0.76; 0.86]   [0.76; 0.85]
 ># mom_iq_c     0.56 *        0.71 *         0.67 *    
->#            [0.44; 0.68]  [0.51; 0.91]   [0.49; 0.86]
+>#            [0.44; 0.68]  [0.51; 0.91]   [0.49; 0.85]
 ># mom_hsyes    0.06 *        0.07 *         0.07 *    
 >#            [0.01; 0.10]  [0.01; 0.13]   [0.02; 0.13]
 ># ----------------------------------------------------
 ># R^2          0.21          0.22           0.22      
 ># Num. obs.  434           219            434         
 ># ====================================================
-># * 0 outside the confidence interval
+># * Null hypothesis value outside the confidence interval.
 ```
 
 You can see that the coefficients for `mom_iq_c` is closer to the original data

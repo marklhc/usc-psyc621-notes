@@ -58,7 +58,7 @@ psych::pairs.panels(lies %>%
                       select(Age, Gender, LDMRT:TEMRT))
 ```
 
-<img src="05_group_comparisons_files/figure-html/lies-1.png" width="672" />
+![](05_group_comparisons_files/figure-epub3/lies-1.png)<!-- -->
 
 ## Between-Subject Comparisons
 
@@ -78,7 +78,7 @@ lies %>%
 ># Warning: Removed 6 rows containing non-finite values (stat_density).
 ```
 
-<img src="05_group_comparisons_files/figure-html/plot-lies-1.png" width="672" />
+![](05_group_comparisons_files/figure-epub3/plot-lies-1.png)<!-- -->
 
 ### Independent sample t-test
 
@@ -166,12 +166,11 @@ p3 <- ggplot(tibble(sig = c(0, 5)), aes(x = sig)) +
 gridExtra::grid.arrange(p1, p2, p3, nrow = 2)
 ```
 
-<img src="05_group_comparisons_files/figure-html/plot-priors-1.png" width="672" />
+![](05_group_comparisons_files/figure-epub3/plot-priors-1.png)<!-- -->
 
 #### Model Diagram
 
-<!--html_preserve--><div id="htmlwidget-de9777f83c40b0c9682e" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-de9777f83c40b0c9682e">{"x":{"diagram":"\ndigraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # data\n  node [shape = box, fixedsize = true]\n  Y1 [label = <y<FONT POINT-SIZE=\"8\"><SUB>i1<\/SUB><\/FONT>>]\n  Y2 [label = <y<FONT POINT-SIZE=\"8\"><SUB>i2<\/SUB><\/FONT>>]\n  \n  # parameters\n  node [shape = circle]\n  mu1 [label = <&mu;<FONT POINT-SIZE=\"8\"><SUB>1<\/SUB><\/FONT>>]\n  beta [label = \"&beta;\"]\n  sigma [label = \"&sigma;\"]\n  \n  # transformed parameters\n  node [shape = circle, peripheries = 2]\n  mu2 [label = <&mu;<FONT POINT-SIZE=\"8\"><SUB>2<\/SUB><\/FONT>>]\n  \n  # fixed values in prior\n  node [shape = circle, peripheries = 1]\n  mu_mu1 [label = <&mu;<FONT POINT-SIZE=\"8\"><SUB>&mu;<FONT POINT-SIZE=\"8\"><SUB>1<\/SUB><\/FONT><\/SUB><\/FONT>>]\n  sigma_mu1 [label = <&sigma;<FONT POINT-SIZE=\"8\"><SUB>&mu;<FONT POINT-SIZE=\"8\"><SUB>1<\/SUB><\/FONT><\/SUB><\/FONT>>]\n  mu_beta [label = <&mu;<FONT POINT-SIZE=\"8\"><SUB>&beta;<\/SUB><\/FONT>>]\n  sigma_beta [label = <&sigma;<FONT POINT-SIZE=\"8\"><SUB>&beta;<\/SUB><\/FONT>>]\n  nu_sigma [label = <&nu;<FONT POINT-SIZE=\"8\"><SUB>&sigma;<\/SUB><\/FONT>>]\n  mu_sigma [label = <&mu;<FONT POINT-SIZE=\"8\"><SUB>&sigma;<\/SUB><\/FONT>>];\n  sigma_sigma [label = <&sigma;<FONT POINT-SIZE=\"8\"><SUB>&sigma;<\/SUB><\/FONT>>]\n\n  # paths\n  nu_sigma -> sigma;\n  mu_sigma -> sigma;\n  sigma_sigma -> sigma;\n  mu_mu1 -> mu1;\n  sigma_mu1 -> mu1;\n  mu_beta -> beta;\n  sigma_beta -> beta;\n  mu1 -> mu2;\n  beta -> mu2;\n  mu1 -> Y1;\n  mu2 -> Y2;\n  sigma -> Y1;\n  sigma -> Y2;\n  \n  # fine tuning\n  {rank = same; Y1; Y2;}\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
+![](05_group_comparisons_files/figure-epub3/diagram-group-compare-1.png)<!-- -->
 
 #### STAN
 
@@ -243,10 +242,10 @@ broom::tidy(m1, pars = c("mu_1", "mu_2", "beta", "sigma"),
 ># # A tibble: 4 x 5
 >#   term  estimate std.error conf.low conf.high
 >#   <chr>    <dbl>     <dbl>    <dbl>     <dbl>
-># 1 mu_1     1.81     0.0999    1.61      2.00 
-># 2 mu_2     1.30     0.0724    1.15      1.44 
-># 3 beta    -0.511    0.125    -0.759    -0.265
-># 4 sigma    0.463    0.0427    0.388     0.557
+># 1 mu_1     1.81     0.101     1.61      2.00 
+># 2 mu_2     1.30     0.0707    1.16      1.44 
+># 3 beta    -0.510    0.122    -0.745    -0.268
+># 4 sigma    0.460    0.0417    0.389     0.554
 ```
 
 ```r
@@ -261,7 +260,7 @@ plot(m1, pars = c("mu_1", "mu_2", "beta", "sigma"))
 ># outer_level: 0.95 (95% intervals)
 ```
 
-<img src="05_group_comparisons_files/figure-html/plot-m1-1.png" width="672" />
+![](05_group_comparisons_files/figure-epub3/plot-m1-1.png)<!-- -->
 
 
 
@@ -296,11 +295,7 @@ bayesplot::mcmc_areas(post_sam, pars = "cohen_d",
                       prob = .90)
 ```
 
-```
-># Warning: `expand_scale()` is deprecated; use `expansion()` instead.
-```
-
-<img src="05_group_comparisons_files/figure-html/post_sam-1.png" width="336" />
+![](05_group_comparisons_files/figure-epub3/post_sam-1.png)<!-- -->
 
 ```r
 # HPDI
@@ -310,19 +305,19 @@ HPDinterval(as.mcmc(post_sam))
 
 ```
 >#          lower  upper
-># beta    -0.756 -0.264
-># sigma    0.379  0.544
-># cohen_d -1.709 -0.563
+># beta    -0.746 -0.269
+># sigma    0.384  0.546
+># cohen_d -1.686 -0.564
 ># attr(,"Probability")
 ># [1] 0.95
 ```
 
 > From the normal model, it was estimated that the mean RT for man was 
-1.809 seconds, 95% CI [1.614, 1.997].
+1.808 seconds, 95% CI [1.608, 2.002].
 On average women had faster RT when asked to tell lies in Dutch than man, with
-an estimated difference of -0.511 seconds, 95% CI 
-[-0.759, -0.265], _d_ = -1.116, 95% CI 
-[-1.697, -0.546].
+an estimated difference of -0.51 seconds, 95% CI 
+[-0.745, -0.268], _d_ = -1.117, 95% CI 
+[-1.684, -0.562].
 
 #### Posterior Predictive Check
 
@@ -340,13 +335,13 @@ y2rep <- as.matrix(m1, pars = "y2rep")[sample.int(2000, 100), ]
 ppc_dens_overlay(y1, yrep = y1rep)
 ```
 
-<img src="05_group_comparisons_files/figure-html/dens-y1-y2-1.png" width="336" />
+![](05_group_comparisons_files/figure-epub3/dens-y1-y2-1.png)<!-- -->
 
 ```r
 ppc_dens_overlay(y2, yrep = y2rep)
 ```
 
-<img src="05_group_comparisons_files/figure-html/dens-y1-y2-2.png" width="336" />
+![](05_group_comparisons_files/figure-epub3/dens-y1-y2-2.png)<!-- -->
 
 The main problem is that the predictions can be negative, which isn't possible
 for response time. Below is a check for outliers:
@@ -356,13 +351,13 @@ for response time. Below is a check for outliers:
 ppc_intervals(y1, yrep = y1rep)
 ```
 
-<img src="05_group_comparisons_files/figure-html/ppc-intervals-y1-y2-1.png" width="336" />
+![](05_group_comparisons_files/figure-epub3/ppc-intervals-y1-y2-1.png)<!-- -->
 
 ```r
 ppc_intervals(y2, yrep = y2rep)
 ```
 
-<img src="05_group_comparisons_files/figure-html/ppc-intervals-y1-y2-2.png" width="336" />
+![](05_group_comparisons_files/figure-epub3/ppc-intervals-y1-y2-2.png)<!-- -->
 
 When the dark blue dots were outside of the intervals (which were the intervals
 of predicted value), it indicates that the model didn't account for those values
@@ -442,7 +437,7 @@ codes for running it on our example.
 
 #### Shifted Lognormal Distributions
 
-<img src="05_group_comparisons_files/figure-html/shifted-lognormal-1.png" width="432" />
+![](05_group_comparisons_files/figure-epub3/shifted-lognormal-1.png)<!-- -->
 
 #### STAN
 
@@ -512,12 +507,12 @@ broom::tidy(m3, pars = c("mu_1", "mu_2", "beta_mu", "sigma",
 
 term       estimate   std.error   conf.low   conf.high
 --------  ---------  ----------  ---------  ----------
-mu_1           0.15        0.21      -0.25        0.54
-mu_2           0.03        0.12      -0.21        0.24
-beta_mu       -0.12        0.19      -0.48        0.26
-sigma          0.40        0.06       0.30        0.52
-ndt_1          0.54        0.21       0.14        0.91
-ndt_2          0.18        0.09       0.02        0.36
+mu_1           0.15        0.21      -0.27        0.52
+mu_2           0.03        0.12      -0.22        0.25
+beta_mu       -0.12        0.18      -0.43        0.27
+sigma          0.40        0.06       0.29        0.53
+ndt_1          0.55        0.21       0.13        0.91
+ndt_2          0.18        0.10       0.02        0.36
 
 #### Difference in $\mu$ and in `ndt`
 
@@ -537,11 +532,7 @@ bayesplot::mcmc_areas(post_sam, pars = c("dt_diff", "ndt_diff"),
                       prob = .90)
 ```
 
-```
-># Warning: `expand_scale()` is deprecated; use `expansion()` instead.
-```
-
-<img src="05_group_comparisons_files/figure-html/post_sam-ndt-1.png" width="336" />
+![](05_group_comparisons_files/figure-epub3/post_sam-ndt-1.png)<!-- -->
 
 
 #### Posterior Predictive Check
@@ -556,13 +547,13 @@ y2rep <- as.matrix(m3, pars = "y2rep")[sample.int(2000, 100), ]
 ppc_dens_overlay(y1, yrep = y1rep)
 ```
 
-<img src="05_group_comparisons_files/figure-html/ppc-dens-m3-1.png" width="336" />
+![](05_group_comparisons_files/figure-epub3/ppc-dens-m3-1.png)<!-- -->
 
 ```r
 ppc_dens_overlay(y2, yrep = y2rep)
 ```
 
-<img src="05_group_comparisons_files/figure-html/ppc-dens-m3-2.png" width="336" />
+![](05_group_comparisons_files/figure-epub3/ppc-dens-m3-2.png)<!-- -->
 
 The above looks pretty good. 
 
@@ -573,13 +564,13 @@ Below is a check for outliers:
 ppc_intervals(y1, yrep = y1rep)
 ```
 
-<img src="05_group_comparisons_files/figure-html/ppc-int-m3-1.png" width="336" />
+![](05_group_comparisons_files/figure-epub3/ppc-int-m3-1.png)<!-- -->
 
 ```r
 ppc_intervals(y2, yrep = y2rep)
 ```
 
-<img src="05_group_comparisons_files/figure-html/ppc-int-m3-2.png" width="336" />
+![](05_group_comparisons_files/figure-epub3/ppc-int-m3-2.png)<!-- -->
 
 There are still quite a handful of outliers. 
 
@@ -614,7 +605,7 @@ lies %>%
 ># Warning: Removed 6 rows containing non-finite values (stat_density).
 ```
 
-<img src="05_group_comparisons_files/figure-html/plot-lies-2-1.png" width="672" />
+![](05_group_comparisons_files/figure-epub3/plot-lies-2-1.png)<!-- -->
 
 ### Independent sample $t$-test
 
@@ -777,7 +768,7 @@ plot(m4, pars = c("mu_1", "mu_2", "beta", "sigma", "tau", "cohen_d"))
 ># outer_level: 0.95 (95% intervals)
 ```
 
-<img src="05_group_comparisons_files/figure-html/plot-m4-1.png" width="672" />
+![](05_group_comparisons_files/figure-epub3/plot-m4-1.png)<!-- -->
 
 
 
@@ -804,13 +795,13 @@ y2rep <- as.matrix(m4, pars = "y2rep")[sample.int(2000, 100), ]
 ppc_dens_overlay(y1, yrep = y1rep)
 ```
 
-<img src="05_group_comparisons_files/figure-html/ppc-dens-m4-1.png" width="336" />
+![](05_group_comparisons_files/figure-epub3/ppc-dens-m4-1.png)<!-- -->
 
 ```r
 ppc_dens_overlay(y2, yrep = y2rep)
 ```
 
-<img src="05_group_comparisons_files/figure-html/ppc-dens-m4-2.png" width="336" />
+![](05_group_comparisons_files/figure-epub3/ppc-dens-m4-2.png)<!-- -->
 
 The fit was good for lies but not for truth. Below is a check for outliers:
 
@@ -819,13 +810,13 @@ The fit was good for lies but not for truth. Below is a check for outliers:
 ppc_intervals(y1, yrep = y1rep)
 ```
 
-<img src="05_group_comparisons_files/figure-html/ppc-int-m4-1.png" width="336" />
+![](05_group_comparisons_files/figure-epub3/ppc-int-m4-1.png)<!-- -->
 
 ```r
 ppc_intervals(y2, yrep = y2rep)
 ```
 
-<img src="05_group_comparisons_files/figure-html/ppc-int-m4-2.png" width="336" />
+![](05_group_comparisons_files/figure-epub3/ppc-int-m4-2.png)<!-- -->
 
 As discussed in the previous note, you may want to consider some alternative 
 models, maybe the Student's $t$ likelihood that accommodate outliers, or some
@@ -859,12 +850,6 @@ m2_brm <- brm(RT ~ veracity + (1 | PP), data = lies_long,
 ># Warning: Rows containing NAs were excluded from the model.
 ```
 
-```
-># Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.
-># Running the chains for more iterations may help. See
-># http://mc-stan.org/misc/warnings.html#bulk-ess
-```
-
 And there are some nice functions you can use to summarize models fitted by
 `brms`
 
@@ -884,17 +869,17 @@ m2_brm
 ># Group-Level Effects: 
 ># ~PP (Number of levels: 63) 
 >#               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-># sd(Intercept)     0.41      0.04     0.34     0.50 1.01      732     1417
+># sd(Intercept)     0.41      0.04     0.33     0.50 1.00      803     1726
 ># 
 ># Population-Level Effects: 
 >#               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-># Intercept         1.45      0.06     1.33     1.56 1.01      361      801
-># veracityTDMRT    -0.30      0.03    -0.36    -0.24 1.00     4341     2787
+># Intercept         1.45      0.06     1.34     1.56 1.01      498      919
+># veracityTDMRT    -0.30      0.03    -0.36    -0.24 1.00     4713     3072
 ># 
 ># Family Specific Parameters: 
 >#       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-># sigma     0.14      0.02     0.10     0.19 1.00     1110     1694
-># nu        5.75      4.77     2.08    19.49 1.00     1603     1783
+># sigma     0.14      0.02     0.10     0.19 1.01      996     1966
+># nu        5.70      4.47     2.06    18.74 1.00     1537     2197
 ># 
 ># Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
 ># and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -906,7 +891,7 @@ m2_brm
 plot(m2_brm)
 ```
 
-<img src="05_group_comparisons_files/figure-html/plot-m2_brm-1.png" width="672" />
+![](05_group_comparisons_files/figure-epub3/plot-m2_brm-1.png)<!-- -->
 
 From above, as the estimate of $\nu$ was quite small, it was pretty clear that 
 there are outliers that need to be handled (and was handled somewhat by the 
@@ -917,7 +902,7 @@ robust Student's $t$ model). Let's look at some posterior predictive checks:
 pp_check(m2_brm, nsamples = 100)
 ```
 
-<img src="05_group_comparisons_files/figure-html/ppc-m2_brm-1.png" width="336" />
+![](05_group_comparisons_files/figure-epub3/ppc-m2_brm-1.png)<!-- -->
 
 
 ```r
@@ -928,7 +913,7 @@ pp_check(m2_brm, type = "intervals_grouped", group = "veracity")
 ># Using all posterior samples for ppc type 'intervals_grouped' by default.
 ```
 
-<img src="05_group_comparisons_files/figure-html/ppc-int-m2_brm-1.png" width="672" />
+![](05_group_comparisons_files/figure-epub3/ppc-int-m2_brm-1.png)<!-- -->
 
 ### Region of Practical Equivalence (ROPE)
 
@@ -1005,7 +990,7 @@ brms::posterior_interval(m3_brm, pars = "b_languageLEMRT")
 
 ```
 >#                    2.5%  97.5%
-># b_languageLEMRT -0.0405 0.0399
+># b_languageLEMRT -0.0406 0.0398
 ```
 
 So we can see that the 95% CI is completely inside the ROPE. Therefore, we would
@@ -1025,7 +1010,7 @@ mean(beta_sam < .05 & beta_sam > -.05)
 ```
 
 ```
-># [1] 0.982
+># [1] 0.983
 ```
 
 which shows that there is a `mean(beta_sam < .05 & beta_sam > -.05) * 100`%

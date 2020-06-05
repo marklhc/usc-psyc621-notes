@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 12 Missing Data | Course Handouts for Bayesian Data Analysis Class</title>
   <meta name="description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Fall semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
-  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 12 Missing Data | Course Handouts for Bayesian Data Analysis Class" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Mark Lai" />
 
 
-<meta name="date" content="2020-03-06" />
+<meta name="date" content="2020-06-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,6 +33,7 @@
   
 <link rel="prev" href="generalized-linear-models.html"/>
 <link rel="next" href="references.html"/>
+<script src="libs/header-attrs-2.2/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -53,22 +54,21 @@
 <script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
 <script src="libs/viz-1.8.2/viz.js"></script>
 <link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
-<script src="libs/grViz-binding-1.0.5/grViz.js"></script>
+<script src="libs/grViz-binding-1.0.6.1/grViz.js"></script>
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -88,7 +88,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -138,70 +138,86 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
-<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
-<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#history-of-bayesian-statistics"><i class="fa fa-check"></i><b>1.1</b> History of Bayesian Statistics</a><ul>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#history-of-bayesian-statistics"><i class="fa fa-check"></i><b>1.1</b> History of Bayesian Statistics</a>
+<ul>
 <li class="chapter" data-level="1.1.1" data-path="introduction.html"><a href="introduction.html#thomas-bayes-17011762"><i class="fa fa-check"></i><b>1.1.1</b> Thomas Bayes (1701–1762)</a></li>
 <li class="chapter" data-level="1.1.2" data-path="introduction.html"><a href="introduction.html#pierre-simon-laplace-17491827"><i class="fa fa-check"></i><b>1.1.2</b> Pierre-Simon Laplace (1749–1827)</a></li>
 <li class="chapter" data-level="1.1.3" data-path="introduction.html"><a href="introduction.html#th-century"><i class="fa fa-check"></i><b>1.1.3</b> 20th Century</a></li>
 </ul></li>
-<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#motivations-for-using-bayesian-methods"><i class="fa fa-check"></i><b>1.2</b> Motivations for Using Bayesian Methods</a><ul>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#motivations-for-using-bayesian-methods"><i class="fa fa-check"></i><b>1.2</b> Motivations for Using Bayesian Methods</a>
+<ul>
 <li class="chapter" data-level="1.2.1" data-path="introduction.html"><a href="introduction.html#problem-with-classical-frequentist-statistics"><i class="fa fa-check"></i><b>1.2.1</b> Problem with classical (frequentist) statistics</a></li>
 </ul></li>
-<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#probability"><i class="fa fa-check"></i><b>1.3</b> Probability</a><ul>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#probability"><i class="fa fa-check"></i><b>1.3</b> Probability</a>
+<ul>
 <li class="chapter" data-level="1.3.1" data-path="introduction.html"><a href="introduction.html#classical-interpretation"><i class="fa fa-check"></i><b>1.3.1</b> Classical Interpretation</a></li>
 <li class="chapter" data-level="1.3.2" data-path="introduction.html"><a href="introduction.html#frequentist-interpretation"><i class="fa fa-check"></i><b>1.3.2</b> Frequentist Interpretation</a></li>
 <li class="chapter" data-level="1.3.3" data-path="introduction.html"><a href="introduction.html#problem-of-the-single-case"><i class="fa fa-check"></i><b>1.3.3</b> Problem of the single case</a></li>
 <li class="chapter" data-level="1.3.4" data-path="introduction.html"><a href="introduction.html#subjectivist-interpretation"><i class="fa fa-check"></i><b>1.3.4</b> Subjectivist Interpretation</a></li>
 <li class="chapter" data-level="1.3.5" data-path="introduction.html"><a href="introduction.html#basics-of-probability"><i class="fa fa-check"></i><b>1.3.5</b> Basics of Probability</a></li>
 </ul></li>
-<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#bayess-theorem"><i class="fa fa-check"></i><b>1.4</b> Bayes’s Theorem</a><ul>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#bayess-theorem"><i class="fa fa-check"></i><b>1.4</b> Bayes’s Theorem</a>
+<ul>
 <li class="chapter" data-level="1.4.1" data-path="introduction.html"><a href="introduction.html#example-1-base-rate-fallacy-from-wikipedia"><i class="fa fa-check"></i><b>1.4.1</b> Example 1: Base rate fallacy (From Wikipedia)</a></li>
 </ul></li>
-<li class="chapter" data-level="1.5" data-path="introduction.html"><a href="introduction.html#bayesian-statistics"><i class="fa fa-check"></i><b>1.5</b> Bayesian Statistics</a><ul>
+<li class="chapter" data-level="1.5" data-path="introduction.html"><a href="introduction.html#bayesian-statistics"><i class="fa fa-check"></i><b>1.5</b> Bayesian Statistics</a>
+<ul>
 <li class="chapter" data-level="1.5.1" data-path="introduction.html"><a href="introduction.html#example-2-locating-a-plane"><i class="fa fa-check"></i><b>1.5.1</b> Example 2: Locating a Plane</a></li>
 </ul></li>
 <li class="chapter" data-level="1.6" data-path="introduction.html"><a href="introduction.html#comparing-bayesian-and-frequentist-statistics"><i class="fa fa-check"></i><b>1.6</b> Comparing Bayesian and Frequentist Statistics</a></li>
 <li class="chapter" data-level="1.7" data-path="introduction.html"><a href="introduction.html#software-for-bayesian-statistics"><i class="fa fa-check"></i><b>1.7</b> Software for Bayesian Statistics</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="bayesian-inference.html"><a href="bayesian-inference.html"><i class="fa fa-check"></i><b>2</b> Bayesian Inference</a><ul>
+<li class="chapter" data-level="2" data-path="bayesian-inference.html"><a href="bayesian-inference.html"><i class="fa fa-check"></i><b>2</b> Bayesian Inference</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#steps-of-bayesian-data-analysis"><i class="fa fa-check"></i><b>2.1</b> Steps of Bayesian Data Analysis</a></li>
 <li class="chapter" data-level="2.2" data-path="bayesian-inference.html"><a href="bayesian-inference.html#real-data-example"><i class="fa fa-check"></i><b>2.2</b> Real Data Example</a></li>
-<li class="chapter" data-level="2.3" data-path="bayesian-inference.html"><a href="bayesian-inference.html#choosing-a-model"><i class="fa fa-check"></i><b>2.3</b> Choosing a Model</a><ul>
+<li class="chapter" data-level="2.3" data-path="bayesian-inference.html"><a href="bayesian-inference.html#choosing-a-model"><i class="fa fa-check"></i><b>2.3</b> Choosing a Model</a>
+<ul>
 <li class="chapter" data-level="2.3.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#exchangeability"><i class="fa fa-check"></i><b>2.3.1</b> Exchangeability*</a></li>
 <li class="chapter" data-level="2.3.2" data-path="bayesian-inference.html"><a href="bayesian-inference.html#probability-distributions"><i class="fa fa-check"></i><b>2.3.2</b> Probability Distributions</a></li>
 <li class="chapter" data-level="2.3.3" data-path="bayesian-inference.html"><a href="bayesian-inference.html#the-likelihood"><i class="fa fa-check"></i><b>2.3.3</b> The Likelihood</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="bayesian-inference.html"><a href="bayesian-inference.html#specifying-priors"><i class="fa fa-check"></i><b>2.4</b> Specifying Priors</a><ul>
+<li class="chapter" data-level="2.4" data-path="bayesian-inference.html"><a href="bayesian-inference.html#specifying-priors"><i class="fa fa-check"></i><b>2.4</b> Specifying Priors</a>
+<ul>
 <li class="chapter" data-level="2.4.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#beta-distribution"><i class="fa fa-check"></i><b>2.4.1</b> Beta Distribution</a></li>
 </ul></li>
-<li class="chapter" data-level="2.5" data-path="bayesian-inference.html"><a href="bayesian-inference.html#obtain-the-posterior-distributions"><i class="fa fa-check"></i><b>2.5</b> Obtain the Posterior Distributions</a><ul>
+<li class="chapter" data-level="2.5" data-path="bayesian-inference.html"><a href="bayesian-inference.html#obtain-the-posterior-distributions"><i class="fa fa-check"></i><b>2.5</b> Obtain the Posterior Distributions</a>
+<ul>
 <li class="chapter" data-level="2.5.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#grid-approximation"><i class="fa fa-check"></i><b>2.5.1</b> Grid Approximation</a></li>
 <li class="chapter" data-level="2.5.2" data-path="bayesian-inference.html"><a href="bayesian-inference.html#using-conjugate-priors"><i class="fa fa-check"></i><b>2.5.2</b> Using Conjugate Priors</a></li>
 <li class="chapter" data-level="2.5.3" data-path="bayesian-inference.html"><a href="bayesian-inference.html#laplace-approximation-with-maximum-a-posteriori-estimation"><i class="fa fa-check"></i><b>2.5.3</b> Laplace Approximation with Maximum A Posteriori Estimation</a></li>
 <li class="chapter" data-level="2.5.4" data-path="bayesian-inference.html"><a href="bayesian-inference.html#markov-chain-monte-carlo-mcmc"><i class="fa fa-check"></i><b>2.5.4</b> Markov Chain Monte Carlo (MCMC)</a></li>
 </ul></li>
-<li class="chapter" data-level="2.6" data-path="bayesian-inference.html"><a href="bayesian-inference.html#summarizing-the-posterior-distribution"><i class="fa fa-check"></i><b>2.6</b> Summarizing the Posterior Distribution</a><ul>
+<li class="chapter" data-level="2.6" data-path="bayesian-inference.html"><a href="bayesian-inference.html#summarizing-the-posterior-distribution"><i class="fa fa-check"></i><b>2.6</b> Summarizing the Posterior Distribution</a>
+<ul>
 <li class="chapter" data-level="2.6.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#posterior-mean-median-and-mode"><i class="fa fa-check"></i><b>2.6.1</b> Posterior Mean, Median, and Mode</a></li>
 <li class="chapter" data-level="2.6.2" data-path="bayesian-inference.html"><a href="bayesian-inference.html#uncertainty-estimates"><i class="fa fa-check"></i><b>2.6.2</b> Uncertainty Estimates</a></li>
 <li class="chapter" data-level="2.6.3" data-path="bayesian-inference.html"><a href="bayesian-inference.html#credible-intervals"><i class="fa fa-check"></i><b>2.6.3</b> Credible Intervals</a></li>
 <li class="chapter" data-level="2.6.4" data-path="bayesian-inference.html"><a href="bayesian-inference.html#probability-of-theta-higherlower-than-a-certain-value"><i class="fa fa-check"></i><b>2.6.4</b> Probability of <span class="math inline">\(\theta\)</span> Higher/Lower Than a Certain Value</a></li>
 </ul></li>
-<li class="chapter" data-level="2.7" data-path="bayesian-inference.html"><a href="bayesian-inference.html#model-checking"><i class="fa fa-check"></i><b>2.7</b> Model Checking</a><ul>
+<li class="chapter" data-level="2.7" data-path="bayesian-inference.html"><a href="bayesian-inference.html#model-checking"><i class="fa fa-check"></i><b>2.7</b> Model Checking</a>
+<ul>
 <li class="chapter" data-level="2.7.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#posterior-predictive-distribution"><i class="fa fa-check"></i><b>2.7.1</b> Posterior Predictive Distribution</a></li>
 </ul></li>
 <li class="chapter" data-level="2.8" data-path="bayesian-inference.html"><a href="bayesian-inference.html#posterior-predictive-check"><i class="fa fa-check"></i><b>2.8</b> Posterior Predictive Check</a></li>
-<li class="chapter" data-level="2.9" data-path="bayesian-inference.html"><a href="bayesian-inference.html#summary"><i class="fa fa-check"></i><b>2.9</b> Summary</a><ul>
+<li class="chapter" data-level="2.9" data-path="bayesian-inference.html"><a href="bayesian-inference.html#summary"><i class="fa fa-check"></i><b>2.9</b> Summary</a>
+<ul>
 <li class="chapter" data-level="2.9.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#key-concepts"><i class="fa fa-check"></i><b>2.9.1</b> Key Concepts</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="one-parameter-models.html"><a href="one-parameter-models.html"><i class="fa fa-check"></i><b>3</b> One-Parameter Models</a><ul>
-<li class="chapter" data-level="3.1" data-path="one-parameter-models.html"><a href="one-parameter-models.html#binomialbernoulli-data"><i class="fa fa-check"></i><b>3.1</b> Binomial/Bernoulli data</a><ul>
+<li class="chapter" data-level="3" data-path="one-parameter-models.html"><a href="one-parameter-models.html"><i class="fa fa-check"></i><b>3</b> One-Parameter Models</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="one-parameter-models.html"><a href="one-parameter-models.html#binomialbernoulli-data"><i class="fa fa-check"></i><b>3.1</b> Binomial/Bernoulli data</a>
+<ul>
 <li class="chapter" data-level="3.1.1" data-path="one-parameter-models.html"><a href="one-parameter-models.html#reparameterization"><i class="fa fa-check"></i><b>3.1.1</b> Reparameterization*</a></li>
 <li class="chapter" data-level="3.1.2" data-path="one-parameter-models.html"><a href="one-parameter-models.html#posterior-predictive-check-1"><i class="fa fa-check"></i><b>3.1.2</b> Posterior Predictive Check</a></li>
 <li class="chapter" data-level="3.1.3" data-path="one-parameter-models.html"><a href="one-parameter-models.html#comparison-to-frequentist-results"><i class="fa fa-check"></i><b>3.1.3</b> Comparison to frequentist results</a></li>
 <li class="chapter" data-level="3.1.4" data-path="one-parameter-models.html"><a href="one-parameter-models.html#sensitivity-to-different-priors"><i class="fa fa-check"></i><b>3.1.4</b> Sensitivity to different priors</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="one-parameter-models.html"><a href="one-parameter-models.html#poisson-data"><i class="fa fa-check"></i><b>3.2</b> Poisson Data</a><ul>
+<li class="chapter" data-level="3.2" data-path="one-parameter-models.html"><a href="one-parameter-models.html#poisson-data"><i class="fa fa-check"></i><b>3.2</b> Poisson Data</a>
+<ul>
 <li class="chapter" data-level="3.2.1" data-path="one-parameter-models.html"><a href="one-parameter-models.html#example-2"><i class="fa fa-check"></i><b>3.2.1</b> Example 2</a></li>
 <li class="chapter" data-level="3.2.2" data-path="one-parameter-models.html"><a href="one-parameter-models.html#choosing-a-model-1"><i class="fa fa-check"></i><b>3.2.2</b> Choosing a model</a></li>
 <li class="chapter" data-level="3.2.3" data-path="one-parameter-models.html"><a href="one-parameter-models.html#choosing-a-prior"><i class="fa fa-check"></i><b>3.2.3</b> Choosing a prior</a></li>
@@ -210,20 +226,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2.6" data-path="one-parameter-models.html"><a href="one-parameter-models.html#posterior-predictive-check-2"><i class="fa fa-check"></i><b>3.2.6</b> Posterior Predictive Check</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html"><i class="fa fa-check"></i><b>4</b> Brief Introduction to STAN</a><ul>
-<li class="chapter" data-level="4.1" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#stan"><i class="fa fa-check"></i><b>4.1</b> <code>STAN</code></a><ul>
+<li class="chapter" data-level="4" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html"><i class="fa fa-check"></i><b>4</b> Brief Introduction to STAN</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#stan"><i class="fa fa-check"></i><b>4.1</b> <code>STAN</code></a>
+<ul>
 <li class="chapter" data-level="4.1.1" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#stan-code"><i class="fa fa-check"></i><b>4.1.1</b> <code>STAN</code> code</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#rstan"><i class="fa fa-check"></i><b>4.2</b> <code>RStan</code></a><ul>
+<li class="chapter" data-level="4.2" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#rstan"><i class="fa fa-check"></i><b>4.2</b> <code>RStan</code></a>
+<ul>
 <li class="chapter" data-level="4.2.1" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#assembling-data-list-in-r"><i class="fa fa-check"></i><b>4.2.1</b> Assembling data list in R</a></li>
 <li class="chapter" data-level="4.2.2" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#call-rstan"><i class="fa fa-check"></i><b>4.2.2</b> Call <code>rstan</code></a></li>
 <li class="chapter" data-level="4.2.3" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#summarize-the-results"><i class="fa fa-check"></i><b>4.2.3</b> Summarize the results</a></li>
 </ul></li>
 <li class="chapter" data-level="4.3" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#resources"><i class="fa fa-check"></i><b>4.3</b> Resources</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="group-comparisons.html"><a href="group-comparisons.html"><i class="fa fa-check"></i><b>5</b> Group Comparisons</a><ul>
+<li class="chapter" data-level="5" data-path="group-comparisons.html"><a href="group-comparisons.html"><i class="fa fa-check"></i><b>5</b> Group Comparisons</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="group-comparisons.html"><a href="group-comparisons.html#data"><i class="fa fa-check"></i><b>5.1</b> Data</a></li>
-<li class="chapter" data-level="5.2" data-path="group-comparisons.html"><a href="group-comparisons.html#between-subject-comparisons"><i class="fa fa-check"></i><b>5.2</b> Between-Subject Comparisons</a><ul>
+<li class="chapter" data-level="5.2" data-path="group-comparisons.html"><a href="group-comparisons.html#between-subject-comparisons"><i class="fa fa-check"></i><b>5.2</b> Between-Subject Comparisons</a>
+<ul>
 <li class="chapter" data-level="5.2.1" data-path="group-comparisons.html"><a href="group-comparisons.html#plots"><i class="fa fa-check"></i><b>5.2.1</b> Plots</a></li>
 <li class="chapter" data-level="5.2.2" data-path="group-comparisons.html"><a href="group-comparisons.html#independent-sample-t-test"><i class="fa fa-check"></i><b>5.2.2</b> Independent sample t-test</a></li>
 <li class="chapter" data-level="5.2.3" data-path="group-comparisons.html"><a href="group-comparisons.html#bayesian-normal-model"><i class="fa fa-check"></i><b>5.2.3</b> Bayesian Normal Model</a></li>
@@ -231,7 +252,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.2.5" data-path="group-comparisons.html"><a href="group-comparisons.html#shifted-lognormal-model"><i class="fa fa-check"></i><b>5.2.5</b> Shifted Lognormal Model*</a></li>
 </ul></li>
 <li class="chapter" data-level="5.3" data-path="group-comparisons.html"><a href="group-comparisons.html#notes-on-model-comparison"><i class="fa fa-check"></i><b>5.3</b> Notes on Model Comparison</a></li>
-<li class="chapter" data-level="5.4" data-path="group-comparisons.html"><a href="group-comparisons.html#within-subject-comparisons"><i class="fa fa-check"></i><b>5.4</b> Within-Subject Comparisons</a><ul>
+<li class="chapter" data-level="5.4" data-path="group-comparisons.html"><a href="group-comparisons.html#within-subject-comparisons"><i class="fa fa-check"></i><b>5.4</b> Within-Subject Comparisons</a>
+<ul>
 <li class="chapter" data-level="5.4.1" data-path="group-comparisons.html"><a href="group-comparisons.html#plots-1"><i class="fa fa-check"></i><b>5.4.1</b> Plots</a></li>
 <li class="chapter" data-level="5.4.2" data-path="group-comparisons.html"><a href="group-comparisons.html#independent-sample-t-test-1"><i class="fa fa-check"></i><b>5.4.2</b> Independent sample <span class="math inline">\(t\)</span>-test</a></li>
 <li class="chapter" data-level="5.4.3" data-path="group-comparisons.html"><a href="group-comparisons.html#bayesian-normal-model-1"><i class="fa fa-check"></i><b>5.4.3</b> Bayesian Normal Model</a></li>
@@ -239,19 +261,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.4.5" data-path="group-comparisons.html"><a href="group-comparisons.html#region-of-practical-equivalence-rope"><i class="fa fa-check"></i><b>5.4.5</b> Region of Practical Equivalence (ROPE)</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html"><i class="fa fa-check"></i><b>6</b> Markov Chain Monte Carlo</a><ul>
+<li class="chapter" data-level="6" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html"><i class="fa fa-check"></i><b>6</b> Markov Chain Monte Carlo</a>
+<ul>
 <li class="chapter" data-level="6.1" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#monte-carlo-simulation-with-one-unknown"><i class="fa fa-check"></i><b>6.1</b> Monte Carlo Simulation With One Unknown</a></li>
-<li class="chapter" data-level="6.2" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#markov-chain-monte-carlo-mcmc-with-one-parameter"><i class="fa fa-check"></i><b>6.2</b> Markov Chain Monte Carlo (MCMC) With One Parameter</a><ul>
+<li class="chapter" data-level="6.2" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#markov-chain-monte-carlo-mcmc-with-one-parameter"><i class="fa fa-check"></i><b>6.2</b> Markov Chain Monte Carlo (MCMC) With One Parameter</a>
+<ul>
 <li class="chapter" data-level="6.2.1" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#the-metropolis-algorithm"><i class="fa fa-check"></i><b>6.2.1</b> The Metropolis algorithm</a></li>
 <li class="chapter" data-level="6.2.2" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#the-metropolis-hastings-algorithm"><i class="fa fa-check"></i><b>6.2.2</b> The Metropolis-Hastings Algorithm</a></li>
 </ul></li>
 <li class="chapter" data-level="6.3" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#markov-chain"><i class="fa fa-check"></i><b>6.3</b> Markov Chain</a></li>
 <li class="chapter" data-level="6.4" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#effective-sample-size-n_texteff"><i class="fa fa-check"></i><b>6.4</b> Effective Sample Size (<span class="math inline">\(n_\text{eff}\)</span>)</a></li>
 <li class="chapter" data-level="6.5" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#mc-error"><i class="fa fa-check"></i><b>6.5</b> MC Error</a></li>
-<li class="chapter" data-level="6.6" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#burn-inwarmup"><i class="fa fa-check"></i><b>6.6</b> Burn-in/Warmup</a><ul>
+<li class="chapter" data-level="6.6" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#burn-inwarmup"><i class="fa fa-check"></i><b>6.6</b> Burn-in/Warmup</a>
+<ul>
 <li class="chapter" data-level="6.6.1" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#thinning"><i class="fa fa-check"></i><b>6.6.1</b> Thinning</a></li>
 </ul></li>
-<li class="chapter" data-level="6.7" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#diagnostics-of-mcmc"><i class="fa fa-check"></i><b>6.7</b> Diagnostics of MCMC</a><ul>
+<li class="chapter" data-level="6.7" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#diagnostics-of-mcmc"><i class="fa fa-check"></i><b>6.7</b> Diagnostics of MCMC</a>
+<ul>
 <li class="chapter" data-level="6.7.1" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#mixing"><i class="fa fa-check"></i><b>6.7.1</b> Mixing</a></li>
 <li class="chapter" data-level="6.7.2" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#acceptance-rate"><i class="fa fa-check"></i><b>6.7.2</b> Acceptance Rate</a></li>
 <li class="chapter" data-level="6.7.3" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#diagnostics-using-multiple-chains"><i class="fa fa-check"></i><b>6.7.3</b> Diagnostics Using Multiple Chains</a></li>
@@ -259,24 +285,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.8" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#multiple-parameters"><i class="fa fa-check"></i><b>6.8</b> Multiple Parameters</a></li>
 <li class="chapter" data-level="6.9" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#hamiltonian-monte-carlo"><i class="fa fa-check"></i><b>6.9</b> Hamiltonian Monte Carlo</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="linear-models.html"><a href="linear-models.html"><i class="fa fa-check"></i><b>7</b> Linear Models</a><ul>
+<li class="chapter" data-level="7" data-path="linear-models.html"><a href="linear-models.html"><i class="fa fa-check"></i><b>7</b> Linear Models</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="linear-models.html"><a href="linear-models.html#what-is-regression"><i class="fa fa-check"></i><b>7.1</b> What is Regression?</a></li>
-<li class="chapter" data-level="7.2" data-path="linear-models.html"><a href="linear-models.html#one-predictor"><i class="fa fa-check"></i><b>7.2</b> One Predictor</a><ul>
+<li class="chapter" data-level="7.2" data-path="linear-models.html"><a href="linear-models.html#one-predictor"><i class="fa fa-check"></i><b>7.2</b> One Predictor</a>
+<ul>
 <li class="chapter" data-level="7.2.1" data-path="linear-models.html"><a href="linear-models.html#a-continuous-predictor"><i class="fa fa-check"></i><b>7.2.1</b> A continuous predictor</a></li>
 <li class="chapter" data-level="7.2.2" data-path="linear-models.html"><a href="linear-models.html#centering"><i class="fa fa-check"></i><b>7.2.2</b> Centering</a></li>
 <li class="chapter" data-level="7.2.3" data-path="linear-models.html"><a href="linear-models.html#a-categorical-predictor"><i class="fa fa-check"></i><b>7.2.3</b> A categorical predictor</a></li>
 <li class="chapter" data-level="7.2.4" data-path="linear-models.html"><a href="linear-models.html#predictors-with-multiple-categories"><i class="fa fa-check"></i><b>7.2.4</b> Predictors with multiple categories</a></li>
 <li class="chapter" data-level="7.2.5" data-path="linear-models.html"><a href="linear-models.html#stan-4"><i class="fa fa-check"></i><b>7.2.5</b> STAN</a></li>
 </ul></li>
-<li class="chapter" data-level="7.3" data-path="linear-models.html"><a href="linear-models.html#multiple-regression"><i class="fa fa-check"></i><b>7.3</b> Multiple Regression</a><ul>
+<li class="chapter" data-level="7.3" data-path="linear-models.html"><a href="linear-models.html#multiple-regression"><i class="fa fa-check"></i><b>7.3</b> Multiple Regression</a>
+<ul>
 <li class="chapter" data-level="7.3.1" data-path="linear-models.html"><a href="linear-models.html#two-predictor-example"><i class="fa fa-check"></i><b>7.3.1</b> Two Predictor Example</a></li>
 <li class="chapter" data-level="7.3.2" data-path="linear-models.html"><a href="linear-models.html#interactions"><i class="fa fa-check"></i><b>7.3.2</b> Interactions</a></li>
 </ul></li>
 <li class="chapter" data-level="7.4" data-path="linear-models.html"><a href="linear-models.html#tabulating-the-models"><i class="fa fa-check"></i><b>7.4</b> Tabulating the Models</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="model-diagnostics.html"><a href="model-diagnostics.html"><i class="fa fa-check"></i><b>8</b> Model Diagnostics</a><ul>
+<li class="chapter" data-level="8" data-path="model-diagnostics.html"><a href="model-diagnostics.html"><i class="fa fa-check"></i><b>8</b> Model Diagnostics</a>
+<ul>
 <li class="chapter" data-level="8.1" data-path="model-diagnostics.html"><a href="model-diagnostics.html#assumptions-of-linear-models"><i class="fa fa-check"></i><b>8.1</b> Assumptions of Linear Models</a></li>
-<li class="chapter" data-level="8.2" data-path="model-diagnostics.html"><a href="model-diagnostics.html#diagnostic-tools"><i class="fa fa-check"></i><b>8.2</b> Diagnostic Tools</a><ul>
+<li class="chapter" data-level="8.2" data-path="model-diagnostics.html"><a href="model-diagnostics.html#diagnostic-tools"><i class="fa fa-check"></i><b>8.2</b> Diagnostic Tools</a>
+<ul>
 <li class="chapter" data-level="8.2.1" data-path="model-diagnostics.html"><a href="model-diagnostics.html#posterior-predictive-check-7"><i class="fa fa-check"></i><b>8.2.1</b> Posterior Predictive Check</a></li>
 <li class="chapter" data-level="8.2.2" data-path="model-diagnostics.html"><a href="model-diagnostics.html#marginal-model-plots"><i class="fa fa-check"></i><b>8.2.2</b> Marginal model plots</a></li>
 <li class="chapter" data-level="8.2.3" data-path="model-diagnostics.html"><a href="model-diagnostics.html#residual-plots"><i class="fa fa-check"></i><b>8.2.3</b> Residual plots</a></li>
@@ -285,54 +316,66 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="8.3" data-path="model-diagnostics.html"><a href="model-diagnostics.html#other-topics"><i class="fa fa-check"></i><b>8.3</b> Other Topics</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html"><i class="fa fa-check"></i><b>9</b> Model Comparison and Regularization</a><ul>
+<li class="chapter" data-level="9" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html"><i class="fa fa-check"></i><b>9</b> Model Comparison and Regularization</a>
+<ul>
 <li class="chapter" data-level="9.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#overfitting-and-underfitting"><i class="fa fa-check"></i><b>9.1</b> Overfitting and Underfitting</a></li>
 <li class="chapter" data-level="9.2" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#kullback-leibler-divergence"><i class="fa fa-check"></i><b>9.2</b> Kullback-Leibler Divergence</a></li>
-<li class="chapter" data-level="9.3" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#information-criteria"><i class="fa fa-check"></i><b>9.3</b> Information Criteria</a><ul>
+<li class="chapter" data-level="9.3" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#information-criteria"><i class="fa fa-check"></i><b>9.3</b> Information Criteria</a>
+<ul>
 <li class="chapter" data-level="9.3.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#experiment-on-deviance"><i class="fa fa-check"></i><b>9.3.1</b> Experiment on Deviance</a></li>
 </ul></li>
-<li class="chapter" data-level="9.4" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#information-criteria-1"><i class="fa fa-check"></i><b>9.4</b> Information Criteria</a><ul>
+<li class="chapter" data-level="9.4" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#information-criteria-1"><i class="fa fa-check"></i><b>9.4</b> Information Criteria</a>
+<ul>
 <li class="chapter" data-level="9.4.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#akaike-information-criteria-aic"><i class="fa fa-check"></i><b>9.4.1</b> Akaike Information Criteria (AIC)</a></li>
 <li class="chapter" data-level="9.4.2" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#deviance-information-criteria-dic"><i class="fa fa-check"></i><b>9.4.2</b> Deviance Information Criteria (DIC)</a></li>
 <li class="chapter" data-level="9.4.3" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#watanabe-akaike-information-criteria-waic"><i class="fa fa-check"></i><b>9.4.3</b> Watanabe-Akaike Information Criteria (WAIC)</a></li>
 <li class="chapter" data-level="9.4.4" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#leave-one-out-cross-validation"><i class="fa fa-check"></i><b>9.4.4</b> Leave-One-Out Cross Validation</a></li>
 <li class="chapter" data-level="9.4.5" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#example"><i class="fa fa-check"></i><b>9.4.5</b> Example</a></li>
 </ul></li>
-<li class="chapter" data-level="9.5" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#stackingmodel-averaging"><i class="fa fa-check"></i><b>9.5</b> Stacking/Model Averaging</a><ul>
+<li class="chapter" data-level="9.5" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#stackingmodel-averaging"><i class="fa fa-check"></i><b>9.5</b> Stacking/Model Averaging</a>
+<ul>
 <li class="chapter" data-level="9.5.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#model-weights"><i class="fa fa-check"></i><b>9.5.1</b> Model Weights</a></li>
 <li class="chapter" data-level="9.5.2" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#model-averaging"><i class="fa fa-check"></i><b>9.5.2</b> Model Averaging</a></li>
 <li class="chapter" data-level="9.5.3" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#stacking"><i class="fa fa-check"></i><b>9.5.3</b> Stacking</a></li>
 </ul></li>
-<li class="chapter" data-level="9.6" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#shrinkage-priors"><i class="fa fa-check"></i><b>9.6</b> Shrinkage Priors</a><ul>
+<li class="chapter" data-level="9.6" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#shrinkage-priors"><i class="fa fa-check"></i><b>9.6</b> Shrinkage Priors</a>
+<ul>
 <li class="chapter" data-level="9.6.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#number-of-parameters"><i class="fa fa-check"></i><b>9.6.1</b> Number of parameters</a></li>
 <li class="chapter" data-level="9.6.2" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#sparsity-inducing-priors"><i class="fa fa-check"></i><b>9.6.2</b> Sparsity-Inducing Priors</a></li>
 <li class="chapter" data-level="9.6.3" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#finnish-horseshoe"><i class="fa fa-check"></i><b>9.6.3</b> Finnish Horseshoe</a></li>
 </ul></li>
-<li class="chapter" data-level="9.7" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#variable-selection"><i class="fa fa-check"></i><b>9.7</b> Variable Selection</a><ul>
+<li class="chapter" data-level="9.7" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#variable-selection"><i class="fa fa-check"></i><b>9.7</b> Variable Selection</a>
+<ul>
 <li class="chapter" data-level="9.7.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#projection-based-method"><i class="fa fa-check"></i><b>9.7.1</b> Projection-Based Method</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html"><i class="fa fa-check"></i><b>10</b> Hierarchical &amp; Multilevel Models</a><ul>
-<li class="chapter" data-level="10.1" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#anova"><i class="fa fa-check"></i><b>10.1</b> ANOVA</a><ul>
+<li class="chapter" data-level="10" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html"><i class="fa fa-check"></i><b>10</b> Hierarchical &amp; Multilevel Models</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#anova"><i class="fa fa-check"></i><b>10.1</b> ANOVA</a>
+<ul>
 <li class="chapter" data-level="10.1.1" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#frequentist-anova"><i class="fa fa-check"></i><b>10.1.1</b> “Frequentist” ANOVA</a></li>
 <li class="chapter" data-level="10.1.2" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#bayesian-anova"><i class="fa fa-check"></i><b>10.1.2</b> Bayesian ANOVA</a></li>
 </ul></li>
-<li class="chapter" data-level="10.2" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#multilevel-modeling-mlm"><i class="fa fa-check"></i><b>10.2</b> Multilevel Modeling (MLM)</a><ul>
+<li class="chapter" data-level="10.2" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#multilevel-modeling-mlm"><i class="fa fa-check"></i><b>10.2</b> Multilevel Modeling (MLM)</a>
+<ul>
 <li class="chapter" data-level="10.2.1" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#examples-of-clustering"><i class="fa fa-check"></i><b>10.2.1</b> Examples of clustering</a></li>
 <li class="chapter" data-level="10.2.2" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#data-1"><i class="fa fa-check"></i><b>10.2.2</b> Data</a></li>
 <li class="chapter" data-level="10.2.3" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#intraclass-correlation"><i class="fa fa-check"></i><b>10.2.3</b> Intraclass correlation</a></li>
 <li class="chapter" data-level="10.2.4" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#is-mlm-needed"><i class="fa fa-check"></i><b>10.2.4</b> Is MLM needed?</a></li>
 </ul></li>
-<li class="chapter" data-level="10.3" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#varying-coefficients"><i class="fa fa-check"></i><b>10.3</b> Varying Coefficients</a><ul>
+<li class="chapter" data-level="10.3" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#varying-coefficients"><i class="fa fa-check"></i><b>10.3</b> Varying Coefficients</a>
+<ul>
 <li class="chapter" data-level="10.3.1" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#varying-intercepts"><i class="fa fa-check"></i><b>10.3.1</b> Varying Intercepts</a></li>
 <li class="chapter" data-level="10.3.2" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#varying-slopes"><i class="fa fa-check"></i><b>10.3.2</b> Varying Slopes</a></li>
 <li class="chapter" data-level="10.3.3" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#varying-sigma"><i class="fa fa-check"></i><b>10.3.3</b> Varying <span class="math inline">\(\sigma\)</span></a></li>
 </ul></li>
 <li class="chapter" data-level="10.4" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#model-comparisons"><i class="fa fa-check"></i><b>10.4</b> Model Comparisons</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>11</b> Generalized Linear Models</a><ul>
+<li class="chapter" data-level="11" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>11</b> Generalized Linear Models</a>
+<ul>
 <li class="chapter" data-level="11.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#basics-of-generalized-linear-models"><i class="fa fa-check"></i><b>11.1</b> Basics of Generalized Linear Models</a></li>
-<li class="chapter" data-level="11.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#binary-logistic-regression"><i class="fa fa-check"></i><b>11.2</b> Binary Logistic Regression</a><ul>
+<li class="chapter" data-level="11.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#binary-logistic-regression"><i class="fa fa-check"></i><b>11.2</b> Binary Logistic Regression</a>
+<ul>
 <li class="chapter" data-level="11.2.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#the-logit-link"><i class="fa fa-check"></i><b>11.2.1</b> The logit link</a></li>
 <li class="chapter" data-level="11.2.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#choice-of-priors"><i class="fa fa-check"></i><b>11.2.2</b> Choice of Priors</a></li>
 <li class="chapter" data-level="11.2.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#interpreting-the-coefficients"><i class="fa fa-check"></i><b>11.2.3</b> Interpreting the coefficients</a></li>
@@ -341,20 +384,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="11.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#binomial-logistic-regression"><i class="fa fa-check"></i><b>11.3</b> Binomial Logistic Regression</a></li>
 <li class="chapter" data-level="11.4" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#probit-regression"><i class="fa fa-check"></i><b>11.4</b> Probit Regression</a></li>
-<li class="chapter" data-level="11.5" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#poisson-regression"><i class="fa fa-check"></i><b>11.5</b> Poisson Regression</a><ul>
+<li class="chapter" data-level="11.5" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#poisson-regression"><i class="fa fa-check"></i><b>11.5</b> Poisson Regression</a>
+<ul>
 <li class="chapter" data-level="11.5.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#interpretations-2"><i class="fa fa-check"></i><b>11.5.1</b> Interpretations</a></li>
 <li class="chapter" data-level="11.5.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#model-checking-2"><i class="fa fa-check"></i><b>11.5.2</b> Model Checking</a></li>
 <li class="chapter" data-level="11.5.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#other-models-in-glm"><i class="fa fa-check"></i><b>11.5.3</b> Other models in GLM</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="missing-data.html"><a href="missing-data.html"><i class="fa fa-check"></i><b>12</b> Missing Data</a><ul>
-<li class="chapter" data-level="12.1" data-path="missing-data.html"><a href="missing-data.html#missing-data-mechanisms"><i class="fa fa-check"></i><b>12.1</b> Missing Data Mechanisms</a><ul>
+<li class="chapter" data-level="12" data-path="missing-data.html"><a href="missing-data.html"><i class="fa fa-check"></i><b>12</b> Missing Data</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="missing-data.html"><a href="missing-data.html#missing-data-mechanisms"><i class="fa fa-check"></i><b>12.1</b> Missing Data Mechanisms</a>
+<ul>
 <li class="chapter" data-level="12.1.1" data-path="missing-data.html"><a href="missing-data.html#mcar-missing-completely-at-random"><i class="fa fa-check"></i><b>12.1.1</b> MCAR (Missing Completely at Random)</a></li>
 <li class="chapter" data-level="12.1.2" data-path="missing-data.html"><a href="missing-data.html#mar-missing-at-random"><i class="fa fa-check"></i><b>12.1.2</b> MAR (Missing At Random)</a></li>
 <li class="chapter" data-level="12.1.3" data-path="missing-data.html"><a href="missing-data.html#nmar-not-missing-at-random"><i class="fa fa-check"></i><b>12.1.3</b> NMAR (Not Missing At Random)</a></li>
 <li class="chapter" data-level="12.1.4" data-path="missing-data.html"><a href="missing-data.html#ignorable-missingness"><i class="fa fa-check"></i><b>12.1.4</b> Ignorable Missingness*</a></li>
 </ul></li>
-<li class="chapter" data-level="12.2" data-path="missing-data.html"><a href="missing-data.html#bayesian-approaches-for-missing-data"><i class="fa fa-check"></i><b>12.2</b> Bayesian Approaches for Missing Data</a><ul>
+<li class="chapter" data-level="12.2" data-path="missing-data.html"><a href="missing-data.html#bayesian-approaches-for-missing-data"><i class="fa fa-check"></i><b>12.2</b> Bayesian Approaches for Missing Data</a>
+<ul>
 <li class="chapter" data-level="12.2.1" data-path="missing-data.html"><a href="missing-data.html#complete-case-analysislistwise-deletion"><i class="fa fa-check"></i><b>12.2.1</b> Complete Case Analysis/Listwise Deletion</a></li>
 <li class="chapter" data-level="12.2.2" data-path="missing-data.html"><a href="missing-data.html#treat-missing-data-as-parameters"><i class="fa fa-check"></i><b>12.2.2</b> Treat Missing Data as Parameters</a></li>
 <li class="chapter" data-level="12.2.3" data-path="missing-data.html"><a href="missing-data.html#multiple-imputation"><i class="fa fa-check"></i><b>12.2.3</b> Multiple Imputation</a></li>
@@ -381,7 +428,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="missing-data" class="section level1">
+<div id="missing-data" class="section level1" number="12">
 <h1><span class="header-section-number">Chapter 12</span> Missing Data</h1>
 <p>Missing data are common in many research problems. Sometimes missing data arise
 from design, but more often data are missing for reasons that are beyond
@@ -391,28 +438,28 @@ handling missing data by treating missing data as parameters with some prior
 information. I will then give a brief introduction of <em>multiple imputation</em> and
 its Bayesian origin. A regression with missing data problem will be used to
 illustrate two Bayesian approaches to handle missing data.</p>
-<div id="missing-data-mechanisms" class="section level2">
+<div id="missing-data-mechanisms" class="section level2" number="12.1">
 <h2><span class="header-section-number">12.1</span> Missing Data Mechanisms</h2>
 <p>To simplify the discussion, assume that missing values are only present in the
 outcome <span class="math inline">\(Y\)</span> in a hypothetical regression problem of using people’s age (<span class="math inline">\(X\)</span>) to
 predict their voting intention (<span class="math inline">\(Y\)</span>).</p>
 <p>Let <span class="math inline">\(R\)</span> be an indicator variable that denotes whether
 <span class="math inline">\(Y\)</span> is missing (<span class="math inline">\(R = 0\)</span>) or not (<span class="math inline">\(R = 1\)</span>). For example, if <span class="math inline">\(Y\)</span> looks like</p>
-<div class="sourceCode" id="cb473"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb473-1"><a href="missing-data.html#cb473-1"></a><span class="kw">set.seed</span>(<span class="dv">3</span>)</span>
-<span id="cb473-2"><a href="missing-data.html#cb473-2"></a>N &lt;-<span class="st"> </span><span class="dv">30</span></span>
-<span id="cb473-3"><a href="missing-data.html#cb473-3"></a>x &lt;-<span class="st"> </span><span class="kw">sort</span>(<span class="kw">sample</span>(<span class="dv">18</span><span class="op">:</span><span class="dv">80</span>, N, <span class="dt">replace =</span> <span class="ot">TRUE</span>))</span>
-<span id="cb473-4"><a href="missing-data.html#cb473-4"></a>y &lt;-<span class="st"> </span><span class="fl">0.5</span> <span class="op">*</span><span class="st"> </span>x <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(x) <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(N, <span class="dt">sd =</span> <span class="fl">0.8</span>)</span>
-<span id="cb473-5"><a href="missing-data.html#cb473-5"></a>y &lt;-<span class="st"> </span><span class="kw">round</span>(y <span class="op">*</span><span class="st"> </span><span class="fl">1.4</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span>, <span class="dv">1</span>)</span>
-<span id="cb473-6"><a href="missing-data.html#cb473-6"></a><span class="kw">ifelse</span>(y[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>] <span class="op">&gt;</span><span class="st"> </span><span class="dv">4</span>, <span class="ot">NA</span>, y[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb472"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb472-1"><a href="missing-data.html#cb472-1"></a><span class="kw">set.seed</span>(<span class="dv">3</span>)</span>
+<span id="cb472-2"><a href="missing-data.html#cb472-2"></a>N &lt;-<span class="st"> </span><span class="dv">30</span></span>
+<span id="cb472-3"><a href="missing-data.html#cb472-3"></a>x &lt;-<span class="st"> </span><span class="kw">sort</span>(<span class="kw">sample</span>(<span class="dv">18</span><span class="op">:</span><span class="dv">80</span>, N, <span class="dt">replace =</span> <span class="ot">TRUE</span>))</span>
+<span id="cb472-4"><a href="missing-data.html#cb472-4"></a>y &lt;-<span class="st"> </span><span class="fl">0.5</span> <span class="op">*</span><span class="st"> </span>x <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(x) <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(N, <span class="dt">sd =</span> <span class="fl">0.8</span>)</span>
+<span id="cb472-5"><a href="missing-data.html#cb472-5"></a>y &lt;-<span class="st"> </span><span class="kw">round</span>(y <span class="op">*</span><span class="st"> </span><span class="fl">1.4</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span>, <span class="dv">1</span>)</span>
+<span id="cb472-6"><a href="missing-data.html#cb472-6"></a><span class="kw">ifelse</span>(y[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>] <span class="op">&gt;</span><span class="st"> </span><span class="dv">4</span>, <span class="ot">NA</span>, y[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>])</span></code></pre></div>
 <pre><code>&gt;#  [1] 2.4 2.7 2.4 2.0 2.0 3.9 3.2 2.3 1.7  NA</code></pre>
 <p>then <span class="math inline">\(R\)</span> will be</p>
 <pre><code>&gt;#  [1] 1 1 1 1 1 1 1 1 1 0</code></pre>
 <p>Assume our data look like the first scatter plot below if there are no missing
 data:</p>
-<div class="sourceCode" id="cb476"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb476-1"><a href="missing-data.html#cb476-1"></a>demo_data &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">y =</span> y, <span class="dt">x =</span> x, </span>
-<span id="cb476-2"><a href="missing-data.html#cb476-2"></a>                    <span class="dt">r_mcar =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>), <span class="dv">10</span>), </span>
-<span id="cb476-3"><a href="missing-data.html#cb476-3"></a>                    <span class="dt">r_mar =</span> <span class="dv">1</span><span class="op">:</span>N <span class="op">&gt;=</span><span class="st"> </span><span class="dv">11</span>, </span>
-<span id="cb476-4"><a href="missing-data.html#cb476-4"></a>                    <span class="dt">r_nmar =</span> <span class="kw">rank</span>(<span class="fl">0.2</span> <span class="op">*</span><span class="st"> </span>x <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(x) <span class="op">+</span><span class="st"> </span><span class="fl">0.8</span> <span class="op">*</span><span class="st"> </span>y <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(y)) <span class="op">&gt;=</span><span class="st"> </span><span class="dv">11</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb475"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb475-1"><a href="missing-data.html#cb475-1"></a>demo_data &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">y =</span> y, <span class="dt">x =</span> x, </span>
+<span id="cb475-2"><a href="missing-data.html#cb475-2"></a>                    <span class="dt">r_mcar =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>), <span class="dv">10</span>), </span>
+<span id="cb475-3"><a href="missing-data.html#cb475-3"></a>                    <span class="dt">r_mar =</span> <span class="dv">1</span><span class="op">:</span>N <span class="op">&gt;=</span><span class="st"> </span><span class="dv">11</span>, </span>
+<span id="cb475-4"><a href="missing-data.html#cb475-4"></a>                    <span class="dt">r_nmar =</span> <span class="kw">rank</span>(<span class="fl">0.2</span> <span class="op">*</span><span class="st"> </span>x <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(x) <span class="op">+</span><span class="st"> </span><span class="fl">0.8</span> <span class="op">*</span><span class="st"> </span>y <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(y)) <span class="op">&gt;=</span><span class="st"> </span><span class="dv">11</span>)</span></code></pre></div>
 <pre><code>&gt;# `geom_smooth()` using formula &#39;y ~ x&#39;
 &gt;# `geom_smooth()` using formula &#39;y ~ x&#39;
 &gt;# `geom_smooth()` using formula &#39;y ~ x&#39;
@@ -437,7 +484,7 @@ missing at random), as summarized in the figures below, which I will further
 explain.</p>
 <!-- ![Three missing data mechanisms (left: `MCAR`; middle: `MAR`; right: -->
 <!-- `NMAR`) ](figures/missing_data_dag.png) -->
-<div id="mcar-missing-completely-at-random" class="section level3">
+<div id="mcar-missing-completely-at-random" class="section level3" number="12.1.1">
 <h3><span class="header-section-number">12.1.1</span> MCAR (Missing Completely at Random)</h3>
 <div id="htmlwidget-748157f64609652d122e" style="width:672px;height:480px;" class="grViz html-widget"></div>
 <script type="application/json" data-for="htmlwidget-748157f64609652d122e">{"x":{"diagram":"\ndigraph mcar {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  node [shape = plaintext]\n  Y; X; \n  Ystar [label = \"Y*\"]\n  RY [label = <R<FONT POINT-SIZE=\"8\"><SUB>Y<\/SUB><\/FONT>>]\n\n  # paths\n  X -> Ystar;\n  Ystar -> Y;\n  RY -> Y;\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
@@ -463,7 +510,7 @@ sample size for analysis, as it throws away information from cases with
 partial information.</p>
 </blockquote>
 </div>
-<div id="mar-missing-at-random" class="section level3">
+<div id="mar-missing-at-random" class="section level3" number="12.1.2">
 <h3><span class="header-section-number">12.1.2</span> MAR (Missing At Random)</h3>
 <div id="htmlwidget-a08941f42e8ad93d0338" style="width:672px;height:480px;" class="grViz html-widget"></div>
 <script type="application/json" data-for="htmlwidget-a08941f42e8ad93d0338">{"x":{"diagram":"\ndigraph mar {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  node [shape = plaintext]\n  Y; X; \n  Ystar [label = \"Y*\"]\n  RY [label = <R<FONT POINT-SIZE=\"8\"><SUB>Y<\/SUB><\/FONT>>]\n\n  # paths\n  X -> Ystar;\n  X -> RY;\n  Ystar -> Y;\n  RY -> Y;\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
@@ -488,7 +535,7 @@ advanced methods generally give more accurate coefficient estimates and standard
 errors.</p>
 </blockquote>
 </div>
-<div id="nmar-not-missing-at-random" class="section level3">
+<div id="nmar-not-missing-at-random" class="section level3" number="12.1.3">
 <h3><span class="header-section-number">12.1.3</span> NMAR (Not Missing At Random)</h3>
 <div id="htmlwidget-0f7405d6c60f62578b83" style="width:672px;height:480px;" class="grViz html-widget"></div>
 <script type="application/json" data-for="htmlwidget-0f7405d6c60f62578b83">{"x":{"diagram":"\ndigraph nmar {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  node [shape = plaintext]\n  Y; X; \n  Ystar [label = \"Y*\"]\n  RY [label = <R<FONT POINT-SIZE=\"8\"><SUB>Y<\/SUB><\/FONT>>]\n\n  # paths\n  X -> Ystar;\n  X -> RY;\n  Ystar -> Y;\n  Ystar -> RY;\n  RY -> Y;\n  {rank = same; Ystar; RY;}\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
@@ -523,7 +570,7 @@ variables that help explain probability of missing data makes <code>MAR</code> m
 reasonable.</p>
 </blockquote>
 </div>
-<div id="ignorable-missingness" class="section level3">
+<div id="ignorable-missingness" class="section level3" number="12.1.4">
 <h3><span class="header-section-number">12.1.4</span> Ignorable Missingness*</h3>
 <p>Let <span class="math inline">\(Y_\textrm{obs}\)</span> be the part of the multivariate data <span class="math inline">\(Y\)</span> that is
 observed (i.e., not missing), and <span class="math inline">\(Y_\textrm{mis}\)</span> be the part that would
@@ -557,7 +604,7 @@ obtain the observed likelihood of <span class="math inline">\((x_i, r_i = 0)\)</
 <p>Because the likelihood depends on <span class="math inline">\(R\)</span> and cannot be separated from <span class="math inline">\(\boldsymbol{\mathbf{\phi}}\)</span>,
 correct inference on <span class="math inline">\(\boldsymbol{\mathbf{\theta}}\)</span> can be obtained only by correct modeling the
 missing data mechanism.</p>
-<div id="if-mcar-holds" class="section level4">
+<div id="if-mcar-holds" class="section level4" number="12.1.4.1">
 <h4><span class="header-section-number">12.1.4.1</span> If MCAR Holds</h4>
 <p>However, if the condition for MCAR is satisfied such that</p>
 <p><span class="math display">\[P(r_i = 0 | x_i, y_{\textrm{mis}, i}; \boldsymbol{\mathbf{\phi}}) = P(r_i = 0; \boldsymbol{\mathbf{\phi}}),\]</span></p>
@@ -575,7 +622,7 @@ missing data mechanism.</p>
 <p>So inference of <span class="math inline">\(\boldsymbol{\mathbf{\theta}}\)</span> does not depend on the missing data mechanism
 <span class="math inline">\(P(r_i = 0; \boldsymbol{\mathbf{\phi}})\)</span>, and missingness is <em>ignorable</em>.</p>
 </div>
-<div id="if-mar-holds" class="section level4">
+<div id="if-mar-holds" class="section level4" number="12.1.4.2">
 <h4><span class="header-section-number">12.1.4.2</span> If MAR Holds</h4>
 <p>Similarly, if the condition for MAR is satisfied such that</p>
 <p><span class="math display">\[P(r_i = 0 | x_i, y_{\textrm{mis}, i}; \boldsymbol{\mathbf{\phi}}) 
@@ -603,67 +650,67 @@ so missingness is non-ignorable.</p>
 </div>
 </div>
 </div>
-<div id="bayesian-approaches-for-missing-data" class="section level2">
+<div id="bayesian-approaches-for-missing-data" class="section level2" number="12.2">
 <h2><span class="header-section-number">12.2</span> Bayesian Approaches for Missing Data</h2>
 <p>We will be using the <code>kidiq</code> data set we discussed in Chapter 7. I’ll do the
 same rescaling and coding <code>mom_hs</code> as a factor variable:</p>
-<div class="sourceCode" id="cb478"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb478-1"><a href="missing-data.html#cb478-1"></a>kidiq &lt;-<span class="st"> </span>haven<span class="op">::</span><span class="kw">read_dta</span>(<span class="st">&quot;../data/kidiq.dta&quot;</span>)</span>
-<span id="cb478-2"><a href="missing-data.html#cb478-2"></a>kidiq100 &lt;-<span class="st"> </span>kidiq <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb478-3"><a href="missing-data.html#cb478-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mom_iq =</span> mom_iq <span class="op">/</span><span class="st"> </span><span class="dv">100</span>,  <span class="co"># divid mom_iq by 100</span></span>
-<span id="cb478-4"><a href="missing-data.html#cb478-4"></a>         <span class="dt">kid_score =</span> kid_score <span class="op">/</span><span class="st"> </span><span class="dv">100</span>,   <span class="co"># divide kid_score by 100</span></span>
-<span id="cb478-5"><a href="missing-data.html#cb478-5"></a>         <span class="dt">mom_iq_c =</span> mom_iq <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, </span>
-<span id="cb478-6"><a href="missing-data.html#cb478-6"></a>         <span class="dt">mom_hs =</span> <span class="kw">factor</span>(mom_hs, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>))) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb478-7"><a href="missing-data.html#cb478-7"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span><span class="st"> </span>mom_iq)</span></code></pre></div>
+<div class="sourceCode" id="cb477"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb477-1"><a href="missing-data.html#cb477-1"></a>kidiq &lt;-<span class="st"> </span>haven<span class="op">::</span><span class="kw">read_dta</span>(<span class="st">&quot;../data/kidiq.dta&quot;</span>)</span>
+<span id="cb477-2"><a href="missing-data.html#cb477-2"></a>kidiq100 &lt;-<span class="st"> </span>kidiq <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb477-3"><a href="missing-data.html#cb477-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mom_iq =</span> mom_iq <span class="op">/</span><span class="st"> </span><span class="dv">100</span>,  <span class="co"># divid mom_iq by 100</span></span>
+<span id="cb477-4"><a href="missing-data.html#cb477-4"></a>         <span class="dt">kid_score =</span> kid_score <span class="op">/</span><span class="st"> </span><span class="dv">100</span>,   <span class="co"># divide kid_score by 100</span></span>
+<span id="cb477-5"><a href="missing-data.html#cb477-5"></a>         <span class="dt">mom_iq_c =</span> mom_iq <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, </span>
+<span id="cb477-6"><a href="missing-data.html#cb477-6"></a>         <span class="dt">mom_hs =</span> <span class="kw">factor</span>(mom_hs, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>))) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb477-7"><a href="missing-data.html#cb477-7"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span><span class="st"> </span>mom_iq)</span></code></pre></div>
 <p>In R, the package <code>mice</code> can be used to perform <em>multiple imputation</em> (to be
 discussed soon), as well as to create missing data. First, let’s generate some
 missing completely at random (MCAR) data by randomly removing up to 50% of
 the data:</p>
-<div class="sourceCode" id="cb479"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb479-1"><a href="missing-data.html#cb479-1"></a><span class="kw">library</span>(mice)</span>
-<span id="cb479-2"><a href="missing-data.html#cb479-2"></a><span class="kw">set.seed</span>(<span class="dv">1955</span>)</span>
-<span id="cb479-3"><a href="missing-data.html#cb479-3"></a>kidiq100_mcar &lt;-<span class="st"> </span><span class="kw">ampute</span>(kidiq100, <span class="dt">prop =</span> <span class="fl">0.5</span>, </span>
-<span id="cb479-4"><a href="missing-data.html#cb479-4"></a>                        <span class="dt">pattern =</span> <span class="kw">data.frame</span>(<span class="dt">kid_score =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>), </span>
-<span id="cb479-5"><a href="missing-data.html#cb479-5"></a>                                             <span class="dt">mom_hs =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>), </span>
-<span id="cb479-6"><a href="missing-data.html#cb479-6"></a>                                             <span class="dt">mom_work =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), </span>
-<span id="cb479-7"><a href="missing-data.html#cb479-7"></a>                                             <span class="dt">mom_age =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), </span>
-<span id="cb479-8"><a href="missing-data.html#cb479-8"></a>                                             <span class="dt">mom_iq_c =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>)), </span>
-<span id="cb479-9"><a href="missing-data.html#cb479-9"></a>                        <span class="dt">freq =</span> <span class="kw">c</span>(.<span class="dv">2</span>, <span class="fl">.4</span>, <span class="fl">.4</span>), </span>
-<span id="cb479-10"><a href="missing-data.html#cb479-10"></a>                        <span class="dt">mech =</span> <span class="st">&quot;MCAR&quot;</span>)</span>
-<span id="cb479-11"><a href="missing-data.html#cb479-11"></a>kidiq100_mcar &lt;-<span class="st"> </span>kidiq100_mcar<span class="op">$</span>amp</span></code></pre></div>
+<div class="sourceCode" id="cb478"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb478-1"><a href="missing-data.html#cb478-1"></a><span class="kw">library</span>(mice)</span>
+<span id="cb478-2"><a href="missing-data.html#cb478-2"></a><span class="kw">set.seed</span>(<span class="dv">1955</span>)</span>
+<span id="cb478-3"><a href="missing-data.html#cb478-3"></a>kidiq100_mcar &lt;-<span class="st"> </span><span class="kw">ampute</span>(kidiq100, <span class="dt">prop =</span> <span class="fl">0.5</span>, </span>
+<span id="cb478-4"><a href="missing-data.html#cb478-4"></a>                        <span class="dt">pattern =</span> <span class="kw">data.frame</span>(<span class="dt">kid_score =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>), </span>
+<span id="cb478-5"><a href="missing-data.html#cb478-5"></a>                                             <span class="dt">mom_hs =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>), </span>
+<span id="cb478-6"><a href="missing-data.html#cb478-6"></a>                                             <span class="dt">mom_work =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), </span>
+<span id="cb478-7"><a href="missing-data.html#cb478-7"></a>                                             <span class="dt">mom_age =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), </span>
+<span id="cb478-8"><a href="missing-data.html#cb478-8"></a>                                             <span class="dt">mom_iq_c =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>)), </span>
+<span id="cb478-9"><a href="missing-data.html#cb478-9"></a>                        <span class="dt">freq =</span> <span class="kw">c</span>(.<span class="dv">2</span>, <span class="fl">.4</span>, <span class="fl">.4</span>), </span>
+<span id="cb478-10"><a href="missing-data.html#cb478-10"></a>                        <span class="dt">mech =</span> <span class="st">&quot;MCAR&quot;</span>)</span>
+<span id="cb478-11"><a href="missing-data.html#cb478-11"></a>kidiq100_mcar &lt;-<span class="st"> </span>kidiq100_mcar<span class="op">$</span>amp</span></code></pre></div>
 <p>The second time, I’ll generate some missing at random (MAR) data:</p>
-<div class="sourceCode" id="cb480"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb480-1"><a href="missing-data.html#cb480-1"></a><span class="kw">set.seed</span>(<span class="dv">1955</span>)</span>
-<span id="cb480-2"><a href="missing-data.html#cb480-2"></a>kidiq100_mar &lt;-<span class="st"> </span><span class="kw">ampute</span>(kidiq100, <span class="dt">prop =</span> <span class="fl">0.5</span>, </span>
-<span id="cb480-3"><a href="missing-data.html#cb480-3"></a>                       <span class="dt">pattern =</span> <span class="kw">data.frame</span>(<span class="dt">kid_score =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>), </span>
-<span id="cb480-4"><a href="missing-data.html#cb480-4"></a>                                            <span class="dt">mom_hs =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>), </span>
-<span id="cb480-5"><a href="missing-data.html#cb480-5"></a>                                            <span class="dt">mom_work =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), </span>
-<span id="cb480-6"><a href="missing-data.html#cb480-6"></a>                                            <span class="dt">mom_age =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), </span>
-<span id="cb480-7"><a href="missing-data.html#cb480-7"></a>                                            <span class="dt">mom_iq_c =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>)), </span>
-<span id="cb480-8"><a href="missing-data.html#cb480-8"></a>                       <span class="dt">freq =</span> <span class="kw">c</span>(.<span class="dv">2</span>, <span class="fl">.4</span>, <span class="fl">.4</span>), </span>
-<span id="cb480-9"><a href="missing-data.html#cb480-9"></a>                       <span class="dt">mech =</span> <span class="st">&quot;MAR&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb479"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb479-1"><a href="missing-data.html#cb479-1"></a><span class="kw">set.seed</span>(<span class="dv">1955</span>)</span>
+<span id="cb479-2"><a href="missing-data.html#cb479-2"></a>kidiq100_mar &lt;-<span class="st"> </span><span class="kw">ampute</span>(kidiq100, <span class="dt">prop =</span> <span class="fl">0.5</span>, </span>
+<span id="cb479-3"><a href="missing-data.html#cb479-3"></a>                       <span class="dt">pattern =</span> <span class="kw">data.frame</span>(<span class="dt">kid_score =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>), </span>
+<span id="cb479-4"><a href="missing-data.html#cb479-4"></a>                                            <span class="dt">mom_hs =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>), </span>
+<span id="cb479-5"><a href="missing-data.html#cb479-5"></a>                                            <span class="dt">mom_work =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), </span>
+<span id="cb479-6"><a href="missing-data.html#cb479-6"></a>                                            <span class="dt">mom_age =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), </span>
+<span id="cb479-7"><a href="missing-data.html#cb479-7"></a>                                            <span class="dt">mom_iq_c =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>)), </span>
+<span id="cb479-8"><a href="missing-data.html#cb479-8"></a>                       <span class="dt">freq =</span> <span class="kw">c</span>(.<span class="dv">2</span>, <span class="fl">.4</span>, <span class="fl">.4</span>), </span>
+<span id="cb479-9"><a href="missing-data.html#cb479-9"></a>                       <span class="dt">mech =</span> <span class="st">&quot;MAR&quot;</span>)</span></code></pre></div>
 <pre><code>&gt;# Warning: Data is made numeric because the calculation of weights requires
 &gt;# numeric data</code></pre>
-<div class="sourceCode" id="cb482"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb482-1"><a href="missing-data.html#cb482-1"></a>kidiq100_mar &lt;-<span class="st"> </span>kidiq100_mar<span class="op">$</span>amp</span></code></pre></div>
+<div class="sourceCode" id="cb481"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb481-1"><a href="missing-data.html#cb481-1"></a>kidiq100_mar &lt;-<span class="st"> </span>kidiq100_mar<span class="op">$</span>amp</span></code></pre></div>
 <p>And finally, some not missing at random (NMAR) data:</p>
-<div class="sourceCode" id="cb483"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb483-1"><a href="missing-data.html#cb483-1"></a><span class="kw">set.seed</span>(<span class="dv">1955</span>)</span>
-<span id="cb483-2"><a href="missing-data.html#cb483-2"></a>kidiq100_nmar &lt;-<span class="st"> </span><span class="kw">ampute</span>(kidiq100, <span class="dt">prop =</span> <span class="fl">0.5</span>, </span>
-<span id="cb483-3"><a href="missing-data.html#cb483-3"></a>                        <span class="dt">pattern =</span> <span class="kw">data.frame</span>(<span class="dt">kid_score =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>), </span>
-<span id="cb483-4"><a href="missing-data.html#cb483-4"></a>                                             <span class="dt">mom_hs =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>), </span>
-<span id="cb483-5"><a href="missing-data.html#cb483-5"></a>                                             <span class="dt">mom_work =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), </span>
-<span id="cb483-6"><a href="missing-data.html#cb483-6"></a>                                             <span class="dt">mom_age =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), </span>
-<span id="cb483-7"><a href="missing-data.html#cb483-7"></a>                                             <span class="dt">mom_iq_c =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>)), </span>
-<span id="cb483-8"><a href="missing-data.html#cb483-8"></a>                        <span class="dt">freq =</span> <span class="kw">c</span>(.<span class="dv">2</span>, <span class="fl">.4</span>, <span class="fl">.4</span>), </span>
-<span id="cb483-9"><a href="missing-data.html#cb483-9"></a>                        <span class="co"># mice call it MNAR</span></span>
-<span id="cb483-10"><a href="missing-data.html#cb483-10"></a>                        <span class="dt">mech =</span> <span class="st">&quot;MNAR&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb482"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb482-1"><a href="missing-data.html#cb482-1"></a><span class="kw">set.seed</span>(<span class="dv">1955</span>)</span>
+<span id="cb482-2"><a href="missing-data.html#cb482-2"></a>kidiq100_nmar &lt;-<span class="st"> </span><span class="kw">ampute</span>(kidiq100, <span class="dt">prop =</span> <span class="fl">0.5</span>, </span>
+<span id="cb482-3"><a href="missing-data.html#cb482-3"></a>                        <span class="dt">pattern =</span> <span class="kw">data.frame</span>(<span class="dt">kid_score =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>), </span>
+<span id="cb482-4"><a href="missing-data.html#cb482-4"></a>                                             <span class="dt">mom_hs =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>), </span>
+<span id="cb482-5"><a href="missing-data.html#cb482-5"></a>                                             <span class="dt">mom_work =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), </span>
+<span id="cb482-6"><a href="missing-data.html#cb482-6"></a>                                             <span class="dt">mom_age =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), </span>
+<span id="cb482-7"><a href="missing-data.html#cb482-7"></a>                                             <span class="dt">mom_iq_c =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>)), </span>
+<span id="cb482-8"><a href="missing-data.html#cb482-8"></a>                        <span class="dt">freq =</span> <span class="kw">c</span>(.<span class="dv">2</span>, <span class="fl">.4</span>, <span class="fl">.4</span>), </span>
+<span id="cb482-9"><a href="missing-data.html#cb482-9"></a>                        <span class="co"># mice call it MNAR</span></span>
+<span id="cb482-10"><a href="missing-data.html#cb482-10"></a>                        <span class="dt">mech =</span> <span class="st">&quot;MNAR&quot;</span>)</span></code></pre></div>
 <pre><code>&gt;# Warning: Data is made numeric because the calculation of weights requires
 &gt;# numeric data</code></pre>
-<div class="sourceCode" id="cb485"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb485-1"><a href="missing-data.html#cb485-1"></a>kidiq100_nmar &lt;-<span class="st"> </span>kidiq100_nmar<span class="op">$</span>amp</span></code></pre></div>
+<div class="sourceCode" id="cb484"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb484-1"><a href="missing-data.html#cb484-1"></a>kidiq100_nmar &lt;-<span class="st"> </span>kidiq100_nmar<span class="op">$</span>amp</span></code></pre></div>
 <p>Let’s check the distributions of the resulting data:</p>
-<div class="sourceCode" id="cb486"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb486-1"><a href="missing-data.html#cb486-1"></a>p1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(kidiq100_mcar, <span class="kw">aes</span>(<span class="dt">x =</span> mom_iq_c, <span class="dt">y =</span> kid_score)) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb486-2"><a href="missing-data.html#cb486-2"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> kidiq100, <span class="dt">color =</span> <span class="st">&quot;grey92&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb486-3"><a href="missing-data.html#cb486-3"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span></span>
-<span id="cb486-4"><a href="missing-data.html#cb486-4"></a><span class="st">  </span><span class="kw">geom_smooth</span>()</span>
-<span id="cb486-5"><a href="missing-data.html#cb486-5"></a>p2 &lt;-<span class="st"> </span>p1 <span class="op">%+%</span><span class="st"> </span>kidiq100_mar</span>
-<span id="cb486-6"><a href="missing-data.html#cb486-6"></a>p3 &lt;-<span class="st"> </span>p1 <span class="op">%+%</span><span class="st"> </span>kidiq100_nmar</span>
-<span id="cb486-7"><a href="missing-data.html#cb486-7"></a><span class="kw">grid.arrange</span>(p1, p2, p3, <span class="dt">nrow =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb485"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb485-1"><a href="missing-data.html#cb485-1"></a>p1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(kidiq100_mcar, <span class="kw">aes</span>(<span class="dt">x =</span> mom_iq_c, <span class="dt">y =</span> kid_score)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb485-2"><a href="missing-data.html#cb485-2"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> kidiq100, <span class="dt">color =</span> <span class="st">&quot;grey92&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb485-3"><a href="missing-data.html#cb485-3"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span></span>
+<span id="cb485-4"><a href="missing-data.html#cb485-4"></a><span class="st">  </span><span class="kw">geom_smooth</span>()</span>
+<span id="cb485-5"><a href="missing-data.html#cb485-5"></a>p2 &lt;-<span class="st"> </span>p1 <span class="op">%+%</span><span class="st"> </span>kidiq100_mar</span>
+<span id="cb485-6"><a href="missing-data.html#cb485-6"></a>p3 &lt;-<span class="st"> </span>p1 <span class="op">%+%</span><span class="st"> </span>kidiq100_nmar</span>
+<span id="cb485-7"><a href="missing-data.html#cb485-7"></a><span class="kw">grid.arrange</span>(p1, p2, p3, <span class="dt">nrow =</span> <span class="dv">2</span>)</span></code></pre></div>
 <pre><code>&gt;# `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</code></pre>
 <pre><code>&gt;# Warning: Removed 230 rows containing non-finite values (stat_smooth).</code></pre>
 <pre><code>&gt;# Warning: Removed 230 rows containing missing values (geom_point).</code></pre>
@@ -682,9 +729,9 @@ actually depends on both <code>mom_iq_c</code> and <code>mom_hs</code>, but when
 not include <code>mom_hs</code> in the model, the resulting situation will actually be
 NMAR.</p>
 <p>The missing data pattern of the <code>kidiq100_mar</code> data set is:</p>
-<div class="sourceCode" id="cb496"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb496-1"><a href="missing-data.html#cb496-1"></a><span class="co"># Recode mom_hs to factor</span></span>
-<span id="cb496-2"><a href="missing-data.html#cb496-2"></a>kidiq100_mar<span class="op">$</span>mom_hs &lt;-<span class="st"> </span><span class="kw">factor</span>(kidiq100_mar<span class="op">$</span>mom_hs, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>))</span>
-<span id="cb496-3"><a href="missing-data.html#cb496-3"></a><span class="kw">md.pattern</span>(kidiq100_mar, <span class="dt">rotate.names =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb495"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb495-1"><a href="missing-data.html#cb495-1"></a><span class="co"># Recode mom_hs to factor</span></span>
+<span id="cb495-2"><a href="missing-data.html#cb495-2"></a>kidiq100_mar<span class="op">$</span>mom_hs &lt;-<span class="st"> </span><span class="kw">factor</span>(kidiq100_mar<span class="op">$</span>mom_hs, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>))</span>
+<span id="cb495-3"><a href="missing-data.html#cb495-3"></a><span class="kw">md.pattern</span>(kidiq100_mar, <span class="dt">rotate.names =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <p><img src="12_missing_data_files/figure-html/md-pattern-mar-1.png" width="480" /></p>
 <pre><code>&gt;#     mom_work mom_age mom_hs mom_iq_c kid_score    
 &gt;# 219        1       1      1        1         1   0
@@ -694,18 +741,18 @@ NMAR.</p>
 &gt;#            0       0     72       94       215 381</code></pre>
 <p>Which shows that only 219 observations had full data, and most were missing the
 <code>kid_score</code> variable.</p>
-<div id="complete-case-analysislistwise-deletion" class="section level3">
+<div id="complete-case-analysislistwise-deletion" class="section level3" number="12.2.1">
 <h3><span class="header-section-number">12.2.1</span> Complete Case Analysis/Listwise Deletion</h3>
 <p>By default, <code>brms</code> uses only cases with no missing data. For example,</p>
-<div class="sourceCode" id="cb498"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb498-1"><a href="missing-data.html#cb498-1"></a>m3_ld &lt;-<span class="st"> </span><span class="kw">brm</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_iq_c <span class="op">+</span><span class="st"> </span>mom_hs, <span class="dt">data =</span> kidiq100_mar, </span>
-<span id="cb498-2"><a href="missing-data.html#cb498-2"></a>             <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </span>
-<span id="cb498-3"><a href="missing-data.html#cb498-3"></a>                       <span class="co"># set for all &quot;b&quot; coefficients</span></span>
-<span id="cb498-4"><a href="missing-data.html#cb498-4"></a>                       <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>),</span>
-<span id="cb498-5"><a href="missing-data.html#cb498-5"></a>                       <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </span>
-<span id="cb498-6"><a href="missing-data.html#cb498-6"></a>             <span class="dt">seed =</span> <span class="dv">2302</span></span>
-<span id="cb498-7"><a href="missing-data.html#cb498-7"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb497"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb497-1"><a href="missing-data.html#cb497-1"></a>m3_ld &lt;-<span class="st"> </span><span class="kw">brm</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_iq_c <span class="op">+</span><span class="st"> </span>mom_hs, <span class="dt">data =</span> kidiq100_mar, </span>
+<span id="cb497-2"><a href="missing-data.html#cb497-2"></a>             <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </span>
+<span id="cb497-3"><a href="missing-data.html#cb497-3"></a>                       <span class="co"># set for all &quot;b&quot; coefficients</span></span>
+<span id="cb497-4"><a href="missing-data.html#cb497-4"></a>                       <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>),</span>
+<span id="cb497-5"><a href="missing-data.html#cb497-5"></a>                       <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </span>
+<span id="cb497-6"><a href="missing-data.html#cb497-6"></a>             <span class="dt">seed =</span> <span class="dv">2302</span></span>
+<span id="cb497-7"><a href="missing-data.html#cb497-7"></a>)</span></code></pre></div>
 <pre><code>&gt;# Warning: Rows containing NAs were excluded from the model.</code></pre>
-<div class="sourceCode" id="cb500"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb500-1"><a href="missing-data.html#cb500-1"></a>m3_ld</span></code></pre></div>
+<div class="sourceCode" id="cb499"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb499-1"><a href="missing-data.html#cb499-1"></a>m3_ld</span></code></pre></div>
 <pre><code>&gt;#  Family: gaussian 
 &gt;#   Links: mu = identity; sigma = identity 
 &gt;# Formula: kid_score ~ mom_iq_c + mom_hs 
@@ -731,14 +778,14 @@ explained, this analysis is only valid when data are missing completely at
 random or missing at random (i.e., missingness of the outcome only depends
 on <code>mom_iq_c</code> and factors unrelated to <code>Ozone</code>).</p>
 <p>If you recall in Chapter 7, the coefficient using the full data should be:</p>
-<div class="sourceCode" id="cb502"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb502-1"><a href="missing-data.html#cb502-1"></a>m3 &lt;-<span class="st"> </span><span class="kw">brm</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_iq_c <span class="op">+</span><span class="st"> </span>mom_hs, <span class="dt">data =</span> kidiq100, </span>
-<span id="cb502-2"><a href="missing-data.html#cb502-2"></a>          <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </span>
-<span id="cb502-3"><a href="missing-data.html#cb502-3"></a>                    <span class="co"># set for all &quot;b&quot; coefficients</span></span>
-<span id="cb502-4"><a href="missing-data.html#cb502-4"></a>                    <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>),</span>
-<span id="cb502-5"><a href="missing-data.html#cb502-5"></a>                    <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </span>
-<span id="cb502-6"><a href="missing-data.html#cb502-6"></a>          <span class="dt">seed =</span> <span class="dv">1955</span></span>
-<span id="cb502-7"><a href="missing-data.html#cb502-7"></a>)</span></code></pre></div>
-<div class="sourceCode" id="cb503"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb503-1"><a href="missing-data.html#cb503-1"></a>m3</span></code></pre></div>
+<div class="sourceCode" id="cb501"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb501-1"><a href="missing-data.html#cb501-1"></a>m3 &lt;-<span class="st"> </span><span class="kw">brm</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_iq_c <span class="op">+</span><span class="st"> </span>mom_hs, <span class="dt">data =</span> kidiq100, </span>
+<span id="cb501-2"><a href="missing-data.html#cb501-2"></a>          <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </span>
+<span id="cb501-3"><a href="missing-data.html#cb501-3"></a>                    <span class="co"># set for all &quot;b&quot; coefficients</span></span>
+<span id="cb501-4"><a href="missing-data.html#cb501-4"></a>                    <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>),</span>
+<span id="cb501-5"><a href="missing-data.html#cb501-5"></a>                    <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </span>
+<span id="cb501-6"><a href="missing-data.html#cb501-6"></a>          <span class="dt">seed =</span> <span class="dv">1955</span></span>
+<span id="cb501-7"><a href="missing-data.html#cb501-7"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb502"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb502-1"><a href="missing-data.html#cb502-1"></a>m3</span></code></pre></div>
 <pre><code>&gt;#  Family: gaussian 
 &gt;#   Links: mu = identity; sigma = identity 
 &gt;# Formula: kid_score ~ mom_iq_c + mom_hs 
@@ -763,23 +810,23 @@ on <code>mom_iq_c</code> and factors unrelated to <code>Ozone</code>).</p>
 better.</p>
 <p>Now, take a look on whether missingness in <code>kid_score</code> is related to other
 variables.</p>
-<div class="sourceCode" id="cb505"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb505-1"><a href="missing-data.html#cb505-1"></a><span class="co"># Compute the missingness indicator (you can use the `within` function too)</span></span>
-<span id="cb505-2"><a href="missing-data.html#cb505-2"></a>kidiq100_mar_R &lt;-<span class="st"> </span><span class="kw">transform</span>(kidiq100_mar, </span>
-<span id="cb505-3"><a href="missing-data.html#cb505-3"></a>                            <span class="dt">kid_score_R =</span> <span class="kw">factor</span>(<span class="kw">as.numeric</span>(<span class="op">!</span><span class="kw">is.na</span>(kid_score)), </span>
-<span id="cb505-4"><a href="missing-data.html#cb505-4"></a>                                                 <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Missing&quot;</span>, </span>
-<span id="cb505-5"><a href="missing-data.html#cb505-5"></a>                                                            <span class="st">&quot;Observed&quot;</span>)))</span></code></pre></div>
-<div class="sourceCode" id="cb506"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb506-1"><a href="missing-data.html#cb506-1"></a><span class="co"># Plot distributions of variables against missingness indicator</span></span>
-<span id="cb506-2"><a href="missing-data.html#cb506-2"></a><span class="kw">qplot</span>(kid_score_R, mom_iq_c, <span class="dt">data =</span> kidiq100_mar_R, <span class="dt">geom =</span> <span class="st">&quot;boxplot&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb504"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb504-1"><a href="missing-data.html#cb504-1"></a><span class="co"># Compute the missingness indicator (you can use the `within` function too)</span></span>
+<span id="cb504-2"><a href="missing-data.html#cb504-2"></a>kidiq100_mar_R &lt;-<span class="st"> </span><span class="kw">transform</span>(kidiq100_mar, </span>
+<span id="cb504-3"><a href="missing-data.html#cb504-3"></a>                            <span class="dt">kid_score_R =</span> <span class="kw">factor</span>(<span class="kw">as.numeric</span>(<span class="op">!</span><span class="kw">is.na</span>(kid_score)), </span>
+<span id="cb504-4"><a href="missing-data.html#cb504-4"></a>                                                 <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Missing&quot;</span>, </span>
+<span id="cb504-5"><a href="missing-data.html#cb504-5"></a>                                                            <span class="st">&quot;Observed&quot;</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb505"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb505-1"><a href="missing-data.html#cb505-1"></a><span class="co"># Plot distributions of variables against missingness indicator</span></span>
+<span id="cb505-2"><a href="missing-data.html#cb505-2"></a><span class="kw">qplot</span>(kid_score_R, mom_iq_c, <span class="dt">data =</span> kidiq100_mar_R, <span class="dt">geom =</span> <span class="st">&quot;boxplot&quot;</span>)</span></code></pre></div>
 <pre><code>&gt;# Warning: Removed 94 rows containing non-finite values (stat_boxplot).</code></pre>
 <p><img src="12_missing_data_files/figure-html/missing_dist1-1.png" width="672" /></p>
-<div class="sourceCode" id="cb508"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb508-1"><a href="missing-data.html#cb508-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> kidiq100_mar_R, <span class="kw">aes</span>(<span class="dt">x =</span> kid_score_R)) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb508-2"><a href="missing-data.html#cb508-2"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> <span class="kw">factor</span>(mom_hs)), <span class="dt">position =</span> <span class="kw">position_dodge</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb507"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb507-1"><a href="missing-data.html#cb507-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> kidiq100_mar_R, <span class="kw">aes</span>(<span class="dt">x =</span> kid_score_R)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb507-2"><a href="missing-data.html#cb507-2"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> <span class="kw">factor</span>(mom_hs)), <span class="dt">position =</span> <span class="kw">position_dodge</span>())</span></code></pre></div>
 <p><img src="12_missing_data_files/figure-html/missing_dist1-2.png" width="672" /></p>
 <p>As we already knew, missingness of <code>kid_score</code> is related to both <code>mom_iq_c</code>
 and <code>mom_hs</code>, in that those with higher <code>mom_iq_c</code> and those whose mother had
 high school degree were more likely to be missing.</p>
 </div>
-<div id="treat-missing-data-as-parameters" class="section level3">
+<div id="treat-missing-data-as-parameters" class="section level3" number="12.2.2">
 <h3><span class="header-section-number">12.2.2</span> Treat Missing Data as Parameters</h3>
 <p>A fully Bayesian approach to handle missing data is to treat the missing
 <code>kid_score</code> values just as parameters, and assign priors to them. When the
@@ -788,7 +835,6 @@ missing and observed <code>kid_score</code> values are exchangeable, conditionin
 predictors (i.e., whether <code>kid_score</code> is missing or not does not add information
 to the <code>kid_score</code> values). Therefore, if <code>kid_score</code> is missing, we use the
 likelihood as the prior for the missing values:</p>
-
 <p><span class="math display">\[\begin{align*}
   \mathtt{kid_score}_{\textrm{obs}, i}&amp; \sim \mathcal{N}(\beta_0 + \beta_1 \mathtt{mom_iq_c}_i, \sigma) \\
   \mathtt{kid_score}_{\textrm{mis}, i}&amp; \sim \mathcal{N}(\beta_0 + \beta_1 \mathtt{mom_iq_c}_i, \sigma) \\
@@ -796,8 +842,8 @@ likelihood as the prior for the missing values:</p>
   \beta_1 &amp; \sim \mathcal{N}(0, 1) \\
   \beta_2 &amp; \sim \mathcal{N}(0, 1)
 \end{align*}\]</span></p>
-<div class="sourceCode" id="cb509"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb509-1"><a href="missing-data.html#cb509-1"></a><span class="kw">library</span>(rstan)</span>
-<span id="cb509-2"><a href="missing-data.html#cb509-2"></a><span class="kw">rstan_options</span>(<span class="dt">auto_write =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb508"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb508-1"><a href="missing-data.html#cb508-1"></a><span class="kw">library</span>(rstan)</span>
+<span id="cb508-2"><a href="missing-data.html#cb508-2"></a><span class="kw">rstan_options</span>(<span class="dt">auto_write =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <pre class="stan"><code>data {
   int&lt;lower=0&gt; N;  // number of observations
   vector[N] y;  // response variable (including missing values);
@@ -836,25 +882,25 @@ generated quantities {
     yrep[i] = normal_rng(yhat[i], sigma);
   }
 }</code></pre>
-<div class="sourceCode" id="cb511"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb511-1"><a href="missing-data.html#cb511-1"></a><span class="co"># Data with no missing X</span></span>
-<span id="cb511-2"><a href="missing-data.html#cb511-2"></a>kidiq100_mar_obsX &lt;-<span class="st"> </span><span class="kw">drop_na</span>(kidiq100_mar, mom_iq_c, mom_hs)</span></code></pre></div>
-<div class="sourceCode" id="cb512"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb512-1"><a href="missing-data.html#cb512-1"></a>m3_stan &lt;-<span class="st"> </span><span class="kw">stan</span>(<span class="st">&quot;../codes/normal_regression_missing.stan&quot;</span>, </span>
-<span id="cb512-2"><a href="missing-data.html#cb512-2"></a>                <span class="dt">data =</span> <span class="kw">list</span>(<span class="dt">N =</span> <span class="kw">nrow</span>(kidiq100_mar_obsX), </span>
-<span id="cb512-3"><a href="missing-data.html#cb512-3"></a>                            <span class="dt">y =</span> <span class="kw">replace_na</span>(kidiq100_mar_obsX<span class="op">$</span>kid_score, <span class="dv">99</span>), </span>
-<span id="cb512-4"><a href="missing-data.html#cb512-4"></a>                            <span class="dt">y_obs =</span> <span class="kw">as.numeric</span>(</span>
-<span id="cb512-5"><a href="missing-data.html#cb512-5"></a>                              <span class="op">!</span><span class="kw">is.na</span>(kidiq100_mar_obsX<span class="op">$</span>kid_score)</span>
-<span id="cb512-6"><a href="missing-data.html#cb512-6"></a>                            ), </span>
-<span id="cb512-7"><a href="missing-data.html#cb512-7"></a>                            <span class="dt">p =</span> <span class="dv">2</span>, </span>
-<span id="cb512-8"><a href="missing-data.html#cb512-8"></a>                            <span class="dt">X =</span> <span class="kw">model.matrix</span>(<span class="op">~</span><span class="st"> </span>mom_iq_c <span class="op">+</span><span class="st"> </span>mom_hs, </span>
-<span id="cb512-9"><a href="missing-data.html#cb512-9"></a>                                             <span class="dt">data =</span> kidiq100_mar_obsX)[ , <span class="dv">-1</span>]), </span>
-<span id="cb512-10"><a href="missing-data.html#cb512-10"></a>                <span class="dt">seed =</span> <span class="dv">1234</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb510"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb510-1"><a href="missing-data.html#cb510-1"></a><span class="co"># Data with no missing X</span></span>
+<span id="cb510-2"><a href="missing-data.html#cb510-2"></a>kidiq100_mar_obsX &lt;-<span class="st"> </span><span class="kw">drop_na</span>(kidiq100_mar, mom_iq_c, mom_hs)</span></code></pre></div>
+<div class="sourceCode" id="cb511"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb511-1"><a href="missing-data.html#cb511-1"></a>m3_stan &lt;-<span class="st"> </span><span class="kw">stan</span>(<span class="st">&quot;../codes/normal_regression_missing.stan&quot;</span>, </span>
+<span id="cb511-2"><a href="missing-data.html#cb511-2"></a>                <span class="dt">data =</span> <span class="kw">list</span>(<span class="dt">N =</span> <span class="kw">nrow</span>(kidiq100_mar_obsX), </span>
+<span id="cb511-3"><a href="missing-data.html#cb511-3"></a>                            <span class="dt">y =</span> <span class="kw">replace_na</span>(kidiq100_mar_obsX<span class="op">$</span>kid_score, <span class="dv">99</span>), </span>
+<span id="cb511-4"><a href="missing-data.html#cb511-4"></a>                            <span class="dt">y_obs =</span> <span class="kw">as.numeric</span>(</span>
+<span id="cb511-5"><a href="missing-data.html#cb511-5"></a>                              <span class="op">!</span><span class="kw">is.na</span>(kidiq100_mar_obsX<span class="op">$</span>kid_score)</span>
+<span id="cb511-6"><a href="missing-data.html#cb511-6"></a>                            ), </span>
+<span id="cb511-7"><a href="missing-data.html#cb511-7"></a>                            <span class="dt">p =</span> <span class="dv">2</span>, </span>
+<span id="cb511-8"><a href="missing-data.html#cb511-8"></a>                            <span class="dt">X =</span> <span class="kw">model.matrix</span>(<span class="op">~</span><span class="st"> </span>mom_iq_c <span class="op">+</span><span class="st"> </span>mom_hs, </span>
+<span id="cb511-9"><a href="missing-data.html#cb511-9"></a>                                             <span class="dt">data =</span> kidiq100_mar_obsX)[ , <span class="dv">-1</span>]), </span>
+<span id="cb511-10"><a href="missing-data.html#cb511-10"></a>                <span class="dt">seed =</span> <span class="dv">1234</span>)</span></code></pre></div>
 <p>Note that the results are basically identical to the complete case analyses, and
 the posterior distributions of the missing <span class="math inline">\(Y\)</span> values are essentially the
 predictive intervals given the <span class="math inline">\(X\)</span> values. For example, for
 the first 10 observations with missing <code>kid_score</code> values,</p>
-<div class="sourceCode" id="cb513"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb513-1"><a href="missing-data.html#cb513-1"></a>draws_ymis &lt;-</span>
-<span id="cb513-2"><a href="missing-data.html#cb513-2"></a><span class="st">  </span><span class="kw">as.matrix</span>(m3_stan, <span class="dt">pars =</span> <span class="st">&quot;yrep&quot;</span>)[ , <span class="kw">is.na</span>(kidiq100_mar_obsX<span class="op">$</span>kid_score)]</span>
-<span id="cb513-3"><a href="missing-data.html#cb513-3"></a><span class="kw">mcmc_areas_ridges</span>(draws_ymis[ , <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>], <span class="dt">bw =</span> <span class="st">&quot;SJ&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb512"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb512-1"><a href="missing-data.html#cb512-1"></a>draws_ymis &lt;-</span>
+<span id="cb512-2"><a href="missing-data.html#cb512-2"></a><span class="st">  </span><span class="kw">as.matrix</span>(m3_stan, <span class="dt">pars =</span> <span class="st">&quot;yrep&quot;</span>)[ , <span class="kw">is.na</span>(kidiq100_mar_obsX<span class="op">$</span>kid_score)]</span>
+<span id="cb512-3"><a href="missing-data.html#cb512-3"></a><span class="kw">mcmc_areas_ridges</span>(draws_ymis[ , <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>], <span class="dt">bw =</span> <span class="st">&quot;SJ&quot;</span>)</span></code></pre></div>
 <div class="figure"><span id="fig:m3-stan-dens"></span>
 <img src="12_missing_data_files/figure-html/m3-stan-dens-1.png" alt="Posterior density plots of the first two missing values of \texttt{kid_score}" width="672" />
 <p class="caption">
@@ -867,7 +913,7 @@ discuss next. Indeed, each posterior sample can be considered an imputed data
 set. The posterior draws of the missing values are also called
 <em>plausible values</em>.</p>
 </div>
-<div id="multiple-imputation" class="section level3">
+<div id="multiple-imputation" class="section level3" number="12.2.3">
 <h3><span class="header-section-number">12.2.3</span> Multiple Imputation</h3>
 <p>Multiple imputation is one of the modern techniques for missing data handling,
 and is general in that it has a very broad application. It uses the observed
@@ -879,7 +925,7 @@ then substitute them to the missing holes to form an imputed data set. The
 difference is that, instead of using all posterior samples, we usually obtain 20
 or 30 imputed data sets, which can be saved and used for almost any kind of
 analyses, Bayesian or frequentist.</p>
-<div id="multiple-imputation-has-several-advantages" class="section level4">
+<div id="multiple-imputation-has-several-advantages" class="section level4" number="12.2.3.1">
 <h4><span class="header-section-number">12.2.3.1</span> Multiple imputation has several advantages</h4>
 <ul>
 <li>It provides valid results when data is MAR</li>
@@ -888,7 +934,7 @@ explain the missing data mechanism (e.g., <code>mom_work</code> and <code>mom_ag
 <li>It is very flexible and can impute continuous and categorical variables</li>
 </ul>
 </div>
-<div id="example-of-multiple-imputation" class="section level4">
+<div id="example-of-multiple-imputation" class="section level4" number="12.2.3.2">
 <h4><span class="header-section-number">12.2.3.2</span> Example of multiple imputation</h4>
 <p>Although in theory one can use the Bayesian procedures with <code>Stan</code> to account
 for missing data or to do multiple imputations, there are some limitations.
@@ -908,7 +954,7 @@ all variables.</p>
 data set</li>
 </ol>
 </div>
-<div id="r-packages-for-multiple-imputation" class="section level4">
+<div id="r-packages-for-multiple-imputation" class="section level4" number="12.2.3.3">
 <h4><span class="header-section-number">12.2.3.3</span> R packages for multiple imputation</h4>
 <p>There are several packages in R for multiple imputation (e.g., <code>Amelia</code>, <code>jomo</code>,
 <code>mi</code>, <code>mice</code>, <code>missForest</code>, <code>norm</code>, <code>pan</code>). Although these packages differ in
@@ -939,14 +985,14 @@ note.</p>
 can collect covariates that can help explain the missing data mechanism. This
 helps recover missing information in the analyses.</p>
 </blockquote>
-<div id="setting-up-and-run-the-imputation" class="section level5">
+<div id="setting-up-and-run-the-imputation" class="section level5" number="12.2.3.3.1">
 <h5><span class="header-section-number">12.2.3.3.1</span> 1. Setting up and run the imputation</h5>
 <p>With binary and continuous missing variables, it can be as simple as running
 the following:</p>
-<div class="sourceCode" id="cb514"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb514-1"><a href="missing-data.html#cb514-1"></a><span class="kw">library</span>(mice)</span>
-<span id="cb514-2"><a href="missing-data.html#cb514-2"></a><span class="co"># Using mice to impute 20 data sets</span></span>
-<span id="cb514-3"><a href="missing-data.html#cb514-3"></a>kidiq100_imp &lt;-<span class="st"> </span><span class="kw">mice</span>(kidiq100_mar, <span class="dt">m =</span> <span class="dv">20</span>, <span class="dt">maxit =</span> <span class="dv">35</span>,</span>
-<span id="cb514-4"><a href="missing-data.html#cb514-4"></a>                     <span class="dt">printFlag =</span> <span class="ot">FALSE</span>)  <span class="co"># set to false only for knitting to Rmd</span></span></code></pre></div>
+<div class="sourceCode" id="cb513"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb513-1"><a href="missing-data.html#cb513-1"></a><span class="kw">library</span>(mice)</span>
+<span id="cb513-2"><a href="missing-data.html#cb513-2"></a><span class="co"># Using mice to impute 20 data sets</span></span>
+<span id="cb513-3"><a href="missing-data.html#cb513-3"></a>kidiq100_imp &lt;-<span class="st"> </span><span class="kw">mice</span>(kidiq100_mar, <span class="dt">m =</span> <span class="dv">20</span>, <span class="dt">maxit =</span> <span class="dv">35</span>,</span>
+<span id="cb513-4"><a href="missing-data.html#cb513-4"></a>                     <span class="dt">printFlag =</span> <span class="ot">FALSE</span>)  <span class="co"># set to false only for knitting to Rmd</span></span></code></pre></div>
 <p>Of course this oversimplifies the complexity of multiple imputation. By default
 it uses the method called “predictive mean matching” to replace missing data
 with a randomly chosen value from several similar cases (see <a href="https://stefvanbuuren.name/fimd/sec-pmm.html" class="uri">https://stefvanbuuren.name/fimd/sec-pmm.html</a>). Things will get more complicated
@@ -954,8 +1000,8 @@ when you have more variables and complex data types.</p>
 <p>Typing <code>kidiq100_imp$imp</code> will show the imputed missing values. Check <code>?mice</code>
 for more information. The <code>complete</code> function fills the missing values to the
 missing holes to form data sets with no missing data.</p>
-<div class="sourceCode" id="cb515"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb515-1"><a href="missing-data.html#cb515-1"></a>kidiq100_imp1 &lt;-<span class="st"> </span><span class="kw">complete</span>(kidiq100_imp, <span class="dv">1</span>)</span>
-<span id="cb515-2"><a href="missing-data.html#cb515-2"></a><span class="kw">head</span>(kidiq100_imp1, <span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb514"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb514-1"><a href="missing-data.html#cb514-1"></a>kidiq100_imp1 &lt;-<span class="st"> </span><span class="kw">complete</span>(kidiq100_imp, <span class="dv">1</span>)</span>
+<span id="cb514-2"><a href="missing-data.html#cb514-2"></a><span class="kw">head</span>(kidiq100_imp1, <span class="dv">10</span>)</span></code></pre></div>
 <pre><code>&gt;#    kid_score mom_hs mom_work mom_age mom_iq_c
 &gt;# 1       1.21    yes        4      27  -0.1883
 &gt;# 2       1.26    yes        4      25   0.2754
@@ -968,7 +1014,7 @@ missing holes to form data sets with no missing data.</p>
 &gt;# 9       1.02    yes        1      24  -0.1838
 &gt;# 10      0.95    yes        1      19  -0.0493</code></pre>
 <p>Compared to the original data:</p>
-<div class="sourceCode" id="cb517"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb517-1"><a href="missing-data.html#cb517-1"></a><span class="kw">head</span>(kidiq100, <span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb516"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb516-1"><a href="missing-data.html#cb516-1"></a><span class="kw">head</span>(kidiq100, <span class="dv">10</span>)</span></code></pre></div>
 <pre><code>&gt;# # A tibble: 10 x 5
 &gt;#    kid_score mom_hs mom_work mom_age mom_iq_c
 &gt;#        &lt;dbl&gt; &lt;fct&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;
@@ -983,34 +1029,34 @@ missing holes to form data sets with no missing data.</p>
 &gt;#  9      1.02 yes           1      24 -0.184  
 &gt;# 10      0.95 yes           1      19 -0.0493</code></pre>
 </div>
-<div id="check-for-convergence" class="section level5">
+<div id="check-for-convergence" class="section level5" number="12.2.3.3.2">
 <h5><span class="header-section-number">12.2.3.3.2</span> 2. Check for Convergence</h5>
 <p>We should also look at convergence:</p>
-<div class="sourceCode" id="cb519"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb519-1"><a href="missing-data.html#cb519-1"></a><span class="kw">plot</span>(kidiq100_imp)</span></code></pre></div>
+<div class="sourceCode" id="cb518"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb518-1"><a href="missing-data.html#cb518-1"></a><span class="kw">plot</span>(kidiq100_imp)</span></code></pre></div>
 <p><img src="12_missing_data_files/figure-html/plot-kidiq100_imp-1.png" width="624" /></p>
 <p>These are basically Markov chains in regular Bayesian analyses. So if you see
 some chains are constantly above or below others then it’s problematic.</p>
 <p>See <a href="https://www.gerkovink.com/miceVignettes/Convergence_pooling/Convergence_and_pooling.html" class="uri">https://www.gerkovink.com/miceVignettes/Convergence_pooling/Convergence_and_pooling.html</a>
 for additional steps to check for convergence.</p>
 </div>
-<div id="run-brm_multiple-on-imputed-data-sets" class="section level5">
+<div id="run-brm_multiple-on-imputed-data-sets" class="section level5" number="12.2.3.3.3">
 <h5><span class="header-section-number">12.2.3.3.3</span> 3. Run <code>brm_multiple</code> on imputed data sets</h5>
 <p><code>brms</code> directly supports multiply imputed data sets. Simply use the
 <code>brm_multiple</code> function and supply the multiply imputed data object to it. Also,
 for computational efficiency using two chains for each imputed data set would
 be faster.</p>
-<div class="sourceCode" id="cb520"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb520-1"><a href="missing-data.html#cb520-1"></a>m3_imp &lt;-<span class="st"> </span><span class="kw">brm_multiple</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_iq_c <span class="op">+</span><span class="st"> </span>mom_hs, <span class="dt">data =</span> kidiq100_imp, </span>
-<span id="cb520-2"><a href="missing-data.html#cb520-2"></a>                       <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </span>
-<span id="cb520-3"><a href="missing-data.html#cb520-3"></a>                                 <span class="co"># set for all &quot;b&quot; coefficients</span></span>
-<span id="cb520-4"><a href="missing-data.html#cb520-4"></a>                                 <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>),</span>
-<span id="cb520-5"><a href="missing-data.html#cb520-5"></a>                                 <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </span>
-<span id="cb520-6"><a href="missing-data.html#cb520-6"></a>                       <span class="dt">seed =</span> <span class="dv">1955</span>, </span>
-<span id="cb520-7"><a href="missing-data.html#cb520-7"></a>                       <span class="dt">chains =</span> 2L, </span>
-<span id="cb520-8"><a href="missing-data.html#cb520-8"></a>                       <span class="dt">cores =</span> 2L</span>
-<span id="cb520-9"><a href="missing-data.html#cb520-9"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb519"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb519-1"><a href="missing-data.html#cb519-1"></a>m3_imp &lt;-<span class="st"> </span><span class="kw">brm_multiple</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_iq_c <span class="op">+</span><span class="st"> </span>mom_hs, <span class="dt">data =</span> kidiq100_imp, </span>
+<span id="cb519-2"><a href="missing-data.html#cb519-2"></a>                       <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </span>
+<span id="cb519-3"><a href="missing-data.html#cb519-3"></a>                                 <span class="co"># set for all &quot;b&quot; coefficients</span></span>
+<span id="cb519-4"><a href="missing-data.html#cb519-4"></a>                                 <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>),</span>
+<span id="cb519-5"><a href="missing-data.html#cb519-5"></a>                                 <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </span>
+<span id="cb519-6"><a href="missing-data.html#cb519-6"></a>                       <span class="dt">seed =</span> <span class="dv">1955</span>, </span>
+<span id="cb519-7"><a href="missing-data.html#cb519-7"></a>                       <span class="dt">chains =</span> 2L, </span>
+<span id="cb519-8"><a href="missing-data.html#cb519-8"></a>                       <span class="dt">cores =</span> 2L</span>
+<span id="cb519-9"><a href="missing-data.html#cb519-9"></a>)</span></code></pre></div>
 <p>See this vignette:
 <a href="https://cran.r-project.org/web/packages/brms/vignettes/brms_missings.html#compatibility-with-other-multiple-imputation-packages" class="uri">https://cran.r-project.org/web/packages/brms/vignettes/brms_missings.html#compatibility-with-other-multiple-imputation-packages</a> for more information. If you look at the results:</p>
-<div class="sourceCode" id="cb521"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb521-1"><a href="missing-data.html#cb521-1"></a>m3_imp</span></code></pre></div>
+<div class="sourceCode" id="cb520"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb520-1"><a href="missing-data.html#cb520-1"></a>m3_imp</span></code></pre></div>
 <pre><code>&gt;# Warning: Parts of the model have not converged (some Rhats are &gt; 1.05). Be
 &gt;# careful when analysing the results! We recommend running more iterations and/or
 &gt;# setting stronger priors.</code></pre>
@@ -1037,7 +1083,7 @@ be faster.</p>
 <p>You will see that there are 40 chains in the results. The <code>Rhat</code> value will
 be much higher than 1, as the chains are from different data sets and will never
 converge. Instead, you should investigate the <code>Rhat</code> for each data set by</p>
-<div class="sourceCode" id="cb524"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb524-1"><a href="missing-data.html#cb524-1"></a>m3_imp<span class="op">$</span>rhats</span></code></pre></div>
+<div class="sourceCode" id="cb523"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb523-1"><a href="missing-data.html#cb523-1"></a>m3_imp<span class="op">$</span>rhats</span></code></pre></div>
 <pre><code>&gt;#    b_Intercept b_mom_iq_c b_mom_hsyes sigma  lp__
 &gt;# 1        1.002      1.000       1.002 1.003 1.002
 &gt;# 2        0.999      1.001       0.999 1.000 1.000
@@ -1061,16 +1107,16 @@ converge. Instead, you should investigate the <code>Rhat</code> for each data se
 &gt;# 20       1.001      1.000       1.001 1.002 1.003</code></pre>
 <p>So the chains have converged for each individual data set.</p>
 <p>Now, put the results together:</p>
-<div class="sourceCode" id="cb526"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb526-1"><a href="missing-data.html#cb526-1"></a><span class="kw">source</span>(<span class="st">&quot;../codes/extract_brmsfit.R&quot;</span>)</span>
-<span id="cb526-2"><a href="missing-data.html#cb526-2"></a>texreg<span class="op">::</span><span class="kw">screenreg</span>(<span class="kw">map</span>(<span class="kw">list</span>(m3, m3_ld, m3_imp), </span>
-<span id="cb526-3"><a href="missing-data.html#cb526-3"></a>                      extract_brmsfit, </span>
-<span id="cb526-4"><a href="missing-data.html#cb526-4"></a>                      <span class="co"># LOO-IC and WAIC not meaningful for comparing different</span></span>
-<span id="cb526-5"><a href="missing-data.html#cb526-5"></a>                      <span class="co"># data</span></span>
-<span id="cb526-6"><a href="missing-data.html#cb526-6"></a>                      <span class="dt">include.loo.ic =</span> <span class="ot">FALSE</span>, </span>
-<span id="cb526-7"><a href="missing-data.html#cb526-7"></a>                      <span class="dt">include.waic =</span> <span class="ot">FALSE</span>), </span>
-<span id="cb526-8"><a href="missing-data.html#cb526-8"></a>                  <span class="dt">custom.model.names =</span> <span class="kw">c</span>(<span class="st">&quot;Full data&quot;</span>, </span>
-<span id="cb526-9"><a href="missing-data.html#cb526-9"></a>                                         <span class="st">&quot;Complete case&quot;</span>, </span>
-<span id="cb526-10"><a href="missing-data.html#cb526-10"></a>                                         <span class="st">&quot;MI&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb525"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb525-1"><a href="missing-data.html#cb525-1"></a><span class="kw">source</span>(<span class="st">&quot;extract_brmsfit.R&quot;</span>)</span>
+<span id="cb525-2"><a href="missing-data.html#cb525-2"></a>texreg<span class="op">::</span><span class="kw">screenreg</span>(<span class="kw">map</span>(<span class="kw">list</span>(m3, m3_ld, m3_imp), </span>
+<span id="cb525-3"><a href="missing-data.html#cb525-3"></a>                      extract_brmsfit, </span>
+<span id="cb525-4"><a href="missing-data.html#cb525-4"></a>                      <span class="co"># LOO-IC and WAIC not meaningful for comparing different</span></span>
+<span id="cb525-5"><a href="missing-data.html#cb525-5"></a>                      <span class="co"># data</span></span>
+<span id="cb525-6"><a href="missing-data.html#cb525-6"></a>                      <span class="dt">include.loo.ic =</span> <span class="ot">FALSE</span>, </span>
+<span id="cb525-7"><a href="missing-data.html#cb525-7"></a>                      <span class="dt">include.waic =</span> <span class="ot">FALSE</span>), </span>
+<span id="cb525-8"><a href="missing-data.html#cb525-8"></a>                  <span class="dt">custom.model.names =</span> <span class="kw">c</span>(<span class="st">&quot;Full data&quot;</span>, </span>
+<span id="cb525-9"><a href="missing-data.html#cb525-9"></a>                                         <span class="st">&quot;Complete case&quot;</span>, </span>
+<span id="cb525-10"><a href="missing-data.html#cb525-10"></a>                                         <span class="st">&quot;MI&quot;</span>))</span></code></pre></div>
 <pre><code>&gt;# Warning: Parts of the model have not converged (some Rhats are &gt; 1.05). Be
 &gt;# careful when analysing the results! We recommend running more iterations and/or
 &gt;# setting stronger priors.</code></pre>
@@ -1090,7 +1136,7 @@ converge. Instead, you should investigate the <code>Rhat</code> for each data se
 &gt;# R^2          0.21          0.22           0.22      
 &gt;# Num. obs.  434           219            434         
 &gt;# ====================================================
-&gt;# * 0 outside the confidence interval</code></pre>
+&gt;# * Null hypothesis value outside the confidence interval.</code></pre>
 <p>You can see that the coefficients for <code>mom_iq_c</code> is closer to the original data
 with multiple imputation, and the credible intervals are slightly shorter than
 complete case analyses.</p>

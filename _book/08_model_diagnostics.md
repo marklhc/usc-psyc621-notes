@@ -91,7 +91,7 @@ we fit last week (with centering):
 pp_check(m4, nsamples = 100)
 ```
 
-<img src="08_model_diagnostics_files/figure-html/ppc-m4-1.png" width="384" />
+![](08_model_diagnostics_files/figure-epub3/ppc-m4-1.png)<!-- -->
 
 Based on the graphical check, we do not see any major systematic discrepancies
 of our data from what can be predicted from our model. 
@@ -114,7 +114,7 @@ pp_check(m4, type = "stat_grouped", stat = "mean", group = "mom_hs")
 ># `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 ```
 
-<img src="08_model_diagnostics_files/figure-html/ppc-m4-stat-1.png" width="432" />
+![](08_model_diagnostics_files/figure-epub3/ppc-m4-stat-1.png)<!-- -->
 
 ```r
 # PPC for the maximum and minimum values
@@ -125,7 +125,7 @@ pp_check(m4, type = "stat_2d", stat = c("max", "min"))
 ># Using all posterior samples for ppc type 'stat_2d' by default.
 ```
 
-<img src="08_model_diagnostics_files/figure-html/ppc-m4-stat-2.png" width="432" />
+![](08_model_diagnostics_files/figure-epub3/ppc-m4-stat-2.png)<!-- -->
 
 Here is a ribbon plot to check for outliers:
 
@@ -138,7 +138,7 @@ pp_check(m4, type = "ribbon_grouped", x = "mom_iq_c", group = "mom_hs")
 ># Using all posterior samples for ppc type 'ribbon_grouped' by default.
 ```
 
-<img src="08_model_diagnostics_files/figure-html/ppc-m4-ribbon-1.png" width="672" />
+![](08_model_diagnostics_files/figure-epub3/ppc-m4-ribbon-1.png)<!-- -->
 
 Some points are outside the 90% predictive intervals. 
 
@@ -161,7 +161,7 @@ mmp_brm(m4, x = "mom_iq_c", prob = .95)
 ># `geom_smooth()` using method = 'loess' and formula 'y ~ x'
 ```
 
-<img src="08_model_diagnostics_files/figure-html/mmp-m4-1.png" width="432" />
+![](08_model_diagnostics_files/figure-epub3/mmp-m4-1.png)<!-- -->
 
 Generally, marginal model plot is more appropriate for ordinal or continuous
 predictors. As you can see above, the red line (for nonparametric fit) and the
@@ -198,7 +198,7 @@ pp_check(m4, type = "error_scatter_avg_vs_x", size = 1.1,
 ># Using all posterior samples for ppc type 'error_scatter_avg_vs_x' by default.
 ```
 
-<img src="08_model_diagnostics_files/figure-html/ppc-m4-error-x-1.png" width="336" />
+![](08_model_diagnostics_files/figure-epub3/ppc-m4-error-x-1.png)<!-- -->
 
 No big problem was found in the residuals. If you see that the _SD_ of the
 residuals is not uniform, or the residuals have some non-linear relationships
@@ -233,7 +233,7 @@ ggplot(res_df,
 ># `geom_smooth()` using method = 'loess' and formula 'y ~ x'
 ```
 
-<img src="08_model_diagnostics_files/figure-html/std-resid-m4-1.png" width="384" />
+![](08_model_diagnostics_files/figure-epub3/std-resid-m4-1.png)<!-- -->
 
 All points are within the -3 to 3 range, so no big issues with outliers. 
 Also, the errors of the residuals have similar variance/spread, so the 
@@ -268,7 +268,7 @@ pairs(m4, pars = "b",
              alpha = 0.25))  # transparency
 ```
 
-<img src="08_model_diagnostics_files/figure-html/pairs-m4-1.png" width="720" />
+![](08_model_diagnostics_files/figure-epub3/pairs-m4-1.png)<!-- -->
 
 If some coefficients are particularly strongly correlated, you may need to 
 think about using a stronger prior or combining some predictors. Principal
@@ -299,7 +299,7 @@ large influence on the regression line.
 ># `geom_smooth()` using formula 'y ~ x'
 ```
 
-<img src="08_model_diagnostics_files/figure-html/unnamed-chunk-1-1.png" width="384" />
+![](08_model_diagnostics_files/figure-epub3/unnamed-chunk-1-1.png)<!-- -->
 
 #### Student's $t$ regression
 
@@ -331,7 +331,7 @@ ggplot(tibble(nu = c(1, 50)), aes(x = nu)) +
   })
 ```
 
-<img src="08_model_diagnostics_files/figure-html/plot-gamma-prior-1.png" width="288" />
+![](08_model_diagnostics_files/figure-epub3/plot-gamma-prior-1.png)<!-- -->
 
 The data did not indicate strong outlier influence, as you can see from the 
 `nu` parameter:
@@ -345,11 +345,7 @@ stanplot(m4t, pars = "nu", type = "areas")
 ># Warning: Method 'stanplot' is deprecated. Please use 'mcmc_plot' instead.
 ```
 
-```
-># Warning: `expand_scale()` is deprecated; use `expansion()` instead.
-```
-
-<img src="08_model_diagnostics_files/figure-html/plot-m4t-1.png" width="384" />
+![](08_model_diagnostics_files/figure-epub3/plot-m4t-1.png)<!-- -->
 
 which is pretty large. 
 
@@ -358,7 +354,7 @@ appeared similar:
 
 
 ```r
-source("../codes/extract_brmsfit.R")
+source("extract_brmsfit.R")
 texreg::screenreg(map(list(m4, m4t), extract_brmsfit))
 ```
 
@@ -381,7 +377,7 @@ texreg::screenreg(map(list(m4, m4t), extract_brmsfit))
 ># loo IC              -252.03         -250.91       
 ># WAIC                -252.05         -250.93       
 ># ==================================================
-># * 0 outside the confidence interval
+># * Null hypothesis value outside the confidence interval.
 ```
 
 The LOOIC and the WAIC reported, which we will talk about in the next set of 
@@ -400,7 +396,7 @@ problem). For example, you can look at the residuals in the following:
 ># `geom_smooth()` using formula 'y ~ x'
 ```
 
-<img src="08_model_diagnostics_files/figure-html/heter-data-1.png" width="672" />
+![](08_model_diagnostics_files/figure-epub3/heter-data-1.png)<!-- -->
 
 Check the variability for each group. How are they different?
 

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 3 One-Parameter Models | Course Handouts for Bayesian Data Analysis Class</title>
   <meta name="description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Fall semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
-  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 3 One-Parameter Models | Course Handouts for Bayesian Data Analysis Class" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Mark Lai" />
 
 
-<meta name="date" content="2020-03-06" />
+<meta name="date" content="2020-06-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,6 +33,7 @@
   
 <link rel="prev" href="bayesian-inference.html"/>
 <link rel="next" href="brief-introduction-to-stan.html"/>
+<script src="libs/header-attrs-2.2/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -53,22 +54,21 @@
 <script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
 <script src="libs/viz-1.8.2/viz.js"></script>
 <link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
-<script src="libs/grViz-binding-1.0.5/grViz.js"></script>
+<script src="libs/grViz-binding-1.0.6.1/grViz.js"></script>
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -88,7 +88,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -138,70 +138,86 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
-<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
-<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#history-of-bayesian-statistics"><i class="fa fa-check"></i><b>1.1</b> History of Bayesian Statistics</a><ul>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#history-of-bayesian-statistics"><i class="fa fa-check"></i><b>1.1</b> History of Bayesian Statistics</a>
+<ul>
 <li class="chapter" data-level="1.1.1" data-path="introduction.html"><a href="introduction.html#thomas-bayes-17011762"><i class="fa fa-check"></i><b>1.1.1</b> Thomas Bayes (1701–1762)</a></li>
 <li class="chapter" data-level="1.1.2" data-path="introduction.html"><a href="introduction.html#pierre-simon-laplace-17491827"><i class="fa fa-check"></i><b>1.1.2</b> Pierre-Simon Laplace (1749–1827)</a></li>
 <li class="chapter" data-level="1.1.3" data-path="introduction.html"><a href="introduction.html#th-century"><i class="fa fa-check"></i><b>1.1.3</b> 20th Century</a></li>
 </ul></li>
-<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#motivations-for-using-bayesian-methods"><i class="fa fa-check"></i><b>1.2</b> Motivations for Using Bayesian Methods</a><ul>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#motivations-for-using-bayesian-methods"><i class="fa fa-check"></i><b>1.2</b> Motivations for Using Bayesian Methods</a>
+<ul>
 <li class="chapter" data-level="1.2.1" data-path="introduction.html"><a href="introduction.html#problem-with-classical-frequentist-statistics"><i class="fa fa-check"></i><b>1.2.1</b> Problem with classical (frequentist) statistics</a></li>
 </ul></li>
-<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#probability"><i class="fa fa-check"></i><b>1.3</b> Probability</a><ul>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#probability"><i class="fa fa-check"></i><b>1.3</b> Probability</a>
+<ul>
 <li class="chapter" data-level="1.3.1" data-path="introduction.html"><a href="introduction.html#classical-interpretation"><i class="fa fa-check"></i><b>1.3.1</b> Classical Interpretation</a></li>
 <li class="chapter" data-level="1.3.2" data-path="introduction.html"><a href="introduction.html#frequentist-interpretation"><i class="fa fa-check"></i><b>1.3.2</b> Frequentist Interpretation</a></li>
 <li class="chapter" data-level="1.3.3" data-path="introduction.html"><a href="introduction.html#problem-of-the-single-case"><i class="fa fa-check"></i><b>1.3.3</b> Problem of the single case</a></li>
 <li class="chapter" data-level="1.3.4" data-path="introduction.html"><a href="introduction.html#subjectivist-interpretation"><i class="fa fa-check"></i><b>1.3.4</b> Subjectivist Interpretation</a></li>
 <li class="chapter" data-level="1.3.5" data-path="introduction.html"><a href="introduction.html#basics-of-probability"><i class="fa fa-check"></i><b>1.3.5</b> Basics of Probability</a></li>
 </ul></li>
-<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#bayess-theorem"><i class="fa fa-check"></i><b>1.4</b> Bayes’s Theorem</a><ul>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#bayess-theorem"><i class="fa fa-check"></i><b>1.4</b> Bayes’s Theorem</a>
+<ul>
 <li class="chapter" data-level="1.4.1" data-path="introduction.html"><a href="introduction.html#example-1-base-rate-fallacy-from-wikipedia"><i class="fa fa-check"></i><b>1.4.1</b> Example 1: Base rate fallacy (From Wikipedia)</a></li>
 </ul></li>
-<li class="chapter" data-level="1.5" data-path="introduction.html"><a href="introduction.html#bayesian-statistics"><i class="fa fa-check"></i><b>1.5</b> Bayesian Statistics</a><ul>
+<li class="chapter" data-level="1.5" data-path="introduction.html"><a href="introduction.html#bayesian-statistics"><i class="fa fa-check"></i><b>1.5</b> Bayesian Statistics</a>
+<ul>
 <li class="chapter" data-level="1.5.1" data-path="introduction.html"><a href="introduction.html#example-2-locating-a-plane"><i class="fa fa-check"></i><b>1.5.1</b> Example 2: Locating a Plane</a></li>
 </ul></li>
 <li class="chapter" data-level="1.6" data-path="introduction.html"><a href="introduction.html#comparing-bayesian-and-frequentist-statistics"><i class="fa fa-check"></i><b>1.6</b> Comparing Bayesian and Frequentist Statistics</a></li>
 <li class="chapter" data-level="1.7" data-path="introduction.html"><a href="introduction.html#software-for-bayesian-statistics"><i class="fa fa-check"></i><b>1.7</b> Software for Bayesian Statistics</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="bayesian-inference.html"><a href="bayesian-inference.html"><i class="fa fa-check"></i><b>2</b> Bayesian Inference</a><ul>
+<li class="chapter" data-level="2" data-path="bayesian-inference.html"><a href="bayesian-inference.html"><i class="fa fa-check"></i><b>2</b> Bayesian Inference</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#steps-of-bayesian-data-analysis"><i class="fa fa-check"></i><b>2.1</b> Steps of Bayesian Data Analysis</a></li>
 <li class="chapter" data-level="2.2" data-path="bayesian-inference.html"><a href="bayesian-inference.html#real-data-example"><i class="fa fa-check"></i><b>2.2</b> Real Data Example</a></li>
-<li class="chapter" data-level="2.3" data-path="bayesian-inference.html"><a href="bayesian-inference.html#choosing-a-model"><i class="fa fa-check"></i><b>2.3</b> Choosing a Model</a><ul>
+<li class="chapter" data-level="2.3" data-path="bayesian-inference.html"><a href="bayesian-inference.html#choosing-a-model"><i class="fa fa-check"></i><b>2.3</b> Choosing a Model</a>
+<ul>
 <li class="chapter" data-level="2.3.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#exchangeability"><i class="fa fa-check"></i><b>2.3.1</b> Exchangeability*</a></li>
 <li class="chapter" data-level="2.3.2" data-path="bayesian-inference.html"><a href="bayesian-inference.html#probability-distributions"><i class="fa fa-check"></i><b>2.3.2</b> Probability Distributions</a></li>
 <li class="chapter" data-level="2.3.3" data-path="bayesian-inference.html"><a href="bayesian-inference.html#the-likelihood"><i class="fa fa-check"></i><b>2.3.3</b> The Likelihood</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="bayesian-inference.html"><a href="bayesian-inference.html#specifying-priors"><i class="fa fa-check"></i><b>2.4</b> Specifying Priors</a><ul>
+<li class="chapter" data-level="2.4" data-path="bayesian-inference.html"><a href="bayesian-inference.html#specifying-priors"><i class="fa fa-check"></i><b>2.4</b> Specifying Priors</a>
+<ul>
 <li class="chapter" data-level="2.4.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#beta-distribution"><i class="fa fa-check"></i><b>2.4.1</b> Beta Distribution</a></li>
 </ul></li>
-<li class="chapter" data-level="2.5" data-path="bayesian-inference.html"><a href="bayesian-inference.html#obtain-the-posterior-distributions"><i class="fa fa-check"></i><b>2.5</b> Obtain the Posterior Distributions</a><ul>
+<li class="chapter" data-level="2.5" data-path="bayesian-inference.html"><a href="bayesian-inference.html#obtain-the-posterior-distributions"><i class="fa fa-check"></i><b>2.5</b> Obtain the Posterior Distributions</a>
+<ul>
 <li class="chapter" data-level="2.5.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#grid-approximation"><i class="fa fa-check"></i><b>2.5.1</b> Grid Approximation</a></li>
 <li class="chapter" data-level="2.5.2" data-path="bayesian-inference.html"><a href="bayesian-inference.html#using-conjugate-priors"><i class="fa fa-check"></i><b>2.5.2</b> Using Conjugate Priors</a></li>
 <li class="chapter" data-level="2.5.3" data-path="bayesian-inference.html"><a href="bayesian-inference.html#laplace-approximation-with-maximum-a-posteriori-estimation"><i class="fa fa-check"></i><b>2.5.3</b> Laplace Approximation with Maximum A Posteriori Estimation</a></li>
 <li class="chapter" data-level="2.5.4" data-path="bayesian-inference.html"><a href="bayesian-inference.html#markov-chain-monte-carlo-mcmc"><i class="fa fa-check"></i><b>2.5.4</b> Markov Chain Monte Carlo (MCMC)</a></li>
 </ul></li>
-<li class="chapter" data-level="2.6" data-path="bayesian-inference.html"><a href="bayesian-inference.html#summarizing-the-posterior-distribution"><i class="fa fa-check"></i><b>2.6</b> Summarizing the Posterior Distribution</a><ul>
+<li class="chapter" data-level="2.6" data-path="bayesian-inference.html"><a href="bayesian-inference.html#summarizing-the-posterior-distribution"><i class="fa fa-check"></i><b>2.6</b> Summarizing the Posterior Distribution</a>
+<ul>
 <li class="chapter" data-level="2.6.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#posterior-mean-median-and-mode"><i class="fa fa-check"></i><b>2.6.1</b> Posterior Mean, Median, and Mode</a></li>
 <li class="chapter" data-level="2.6.2" data-path="bayesian-inference.html"><a href="bayesian-inference.html#uncertainty-estimates"><i class="fa fa-check"></i><b>2.6.2</b> Uncertainty Estimates</a></li>
 <li class="chapter" data-level="2.6.3" data-path="bayesian-inference.html"><a href="bayesian-inference.html#credible-intervals"><i class="fa fa-check"></i><b>2.6.3</b> Credible Intervals</a></li>
 <li class="chapter" data-level="2.6.4" data-path="bayesian-inference.html"><a href="bayesian-inference.html#probability-of-theta-higherlower-than-a-certain-value"><i class="fa fa-check"></i><b>2.6.4</b> Probability of <span class="math inline">\(\theta\)</span> Higher/Lower Than a Certain Value</a></li>
 </ul></li>
-<li class="chapter" data-level="2.7" data-path="bayesian-inference.html"><a href="bayesian-inference.html#model-checking"><i class="fa fa-check"></i><b>2.7</b> Model Checking</a><ul>
+<li class="chapter" data-level="2.7" data-path="bayesian-inference.html"><a href="bayesian-inference.html#model-checking"><i class="fa fa-check"></i><b>2.7</b> Model Checking</a>
+<ul>
 <li class="chapter" data-level="2.7.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#posterior-predictive-distribution"><i class="fa fa-check"></i><b>2.7.1</b> Posterior Predictive Distribution</a></li>
 </ul></li>
 <li class="chapter" data-level="2.8" data-path="bayesian-inference.html"><a href="bayesian-inference.html#posterior-predictive-check"><i class="fa fa-check"></i><b>2.8</b> Posterior Predictive Check</a></li>
-<li class="chapter" data-level="2.9" data-path="bayesian-inference.html"><a href="bayesian-inference.html#summary"><i class="fa fa-check"></i><b>2.9</b> Summary</a><ul>
+<li class="chapter" data-level="2.9" data-path="bayesian-inference.html"><a href="bayesian-inference.html#summary"><i class="fa fa-check"></i><b>2.9</b> Summary</a>
+<ul>
 <li class="chapter" data-level="2.9.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#key-concepts"><i class="fa fa-check"></i><b>2.9.1</b> Key Concepts</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="one-parameter-models.html"><a href="one-parameter-models.html"><i class="fa fa-check"></i><b>3</b> One-Parameter Models</a><ul>
-<li class="chapter" data-level="3.1" data-path="one-parameter-models.html"><a href="one-parameter-models.html#binomialbernoulli-data"><i class="fa fa-check"></i><b>3.1</b> Binomial/Bernoulli data</a><ul>
+<li class="chapter" data-level="3" data-path="one-parameter-models.html"><a href="one-parameter-models.html"><i class="fa fa-check"></i><b>3</b> One-Parameter Models</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="one-parameter-models.html"><a href="one-parameter-models.html#binomialbernoulli-data"><i class="fa fa-check"></i><b>3.1</b> Binomial/Bernoulli data</a>
+<ul>
 <li class="chapter" data-level="3.1.1" data-path="one-parameter-models.html"><a href="one-parameter-models.html#reparameterization"><i class="fa fa-check"></i><b>3.1.1</b> Reparameterization*</a></li>
 <li class="chapter" data-level="3.1.2" data-path="one-parameter-models.html"><a href="one-parameter-models.html#posterior-predictive-check-1"><i class="fa fa-check"></i><b>3.1.2</b> Posterior Predictive Check</a></li>
 <li class="chapter" data-level="3.1.3" data-path="one-parameter-models.html"><a href="one-parameter-models.html#comparison-to-frequentist-results"><i class="fa fa-check"></i><b>3.1.3</b> Comparison to frequentist results</a></li>
 <li class="chapter" data-level="3.1.4" data-path="one-parameter-models.html"><a href="one-parameter-models.html#sensitivity-to-different-priors"><i class="fa fa-check"></i><b>3.1.4</b> Sensitivity to different priors</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="one-parameter-models.html"><a href="one-parameter-models.html#poisson-data"><i class="fa fa-check"></i><b>3.2</b> Poisson Data</a><ul>
+<li class="chapter" data-level="3.2" data-path="one-parameter-models.html"><a href="one-parameter-models.html#poisson-data"><i class="fa fa-check"></i><b>3.2</b> Poisson Data</a>
+<ul>
 <li class="chapter" data-level="3.2.1" data-path="one-parameter-models.html"><a href="one-parameter-models.html#example-2"><i class="fa fa-check"></i><b>3.2.1</b> Example 2</a></li>
 <li class="chapter" data-level="3.2.2" data-path="one-parameter-models.html"><a href="one-parameter-models.html#choosing-a-model-1"><i class="fa fa-check"></i><b>3.2.2</b> Choosing a model</a></li>
 <li class="chapter" data-level="3.2.3" data-path="one-parameter-models.html"><a href="one-parameter-models.html#choosing-a-prior"><i class="fa fa-check"></i><b>3.2.3</b> Choosing a prior</a></li>
@@ -210,20 +226,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2.6" data-path="one-parameter-models.html"><a href="one-parameter-models.html#posterior-predictive-check-2"><i class="fa fa-check"></i><b>3.2.6</b> Posterior Predictive Check</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html"><i class="fa fa-check"></i><b>4</b> Brief Introduction to STAN</a><ul>
-<li class="chapter" data-level="4.1" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#stan"><i class="fa fa-check"></i><b>4.1</b> <code>STAN</code></a><ul>
+<li class="chapter" data-level="4" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html"><i class="fa fa-check"></i><b>4</b> Brief Introduction to STAN</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#stan"><i class="fa fa-check"></i><b>4.1</b> <code>STAN</code></a>
+<ul>
 <li class="chapter" data-level="4.1.1" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#stan-code"><i class="fa fa-check"></i><b>4.1.1</b> <code>STAN</code> code</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#rstan"><i class="fa fa-check"></i><b>4.2</b> <code>RStan</code></a><ul>
+<li class="chapter" data-level="4.2" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#rstan"><i class="fa fa-check"></i><b>4.2</b> <code>RStan</code></a>
+<ul>
 <li class="chapter" data-level="4.2.1" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#assembling-data-list-in-r"><i class="fa fa-check"></i><b>4.2.1</b> Assembling data list in R</a></li>
 <li class="chapter" data-level="4.2.2" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#call-rstan"><i class="fa fa-check"></i><b>4.2.2</b> Call <code>rstan</code></a></li>
 <li class="chapter" data-level="4.2.3" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#summarize-the-results"><i class="fa fa-check"></i><b>4.2.3</b> Summarize the results</a></li>
 </ul></li>
 <li class="chapter" data-level="4.3" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#resources"><i class="fa fa-check"></i><b>4.3</b> Resources</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="group-comparisons.html"><a href="group-comparisons.html"><i class="fa fa-check"></i><b>5</b> Group Comparisons</a><ul>
+<li class="chapter" data-level="5" data-path="group-comparisons.html"><a href="group-comparisons.html"><i class="fa fa-check"></i><b>5</b> Group Comparisons</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="group-comparisons.html"><a href="group-comparisons.html#data"><i class="fa fa-check"></i><b>5.1</b> Data</a></li>
-<li class="chapter" data-level="5.2" data-path="group-comparisons.html"><a href="group-comparisons.html#between-subject-comparisons"><i class="fa fa-check"></i><b>5.2</b> Between-Subject Comparisons</a><ul>
+<li class="chapter" data-level="5.2" data-path="group-comparisons.html"><a href="group-comparisons.html#between-subject-comparisons"><i class="fa fa-check"></i><b>5.2</b> Between-Subject Comparisons</a>
+<ul>
 <li class="chapter" data-level="5.2.1" data-path="group-comparisons.html"><a href="group-comparisons.html#plots"><i class="fa fa-check"></i><b>5.2.1</b> Plots</a></li>
 <li class="chapter" data-level="5.2.2" data-path="group-comparisons.html"><a href="group-comparisons.html#independent-sample-t-test"><i class="fa fa-check"></i><b>5.2.2</b> Independent sample t-test</a></li>
 <li class="chapter" data-level="5.2.3" data-path="group-comparisons.html"><a href="group-comparisons.html#bayesian-normal-model"><i class="fa fa-check"></i><b>5.2.3</b> Bayesian Normal Model</a></li>
@@ -231,7 +252,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.2.5" data-path="group-comparisons.html"><a href="group-comparisons.html#shifted-lognormal-model"><i class="fa fa-check"></i><b>5.2.5</b> Shifted Lognormal Model*</a></li>
 </ul></li>
 <li class="chapter" data-level="5.3" data-path="group-comparisons.html"><a href="group-comparisons.html#notes-on-model-comparison"><i class="fa fa-check"></i><b>5.3</b> Notes on Model Comparison</a></li>
-<li class="chapter" data-level="5.4" data-path="group-comparisons.html"><a href="group-comparisons.html#within-subject-comparisons"><i class="fa fa-check"></i><b>5.4</b> Within-Subject Comparisons</a><ul>
+<li class="chapter" data-level="5.4" data-path="group-comparisons.html"><a href="group-comparisons.html#within-subject-comparisons"><i class="fa fa-check"></i><b>5.4</b> Within-Subject Comparisons</a>
+<ul>
 <li class="chapter" data-level="5.4.1" data-path="group-comparisons.html"><a href="group-comparisons.html#plots-1"><i class="fa fa-check"></i><b>5.4.1</b> Plots</a></li>
 <li class="chapter" data-level="5.4.2" data-path="group-comparisons.html"><a href="group-comparisons.html#independent-sample-t-test-1"><i class="fa fa-check"></i><b>5.4.2</b> Independent sample <span class="math inline">\(t\)</span>-test</a></li>
 <li class="chapter" data-level="5.4.3" data-path="group-comparisons.html"><a href="group-comparisons.html#bayesian-normal-model-1"><i class="fa fa-check"></i><b>5.4.3</b> Bayesian Normal Model</a></li>
@@ -239,19 +261,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.4.5" data-path="group-comparisons.html"><a href="group-comparisons.html#region-of-practical-equivalence-rope"><i class="fa fa-check"></i><b>5.4.5</b> Region of Practical Equivalence (ROPE)</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html"><i class="fa fa-check"></i><b>6</b> Markov Chain Monte Carlo</a><ul>
+<li class="chapter" data-level="6" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html"><i class="fa fa-check"></i><b>6</b> Markov Chain Monte Carlo</a>
+<ul>
 <li class="chapter" data-level="6.1" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#monte-carlo-simulation-with-one-unknown"><i class="fa fa-check"></i><b>6.1</b> Monte Carlo Simulation With One Unknown</a></li>
-<li class="chapter" data-level="6.2" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#markov-chain-monte-carlo-mcmc-with-one-parameter"><i class="fa fa-check"></i><b>6.2</b> Markov Chain Monte Carlo (MCMC) With One Parameter</a><ul>
+<li class="chapter" data-level="6.2" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#markov-chain-monte-carlo-mcmc-with-one-parameter"><i class="fa fa-check"></i><b>6.2</b> Markov Chain Monte Carlo (MCMC) With One Parameter</a>
+<ul>
 <li class="chapter" data-level="6.2.1" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#the-metropolis-algorithm"><i class="fa fa-check"></i><b>6.2.1</b> The Metropolis algorithm</a></li>
 <li class="chapter" data-level="6.2.2" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#the-metropolis-hastings-algorithm"><i class="fa fa-check"></i><b>6.2.2</b> The Metropolis-Hastings Algorithm</a></li>
 </ul></li>
 <li class="chapter" data-level="6.3" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#markov-chain"><i class="fa fa-check"></i><b>6.3</b> Markov Chain</a></li>
 <li class="chapter" data-level="6.4" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#effective-sample-size-n_texteff"><i class="fa fa-check"></i><b>6.4</b> Effective Sample Size (<span class="math inline">\(n_\text{eff}\)</span>)</a></li>
 <li class="chapter" data-level="6.5" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#mc-error"><i class="fa fa-check"></i><b>6.5</b> MC Error</a></li>
-<li class="chapter" data-level="6.6" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#burn-inwarmup"><i class="fa fa-check"></i><b>6.6</b> Burn-in/Warmup</a><ul>
+<li class="chapter" data-level="6.6" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#burn-inwarmup"><i class="fa fa-check"></i><b>6.6</b> Burn-in/Warmup</a>
+<ul>
 <li class="chapter" data-level="6.6.1" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#thinning"><i class="fa fa-check"></i><b>6.6.1</b> Thinning</a></li>
 </ul></li>
-<li class="chapter" data-level="6.7" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#diagnostics-of-mcmc"><i class="fa fa-check"></i><b>6.7</b> Diagnostics of MCMC</a><ul>
+<li class="chapter" data-level="6.7" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#diagnostics-of-mcmc"><i class="fa fa-check"></i><b>6.7</b> Diagnostics of MCMC</a>
+<ul>
 <li class="chapter" data-level="6.7.1" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#mixing"><i class="fa fa-check"></i><b>6.7.1</b> Mixing</a></li>
 <li class="chapter" data-level="6.7.2" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#acceptance-rate"><i class="fa fa-check"></i><b>6.7.2</b> Acceptance Rate</a></li>
 <li class="chapter" data-level="6.7.3" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#diagnostics-using-multiple-chains"><i class="fa fa-check"></i><b>6.7.3</b> Diagnostics Using Multiple Chains</a></li>
@@ -259,24 +285,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.8" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#multiple-parameters"><i class="fa fa-check"></i><b>6.8</b> Multiple Parameters</a></li>
 <li class="chapter" data-level="6.9" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#hamiltonian-monte-carlo"><i class="fa fa-check"></i><b>6.9</b> Hamiltonian Monte Carlo</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="linear-models.html"><a href="linear-models.html"><i class="fa fa-check"></i><b>7</b> Linear Models</a><ul>
+<li class="chapter" data-level="7" data-path="linear-models.html"><a href="linear-models.html"><i class="fa fa-check"></i><b>7</b> Linear Models</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="linear-models.html"><a href="linear-models.html#what-is-regression"><i class="fa fa-check"></i><b>7.1</b> What is Regression?</a></li>
-<li class="chapter" data-level="7.2" data-path="linear-models.html"><a href="linear-models.html#one-predictor"><i class="fa fa-check"></i><b>7.2</b> One Predictor</a><ul>
+<li class="chapter" data-level="7.2" data-path="linear-models.html"><a href="linear-models.html#one-predictor"><i class="fa fa-check"></i><b>7.2</b> One Predictor</a>
+<ul>
 <li class="chapter" data-level="7.2.1" data-path="linear-models.html"><a href="linear-models.html#a-continuous-predictor"><i class="fa fa-check"></i><b>7.2.1</b> A continuous predictor</a></li>
 <li class="chapter" data-level="7.2.2" data-path="linear-models.html"><a href="linear-models.html#centering"><i class="fa fa-check"></i><b>7.2.2</b> Centering</a></li>
 <li class="chapter" data-level="7.2.3" data-path="linear-models.html"><a href="linear-models.html#a-categorical-predictor"><i class="fa fa-check"></i><b>7.2.3</b> A categorical predictor</a></li>
 <li class="chapter" data-level="7.2.4" data-path="linear-models.html"><a href="linear-models.html#predictors-with-multiple-categories"><i class="fa fa-check"></i><b>7.2.4</b> Predictors with multiple categories</a></li>
 <li class="chapter" data-level="7.2.5" data-path="linear-models.html"><a href="linear-models.html#stan-4"><i class="fa fa-check"></i><b>7.2.5</b> STAN</a></li>
 </ul></li>
-<li class="chapter" data-level="7.3" data-path="linear-models.html"><a href="linear-models.html#multiple-regression"><i class="fa fa-check"></i><b>7.3</b> Multiple Regression</a><ul>
+<li class="chapter" data-level="7.3" data-path="linear-models.html"><a href="linear-models.html#multiple-regression"><i class="fa fa-check"></i><b>7.3</b> Multiple Regression</a>
+<ul>
 <li class="chapter" data-level="7.3.1" data-path="linear-models.html"><a href="linear-models.html#two-predictor-example"><i class="fa fa-check"></i><b>7.3.1</b> Two Predictor Example</a></li>
 <li class="chapter" data-level="7.3.2" data-path="linear-models.html"><a href="linear-models.html#interactions"><i class="fa fa-check"></i><b>7.3.2</b> Interactions</a></li>
 </ul></li>
 <li class="chapter" data-level="7.4" data-path="linear-models.html"><a href="linear-models.html#tabulating-the-models"><i class="fa fa-check"></i><b>7.4</b> Tabulating the Models</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="model-diagnostics.html"><a href="model-diagnostics.html"><i class="fa fa-check"></i><b>8</b> Model Diagnostics</a><ul>
+<li class="chapter" data-level="8" data-path="model-diagnostics.html"><a href="model-diagnostics.html"><i class="fa fa-check"></i><b>8</b> Model Diagnostics</a>
+<ul>
 <li class="chapter" data-level="8.1" data-path="model-diagnostics.html"><a href="model-diagnostics.html#assumptions-of-linear-models"><i class="fa fa-check"></i><b>8.1</b> Assumptions of Linear Models</a></li>
-<li class="chapter" data-level="8.2" data-path="model-diagnostics.html"><a href="model-diagnostics.html#diagnostic-tools"><i class="fa fa-check"></i><b>8.2</b> Diagnostic Tools</a><ul>
+<li class="chapter" data-level="8.2" data-path="model-diagnostics.html"><a href="model-diagnostics.html#diagnostic-tools"><i class="fa fa-check"></i><b>8.2</b> Diagnostic Tools</a>
+<ul>
 <li class="chapter" data-level="8.2.1" data-path="model-diagnostics.html"><a href="model-diagnostics.html#posterior-predictive-check-7"><i class="fa fa-check"></i><b>8.2.1</b> Posterior Predictive Check</a></li>
 <li class="chapter" data-level="8.2.2" data-path="model-diagnostics.html"><a href="model-diagnostics.html#marginal-model-plots"><i class="fa fa-check"></i><b>8.2.2</b> Marginal model plots</a></li>
 <li class="chapter" data-level="8.2.3" data-path="model-diagnostics.html"><a href="model-diagnostics.html#residual-plots"><i class="fa fa-check"></i><b>8.2.3</b> Residual plots</a></li>
@@ -285,54 +316,66 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="8.3" data-path="model-diagnostics.html"><a href="model-diagnostics.html#other-topics"><i class="fa fa-check"></i><b>8.3</b> Other Topics</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html"><i class="fa fa-check"></i><b>9</b> Model Comparison and Regularization</a><ul>
+<li class="chapter" data-level="9" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html"><i class="fa fa-check"></i><b>9</b> Model Comparison and Regularization</a>
+<ul>
 <li class="chapter" data-level="9.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#overfitting-and-underfitting"><i class="fa fa-check"></i><b>9.1</b> Overfitting and Underfitting</a></li>
 <li class="chapter" data-level="9.2" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#kullback-leibler-divergence"><i class="fa fa-check"></i><b>9.2</b> Kullback-Leibler Divergence</a></li>
-<li class="chapter" data-level="9.3" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#information-criteria"><i class="fa fa-check"></i><b>9.3</b> Information Criteria</a><ul>
+<li class="chapter" data-level="9.3" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#information-criteria"><i class="fa fa-check"></i><b>9.3</b> Information Criteria</a>
+<ul>
 <li class="chapter" data-level="9.3.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#experiment-on-deviance"><i class="fa fa-check"></i><b>9.3.1</b> Experiment on Deviance</a></li>
 </ul></li>
-<li class="chapter" data-level="9.4" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#information-criteria-1"><i class="fa fa-check"></i><b>9.4</b> Information Criteria</a><ul>
+<li class="chapter" data-level="9.4" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#information-criteria-1"><i class="fa fa-check"></i><b>9.4</b> Information Criteria</a>
+<ul>
 <li class="chapter" data-level="9.4.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#akaike-information-criteria-aic"><i class="fa fa-check"></i><b>9.4.1</b> Akaike Information Criteria (AIC)</a></li>
 <li class="chapter" data-level="9.4.2" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#deviance-information-criteria-dic"><i class="fa fa-check"></i><b>9.4.2</b> Deviance Information Criteria (DIC)</a></li>
 <li class="chapter" data-level="9.4.3" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#watanabe-akaike-information-criteria-waic"><i class="fa fa-check"></i><b>9.4.3</b> Watanabe-Akaike Information Criteria (WAIC)</a></li>
 <li class="chapter" data-level="9.4.4" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#leave-one-out-cross-validation"><i class="fa fa-check"></i><b>9.4.4</b> Leave-One-Out Cross Validation</a></li>
 <li class="chapter" data-level="9.4.5" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#example"><i class="fa fa-check"></i><b>9.4.5</b> Example</a></li>
 </ul></li>
-<li class="chapter" data-level="9.5" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#stackingmodel-averaging"><i class="fa fa-check"></i><b>9.5</b> Stacking/Model Averaging</a><ul>
+<li class="chapter" data-level="9.5" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#stackingmodel-averaging"><i class="fa fa-check"></i><b>9.5</b> Stacking/Model Averaging</a>
+<ul>
 <li class="chapter" data-level="9.5.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#model-weights"><i class="fa fa-check"></i><b>9.5.1</b> Model Weights</a></li>
 <li class="chapter" data-level="9.5.2" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#model-averaging"><i class="fa fa-check"></i><b>9.5.2</b> Model Averaging</a></li>
 <li class="chapter" data-level="9.5.3" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#stacking"><i class="fa fa-check"></i><b>9.5.3</b> Stacking</a></li>
 </ul></li>
-<li class="chapter" data-level="9.6" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#shrinkage-priors"><i class="fa fa-check"></i><b>9.6</b> Shrinkage Priors</a><ul>
+<li class="chapter" data-level="9.6" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#shrinkage-priors"><i class="fa fa-check"></i><b>9.6</b> Shrinkage Priors</a>
+<ul>
 <li class="chapter" data-level="9.6.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#number-of-parameters"><i class="fa fa-check"></i><b>9.6.1</b> Number of parameters</a></li>
 <li class="chapter" data-level="9.6.2" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#sparsity-inducing-priors"><i class="fa fa-check"></i><b>9.6.2</b> Sparsity-Inducing Priors</a></li>
 <li class="chapter" data-level="9.6.3" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#finnish-horseshoe"><i class="fa fa-check"></i><b>9.6.3</b> Finnish Horseshoe</a></li>
 </ul></li>
-<li class="chapter" data-level="9.7" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#variable-selection"><i class="fa fa-check"></i><b>9.7</b> Variable Selection</a><ul>
+<li class="chapter" data-level="9.7" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#variable-selection"><i class="fa fa-check"></i><b>9.7</b> Variable Selection</a>
+<ul>
 <li class="chapter" data-level="9.7.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#projection-based-method"><i class="fa fa-check"></i><b>9.7.1</b> Projection-Based Method</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html"><i class="fa fa-check"></i><b>10</b> Hierarchical &amp; Multilevel Models</a><ul>
-<li class="chapter" data-level="10.1" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#anova"><i class="fa fa-check"></i><b>10.1</b> ANOVA</a><ul>
+<li class="chapter" data-level="10" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html"><i class="fa fa-check"></i><b>10</b> Hierarchical &amp; Multilevel Models</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#anova"><i class="fa fa-check"></i><b>10.1</b> ANOVA</a>
+<ul>
 <li class="chapter" data-level="10.1.1" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#frequentist-anova"><i class="fa fa-check"></i><b>10.1.1</b> “Frequentist” ANOVA</a></li>
 <li class="chapter" data-level="10.1.2" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#bayesian-anova"><i class="fa fa-check"></i><b>10.1.2</b> Bayesian ANOVA</a></li>
 </ul></li>
-<li class="chapter" data-level="10.2" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#multilevel-modeling-mlm"><i class="fa fa-check"></i><b>10.2</b> Multilevel Modeling (MLM)</a><ul>
+<li class="chapter" data-level="10.2" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#multilevel-modeling-mlm"><i class="fa fa-check"></i><b>10.2</b> Multilevel Modeling (MLM)</a>
+<ul>
 <li class="chapter" data-level="10.2.1" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#examples-of-clustering"><i class="fa fa-check"></i><b>10.2.1</b> Examples of clustering</a></li>
 <li class="chapter" data-level="10.2.2" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#data-1"><i class="fa fa-check"></i><b>10.2.2</b> Data</a></li>
 <li class="chapter" data-level="10.2.3" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#intraclass-correlation"><i class="fa fa-check"></i><b>10.2.3</b> Intraclass correlation</a></li>
 <li class="chapter" data-level="10.2.4" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#is-mlm-needed"><i class="fa fa-check"></i><b>10.2.4</b> Is MLM needed?</a></li>
 </ul></li>
-<li class="chapter" data-level="10.3" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#varying-coefficients"><i class="fa fa-check"></i><b>10.3</b> Varying Coefficients</a><ul>
+<li class="chapter" data-level="10.3" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#varying-coefficients"><i class="fa fa-check"></i><b>10.3</b> Varying Coefficients</a>
+<ul>
 <li class="chapter" data-level="10.3.1" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#varying-intercepts"><i class="fa fa-check"></i><b>10.3.1</b> Varying Intercepts</a></li>
 <li class="chapter" data-level="10.3.2" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#varying-slopes"><i class="fa fa-check"></i><b>10.3.2</b> Varying Slopes</a></li>
 <li class="chapter" data-level="10.3.3" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#varying-sigma"><i class="fa fa-check"></i><b>10.3.3</b> Varying <span class="math inline">\(\sigma\)</span></a></li>
 </ul></li>
 <li class="chapter" data-level="10.4" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#model-comparisons"><i class="fa fa-check"></i><b>10.4</b> Model Comparisons</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>11</b> Generalized Linear Models</a><ul>
+<li class="chapter" data-level="11" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>11</b> Generalized Linear Models</a>
+<ul>
 <li class="chapter" data-level="11.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#basics-of-generalized-linear-models"><i class="fa fa-check"></i><b>11.1</b> Basics of Generalized Linear Models</a></li>
-<li class="chapter" data-level="11.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#binary-logistic-regression"><i class="fa fa-check"></i><b>11.2</b> Binary Logistic Regression</a><ul>
+<li class="chapter" data-level="11.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#binary-logistic-regression"><i class="fa fa-check"></i><b>11.2</b> Binary Logistic Regression</a>
+<ul>
 <li class="chapter" data-level="11.2.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#the-logit-link"><i class="fa fa-check"></i><b>11.2.1</b> The logit link</a></li>
 <li class="chapter" data-level="11.2.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#choice-of-priors"><i class="fa fa-check"></i><b>11.2.2</b> Choice of Priors</a></li>
 <li class="chapter" data-level="11.2.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#interpreting-the-coefficients"><i class="fa fa-check"></i><b>11.2.3</b> Interpreting the coefficients</a></li>
@@ -341,20 +384,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="11.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#binomial-logistic-regression"><i class="fa fa-check"></i><b>11.3</b> Binomial Logistic Regression</a></li>
 <li class="chapter" data-level="11.4" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#probit-regression"><i class="fa fa-check"></i><b>11.4</b> Probit Regression</a></li>
-<li class="chapter" data-level="11.5" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#poisson-regression"><i class="fa fa-check"></i><b>11.5</b> Poisson Regression</a><ul>
+<li class="chapter" data-level="11.5" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#poisson-regression"><i class="fa fa-check"></i><b>11.5</b> Poisson Regression</a>
+<ul>
 <li class="chapter" data-level="11.5.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#interpretations-2"><i class="fa fa-check"></i><b>11.5.1</b> Interpretations</a></li>
 <li class="chapter" data-level="11.5.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#model-checking-2"><i class="fa fa-check"></i><b>11.5.2</b> Model Checking</a></li>
 <li class="chapter" data-level="11.5.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#other-models-in-glm"><i class="fa fa-check"></i><b>11.5.3</b> Other models in GLM</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="missing-data.html"><a href="missing-data.html"><i class="fa fa-check"></i><b>12</b> Missing Data</a><ul>
-<li class="chapter" data-level="12.1" data-path="missing-data.html"><a href="missing-data.html#missing-data-mechanisms"><i class="fa fa-check"></i><b>12.1</b> Missing Data Mechanisms</a><ul>
+<li class="chapter" data-level="12" data-path="missing-data.html"><a href="missing-data.html"><i class="fa fa-check"></i><b>12</b> Missing Data</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="missing-data.html"><a href="missing-data.html#missing-data-mechanisms"><i class="fa fa-check"></i><b>12.1</b> Missing Data Mechanisms</a>
+<ul>
 <li class="chapter" data-level="12.1.1" data-path="missing-data.html"><a href="missing-data.html#mcar-missing-completely-at-random"><i class="fa fa-check"></i><b>12.1.1</b> MCAR (Missing Completely at Random)</a></li>
 <li class="chapter" data-level="12.1.2" data-path="missing-data.html"><a href="missing-data.html#mar-missing-at-random"><i class="fa fa-check"></i><b>12.1.2</b> MAR (Missing At Random)</a></li>
 <li class="chapter" data-level="12.1.3" data-path="missing-data.html"><a href="missing-data.html#nmar-not-missing-at-random"><i class="fa fa-check"></i><b>12.1.3</b> NMAR (Not Missing At Random)</a></li>
 <li class="chapter" data-level="12.1.4" data-path="missing-data.html"><a href="missing-data.html#ignorable-missingness"><i class="fa fa-check"></i><b>12.1.4</b> Ignorable Missingness*</a></li>
 </ul></li>
-<li class="chapter" data-level="12.2" data-path="missing-data.html"><a href="missing-data.html#bayesian-approaches-for-missing-data"><i class="fa fa-check"></i><b>12.2</b> Bayesian Approaches for Missing Data</a><ul>
+<li class="chapter" data-level="12.2" data-path="missing-data.html"><a href="missing-data.html#bayesian-approaches-for-missing-data"><i class="fa fa-check"></i><b>12.2</b> Bayesian Approaches for Missing Data</a>
+<ul>
 <li class="chapter" data-level="12.2.1" data-path="missing-data.html"><a href="missing-data.html#complete-case-analysislistwise-deletion"><i class="fa fa-check"></i><b>12.2.1</b> Complete Case Analysis/Listwise Deletion</a></li>
 <li class="chapter" data-level="12.2.2" data-path="missing-data.html"><a href="missing-data.html#treat-missing-data-as-parameters"><i class="fa fa-check"></i><b>12.2.2</b> Treat Missing Data as Parameters</a></li>
 <li class="chapter" data-level="12.2.3" data-path="missing-data.html"><a href="missing-data.html#multiple-imputation"><i class="fa fa-check"></i><b>12.2.3</b> Multiple Imputation</a></li>
@@ -381,7 +428,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="one-parameter-models" class="section level1">
+<div id="one-parameter-models" class="section level1" number="3">
 <h1><span class="header-section-number">Chapter 3</span> One-Parameter Models</h1>
 <p>This lecture surveys some very simple models with one parameter for some real
 research data. In your research it is rare to study only one variable with one
@@ -392,7 +439,7 @@ Specifically we will consider two models:</p>
 <li>Binomial/Bernoulli data</li>
 <li>Poisson data</li>
 </ul>
-<div id="binomialbernoulli-data" class="section level2">
+<div id="binomialbernoulli-data" class="section level2" number="3.1">
 <h2><span class="header-section-number">3.1</span> Binomial/Bernoulli data</h2>
 <p>You’ve already seen the binomial model in the AIDS example. When you have one
 event with two outcomes, like flipping a coin or sampling a respondent and
@@ -409,12 +456,12 @@ prior for a transformed parameter that has values between <span class="math inli
 <span class="math inline">\(\infty\)</span>, such as one on the <em>logit</em> scale (as related to logistic regression).</p>
 <p>Instead of the subsample, here we will use the full sample in the <code>Aids2</code> data
 set, with the same informative prior of Beta(46, 34). In the full data, we have</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="one-parameter-models.html#cb37-1"></a><span class="kw">data</span>(<span class="st">&quot;Aids2&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;MASS&quot;</span>)</span>
-<span id="cb37-2"><a href="one-parameter-models.html#cb37-2"></a><span class="kw">summary</span>(Aids2<span class="op">$</span>status)</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="one-parameter-models.html#cb39-1"></a><span class="kw">data</span>(<span class="st">&quot;Aids2&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;MASS&quot;</span>)</span>
+<span id="cb39-2"><a href="one-parameter-models.html#cb39-2"></a><span class="kw">summary</span>(Aids2<span class="op">$</span>status)</span></code></pre></div>
 <pre><code>&gt;#    A    D 
 &gt;# 1082 1761</code></pre>
 <p>So based on the conjugacy, the posterior of <span class="math inline">\(\theta\)</span> is Beta(1,807, 1,116).</p>
-<div id="reparameterization" class="section level3">
+<div id="reparameterization" class="section level3" number="3.1.1">
 <h3><span class="header-section-number">3.1.1</span> Reparameterization*</h3>
 <p>A problem in choosing an uninformative prior is that the prior is not invariant
 to <em>reparameterization</em>. Reparameterization means, instead of estimating the
@@ -432,13 +479,13 @@ for some theoretical reason. Instead of having a support of [0, 1], it has
 a support of (<span class="math inline">\(-\infty\)</span>, <span class="math inline">\(\infty\)</span>), or the whole real number line.</p>
 <p>However, a uniform prior on <span class="math inline">\(\theta\)</span> will not transform to a uniform prior
 on <span class="math inline">\(\varphi\)</span>. If we take a large sample of <span class="math inline">\(\theta\)</span> from a uniform distribution:</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="one-parameter-models.html#cb39-1"></a>th_samples &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="fl">1e5</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="one-parameter-models.html#cb41-1"></a>th_samples &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="fl">1e5</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span></code></pre></div>
 <p>and transform each value to <span class="math inline">\(\varphi\)</span>:</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="one-parameter-models.html#cb40-1"></a>phi_samples &lt;-<span class="st"> </span><span class="kw">log</span>(th_samples <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>th_samples))</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="one-parameter-models.html#cb42-1"></a>phi_samples &lt;-<span class="st"> </span><span class="kw">log</span>(th_samples <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>th_samples))</span></code></pre></div>
 <p>The resulting prior on <span class="math inline">\(\varphi\)</span> will be</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="one-parameter-models.html#cb41-1"></a><span class="kw">ggplot</span>(<span class="kw">tibble</span>(<span class="dt">phi =</span> phi_samples), <span class="kw">aes</span>(<span class="dt">x =</span> phi)) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb41-2"><a href="one-parameter-models.html#cb41-2"></a><span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">bw =</span> <span class="st">&quot;SJ&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb41-3"><a href="one-parameter-models.html#cb41-3"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="kw">expression</span>(varphi))</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="one-parameter-models.html#cb43-1"></a><span class="kw">ggplot</span>(<span class="kw">tibble</span>(<span class="dt">phi =</span> phi_samples), <span class="kw">aes</span>(<span class="dt">x =</span> phi)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb43-2"><a href="one-parameter-models.html#cb43-2"></a><span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">bw =</span> <span class="st">&quot;SJ&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb43-3"><a href="one-parameter-models.html#cb43-3"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="kw">expression</span>(varphi))</span></code></pre></div>
 <p><img src="03_one_parameter_models_files/figure-html/prior-phi-1.png" width="288" /></p>
 <p>which assigns more density to <span class="math inline">\(\varphi = 0\)</span>. Although generally you will get
 very similar results using either a non-informative prior on <span class="math inline">\(\theta\)</span> or
@@ -450,7 +497,7 @@ on <span class="math inline">\(\theta\)</span> for the subsample of size 10, and
 <p><img src="03_one_parameter_models_files/figure-html/m1-density-1.png" width="480" /></p>
 <hr />
 </div>
-<div id="posterior-predictive-check-1" class="section level3">
+<div id="posterior-predictive-check-1" class="section level3" number="3.1.2">
 <h3><span class="header-section-number">3.1.2</span> Posterior Predictive Check</h3>
 <p>Now, we need to know whether the model fit the data well. If we only have the
 <code>status</code> variable we don’t have much to check for a binomial model. However, as
@@ -494,13 +541,13 @@ Bayesian strives for would be to get a posterior predictive <span class="math in
 modeling the data as four different states, or better by using a hierarchical
 model.</p>
 </div>
-<div id="comparison-to-frequentist-results" class="section level3">
+<div id="comparison-to-frequentist-results" class="section level3" number="3.1.3">
 <h3><span class="header-section-number">3.1.3</span> Comparison to frequentist results</h3>
 <p>Using maximum likelihood, the estimated death rate would be <span class="math inline">\(\hat \theta = 1761 / 2843 = 0.619\)</span>, with a standard error (<em>SE</em>) of
 <span class="math inline">\(\sqrt{0.619 (1 - 0.619) / n} = 0.009\)</span>, with a 90% confidence interval of <span class="math inline">\([0.604, 0.634]\)</span>, which is similar to the interval with
 Bayesian inference.</p>
 </div>
-<div id="sensitivity-to-different-priors" class="section level3">
+<div id="sensitivity-to-different-priors" class="section level3" number="3.1.4">
 <h3><span class="header-section-number">3.1.4</span> Sensitivity to different priors</h3>
 <p><img src="03_one_parameter_models_files/figure-html/sensitivity-1.png" width="672" /></p>
 <p>You can see one needs a very strong prior (equivalent to 600 data points)
@@ -519,7 +566,7 @@ when there are true prior information available.</p>
 <hr />
 </div>
 </div>
-<div id="poisson-data" class="section level2">
+<div id="poisson-data" class="section level2" number="3.2">
 <h2><span class="header-section-number">3.2</span> Poisson Data</h2>
 <p>A Poisson distribution is suitable for count data in a fixed interval, when
 the average rate of the event happening is constant, and when the time from
@@ -538,16 +585,16 @@ a normal distribution.</p>
 variance is always the same. Therefore, if you have a Poisson distribution
 with <span class="math inline">\(\lambda = 3\)</span>, its variance must be <span class="math inline">\(3\)</span>, and so its <em>SD</em> is <span class="math inline">\(\sqrt{3} = 1.732\)</span>. This will be an important property to check the fit of a
 Poisson model.</p>
-<div id="example-2" class="section level3">
+<div id="example-2" class="section level3" number="3.2.1">
 <h3><span class="header-section-number">3.2.1</span> Example 2</h3>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="one-parameter-models.html#cb45-1"></a><span class="co"># Download data file</span></span>
-<span id="cb45-2"><a href="one-parameter-models.html#cb45-2"></a><span class="kw">download.file</span>(<span class="st">&quot;https://files.osf.io/v1/resources/47tnc/providers/osfstorage/553e51f98c5e4a21991987e7?action=download&amp;version=1&amp;direct&quot;</span>, <span class="st">&quot;../data/redcard_data.zip&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="one-parameter-models.html#cb46-1"></a>redcard_dat &lt;-<span class="st"> </span>readr<span class="op">::</span><span class="kw">read_csv</span>(<span class="st">&quot;../data/redcard_data.zip&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb46-2"><a href="one-parameter-models.html#cb46-2"></a><span class="st">  </span><span class="kw">filter</span>(leagueCountry <span class="op">==</span><span class="st"> &quot;England&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb46-3"><a href="one-parameter-models.html#cb46-3"></a><span class="st">  </span><span class="kw">group_by</span>(player) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb46-4"><a href="one-parameter-models.html#cb46-4"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">rater_dark =</span> (<span class="kw">mean</span>(rater1) <span class="op">+</span><span class="st"> </span><span class="kw">mean</span>(rater2)) <span class="op">/</span><span class="st"> </span><span class="dv">2</span>, </span>
-<span id="cb46-5"><a href="one-parameter-models.html#cb46-5"></a>            <span class="dt">yellowCards =</span> <span class="kw">sum</span>(yellowCards), </span>
-<span id="cb46-6"><a href="one-parameter-models.html#cb46-6"></a>            <span class="dt">redCards =</span> <span class="kw">sum</span>(redCards))</span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="one-parameter-models.html#cb47-1"></a><span class="co"># Download data file</span></span>
+<span id="cb47-2"><a href="one-parameter-models.html#cb47-2"></a><span class="kw">download.file</span>(<span class="st">&quot;https://files.osf.io/v1/resources/47tnc/providers/osfstorage/553e51f98c5e4a21991987e7?action=download&amp;version=1&amp;direct&quot;</span>, <span class="st">&quot;../data/redcard_data.zip&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="one-parameter-models.html#cb48-1"></a>redcard_dat &lt;-<span class="st"> </span>readr<span class="op">::</span><span class="kw">read_csv</span>(<span class="st">&quot;../data/redcard_data.zip&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb48-2"><a href="one-parameter-models.html#cb48-2"></a><span class="st">  </span><span class="kw">filter</span>(leagueCountry <span class="op">==</span><span class="st"> &quot;England&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb48-3"><a href="one-parameter-models.html#cb48-3"></a><span class="st">  </span><span class="kw">group_by</span>(player) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb48-4"><a href="one-parameter-models.html#cb48-4"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">rater_dark =</span> (<span class="kw">mean</span>(rater1) <span class="op">+</span><span class="st"> </span><span class="kw">mean</span>(rater2)) <span class="op">/</span><span class="st"> </span><span class="dv">2</span>, </span>
+<span id="cb48-5"><a href="one-parameter-models.html#cb48-5"></a>            <span class="dt">yellowCards =</span> <span class="kw">sum</span>(yellowCards), </span>
+<span id="cb48-6"><a href="one-parameter-models.html#cb48-6"></a>            <span class="dt">redCards =</span> <span class="kw">sum</span>(redCards))</span></code></pre></div>
 <p>We will use a data set by <span class="citation">(Silberzahn et al. <a href="#ref-silberzahn2018many" role="doc-biblioref">2018</a>)</span>, which the authors sent out to
 29 research teams for analyses (read the paper for more information on the
 context). We will use a subset of the data, which contains information of
@@ -570,12 +617,12 @@ reasonably well, but there are more zeros in the data than what the Poisson
 would expect. However, we will proceed with the Poisson model first in this
 lecture, and we may deal with the extra zeros later in the cocurse.</p>
 </div>
-<div id="choosing-a-model-1" class="section level3">
+<div id="choosing-a-model-1" class="section level3" number="3.2.2">
 <h3><span class="header-section-number">3.2.2</span> Choosing a model</h3>
 <p>With exchangeability, the model will be</p>
 <p><span class="math display">\[\mathtt{redCards}_i \sim \mathrm{Pois}(\lambda)\]</span></p>
 </div>
-<div id="choosing-a-prior" class="section level3">
+<div id="choosing-a-prior" class="section level3" number="3.2.3">
 <h3><span class="header-section-number">3.2.3</span> Choosing a prior</h3>
 <p>A conjugate prior for the Poisson model is the Gamma distribution family, which
 has two parameters: <span class="math inline">\(a\)</span> is the “shape” parameter, and <span class="math inline">\(b\)</span> is the “scale”
@@ -591,7 +638,7 @@ informative prior is to first transform the parameter into one with a support
 of <span class="math inline">\([-\infty, \infty]\)</span>, and the natural log transformation is common for the
 Poisson rate parameter.</p>
 </div>
-<div id="model-equations-and-diagram" class="section level3">
+<div id="model-equations-and-diagram" class="section level3" number="3.2.4">
 <h3><span class="header-section-number">3.2.4</span> Model Equations and Diagram</h3>
 <p>Our Poisson model and prior are thus</p>
 <p><span class="math display">\[\begin{align}
@@ -605,47 +652,47 @@ normal prior, which controls the informativeness of our prior. In this case,
 seems unlikely for <span class="math inline">\(\lambda\)</span> to be outside of this range. Therefore, I will
 choose <span class="math inline">\(\sigma_{\log(\lambda)}\)</span> = 2.5.</p>
 <p><font color="red">The priors are plotted below:</font></p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="one-parameter-models.html#cb48-1"></a>p1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">tibble</span>(<span class="dt">log_lambda =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">10</span>, <span class="dv">10</span>)), <span class="kw">aes</span>(<span class="dt">x =</span> log_lambda)) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb48-2"><a href="one-parameter-models.html#cb48-2"></a><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> dnorm, <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="fl">2.5</span>)) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb48-3"><a href="one-parameter-models.html#cb48-3"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="kw">expression</span>(<span class="kw">log</span>(lambda)), <span class="dt">y =</span> <span class="st">&quot;Density&quot;</span>)</span>
-<span id="cb48-4"><a href="one-parameter-models.html#cb48-4"></a>p2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">tibble</span>(<span class="dt">lambda =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">20</span>)), <span class="kw">aes</span>(<span class="dt">x =</span> lambda)) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb48-5"><a href="one-parameter-models.html#cb48-5"></a><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> <span class="cf">function</span>(x) <span class="kw">dnorm</span>(<span class="kw">log</span>(x), <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="fl">2.5</span>), </span>
-<span id="cb48-6"><a href="one-parameter-models.html#cb48-6"></a>                <span class="dt">n =</span> <span class="dv">501</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb48-7"><a href="one-parameter-models.html#cb48-7"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="kw">expression</span>(lambda), <span class="dt">y =</span> <span class="st">&quot;Density&quot;</span>)</span>
-<span id="cb48-8"><a href="one-parameter-models.html#cb48-8"></a>gridExtra<span class="op">::</span><span class="kw">grid.arrange</span>(p1, p2, <span class="dt">nrow =</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="one-parameter-models.html#cb50-1"></a>p1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">tibble</span>(<span class="dt">log_lambda =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">10</span>, <span class="dv">10</span>)), <span class="kw">aes</span>(<span class="dt">x =</span> log_lambda)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb50-2"><a href="one-parameter-models.html#cb50-2"></a><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> dnorm, <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="fl">2.5</span>)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb50-3"><a href="one-parameter-models.html#cb50-3"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="kw">expression</span>(<span class="kw">log</span>(lambda)), <span class="dt">y =</span> <span class="st">&quot;Density&quot;</span>)</span>
+<span id="cb50-4"><a href="one-parameter-models.html#cb50-4"></a>p2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">tibble</span>(<span class="dt">lambda =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">20</span>)), <span class="kw">aes</span>(<span class="dt">x =</span> lambda)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb50-5"><a href="one-parameter-models.html#cb50-5"></a><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> <span class="cf">function</span>(x) <span class="kw">dnorm</span>(<span class="kw">log</span>(x), <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="fl">2.5</span>), </span>
+<span id="cb50-6"><a href="one-parameter-models.html#cb50-6"></a>                <span class="dt">n =</span> <span class="dv">501</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb50-7"><a href="one-parameter-models.html#cb50-7"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="kw">expression</span>(lambda), <span class="dt">y =</span> <span class="st">&quot;Density&quot;</span>)</span>
+<span id="cb50-8"><a href="one-parameter-models.html#cb50-8"></a>gridExtra<span class="op">::</span><span class="kw">grid.arrange</span>(p1, p2, <span class="dt">nrow =</span> <span class="dv">1</span>)</span></code></pre></div>
 <p><img src="03_one_parameter_models_files/figure-html/gamma-dist-1.png" width="75%" /></p>
 <p>Here is a graphical sketch of the model and the prior using the R package
 <code>DiagrammeR</code>:</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="one-parameter-models.html#cb49-1"></a>DiagrammeR<span class="op">::</span><span class="kw">grViz</span>(<span class="st">&quot;</span></span>
-<span id="cb49-2"><a href="one-parameter-models.html#cb49-2"></a><span class="st">digraph boxes_and_circles {</span></span>
-<span id="cb49-3"><a href="one-parameter-models.html#cb49-3"></a></span>
-<span id="cb49-4"><a href="one-parameter-models.html#cb49-4"></a><span class="st">  # a &#39;graph&#39; statement</span></span>
-<span id="cb49-5"><a href="one-parameter-models.html#cb49-5"></a><span class="st">  graph [overlap = true, fontsize = 10]</span></span>
-<span id="cb49-6"><a href="one-parameter-models.html#cb49-6"></a></span>
-<span id="cb49-7"><a href="one-parameter-models.html#cb49-7"></a><span class="st">  # data</span></span>
-<span id="cb49-8"><a href="one-parameter-models.html#cb49-8"></a><span class="st">  node [shape = box, fixedsize = true]</span></span>
-<span id="cb49-9"><a href="one-parameter-models.html#cb49-9"></a><span class="st">  Y [label = &#39;y@_{i}&#39;]</span></span>
-<span id="cb49-10"><a href="one-parameter-models.html#cb49-10"></a><span class="st">  </span></span>
-<span id="cb49-11"><a href="one-parameter-models.html#cb49-11"></a><span class="st">  # parameters</span></span>
-<span id="cb49-12"><a href="one-parameter-models.html#cb49-12"></a><span class="st">  node [shape = circle]</span></span>
-<span id="cb49-13"><a href="one-parameter-models.html#cb49-13"></a><span class="st">  loglambda [label = &#39;log(&amp;lambda;)&#39;]</span></span>
-<span id="cb49-14"><a href="one-parameter-models.html#cb49-14"></a><span class="st">  </span></span>
-<span id="cb49-15"><a href="one-parameter-models.html#cb49-15"></a><span class="st">  # transformed parameters</span></span>
-<span id="cb49-16"><a href="one-parameter-models.html#cb49-16"></a><span class="st">  node [shape = circle, peripheries = 2]</span></span>
-<span id="cb49-17"><a href="one-parameter-models.html#cb49-17"></a><span class="st">  lambda [label = &#39;&amp;lambda;&#39;]</span></span>
-<span id="cb49-18"><a href="one-parameter-models.html#cb49-18"></a><span class="st">  </span></span>
-<span id="cb49-19"><a href="one-parameter-models.html#cb49-19"></a><span class="st">  # fixed values in prior</span></span>
-<span id="cb49-20"><a href="one-parameter-models.html#cb49-20"></a><span class="st">  node [shape = circle, peripheries = 1]</span></span>
-<span id="cb49-21"><a href="one-parameter-models.html#cb49-21"></a><span class="st">  mu_loglambda [label = &#39;&amp;mu;@_{log(&amp;lambda;)}&#39;];</span></span>
-<span id="cb49-22"><a href="one-parameter-models.html#cb49-22"></a><span class="st">  sigma_loglambda [label = &#39;&amp;sigma;@_{log(&amp;lambda;)}&#39;]</span></span>
-<span id="cb49-23"><a href="one-parameter-models.html#cb49-23"></a></span>
-<span id="cb49-24"><a href="one-parameter-models.html#cb49-24"></a><span class="st">  # paths</span></span>
-<span id="cb49-25"><a href="one-parameter-models.html#cb49-25"></a><span class="st">  mu_loglambda -&gt; loglambda;</span></span>
-<span id="cb49-26"><a href="one-parameter-models.html#cb49-26"></a><span class="st">  sigma_loglambda -&gt; loglambda;</span></span>
-<span id="cb49-27"><a href="one-parameter-models.html#cb49-27"></a><span class="st">  loglambda -&gt; lambda;</span></span>
-<span id="cb49-28"><a href="one-parameter-models.html#cb49-28"></a><span class="st">  lambda -&gt; Y;</span></span>
-<span id="cb49-29"><a href="one-parameter-models.html#cb49-29"></a><span class="st">}</span></span>
-<span id="cb49-30"><a href="one-parameter-models.html#cb49-30"></a><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="one-parameter-models.html#cb51-1"></a>DiagrammeR<span class="op">::</span><span class="kw">grViz</span>(<span class="st">&quot;</span></span>
+<span id="cb51-2"><a href="one-parameter-models.html#cb51-2"></a><span class="st">digraph boxes_and_circles {</span></span>
+<span id="cb51-3"><a href="one-parameter-models.html#cb51-3"></a></span>
+<span id="cb51-4"><a href="one-parameter-models.html#cb51-4"></a><span class="st">  # a &#39;graph&#39; statement</span></span>
+<span id="cb51-5"><a href="one-parameter-models.html#cb51-5"></a><span class="st">  graph [overlap = true, fontsize = 10]</span></span>
+<span id="cb51-6"><a href="one-parameter-models.html#cb51-6"></a></span>
+<span id="cb51-7"><a href="one-parameter-models.html#cb51-7"></a><span class="st">  # data</span></span>
+<span id="cb51-8"><a href="one-parameter-models.html#cb51-8"></a><span class="st">  node [shape = box, fixedsize = true]</span></span>
+<span id="cb51-9"><a href="one-parameter-models.html#cb51-9"></a><span class="st">  Y [label = &#39;y@_{i}&#39;]</span></span>
+<span id="cb51-10"><a href="one-parameter-models.html#cb51-10"></a><span class="st">  </span></span>
+<span id="cb51-11"><a href="one-parameter-models.html#cb51-11"></a><span class="st">  # parameters</span></span>
+<span id="cb51-12"><a href="one-parameter-models.html#cb51-12"></a><span class="st">  node [shape = circle]</span></span>
+<span id="cb51-13"><a href="one-parameter-models.html#cb51-13"></a><span class="st">  loglambda [label = &#39;log(&amp;lambda;)&#39;]</span></span>
+<span id="cb51-14"><a href="one-parameter-models.html#cb51-14"></a><span class="st">  </span></span>
+<span id="cb51-15"><a href="one-parameter-models.html#cb51-15"></a><span class="st">  # transformed parameters</span></span>
+<span id="cb51-16"><a href="one-parameter-models.html#cb51-16"></a><span class="st">  node [shape = circle, peripheries = 2]</span></span>
+<span id="cb51-17"><a href="one-parameter-models.html#cb51-17"></a><span class="st">  lambda [label = &#39;&amp;lambda;&#39;]</span></span>
+<span id="cb51-18"><a href="one-parameter-models.html#cb51-18"></a><span class="st">  </span></span>
+<span id="cb51-19"><a href="one-parameter-models.html#cb51-19"></a><span class="st">  # fixed values in prior</span></span>
+<span id="cb51-20"><a href="one-parameter-models.html#cb51-20"></a><span class="st">  node [shape = circle, peripheries = 1]</span></span>
+<span id="cb51-21"><a href="one-parameter-models.html#cb51-21"></a><span class="st">  mu_loglambda [label = &#39;&amp;mu;@_{log(&amp;lambda;)}&#39;];</span></span>
+<span id="cb51-22"><a href="one-parameter-models.html#cb51-22"></a><span class="st">  sigma_loglambda [label = &#39;&amp;sigma;@_{log(&amp;lambda;)}&#39;]</span></span>
+<span id="cb51-23"><a href="one-parameter-models.html#cb51-23"></a></span>
+<span id="cb51-24"><a href="one-parameter-models.html#cb51-24"></a><span class="st">  # paths</span></span>
+<span id="cb51-25"><a href="one-parameter-models.html#cb51-25"></a><span class="st">  mu_loglambda -&gt; loglambda;</span></span>
+<span id="cb51-26"><a href="one-parameter-models.html#cb51-26"></a><span class="st">  sigma_loglambda -&gt; loglambda;</span></span>
+<span id="cb51-27"><a href="one-parameter-models.html#cb51-27"></a><span class="st">  loglambda -&gt; lambda;</span></span>
+<span id="cb51-28"><a href="one-parameter-models.html#cb51-28"></a><span class="st">  lambda -&gt; Y;</span></span>
+<span id="cb51-29"><a href="one-parameter-models.html#cb51-29"></a><span class="st">}</span></span>
+<span id="cb51-30"><a href="one-parameter-models.html#cb51-30"></a><span class="st">&quot;</span>)</span></code></pre></div>
 <div id="htmlwidget-a4f1c79fa0875741aeb2" style="width:672px;height:480px;" class="grViz html-widget"></div>
 <script type="application/json" data-for="htmlwidget-a4f1c79fa0875741aeb2">{"x":{"diagram":"\ndigraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # data\n  node [shape = box, fixedsize = true]\n  Y [label = <y<FONT POINT-SIZE=\"8\"><SUB>i<\/SUB><\/FONT>>]\n  \n  # parameters\n  node [shape = circle]\n  loglambda [label = \"log(&lambda;)\"]\n  \n  # transformed parameters\n  node [shape = circle, peripheries = 2]\n  lambda [label = \"&lambda;\"]\n  \n  # fixed values in prior\n  node [shape = circle, peripheries = 1]\n  mu_loglambda [label = <&mu;<FONT POINT-SIZE=\"8\"><SUB>log(&lambda;)<\/SUB><\/FONT>>];\n  sigma_loglambda [label = <&sigma;<FONT POINT-SIZE=\"8\"><SUB>log(&lambda;)<\/SUB><\/FONT>>]\n\n  # paths\n  mu_loglambda -> loglambda;\n  sigma_loglambda -> loglambda;\n  loglambda -> lambda;\n  lambda -> Y;\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p>Note that there currently is not a widely accepted standard for drawing these
@@ -653,7 +700,7 @@ kinds of graphs, but as long as you have a reasonable and consistent way to
 represent them it should be fine. The double bordered node is used to show a
 deterministic node (i.e., a transformation of some variables).</p>
 </div>
-<div id="getting-the-posterior" class="section level3">
+<div id="getting-the-posterior" class="section level3" number="3.2.5">
 <h3><span class="header-section-number">3.2.5</span> Getting the posterior</h3>
 <p>With a non-conjugate prior for a Poisson model, we will need to use MCMC. Below
 is the STAN code and the R code for running the model with our prior. We’ll talk
@@ -677,13 +724,13 @@ generated quantities {
     yrep[i] = poisson_log_rng(log_lambda);
   }
 }</code></pre>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="one-parameter-models.html#cb51-1"></a><span class="kw">library</span>(rstan)</span>
-<span id="cb51-2"><a href="one-parameter-models.html#cb51-2"></a><span class="kw">rstan_options</span>(<span class="dt">auto_write =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb51-3"><a href="one-parameter-models.html#cb51-3"></a>m2 &lt;-<span class="st"> </span><span class="kw">stan</span>(<span class="dt">file =</span> <span class="st">&quot;../codes/poisson_model.stan&quot;</span>, </span>
-<span id="cb51-4"><a href="one-parameter-models.html#cb51-4"></a>           <span class="dt">data =</span> <span class="kw">list</span>(<span class="dt">N =</span> <span class="dv">564</span>, <span class="dt">y =</span> redcard_dat<span class="op">$</span>redCards), </span>
-<span id="cb51-5"><a href="one-parameter-models.html#cb51-5"></a>           <span class="dt">iter =</span> <span class="dv">800</span>, <span class="dt">chains =</span> <span class="dv">2</span>, <span class="dt">cores =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="one-parameter-models.html#cb53-1"></a><span class="kw">library</span>(rstan)</span>
+<span id="cb53-2"><a href="one-parameter-models.html#cb53-2"></a><span class="kw">rstan_options</span>(<span class="dt">auto_write =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb53-3"><a href="one-parameter-models.html#cb53-3"></a>m2 &lt;-<span class="st"> </span><span class="kw">stan</span>(<span class="dt">file =</span> <span class="st">&quot;../codes/poisson_model.stan&quot;</span>, </span>
+<span id="cb53-4"><a href="one-parameter-models.html#cb53-4"></a>           <span class="dt">data =</span> <span class="kw">list</span>(<span class="dt">N =</span> <span class="dv">564</span>, <span class="dt">y =</span> redcard_dat<span class="op">$</span>redCards), </span>
+<span id="cb53-5"><a href="one-parameter-models.html#cb53-5"></a>           <span class="dt">iter =</span> <span class="dv">800</span>, <span class="dt">chains =</span> <span class="dv">2</span>, <span class="dt">cores =</span> <span class="dv">2</span>)</span></code></pre></div>
 <p>Below is a summary of the posterior distributions</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="one-parameter-models.html#cb52-1"></a><span class="kw">print</span>(m2, <span class="dt">pars =</span> <span class="kw">c</span>(<span class="st">&quot;log_lambda&quot;</span>, <span class="st">&quot;lambda&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="one-parameter-models.html#cb54-1"></a><span class="kw">print</span>(m2, <span class="dt">pars =</span> <span class="kw">c</span>(<span class="st">&quot;log_lambda&quot;</span>, <span class="st">&quot;lambda&quot;</span>))</span></code></pre></div>
 <pre><code>&gt;# Inference for Stan model: poisson_model.
 &gt;# 2 chains, each with iter=800; warmup=400; thin=1; 
 &gt;# post-warmup draws per chain=400, total post-warmup draws=800.
@@ -697,25 +744,24 @@ generated quantities {
 &gt;# and Rhat is the potential scale reduction factor on split chains (at 
 &gt;# convergence, Rhat=1).</code></pre>
 <p>The posterior density and the 95% CI (credible interval) for <span class="math inline">\(\lambda\)</span> is</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="one-parameter-models.html#cb54-1"></a>bayesplot<span class="op">::</span><span class="kw">mcmc_areas</span>(m2, <span class="dt">pars =</span> <span class="kw">c</span>(<span class="st">&quot;log_lambda&quot;</span>, <span class="st">&quot;lambda&quot;</span>), <span class="dt">prob =</span> <span class="fl">0.95</span>)</span></code></pre></div>
-<pre><code>&gt;# Warning: `expand_scale()` is deprecated; use `expansion()` instead.</code></pre>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="one-parameter-models.html#cb56-1"></a>bayesplot<span class="op">::</span><span class="kw">mcmc_areas</span>(m2, <span class="dt">pars =</span> <span class="kw">c</span>(<span class="st">&quot;log_lambda&quot;</span>, <span class="st">&quot;lambda&quot;</span>), <span class="dt">prob =</span> <span class="fl">0.95</span>)</span></code></pre></div>
 <p><img src="03_one_parameter_models_files/figure-html/m2_plot_areas-1.png" width="672" /></p>
 <p>The frequentist maximum likelihood estimate for <span class="math inline">\(\lambda\)</span> is the mean of the
 data, which is <span class="math inline">\(\hat \lambda = 0.897\)</span>, and
 the <em>SE</em> is the square root of the sample mean, 0.04, with a 90% confidence interval [0.819, 0.975]. So the Bayesian results are
 similar, with a slightly more precise inference (slightly smaller <em>SE</em>).</p>
 </div>
-<div id="posterior-predictive-check-2" class="section level3">
+<div id="posterior-predictive-check-2" class="section level3" number="3.2.6">
 <h3><span class="header-section-number">3.2.6</span> Posterior Predictive Check</h3>
 <p>As now you should know, always generate some simulated predictions from the
 model to check your results.</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="one-parameter-models.html#cb56-1"></a>bayesplot<span class="op">::</span><span class="kw">ppc_bars</span>(redcard_dat<span class="op">$</span>redCards, </span>
-<span id="cb56-2"><a href="one-parameter-models.html#cb56-2"></a>                    <span class="dt">yrep =</span> <span class="kw">as.matrix</span>(m2, <span class="dt">pars =</span> <span class="st">&quot;yrep&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="one-parameter-models.html#cb57-1"></a>bayesplot<span class="op">::</span><span class="kw">ppc_bars</span>(redcard_dat<span class="op">$</span>redCards, </span>
+<span id="cb57-2"><a href="one-parameter-models.html#cb57-2"></a>                    <span class="dt">yrep =</span> <span class="kw">as.matrix</span>(m2, <span class="dt">pars =</span> <span class="st">&quot;yrep&quot;</span>))</span></code></pre></div>
 <p><img src="03_one_parameter_models_files/figure-html/ppc-redcard-1-1.png" width="432" /></p>
 <p>There’s also a useful graphical tool, rootogram, for diagnosing count models</p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="one-parameter-models.html#cb57-1"></a>bayesplot<span class="op">::</span><span class="kw">ppc_rootogram</span>(redcard_dat<span class="op">$</span>redCards, </span>
-<span id="cb57-2"><a href="one-parameter-models.html#cb57-2"></a>                         <span class="dt">yrep =</span> <span class="kw">as.matrix</span>(m2, <span class="dt">pars =</span> <span class="st">&quot;yrep&quot;</span>), </span>
-<span id="cb57-3"><a href="one-parameter-models.html#cb57-3"></a>                         <span class="dt">style =</span> <span class="st">&quot;hanging&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="one-parameter-models.html#cb58-1"></a>bayesplot<span class="op">::</span><span class="kw">ppc_rootogram</span>(redcard_dat<span class="op">$</span>redCards, </span>
+<span id="cb58-2"><a href="one-parameter-models.html#cb58-2"></a>                         <span class="dt">yrep =</span> <span class="kw">as.matrix</span>(m2, <span class="dt">pars =</span> <span class="st">&quot;yrep&quot;</span>), </span>
+<span id="cb58-3"><a href="one-parameter-models.html#cb58-3"></a>                         <span class="dt">style =</span> <span class="st">&quot;hanging&quot;</span>)</span></code></pre></div>
 <p><img src="03_one_parameter_models_files/figure-html/rootogram-redcard-1.png" width="432" /></p>
 <p>As can be seen, the predicted counts were off a little bit. Things that can
 improve the model includes:</p>

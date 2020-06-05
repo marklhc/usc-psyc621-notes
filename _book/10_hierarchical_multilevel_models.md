@@ -32,7 +32,7 @@ ggplot(alert, aes(x = Dosage, y = Alertness)) +
 ># No summary function supplied, defaulting to `mean_se()`
 ```
 
-<img src="10_hierarchical_multilevel_models_files/figure-html/alert-1.png" width="672" />
+![](10_hierarchical_multilevel_models_files/figure-epub3/alert-1.png)<!-- -->
 
 As can be seen, Dosage `c` has lower mean than others. 
 
@@ -48,7 +48,7 @@ summary(aov(Alertness ~ Dosage, data = alert))
 ```
 >#             Df Sum Sq Mean Sq F value  Pr(>F)    
 ># Dosage       2    619   309.5    11.5 0.00094 ***
-># Residuals   15    403    26.9                    
+># Residuals   15    404    26.9                    
 ># ---
 ># Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
@@ -125,21 +125,21 @@ broom::tidy(m1) %>%
 
 term                     estimate   std.error    lower    upper
 ----------------------  ---------  ----------  -------  -------
-b_Intercept                 26.37        8.20    13.22    37.49
-sd_Dosage__Intercept        11.42        6.79     4.10    24.62
-sigma                        5.65        1.17     4.11     7.87
-r_Dosage[a,Intercept]        5.63        8.32    -5.47    19.22
-r_Dosage[b,Intercept]        3.38        8.37    -8.07    17.18
-r_Dosage[c,Intercept]       -6.71        8.31   -18.71     6.29
-lp__                       -67.08        2.13   -71.13   -64.33
+b_Intercept                 26.74        7.49    14.57    37.82
+sd_Dosage__Intercept        11.42        6.59     4.29    24.80
+sigma                        5.58        1.09     4.09     7.63
+r_Dosage[a,Intercept]        5.34        7.64    -5.86    18.11
+r_Dosage[b,Intercept]        3.03        7.64    -8.16    15.47
+r_Dosage[c,Intercept]       -7.13        7.58   -19.02     4.94
+lp__                       -66.90        1.97   -70.67   -64.31
 
 From the results, the posterior mean for $\gamma$ is 
-26.37 (*SD* = 
-8.198), which was the grand mean `Alertness`
+26.74 (*SD* = 
+7.489), which was the grand mean `Alertness`
 level. The between-group *SD* was estimated to be $\tau$ = 
-11.416, whereas the within-group
+11.419, whereas the within-group
 *SD* was estimated to be $\sigma$ = 
-5.654. 
+5.577. 
 
 You can get the posterior mean for the mean of each group (i.e., $\mu_j$) using
 
@@ -150,9 +150,9 @@ coef(m1)$Dosage[ , , "Intercept"]
 
 ```
 >#   Estimate Est.Error Q2.5 Q97.5
-># a     32.0      2.36 27.2  36.6
-># b     29.7      2.29 25.2  34.2
-># c     19.7      2.42 15.0  24.6
+># a     32.1      2.24 27.6  36.4
+># b     29.8      2.26 25.3  34.2
+># c     19.6      2.37 14.9  24.3
 ```
 
 #### Shrinkage
@@ -178,7 +178,7 @@ ggplot(alert, aes(x = Dosage, y = Alertness)) +
 ># No summary function supplied, defaulting to `mean_se()`
 ```
 
-<img src="10_hierarchical_multilevel_models_files/figure-html/plot-blup-1.png" width="480" />
+![](10_hierarchical_multilevel_models_files/figure-epub3/plot-blup-1.png)<!-- -->
 
 If you look more carefully, you can see that the Bayes estimates are closer to
 the middle. This *shrinkage* effect may seem odd at first, but it has a good 
@@ -211,7 +211,7 @@ been adjusted. You can plot the estimated group means by:
 mcmc_intervals(coef(m1, summary = FALSE)$Dosage[ , , "Intercept"])
 ```
 
-<img src="10_hierarchical_multilevel_models_files/figure-html/intervals-m1-1.png" width="672" />
+![](10_hierarchical_multilevel_models_files/figure-epub3/intervals-m1-1.png)<!-- -->
 
 And below it shows the posterior of the differences:
 
@@ -229,11 +229,7 @@ m1_cont_draws <- map_dfc(m1_cont,
 mcmc_areas(m1_cont_draws, prob = .95, bw = "SJ")
 ```
 
-```
-># Warning: `expand_scale()` is deprecated; use `expansion()` instead.
-```
-
-<img src="10_hierarchical_multilevel_models_files/figure-html/mcp-m1-1.png" width="672" />
+![](10_hierarchical_multilevel_models_files/figure-epub3/mcp-m1-1.png)<!-- -->
 
 And the results in this example are similar to the post hoc comparisons. 
 
@@ -304,7 +300,7 @@ data(sleepstudy, package = "lme4")  # call the data
 psych::pairs.panels(sleepstudy[1:2])
 ```
 
-<img src="10_hierarchical_multilevel_models_files/figure-html/pairs-sleepstudy-1.png" width="480" />
+![](10_hierarchical_multilevel_models_files/figure-epub3/pairs-sleepstudy-1.png)<!-- -->
 
 This data set has clustering because it is repeated measures nested within 
 persons. It is more useful to plot the change in the outcome:
@@ -322,7 +318,7 @@ ggplot(sleepstudy, aes(x = Days, y = Reaction)) +
 ># `geom_smooth()` using method = 'loess' and formula 'y ~ x'
 ```
 
-<img src="10_hierarchical_multilevel_models_files/figure-html/traj-sleepstudy-1.png" width="624" />
+![](10_hierarchical_multilevel_models_files/figure-epub3/traj-sleepstudy-1.png)<!-- -->
 
 As you can see, most people experience increases in reaction time, although 
 there are certainly differences across individuals. 
@@ -344,7 +340,7 @@ between-level (e.g., between-group, between-person) differences
 Here is a graph from my MLM class showing how the data would be like with
 different ICC levels:
 
-<img src="10_hierarchical_multilevel_models_files/figure-html/icc-examples-1.png" width="576" />
+![](10_hierarchical_multilevel_models_files/figure-epub3/icc-examples-1.png)<!-- -->
 As you can see, the higher the ICC, the higher the variations in the 
 cluster means, relative to the within-cluster variations. Below is the graph
 for the `sleepstudy` data:
@@ -361,7 +357,7 @@ ggplot(sleepstudy, aes(x = Subject, y = Reaction)) +
 ># Warning: `fun.y` is deprecated. Use `fun` instead.
 ```
 
-<img src="10_hierarchical_multilevel_models_files/figure-html/plot-icc-data-1.png" width="528" />
+![](10_hierarchical_multilevel_models_files/figure-epub3/plot-icc-data-1.png)<!-- -->
 
 Which has substantial between-person variations. 
 
@@ -424,7 +420,7 @@ draws_icc <- draws_tau^2 / (draws_tau^2 + draws_sigma^2)
 qplot(draws_icc, geom = "density", xlab = "ICC", bw = "SJ")
 ```
 
-<img src="10_hierarchical_multilevel_models_files/figure-html/draws_icc-1.png" width="672" />
+![](10_hierarchical_multilevel_models_files/figure-epub3/draws_icc-1.png)<!-- -->
 
 ```r
 # Summarize the ICC distribution
@@ -579,7 +575,7 @@ ggplot(sleepstudy, aes(x = Days, y = Reaction10)) +
 ># `geom_smooth()` using method = 'loess' and formula 'y ~ x'
 ```
 
-<img src="10_hierarchical_multilevel_models_files/figure-html/traj-ave-m3-1.png" width="624" />
+![](10_hierarchical_multilevel_models_files/figure-epub3/traj-ave-m3-1.png)<!-- -->
 
 As can be seen, the estimated coefficient for `Days`, which was assumed 
 constant for everyone, fit the overall data. However, does it fit each 
@@ -613,7 +609,7 @@ ggplot(sleepstudy, aes(x = Days, y = Reaction10)) +
 ># `geom_smooth()` using method = 'loess' and formula 'y ~ x'
 ```
 
-<img src="10_hierarchical_multilevel_models_files/figure-html/traj-m3-1.png" width="624" />
+![](10_hierarchical_multilevel_models_files/figure-epub3/traj-m3-1.png)<!-- -->
 
 Obviously it only fit a few individuals, but not all. So let's also allow 
 $\beta_1$ to vary. 
@@ -726,7 +722,7 @@ ggplot(tibble(rho = c(-1, 1)), aes(x = rho)) +
 ># Warning: Removed 2 row(s) containing missing values (geom_path).
 ```
 
-<img src="10_hierarchical_multilevel_models_files/figure-html/plot-lkj-1.png" width="480" />
+![](10_hierarchical_multilevel_models_files/figure-epub3/plot-lkj-1.png)<!-- -->
 
 As you can see, when $\eta$ increases, the correlation is more concentrated to
 zero. 
@@ -821,7 +817,7 @@ ggplot(sleepstudy, aes(x = Days, y = Reaction10)) +
 ># `geom_smooth()` using method = 'loess' and formula 'y ~ x'
 ```
 
-<img src="10_hierarchical_multilevel_models_files/figure-html/traj-m4-1.png" width="624" />
+![](10_hierarchical_multilevel_models_files/figure-epub3/traj-m4-1.png)<!-- -->
 
 You can see that the fit is better. You can also visualize the varying 
 regression lines:
@@ -837,7 +833,7 @@ ggplot(sleepstudy, aes(x = Days, y = Reaction10, col = Subject)) +
   guides(col = FALSE)
 ```
 
-<img src="10_hierarchical_multilevel_models_files/figure-html/varying-slopes-1.png" width="672" />
+![](10_hierarchical_multilevel_models_files/figure-epub3/varying-slopes-1.png)<!-- -->
 
 Or using the `sjPlot` package:
 
@@ -854,14 +850,14 @@ sjPlot::plot_model(m4, type = "pred",
 
 ```
 ># Warning: posterior_linpred(transform = TRUE) is deprecated. Please use
-># pp_expect() instead, without the 'transform' argument.
+># posterior_epred() instead, without the 'transform' argument.
 ```
 
 ```
 ># Note: uncertainty of error terms are not taken into account. You may want to use `rstantools::posterior_predict()`.
 ```
 
-<img src="10_hierarchical_multilevel_models_files/figure-html/sjPlot-varying-1.png" width="672" />
+![](10_hierarchical_multilevel_models_files/figure-epub3/sjPlot-varying-1.png)<!-- -->
 
 
 #### Fixed Effect Model
@@ -1098,7 +1094,7 @@ pp_check(m5, type = "ribbon_grouped", group = "Subject",
 ># Using all posterior samples for ppc type 'ribbon_grouped' by default.
 ```
 
-<img src="10_hierarchical_multilevel_models_files/figure-html/ppc-m5-1.png" width="768" />
+![](10_hierarchical_multilevel_models_files/figure-epub3/ppc-m5-1.png)<!-- -->
 
 ## Model Comparisons
 
@@ -1116,7 +1112,7 @@ Here's the table for the several models:
 
 
 ```r
-source("../codes/extract_brmsfit.R")
+source("extract_brmsfit.R")
 ext_m3 <- extract_brmsfit(m3)
 ext_m3@gof.names[1] <- "SD(Intercept): Subject"
 ext_m4 <- extract_brmsfit(m4)
@@ -1157,114 +1153,119 @@ texreg::htmlreg(list(ext_m3, ext_m4, ext_m5),
                 doctype = FALSE)
 ```
 
-
-<table cellspacing="0" align="center" style="border: none;">
-<caption align="bottom" style="margin-top:0.3em;">Statistical models</caption>
+<table class="texreg" style="margin: 10px auto;border-collapse: collapse;border-spacing: 0px;caption-side: bottom;color: #000000;border-top: 2px solid #000000;">
+<caption>Statistical models</caption>
+<thead>
 <tr>
-<th style="text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;"><b></b></th>
-<th style="text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;"><b>Varying Intercepts + Days</b></th>
-<th style="text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;"><b>Varying Intercepts and Slopes</b></th>
-<th style="text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;"><b>Varying Variances</b></th>
+<th style="padding-left: 5px;padding-right: 5px;">&nbsp;</th>
+<th style="padding-left: 5px;padding-right: 5px;">Varying Intercepts + Days</th>
+<th style="padding-left: 5px;padding-right: 5px;">Varying Intercepts and Slopes</th>
+<th style="padding-left: 5px;padding-right: 5px;">Varying Variances</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-top: 1px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">Intercept</td>
+<td style="padding-left: 5px;padding-right: 5px;">25.18<sup>*</sup></td>
+<td style="padding-left: 5px;padding-right: 5px;">25.13<sup>*</sup></td>
+<td style="padding-left: 5px;padding-right: 5px;">25.16<sup>*</sup></td>
 </tr>
 <tr>
-<td style="padding-right: 12px; border: none;">Intercept</td>
-<td style="padding-right: 12px; border: none;">25.18<sup style="vertical-align: 0px;">*</sup></td>
-<td style="padding-right: 12px; border: none;">25.13<sup style="vertical-align: 0px;">*</sup></td>
-<td style="padding-right: 12px; border: none;">25.16<sup style="vertical-align: 0px;">*</sup></td>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">[23.12; 27.30]</td>
+<td style="padding-left: 5px;padding-right: 5px;">[23.59; 26.72]</td>
+<td style="padding-left: 5px;padding-right: 5px;">[23.57; 26.86]</td>
 </tr>
 <tr>
-<td style="padding-right: 12px; border: none;"></td>
-<td style="padding-right: 12px; border: none;">[23.12; 27.30]</td>
-<td style="padding-right: 12px; border: none;">[23.59; 26.72]</td>
-<td style="padding-right: 12px; border: none;">[23.57; 26.86]</td>
+<td style="padding-left: 5px;padding-right: 5px;">Days</td>
+<td style="padding-left: 5px;padding-right: 5px;">1.05<sup>*</sup></td>
+<td style="padding-left: 5px;padding-right: 5px;">1.05<sup>*</sup></td>
+<td style="padding-left: 5px;padding-right: 5px;">1.04<sup>*</sup></td>
 </tr>
 <tr>
-<td style="padding-right: 12px; border: none;">Days</td>
-<td style="padding-right: 12px; border: none;">1.05<sup style="vertical-align: 0px;">*</sup></td>
-<td style="padding-right: 12px; border: none;">1.05<sup style="vertical-align: 0px;">*</sup></td>
-<td style="padding-right: 12px; border: none;">1.04<sup style="vertical-align: 0px;">*</sup></td>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">[ 0.90;  1.21]</td>
+<td style="padding-left: 5px;padding-right: 5px;">[ 0.66;  1.38]</td>
+<td style="padding-left: 5px;padding-right: 5px;">[ 0.68;  1.42]</td>
 </tr>
 <tr>
-<td style="padding-right: 12px; border: none;"></td>
-<td style="padding-right: 12px; border: none;">[0.90; 1.21]</td>
-<td style="padding-right: 12px; border: none;">[0.66; 1.38]</td>
-<td style="padding-right: 12px; border: none;">[0.68; 1.42]</td>
+<td style="padding-left: 5px;padding-right: 5px;">sigma_Intercept</td>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">0.73<sup>*</sup></td>
 </tr>
 <tr>
-<td style="padding-right: 12px; border: none;">sigma_Intercept</td>
-<td style="padding-right: 12px; border: none;"></td>
-<td style="padding-right: 12px; border: none;"></td>
-<td style="padding-right: 12px; border: none;">0.73<sup style="vertical-align: 0px;">*</sup></td>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">[ 0.47;  1.00]</td>
+</tr>
+<tr style="border-top: 1px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">SD(Intercept): Subject</td>
+<td style="padding-left: 5px;padding-right: 5px;">4.03</td>
+<td style="padding-left: 5px;padding-right: 5px;">2.86</td>
+<td style="padding-left: 5px;padding-right: 5px;">3.14</td>
 </tr>
 <tr>
-<td style="padding-right: 12px; border: none;"></td>
-<td style="padding-right: 12px; border: none;"></td>
-<td style="padding-right: 12px; border: none;"></td>
-<td style="padding-right: 12px; border: none;">[0.47; 1.00]</td>
+<td style="padding-left: 5px;padding-right: 5px;">SD(Days): Subject</td>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">0.69</td>
+<td style="padding-left: 5px;padding-right: 5px;">0.70</td>
 </tr>
 <tr>
-<td style="border-top: 1px solid black;">SD(Intercept): Subject</td>
-<td style="border-top: 1px solid black;">4.03</td>
-<td style="border-top: 1px solid black;">2.86</td>
-<td style="border-top: 1px solid black;">3.14</td>
+<td style="padding-left: 5px;padding-right: 5px;">SD(log[sigma]): Subject</td>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">0.51</td>
 </tr>
 <tr>
-<td style="padding-right: 12px; border: none;">SD(Days): Subject</td>
-<td style="padding-right: 12px; border: none;"></td>
-<td style="padding-right: 12px; border: none;">0.69</td>
-<td style="padding-right: 12px; border: none;">0.70</td>
+<td style="padding-left: 5px;padding-right: 5px;">Cor(Intercept,Days): Subject</td>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">0.05</td>
+<td style="padding-left: 5px;padding-right: 5px;">0.00</td>
 </tr>
 <tr>
-<td style="padding-right: 12px; border: none;">SD(log[sigma]): Subject</td>
-<td style="padding-right: 12px; border: none;"></td>
-<td style="padding-right: 12px; border: none;"></td>
-<td style="padding-right: 12px; border: none;">0.51</td>
+<td style="padding-left: 5px;padding-right: 5px;">Cor(Intercept,log[sigma]): Subject</td>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">0.25</td>
 </tr>
 <tr>
-<td style="padding-right: 12px; border: none;">Cor(Intercept,Days): Subject</td>
-<td style="padding-right: 12px; border: none;"></td>
-<td style="padding-right: 12px; border: none;">0.05</td>
-<td style="padding-right: 12px; border: none;">0.00</td>
+<td style="padding-left: 5px;padding-right: 5px;">Cor(Days,log[sigma]): Subject</td>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">&nbsp;</td>
+<td style="padding-left: 5px;padding-right: 5px;">0.44</td>
 </tr>
 <tr>
-<td style="padding-right: 12px; border: none;">Cor(Intercept,log[sigma]): Subject</td>
-<td style="padding-right: 12px; border: none;"></td>
-<td style="padding-right: 12px; border: none;"></td>
-<td style="padding-right: 12px; border: none;">0.25</td>
+<td style="padding-left: 5px;padding-right: 5px;">R<sup>2</sup></td>
+<td style="padding-left: 5px;padding-right: 5px;">0.70</td>
+<td style="padding-left: 5px;padding-right: 5px;">0.79</td>
+<td style="padding-left: 5px;padding-right: 5px;">0.80</td>
 </tr>
 <tr>
-<td style="padding-right: 12px; border: none;">Cor(Days,log[sigma]): Subject</td>
-<td style="padding-right: 12px; border: none;"></td>
-<td style="padding-right: 12px; border: none;"></td>
-<td style="padding-right: 12px; border: none;">0.44</td>
+<td style="padding-left: 5px;padding-right: 5px;">Num. obs.</td>
+<td style="padding-left: 5px;padding-right: 5px;">180</td>
+<td style="padding-left: 5px;padding-right: 5px;">180</td>
+<td style="padding-left: 5px;padding-right: 5px;">180</td>
 </tr>
 <tr>
-<td style="padding-right: 12px; border: none;">R<sup style="vertical-align: 0px;">2</sup></td>
-<td style="padding-right: 12px; border: none;">0.70</td>
-<td style="padding-right: 12px; border: none;">0.79</td>
-<td style="padding-right: 12px; border: none;">0.80</td>
+<td style="padding-left: 5px;padding-right: 5px;">loo IC</td>
+<td style="padding-left: 5px;padding-right: 5px;">941.06</td>
+<td style="padding-left: 5px;padding-right: 5px;">892.55</td>
+<td style="padding-left: 5px;padding-right: 5px;">838.70</td>
 </tr>
+<tr style="border-bottom: 2px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">WAIC</td>
+<td style="padding-left: 5px;padding-right: 5px;">940.73</td>
+<td style="padding-left: 5px;padding-right: 5px;">889.81</td>
+<td style="padding-left: 5px;padding-right: 5px;">827.78</td>
+</tr>
+</tbody>
+<tfoot>
 <tr>
-<td style="padding-right: 12px; border: none;">Num. obs.</td>
-<td style="padding-right: 12px; border: none;">180</td>
-<td style="padding-right: 12px; border: none;">180</td>
-<td style="padding-right: 12px; border: none;">180</td>
+<td style="font-size: 0.8em;" colspan="4"><sup>*</sup> Null hypothesis value outside the confidence interval.</td>
 </tr>
-<tr>
-<td style="padding-right: 12px; border: none;">loo IC</td>
-<td style="padding-right: 12px; border: none;">941.06</td>
-<td style="padding-right: 12px; border: none;">892.55</td>
-<td style="padding-right: 12px; border: none;">838.70</td>
-</tr>
-<tr>
-<td style="border-bottom: 2px solid black;">WAIC</td>
-<td style="border-bottom: 2px solid black;">940.73</td>
-<td style="border-bottom: 2px solid black;">889.81</td>
-<td style="border-bottom: 2px solid black;">827.78</td>
-</tr>
-<tr>
-<td style="padding-right: 12px; border: none;" colspan="5"><span style="font-size:0.8em"><sup>*</sup> 0 outside the confidence interval</span></td>
-</tr>
+</tfoot>
 </table>
 
 As can be seen, the last model had the best predictive performance. 

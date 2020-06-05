@@ -12,7 +12,7 @@ variable) and one or more predictor variables (also called
 explanatory/independent variables). For example, if we have the following 
 scatter plot between two variables ($Y$ and $X$):
 
-<img src="07_linear_model_files/figure-html/reg-curve-1.png" width="672" />
+![](07_linear_model_files/figure-epub3/reg-curve-1.png)<!-- -->
 
 We want to find some pattern from this relationship. In conventional regression,
 we model the conditional distribution of $Y$ given $X$, $P(Y \mid X)$, by 
@@ -21,7 +21,7 @@ depends on the predictor, and (b) a _random_/_probabilistic_ component that does
 not depend on the predictor. For example, we can start with a systematic
 component which only depends on the predictor value:
 
-<img src="07_linear_model_files/figure-html/reg-systematic-1.png" width="672" />
+![](07_linear_model_files/figure-epub3/reg-systematic-1.png)<!-- -->
 
 As you can see, all the red dots fall exactly on the curve in the graph above, 
 meaning that as long as one knows the $X$ value, one can predict the $Y$ value 
@@ -41,7 +41,7 @@ expectation, $\E(Y \mid X)$, is completely determined by $X$, whereas on top of
 the conditional expectation, the observed $Y$ value can be scattered around the
 conditional expectations, like the graph on the left below:
 
-<img src="07_linear_model_files/figure-html/reg-combo-1.png" width="576" />
+![](07_linear_model_files/figure-epub3/reg-combo-1.png)<!-- -->
 
 We can write the systematic part as:
 $$\E(Y \mid X) = f(X; \beta_1, \beta_2, \ldots), $$
@@ -132,7 +132,7 @@ Let's first see a scatterplot matrix
 psych::pairs.panels(kidiq)
 ```
 
-<img src="07_linear_model_files/figure-html/panel-kidiq-1.png" width="768" />
+![](07_linear_model_files/figure-epub3/panel-kidiq-1.png)<!-- -->
 
 
 We will first use mother's score on an IQ test to predict the child's test
@@ -152,7 +152,7 @@ ggplot(aes(x = mom_iq, y = kid_score), data = kidiq) +
 ># `geom_smooth()` using method = 'loess' and formula 'y ~ x'
 ```
 
-<img src="07_linear_model_files/figure-html/kidiq-momiq-1.png" width="672" />
+![](07_linear_model_files/figure-epub3/kidiq-momiq-1.png)<!-- -->
 
 Here we use the `ggplot2` package to plot the data. You have already used the
 this package for some previous assignments and exercise, but here I'll give you
@@ -229,7 +229,7 @@ distribution is recommended by @Gelman2006 and has the following shape:
 ># Warning: `mapping` is not used by stat_function()
 ```
 
-<img src="07_linear_model_files/figure-html/half-t-1.png" width="672" />
+![](07_linear_model_files/figure-epub3/half-t-1.png)<!-- -->
 
 As you can see, there is more density towards zero, but the tail is still quite 
 heavy (as compared to a normal distribution), as you can see by comparing it to 
@@ -246,11 +246,11 @@ get_prior(kid_score ~ mom_iq, data = kidiq100)
 ```
 
 ```
->#                 prior     class   coef group resp dpar nlpar bound
-># 1                             b                                   
-># 2                             b mom_iq                            
-># 3 student_t(3, 1, 10) Intercept                                   
-># 4 student_t(3, 0, 10)     sigma
+>#                    prior     class   coef group resp dpar nlpar bound
+># 1                                b                                   
+># 2                                b mom_iq                            
+># 3 student_t(3, 0.9, 2.5) Intercept                                   
+># 4   student_t(3, 0, 2.5)     sigma
 ```
 
 
@@ -336,7 +336,7 @@ You can plot the density and mixing of the posterior distributions:
 plot(m1)
 ```
 
-<img src="07_linear_model_files/figure-html/plot-m1-1.png" width="576" />
+![](07_linear_model_files/figure-epub3/plot-m1-1.png)<!-- -->
 
 #### Posterior Predictive Check
 
@@ -348,7 +348,7 @@ This can be done with `pp_check`
 pp_check(m1, nsamples = 100)
 ```
 
-<img src="07_linear_model_files/figure-html/ppc-m1-1.png" width="672" />
+![](07_linear_model_files/figure-epub3/ppc-m1-1.png)<!-- -->
 
 Looks like there is some skewness not captured in the model. We will talk more
 about diagnostics for regression models next week.
@@ -387,7 +387,7 @@ ggplot(aes(x = mom_iq, y = kid_score), data = kidiq100) +
               slope = fixef(m1)[2, "Estimate"]) 
 ```
 
-<img src="07_linear_model_files/figure-html/line-m1-1.png" width="672" />
+![](07_linear_model_files/figure-epub3/line-m1-1.png)<!-- -->
 
 Or with `brms`, we can use the handy `marginal_effects()` function:
 
@@ -401,7 +401,7 @@ plot(marginal_effects(m1), points = TRUE, point_args = list(size = 0.5))
 ># 'conditional_effects' instead.
 ```
 
-<img src="07_linear_model_files/figure-html/marginal-m1-1.png" width="672" />
+![](07_linear_model_files/figure-epub3/marginal-m1-1.png)<!-- -->
 
 ##### Predictive intervals
 
@@ -426,7 +426,7 @@ mmp_brm(m1, x = "mom_iq", prob = 0.90,
 ># `geom_smooth()` using method = 'loess' and formula 'y ~ x'
 ```
 
-<img src="07_linear_model_files/figure-html/mmp-m1-1.png" width="672" />
+![](07_linear_model_files/figure-epub3/mmp-m1-1.png)<!-- -->
 
 ##### $R^2$ effect size
 
@@ -454,11 +454,7 @@ bayes_R2(m1, summary = FALSE) %>%
   mcmc_areas(prob = .90)  # showing density and 95% CI
 ```
 
-```
-># Warning: `expand_scale()` is deprecated; use `expansion()` instead.
-```
-
-<img src="07_linear_model_files/figure-html/r2-m1-1.png" width="672" />
+![](07_linear_model_files/figure-epub3/r2-m1-1.png)<!-- -->
 
 
 
@@ -479,7 +475,7 @@ In the previous model, the intercept is the estimated mean `kid_score` when
 `mom_iq` is zero. As illustrated in the graph below, this value is not very
 meaningful, as `mom_iq = 0` is far from the main bulk of data:
 
-<img src="07_linear_model_files/figure-html/plot-m1-2-1.png" width="672" />
+![](07_linear_model_files/figure-epub3/plot-m1-2-1.png)<!-- -->
 
 And many scholar caution against extrapolation in regression. Therefore, for
 interpretation purpose one should consider *center* the predictors so that 
@@ -537,7 +533,7 @@ ggplot(aes(x = factor(mom_hs), y = kid_score), data = kidiq100) +
   geom_boxplot()  # add a layer with a boxplot
 ```
 
-<img src="07_linear_model_files/figure-html/kid_score-mom_hs-1.png" width="384" />
+![](07_linear_model_files/figure-epub3/kid_score-mom_hs-1.png)<!-- -->
 
 Our regression model is 
 
@@ -628,7 +624,7 @@ plot(marginal_effects(m2))
 ># 'conditional_effects' instead.
 ```
 
-<img src="07_linear_model_files/figure-html/marginal-m2-1.png" width="672" />
+![](07_linear_model_files/figure-epub3/marginal-m2-1.png)<!-- -->
 
 This is an example of the beauty of Bayesian and the MCMC method. In 
 frequentist, although it's easy to get $\hat{\beta_0} + \hat{\beta_1}$, it is
@@ -677,7 +673,7 @@ plot(marginal_effects(m1_cat))
 ># 'conditional_effects' instead.
 ```
 
-<img src="07_linear_model_files/figure-html/marginal-m1_cat-1.png" width="672" />
+![](07_linear_model_files/figure-epub3/marginal-m1_cat-1.png)<!-- -->
 
 ### STAN
 
@@ -787,11 +783,7 @@ stanplot(m3, type = "areas", prob = 0.90)
 ># Warning: Method 'stanplot' is deprecated. Please use 'mcmc_plot' instead.
 ```
 
-```
-># Warning: `expand_scale()` is deprecated; use `expansion()` instead.
-```
-
-<img src="07_linear_model_files/figure-html/plot-m3-1.png" width="672" />
+![](07_linear_model_files/figure-epub3/plot-m3-1.png)<!-- -->
 
 We can plot the data with two regression lines
 (left for `mom_hs` = "no" and right for `mom_hs` = "yes):
@@ -811,7 +803,7 @@ plot(
 ># 'conditional_effects' instead.
 ```
 
-<img src="07_linear_model_files/figure-html/marginal-m3-1.png" width="528" />
+![](07_linear_model_files/figure-epub3/marginal-m3-1.png)<!-- -->
 
 Using the posterior mean, we have the following regression line
 $$\widehat{\texttt{kid_score}} = 0.821 + 
@@ -941,7 +933,7 @@ plot(
 ># 'conditional_effects' instead.
 ```
 
-<img src="07_linear_model_files/figure-html/marginal-m4-1.png" width="528" />
+![](07_linear_model_files/figure-epub3/marginal-m4-1.png)<!-- -->
 
 We can get an $R^2$ effect size. 
 
@@ -973,11 +965,7 @@ stanplot(m4, type = "areas", pars = "b", prob = 0.90)
 ># Warning: Method 'stanplot' is deprecated. Please use 'mcmc_plot' instead.
 ```
 
-```
-># Warning: `expand_scale()` is deprecated; use `expansion()` instead.
-```
-
-<img src="07_linear_model_files/figure-html/areas-m4-1.png" width="672" />
+![](07_linear_model_files/figure-epub3/areas-m4-1.png)<!-- -->
 
 And below I plot the 90% predictive intervals and the variations of the
 regression lines, separated by the status of `mom_hs`. The R code is a bit
@@ -1013,7 +1001,7 @@ ggplot(aes(x = mom_iq_c, y = kid_score), data = df_plot) +
   geom_abline(data = df_mean_line, aes(intercept = a, slope = b))
 ```
 
-<img src="07_linear_model_files/figure-html/pi-m4-1.png" width="576" />
+![](07_linear_model_files/figure-epub3/pi-m4-1.png)<!-- -->
 
 And you can see the uncertainty is larger for `mom_hs` = 0. This makes sense
 because there are less participants in this group. 
@@ -1112,7 +1100,7 @@ However right now it only supports HTML. You can also use the following code:
 
 
 ```r
-source("../codes/extract_brmsfit.R")
+source("extract_brmsfit.R")
 texreg::screenreg(map(list(m1c, m2, m3, m4), extract_brmsfit))
 ```
 
@@ -1135,7 +1123,7 @@ texreg::screenreg(map(list(m1c, m2, m3, m4), extract_brmsfit))
 ># loo IC              -240.07       -167.76       -245.19       -252.03       
 ># WAIC                -240.08       -167.77       -245.20       -252.05       
 ># ============================================================================
-># * 0 outside the confidence interval
+># * Null hypothesis value outside the confidence interval.
 ```
 
 Replacing `texreg::screenreg()` by `texreg::texreg()` will generate table for 

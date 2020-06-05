@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 8 Model Diagnostics | Course Handouts for Bayesian Data Analysis Class</title>
   <meta name="description" content="This is a collection of my course handouts for PSYC 621 class in the 2019 Fall semester. Please contact me [mailto:hokchiol@usc.edu] for any errors (as I’m sure there are plenty of them)." />
-  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 8 Model Diagnostics | Course Handouts for Bayesian Data Analysis Class" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Mark Lai" />
 
 
-<meta name="date" content="2020-03-06" />
+<meta name="date" content="2020-06-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,6 +33,7 @@
   
 <link rel="prev" href="linear-models.html"/>
 <link rel="next" href="model-comparison-and-regularization.html"/>
+<script src="libs/header-attrs-2.2/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -53,22 +54,21 @@
 <script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
 <script src="libs/viz-1.8.2/viz.js"></script>
 <link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
-<script src="libs/grViz-binding-1.0.5/grViz.js"></script>
+<script src="libs/grViz-binding-1.0.6.1/grViz.js"></script>
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -88,7 +88,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -138,70 +138,86 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
-<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
-<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#history-of-bayesian-statistics"><i class="fa fa-check"></i><b>1.1</b> History of Bayesian Statistics</a><ul>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#history-of-bayesian-statistics"><i class="fa fa-check"></i><b>1.1</b> History of Bayesian Statistics</a>
+<ul>
 <li class="chapter" data-level="1.1.1" data-path="introduction.html"><a href="introduction.html#thomas-bayes-17011762"><i class="fa fa-check"></i><b>1.1.1</b> Thomas Bayes (1701–1762)</a></li>
 <li class="chapter" data-level="1.1.2" data-path="introduction.html"><a href="introduction.html#pierre-simon-laplace-17491827"><i class="fa fa-check"></i><b>1.1.2</b> Pierre-Simon Laplace (1749–1827)</a></li>
 <li class="chapter" data-level="1.1.3" data-path="introduction.html"><a href="introduction.html#th-century"><i class="fa fa-check"></i><b>1.1.3</b> 20th Century</a></li>
 </ul></li>
-<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#motivations-for-using-bayesian-methods"><i class="fa fa-check"></i><b>1.2</b> Motivations for Using Bayesian Methods</a><ul>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#motivations-for-using-bayesian-methods"><i class="fa fa-check"></i><b>1.2</b> Motivations for Using Bayesian Methods</a>
+<ul>
 <li class="chapter" data-level="1.2.1" data-path="introduction.html"><a href="introduction.html#problem-with-classical-frequentist-statistics"><i class="fa fa-check"></i><b>1.2.1</b> Problem with classical (frequentist) statistics</a></li>
 </ul></li>
-<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#probability"><i class="fa fa-check"></i><b>1.3</b> Probability</a><ul>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#probability"><i class="fa fa-check"></i><b>1.3</b> Probability</a>
+<ul>
 <li class="chapter" data-level="1.3.1" data-path="introduction.html"><a href="introduction.html#classical-interpretation"><i class="fa fa-check"></i><b>1.3.1</b> Classical Interpretation</a></li>
 <li class="chapter" data-level="1.3.2" data-path="introduction.html"><a href="introduction.html#frequentist-interpretation"><i class="fa fa-check"></i><b>1.3.2</b> Frequentist Interpretation</a></li>
 <li class="chapter" data-level="1.3.3" data-path="introduction.html"><a href="introduction.html#problem-of-the-single-case"><i class="fa fa-check"></i><b>1.3.3</b> Problem of the single case</a></li>
 <li class="chapter" data-level="1.3.4" data-path="introduction.html"><a href="introduction.html#subjectivist-interpretation"><i class="fa fa-check"></i><b>1.3.4</b> Subjectivist Interpretation</a></li>
 <li class="chapter" data-level="1.3.5" data-path="introduction.html"><a href="introduction.html#basics-of-probability"><i class="fa fa-check"></i><b>1.3.5</b> Basics of Probability</a></li>
 </ul></li>
-<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#bayess-theorem"><i class="fa fa-check"></i><b>1.4</b> Bayes’s Theorem</a><ul>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#bayess-theorem"><i class="fa fa-check"></i><b>1.4</b> Bayes’s Theorem</a>
+<ul>
 <li class="chapter" data-level="1.4.1" data-path="introduction.html"><a href="introduction.html#example-1-base-rate-fallacy-from-wikipedia"><i class="fa fa-check"></i><b>1.4.1</b> Example 1: Base rate fallacy (From Wikipedia)</a></li>
 </ul></li>
-<li class="chapter" data-level="1.5" data-path="introduction.html"><a href="introduction.html#bayesian-statistics"><i class="fa fa-check"></i><b>1.5</b> Bayesian Statistics</a><ul>
+<li class="chapter" data-level="1.5" data-path="introduction.html"><a href="introduction.html#bayesian-statistics"><i class="fa fa-check"></i><b>1.5</b> Bayesian Statistics</a>
+<ul>
 <li class="chapter" data-level="1.5.1" data-path="introduction.html"><a href="introduction.html#example-2-locating-a-plane"><i class="fa fa-check"></i><b>1.5.1</b> Example 2: Locating a Plane</a></li>
 </ul></li>
 <li class="chapter" data-level="1.6" data-path="introduction.html"><a href="introduction.html#comparing-bayesian-and-frequentist-statistics"><i class="fa fa-check"></i><b>1.6</b> Comparing Bayesian and Frequentist Statistics</a></li>
 <li class="chapter" data-level="1.7" data-path="introduction.html"><a href="introduction.html#software-for-bayesian-statistics"><i class="fa fa-check"></i><b>1.7</b> Software for Bayesian Statistics</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="bayesian-inference.html"><a href="bayesian-inference.html"><i class="fa fa-check"></i><b>2</b> Bayesian Inference</a><ul>
+<li class="chapter" data-level="2" data-path="bayesian-inference.html"><a href="bayesian-inference.html"><i class="fa fa-check"></i><b>2</b> Bayesian Inference</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#steps-of-bayesian-data-analysis"><i class="fa fa-check"></i><b>2.1</b> Steps of Bayesian Data Analysis</a></li>
 <li class="chapter" data-level="2.2" data-path="bayesian-inference.html"><a href="bayesian-inference.html#real-data-example"><i class="fa fa-check"></i><b>2.2</b> Real Data Example</a></li>
-<li class="chapter" data-level="2.3" data-path="bayesian-inference.html"><a href="bayesian-inference.html#choosing-a-model"><i class="fa fa-check"></i><b>2.3</b> Choosing a Model</a><ul>
+<li class="chapter" data-level="2.3" data-path="bayesian-inference.html"><a href="bayesian-inference.html#choosing-a-model"><i class="fa fa-check"></i><b>2.3</b> Choosing a Model</a>
+<ul>
 <li class="chapter" data-level="2.3.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#exchangeability"><i class="fa fa-check"></i><b>2.3.1</b> Exchangeability*</a></li>
 <li class="chapter" data-level="2.3.2" data-path="bayesian-inference.html"><a href="bayesian-inference.html#probability-distributions"><i class="fa fa-check"></i><b>2.3.2</b> Probability Distributions</a></li>
 <li class="chapter" data-level="2.3.3" data-path="bayesian-inference.html"><a href="bayesian-inference.html#the-likelihood"><i class="fa fa-check"></i><b>2.3.3</b> The Likelihood</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="bayesian-inference.html"><a href="bayesian-inference.html#specifying-priors"><i class="fa fa-check"></i><b>2.4</b> Specifying Priors</a><ul>
+<li class="chapter" data-level="2.4" data-path="bayesian-inference.html"><a href="bayesian-inference.html#specifying-priors"><i class="fa fa-check"></i><b>2.4</b> Specifying Priors</a>
+<ul>
 <li class="chapter" data-level="2.4.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#beta-distribution"><i class="fa fa-check"></i><b>2.4.1</b> Beta Distribution</a></li>
 </ul></li>
-<li class="chapter" data-level="2.5" data-path="bayesian-inference.html"><a href="bayesian-inference.html#obtain-the-posterior-distributions"><i class="fa fa-check"></i><b>2.5</b> Obtain the Posterior Distributions</a><ul>
+<li class="chapter" data-level="2.5" data-path="bayesian-inference.html"><a href="bayesian-inference.html#obtain-the-posterior-distributions"><i class="fa fa-check"></i><b>2.5</b> Obtain the Posterior Distributions</a>
+<ul>
 <li class="chapter" data-level="2.5.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#grid-approximation"><i class="fa fa-check"></i><b>2.5.1</b> Grid Approximation</a></li>
 <li class="chapter" data-level="2.5.2" data-path="bayesian-inference.html"><a href="bayesian-inference.html#using-conjugate-priors"><i class="fa fa-check"></i><b>2.5.2</b> Using Conjugate Priors</a></li>
 <li class="chapter" data-level="2.5.3" data-path="bayesian-inference.html"><a href="bayesian-inference.html#laplace-approximation-with-maximum-a-posteriori-estimation"><i class="fa fa-check"></i><b>2.5.3</b> Laplace Approximation with Maximum A Posteriori Estimation</a></li>
 <li class="chapter" data-level="2.5.4" data-path="bayesian-inference.html"><a href="bayesian-inference.html#markov-chain-monte-carlo-mcmc"><i class="fa fa-check"></i><b>2.5.4</b> Markov Chain Monte Carlo (MCMC)</a></li>
 </ul></li>
-<li class="chapter" data-level="2.6" data-path="bayesian-inference.html"><a href="bayesian-inference.html#summarizing-the-posterior-distribution"><i class="fa fa-check"></i><b>2.6</b> Summarizing the Posterior Distribution</a><ul>
+<li class="chapter" data-level="2.6" data-path="bayesian-inference.html"><a href="bayesian-inference.html#summarizing-the-posterior-distribution"><i class="fa fa-check"></i><b>2.6</b> Summarizing the Posterior Distribution</a>
+<ul>
 <li class="chapter" data-level="2.6.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#posterior-mean-median-and-mode"><i class="fa fa-check"></i><b>2.6.1</b> Posterior Mean, Median, and Mode</a></li>
 <li class="chapter" data-level="2.6.2" data-path="bayesian-inference.html"><a href="bayesian-inference.html#uncertainty-estimates"><i class="fa fa-check"></i><b>2.6.2</b> Uncertainty Estimates</a></li>
 <li class="chapter" data-level="2.6.3" data-path="bayesian-inference.html"><a href="bayesian-inference.html#credible-intervals"><i class="fa fa-check"></i><b>2.6.3</b> Credible Intervals</a></li>
 <li class="chapter" data-level="2.6.4" data-path="bayesian-inference.html"><a href="bayesian-inference.html#probability-of-theta-higherlower-than-a-certain-value"><i class="fa fa-check"></i><b>2.6.4</b> Probability of <span class="math inline">\(\theta\)</span> Higher/Lower Than a Certain Value</a></li>
 </ul></li>
-<li class="chapter" data-level="2.7" data-path="bayesian-inference.html"><a href="bayesian-inference.html#model-checking"><i class="fa fa-check"></i><b>2.7</b> Model Checking</a><ul>
+<li class="chapter" data-level="2.7" data-path="bayesian-inference.html"><a href="bayesian-inference.html#model-checking"><i class="fa fa-check"></i><b>2.7</b> Model Checking</a>
+<ul>
 <li class="chapter" data-level="2.7.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#posterior-predictive-distribution"><i class="fa fa-check"></i><b>2.7.1</b> Posterior Predictive Distribution</a></li>
 </ul></li>
 <li class="chapter" data-level="2.8" data-path="bayesian-inference.html"><a href="bayesian-inference.html#posterior-predictive-check"><i class="fa fa-check"></i><b>2.8</b> Posterior Predictive Check</a></li>
-<li class="chapter" data-level="2.9" data-path="bayesian-inference.html"><a href="bayesian-inference.html#summary"><i class="fa fa-check"></i><b>2.9</b> Summary</a><ul>
+<li class="chapter" data-level="2.9" data-path="bayesian-inference.html"><a href="bayesian-inference.html#summary"><i class="fa fa-check"></i><b>2.9</b> Summary</a>
+<ul>
 <li class="chapter" data-level="2.9.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#key-concepts"><i class="fa fa-check"></i><b>2.9.1</b> Key Concepts</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="one-parameter-models.html"><a href="one-parameter-models.html"><i class="fa fa-check"></i><b>3</b> One-Parameter Models</a><ul>
-<li class="chapter" data-level="3.1" data-path="one-parameter-models.html"><a href="one-parameter-models.html#binomialbernoulli-data"><i class="fa fa-check"></i><b>3.1</b> Binomial/Bernoulli data</a><ul>
+<li class="chapter" data-level="3" data-path="one-parameter-models.html"><a href="one-parameter-models.html"><i class="fa fa-check"></i><b>3</b> One-Parameter Models</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="one-parameter-models.html"><a href="one-parameter-models.html#binomialbernoulli-data"><i class="fa fa-check"></i><b>3.1</b> Binomial/Bernoulli data</a>
+<ul>
 <li class="chapter" data-level="3.1.1" data-path="one-parameter-models.html"><a href="one-parameter-models.html#reparameterization"><i class="fa fa-check"></i><b>3.1.1</b> Reparameterization*</a></li>
 <li class="chapter" data-level="3.1.2" data-path="one-parameter-models.html"><a href="one-parameter-models.html#posterior-predictive-check-1"><i class="fa fa-check"></i><b>3.1.2</b> Posterior Predictive Check</a></li>
 <li class="chapter" data-level="3.1.3" data-path="one-parameter-models.html"><a href="one-parameter-models.html#comparison-to-frequentist-results"><i class="fa fa-check"></i><b>3.1.3</b> Comparison to frequentist results</a></li>
 <li class="chapter" data-level="3.1.4" data-path="one-parameter-models.html"><a href="one-parameter-models.html#sensitivity-to-different-priors"><i class="fa fa-check"></i><b>3.1.4</b> Sensitivity to different priors</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="one-parameter-models.html"><a href="one-parameter-models.html#poisson-data"><i class="fa fa-check"></i><b>3.2</b> Poisson Data</a><ul>
+<li class="chapter" data-level="3.2" data-path="one-parameter-models.html"><a href="one-parameter-models.html#poisson-data"><i class="fa fa-check"></i><b>3.2</b> Poisson Data</a>
+<ul>
 <li class="chapter" data-level="3.2.1" data-path="one-parameter-models.html"><a href="one-parameter-models.html#example-2"><i class="fa fa-check"></i><b>3.2.1</b> Example 2</a></li>
 <li class="chapter" data-level="3.2.2" data-path="one-parameter-models.html"><a href="one-parameter-models.html#choosing-a-model-1"><i class="fa fa-check"></i><b>3.2.2</b> Choosing a model</a></li>
 <li class="chapter" data-level="3.2.3" data-path="one-parameter-models.html"><a href="one-parameter-models.html#choosing-a-prior"><i class="fa fa-check"></i><b>3.2.3</b> Choosing a prior</a></li>
@@ -210,20 +226,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2.6" data-path="one-parameter-models.html"><a href="one-parameter-models.html#posterior-predictive-check-2"><i class="fa fa-check"></i><b>3.2.6</b> Posterior Predictive Check</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html"><i class="fa fa-check"></i><b>4</b> Brief Introduction to STAN</a><ul>
-<li class="chapter" data-level="4.1" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#stan"><i class="fa fa-check"></i><b>4.1</b> <code>STAN</code></a><ul>
+<li class="chapter" data-level="4" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html"><i class="fa fa-check"></i><b>4</b> Brief Introduction to STAN</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#stan"><i class="fa fa-check"></i><b>4.1</b> <code>STAN</code></a>
+<ul>
 <li class="chapter" data-level="4.1.1" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#stan-code"><i class="fa fa-check"></i><b>4.1.1</b> <code>STAN</code> code</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#rstan"><i class="fa fa-check"></i><b>4.2</b> <code>RStan</code></a><ul>
+<li class="chapter" data-level="4.2" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#rstan"><i class="fa fa-check"></i><b>4.2</b> <code>RStan</code></a>
+<ul>
 <li class="chapter" data-level="4.2.1" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#assembling-data-list-in-r"><i class="fa fa-check"></i><b>4.2.1</b> Assembling data list in R</a></li>
 <li class="chapter" data-level="4.2.2" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#call-rstan"><i class="fa fa-check"></i><b>4.2.2</b> Call <code>rstan</code></a></li>
 <li class="chapter" data-level="4.2.3" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#summarize-the-results"><i class="fa fa-check"></i><b>4.2.3</b> Summarize the results</a></li>
 </ul></li>
 <li class="chapter" data-level="4.3" data-path="brief-introduction-to-stan.html"><a href="brief-introduction-to-stan.html#resources"><i class="fa fa-check"></i><b>4.3</b> Resources</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="group-comparisons.html"><a href="group-comparisons.html"><i class="fa fa-check"></i><b>5</b> Group Comparisons</a><ul>
+<li class="chapter" data-level="5" data-path="group-comparisons.html"><a href="group-comparisons.html"><i class="fa fa-check"></i><b>5</b> Group Comparisons</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="group-comparisons.html"><a href="group-comparisons.html#data"><i class="fa fa-check"></i><b>5.1</b> Data</a></li>
-<li class="chapter" data-level="5.2" data-path="group-comparisons.html"><a href="group-comparisons.html#between-subject-comparisons"><i class="fa fa-check"></i><b>5.2</b> Between-Subject Comparisons</a><ul>
+<li class="chapter" data-level="5.2" data-path="group-comparisons.html"><a href="group-comparisons.html#between-subject-comparisons"><i class="fa fa-check"></i><b>5.2</b> Between-Subject Comparisons</a>
+<ul>
 <li class="chapter" data-level="5.2.1" data-path="group-comparisons.html"><a href="group-comparisons.html#plots"><i class="fa fa-check"></i><b>5.2.1</b> Plots</a></li>
 <li class="chapter" data-level="5.2.2" data-path="group-comparisons.html"><a href="group-comparisons.html#independent-sample-t-test"><i class="fa fa-check"></i><b>5.2.2</b> Independent sample t-test</a></li>
 <li class="chapter" data-level="5.2.3" data-path="group-comparisons.html"><a href="group-comparisons.html#bayesian-normal-model"><i class="fa fa-check"></i><b>5.2.3</b> Bayesian Normal Model</a></li>
@@ -231,7 +252,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.2.5" data-path="group-comparisons.html"><a href="group-comparisons.html#shifted-lognormal-model"><i class="fa fa-check"></i><b>5.2.5</b> Shifted Lognormal Model*</a></li>
 </ul></li>
 <li class="chapter" data-level="5.3" data-path="group-comparisons.html"><a href="group-comparisons.html#notes-on-model-comparison"><i class="fa fa-check"></i><b>5.3</b> Notes on Model Comparison</a></li>
-<li class="chapter" data-level="5.4" data-path="group-comparisons.html"><a href="group-comparisons.html#within-subject-comparisons"><i class="fa fa-check"></i><b>5.4</b> Within-Subject Comparisons</a><ul>
+<li class="chapter" data-level="5.4" data-path="group-comparisons.html"><a href="group-comparisons.html#within-subject-comparisons"><i class="fa fa-check"></i><b>5.4</b> Within-Subject Comparisons</a>
+<ul>
 <li class="chapter" data-level="5.4.1" data-path="group-comparisons.html"><a href="group-comparisons.html#plots-1"><i class="fa fa-check"></i><b>5.4.1</b> Plots</a></li>
 <li class="chapter" data-level="5.4.2" data-path="group-comparisons.html"><a href="group-comparisons.html#independent-sample-t-test-1"><i class="fa fa-check"></i><b>5.4.2</b> Independent sample <span class="math inline">\(t\)</span>-test</a></li>
 <li class="chapter" data-level="5.4.3" data-path="group-comparisons.html"><a href="group-comparisons.html#bayesian-normal-model-1"><i class="fa fa-check"></i><b>5.4.3</b> Bayesian Normal Model</a></li>
@@ -239,19 +261,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.4.5" data-path="group-comparisons.html"><a href="group-comparisons.html#region-of-practical-equivalence-rope"><i class="fa fa-check"></i><b>5.4.5</b> Region of Practical Equivalence (ROPE)</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html"><i class="fa fa-check"></i><b>6</b> Markov Chain Monte Carlo</a><ul>
+<li class="chapter" data-level="6" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html"><i class="fa fa-check"></i><b>6</b> Markov Chain Monte Carlo</a>
+<ul>
 <li class="chapter" data-level="6.1" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#monte-carlo-simulation-with-one-unknown"><i class="fa fa-check"></i><b>6.1</b> Monte Carlo Simulation With One Unknown</a></li>
-<li class="chapter" data-level="6.2" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#markov-chain-monte-carlo-mcmc-with-one-parameter"><i class="fa fa-check"></i><b>6.2</b> Markov Chain Monte Carlo (MCMC) With One Parameter</a><ul>
+<li class="chapter" data-level="6.2" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#markov-chain-monte-carlo-mcmc-with-one-parameter"><i class="fa fa-check"></i><b>6.2</b> Markov Chain Monte Carlo (MCMC) With One Parameter</a>
+<ul>
 <li class="chapter" data-level="6.2.1" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#the-metropolis-algorithm"><i class="fa fa-check"></i><b>6.2.1</b> The Metropolis algorithm</a></li>
 <li class="chapter" data-level="6.2.2" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#the-metropolis-hastings-algorithm"><i class="fa fa-check"></i><b>6.2.2</b> The Metropolis-Hastings Algorithm</a></li>
 </ul></li>
 <li class="chapter" data-level="6.3" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#markov-chain"><i class="fa fa-check"></i><b>6.3</b> Markov Chain</a></li>
 <li class="chapter" data-level="6.4" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#effective-sample-size-n_texteff"><i class="fa fa-check"></i><b>6.4</b> Effective Sample Size (<span class="math inline">\(n_\text{eff}\)</span>)</a></li>
 <li class="chapter" data-level="6.5" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#mc-error"><i class="fa fa-check"></i><b>6.5</b> MC Error</a></li>
-<li class="chapter" data-level="6.6" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#burn-inwarmup"><i class="fa fa-check"></i><b>6.6</b> Burn-in/Warmup</a><ul>
+<li class="chapter" data-level="6.6" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#burn-inwarmup"><i class="fa fa-check"></i><b>6.6</b> Burn-in/Warmup</a>
+<ul>
 <li class="chapter" data-level="6.6.1" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#thinning"><i class="fa fa-check"></i><b>6.6.1</b> Thinning</a></li>
 </ul></li>
-<li class="chapter" data-level="6.7" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#diagnostics-of-mcmc"><i class="fa fa-check"></i><b>6.7</b> Diagnostics of MCMC</a><ul>
+<li class="chapter" data-level="6.7" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#diagnostics-of-mcmc"><i class="fa fa-check"></i><b>6.7</b> Diagnostics of MCMC</a>
+<ul>
 <li class="chapter" data-level="6.7.1" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#mixing"><i class="fa fa-check"></i><b>6.7.1</b> Mixing</a></li>
 <li class="chapter" data-level="6.7.2" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#acceptance-rate"><i class="fa fa-check"></i><b>6.7.2</b> Acceptance Rate</a></li>
 <li class="chapter" data-level="6.7.3" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#diagnostics-using-multiple-chains"><i class="fa fa-check"></i><b>6.7.3</b> Diagnostics Using Multiple Chains</a></li>
@@ -259,24 +285,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.8" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#multiple-parameters"><i class="fa fa-check"></i><b>6.8</b> Multiple Parameters</a></li>
 <li class="chapter" data-level="6.9" data-path="markov-chain-monte-carlo.html"><a href="markov-chain-monte-carlo.html#hamiltonian-monte-carlo"><i class="fa fa-check"></i><b>6.9</b> Hamiltonian Monte Carlo</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="linear-models.html"><a href="linear-models.html"><i class="fa fa-check"></i><b>7</b> Linear Models</a><ul>
+<li class="chapter" data-level="7" data-path="linear-models.html"><a href="linear-models.html"><i class="fa fa-check"></i><b>7</b> Linear Models</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="linear-models.html"><a href="linear-models.html#what-is-regression"><i class="fa fa-check"></i><b>7.1</b> What is Regression?</a></li>
-<li class="chapter" data-level="7.2" data-path="linear-models.html"><a href="linear-models.html#one-predictor"><i class="fa fa-check"></i><b>7.2</b> One Predictor</a><ul>
+<li class="chapter" data-level="7.2" data-path="linear-models.html"><a href="linear-models.html#one-predictor"><i class="fa fa-check"></i><b>7.2</b> One Predictor</a>
+<ul>
 <li class="chapter" data-level="7.2.1" data-path="linear-models.html"><a href="linear-models.html#a-continuous-predictor"><i class="fa fa-check"></i><b>7.2.1</b> A continuous predictor</a></li>
 <li class="chapter" data-level="7.2.2" data-path="linear-models.html"><a href="linear-models.html#centering"><i class="fa fa-check"></i><b>7.2.2</b> Centering</a></li>
 <li class="chapter" data-level="7.2.3" data-path="linear-models.html"><a href="linear-models.html#a-categorical-predictor"><i class="fa fa-check"></i><b>7.2.3</b> A categorical predictor</a></li>
 <li class="chapter" data-level="7.2.4" data-path="linear-models.html"><a href="linear-models.html#predictors-with-multiple-categories"><i class="fa fa-check"></i><b>7.2.4</b> Predictors with multiple categories</a></li>
 <li class="chapter" data-level="7.2.5" data-path="linear-models.html"><a href="linear-models.html#stan-4"><i class="fa fa-check"></i><b>7.2.5</b> STAN</a></li>
 </ul></li>
-<li class="chapter" data-level="7.3" data-path="linear-models.html"><a href="linear-models.html#multiple-regression"><i class="fa fa-check"></i><b>7.3</b> Multiple Regression</a><ul>
+<li class="chapter" data-level="7.3" data-path="linear-models.html"><a href="linear-models.html#multiple-regression"><i class="fa fa-check"></i><b>7.3</b> Multiple Regression</a>
+<ul>
 <li class="chapter" data-level="7.3.1" data-path="linear-models.html"><a href="linear-models.html#two-predictor-example"><i class="fa fa-check"></i><b>7.3.1</b> Two Predictor Example</a></li>
 <li class="chapter" data-level="7.3.2" data-path="linear-models.html"><a href="linear-models.html#interactions"><i class="fa fa-check"></i><b>7.3.2</b> Interactions</a></li>
 </ul></li>
 <li class="chapter" data-level="7.4" data-path="linear-models.html"><a href="linear-models.html#tabulating-the-models"><i class="fa fa-check"></i><b>7.4</b> Tabulating the Models</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="model-diagnostics.html"><a href="model-diagnostics.html"><i class="fa fa-check"></i><b>8</b> Model Diagnostics</a><ul>
+<li class="chapter" data-level="8" data-path="model-diagnostics.html"><a href="model-diagnostics.html"><i class="fa fa-check"></i><b>8</b> Model Diagnostics</a>
+<ul>
 <li class="chapter" data-level="8.1" data-path="model-diagnostics.html"><a href="model-diagnostics.html#assumptions-of-linear-models"><i class="fa fa-check"></i><b>8.1</b> Assumptions of Linear Models</a></li>
-<li class="chapter" data-level="8.2" data-path="model-diagnostics.html"><a href="model-diagnostics.html#diagnostic-tools"><i class="fa fa-check"></i><b>8.2</b> Diagnostic Tools</a><ul>
+<li class="chapter" data-level="8.2" data-path="model-diagnostics.html"><a href="model-diagnostics.html#diagnostic-tools"><i class="fa fa-check"></i><b>8.2</b> Diagnostic Tools</a>
+<ul>
 <li class="chapter" data-level="8.2.1" data-path="model-diagnostics.html"><a href="model-diagnostics.html#posterior-predictive-check-7"><i class="fa fa-check"></i><b>8.2.1</b> Posterior Predictive Check</a></li>
 <li class="chapter" data-level="8.2.2" data-path="model-diagnostics.html"><a href="model-diagnostics.html#marginal-model-plots"><i class="fa fa-check"></i><b>8.2.2</b> Marginal model plots</a></li>
 <li class="chapter" data-level="8.2.3" data-path="model-diagnostics.html"><a href="model-diagnostics.html#residual-plots"><i class="fa fa-check"></i><b>8.2.3</b> Residual plots</a></li>
@@ -285,54 +316,66 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="8.3" data-path="model-diagnostics.html"><a href="model-diagnostics.html#other-topics"><i class="fa fa-check"></i><b>8.3</b> Other Topics</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html"><i class="fa fa-check"></i><b>9</b> Model Comparison and Regularization</a><ul>
+<li class="chapter" data-level="9" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html"><i class="fa fa-check"></i><b>9</b> Model Comparison and Regularization</a>
+<ul>
 <li class="chapter" data-level="9.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#overfitting-and-underfitting"><i class="fa fa-check"></i><b>9.1</b> Overfitting and Underfitting</a></li>
 <li class="chapter" data-level="9.2" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#kullback-leibler-divergence"><i class="fa fa-check"></i><b>9.2</b> Kullback-Leibler Divergence</a></li>
-<li class="chapter" data-level="9.3" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#information-criteria"><i class="fa fa-check"></i><b>9.3</b> Information Criteria</a><ul>
+<li class="chapter" data-level="9.3" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#information-criteria"><i class="fa fa-check"></i><b>9.3</b> Information Criteria</a>
+<ul>
 <li class="chapter" data-level="9.3.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#experiment-on-deviance"><i class="fa fa-check"></i><b>9.3.1</b> Experiment on Deviance</a></li>
 </ul></li>
-<li class="chapter" data-level="9.4" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#information-criteria-1"><i class="fa fa-check"></i><b>9.4</b> Information Criteria</a><ul>
+<li class="chapter" data-level="9.4" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#information-criteria-1"><i class="fa fa-check"></i><b>9.4</b> Information Criteria</a>
+<ul>
 <li class="chapter" data-level="9.4.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#akaike-information-criteria-aic"><i class="fa fa-check"></i><b>9.4.1</b> Akaike Information Criteria (AIC)</a></li>
 <li class="chapter" data-level="9.4.2" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#deviance-information-criteria-dic"><i class="fa fa-check"></i><b>9.4.2</b> Deviance Information Criteria (DIC)</a></li>
 <li class="chapter" data-level="9.4.3" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#watanabe-akaike-information-criteria-waic"><i class="fa fa-check"></i><b>9.4.3</b> Watanabe-Akaike Information Criteria (WAIC)</a></li>
 <li class="chapter" data-level="9.4.4" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#leave-one-out-cross-validation"><i class="fa fa-check"></i><b>9.4.4</b> Leave-One-Out Cross Validation</a></li>
 <li class="chapter" data-level="9.4.5" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#example"><i class="fa fa-check"></i><b>9.4.5</b> Example</a></li>
 </ul></li>
-<li class="chapter" data-level="9.5" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#stackingmodel-averaging"><i class="fa fa-check"></i><b>9.5</b> Stacking/Model Averaging</a><ul>
+<li class="chapter" data-level="9.5" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#stackingmodel-averaging"><i class="fa fa-check"></i><b>9.5</b> Stacking/Model Averaging</a>
+<ul>
 <li class="chapter" data-level="9.5.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#model-weights"><i class="fa fa-check"></i><b>9.5.1</b> Model Weights</a></li>
 <li class="chapter" data-level="9.5.2" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#model-averaging"><i class="fa fa-check"></i><b>9.5.2</b> Model Averaging</a></li>
 <li class="chapter" data-level="9.5.3" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#stacking"><i class="fa fa-check"></i><b>9.5.3</b> Stacking</a></li>
 </ul></li>
-<li class="chapter" data-level="9.6" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#shrinkage-priors"><i class="fa fa-check"></i><b>9.6</b> Shrinkage Priors</a><ul>
+<li class="chapter" data-level="9.6" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#shrinkage-priors"><i class="fa fa-check"></i><b>9.6</b> Shrinkage Priors</a>
+<ul>
 <li class="chapter" data-level="9.6.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#number-of-parameters"><i class="fa fa-check"></i><b>9.6.1</b> Number of parameters</a></li>
 <li class="chapter" data-level="9.6.2" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#sparsity-inducing-priors"><i class="fa fa-check"></i><b>9.6.2</b> Sparsity-Inducing Priors</a></li>
 <li class="chapter" data-level="9.6.3" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#finnish-horseshoe"><i class="fa fa-check"></i><b>9.6.3</b> Finnish Horseshoe</a></li>
 </ul></li>
-<li class="chapter" data-level="9.7" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#variable-selection"><i class="fa fa-check"></i><b>9.7</b> Variable Selection</a><ul>
+<li class="chapter" data-level="9.7" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#variable-selection"><i class="fa fa-check"></i><b>9.7</b> Variable Selection</a>
+<ul>
 <li class="chapter" data-level="9.7.1" data-path="model-comparison-and-regularization.html"><a href="model-comparison-and-regularization.html#projection-based-method"><i class="fa fa-check"></i><b>9.7.1</b> Projection-Based Method</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html"><i class="fa fa-check"></i><b>10</b> Hierarchical &amp; Multilevel Models</a><ul>
-<li class="chapter" data-level="10.1" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#anova"><i class="fa fa-check"></i><b>10.1</b> ANOVA</a><ul>
+<li class="chapter" data-level="10" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html"><i class="fa fa-check"></i><b>10</b> Hierarchical &amp; Multilevel Models</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#anova"><i class="fa fa-check"></i><b>10.1</b> ANOVA</a>
+<ul>
 <li class="chapter" data-level="10.1.1" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#frequentist-anova"><i class="fa fa-check"></i><b>10.1.1</b> “Frequentist” ANOVA</a></li>
 <li class="chapter" data-level="10.1.2" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#bayesian-anova"><i class="fa fa-check"></i><b>10.1.2</b> Bayesian ANOVA</a></li>
 </ul></li>
-<li class="chapter" data-level="10.2" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#multilevel-modeling-mlm"><i class="fa fa-check"></i><b>10.2</b> Multilevel Modeling (MLM)</a><ul>
+<li class="chapter" data-level="10.2" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#multilevel-modeling-mlm"><i class="fa fa-check"></i><b>10.2</b> Multilevel Modeling (MLM)</a>
+<ul>
 <li class="chapter" data-level="10.2.1" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#examples-of-clustering"><i class="fa fa-check"></i><b>10.2.1</b> Examples of clustering</a></li>
 <li class="chapter" data-level="10.2.2" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#data-1"><i class="fa fa-check"></i><b>10.2.2</b> Data</a></li>
 <li class="chapter" data-level="10.2.3" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#intraclass-correlation"><i class="fa fa-check"></i><b>10.2.3</b> Intraclass correlation</a></li>
 <li class="chapter" data-level="10.2.4" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#is-mlm-needed"><i class="fa fa-check"></i><b>10.2.4</b> Is MLM needed?</a></li>
 </ul></li>
-<li class="chapter" data-level="10.3" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#varying-coefficients"><i class="fa fa-check"></i><b>10.3</b> Varying Coefficients</a><ul>
+<li class="chapter" data-level="10.3" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#varying-coefficients"><i class="fa fa-check"></i><b>10.3</b> Varying Coefficients</a>
+<ul>
 <li class="chapter" data-level="10.3.1" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#varying-intercepts"><i class="fa fa-check"></i><b>10.3.1</b> Varying Intercepts</a></li>
 <li class="chapter" data-level="10.3.2" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#varying-slopes"><i class="fa fa-check"></i><b>10.3.2</b> Varying Slopes</a></li>
 <li class="chapter" data-level="10.3.3" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#varying-sigma"><i class="fa fa-check"></i><b>10.3.3</b> Varying <span class="math inline">\(\sigma\)</span></a></li>
 </ul></li>
 <li class="chapter" data-level="10.4" data-path="hierarchical-multilevel-models.html"><a href="hierarchical-multilevel-models.html#model-comparisons"><i class="fa fa-check"></i><b>10.4</b> Model Comparisons</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>11</b> Generalized Linear Models</a><ul>
+<li class="chapter" data-level="11" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html"><i class="fa fa-check"></i><b>11</b> Generalized Linear Models</a>
+<ul>
 <li class="chapter" data-level="11.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#basics-of-generalized-linear-models"><i class="fa fa-check"></i><b>11.1</b> Basics of Generalized Linear Models</a></li>
-<li class="chapter" data-level="11.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#binary-logistic-regression"><i class="fa fa-check"></i><b>11.2</b> Binary Logistic Regression</a><ul>
+<li class="chapter" data-level="11.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#binary-logistic-regression"><i class="fa fa-check"></i><b>11.2</b> Binary Logistic Regression</a>
+<ul>
 <li class="chapter" data-level="11.2.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#the-logit-link"><i class="fa fa-check"></i><b>11.2.1</b> The logit link</a></li>
 <li class="chapter" data-level="11.2.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#choice-of-priors"><i class="fa fa-check"></i><b>11.2.2</b> Choice of Priors</a></li>
 <li class="chapter" data-level="11.2.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#interpreting-the-coefficients"><i class="fa fa-check"></i><b>11.2.3</b> Interpreting the coefficients</a></li>
@@ -341,20 +384,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="11.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#binomial-logistic-regression"><i class="fa fa-check"></i><b>11.3</b> Binomial Logistic Regression</a></li>
 <li class="chapter" data-level="11.4" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#probit-regression"><i class="fa fa-check"></i><b>11.4</b> Probit Regression</a></li>
-<li class="chapter" data-level="11.5" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#poisson-regression"><i class="fa fa-check"></i><b>11.5</b> Poisson Regression</a><ul>
+<li class="chapter" data-level="11.5" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#poisson-regression"><i class="fa fa-check"></i><b>11.5</b> Poisson Regression</a>
+<ul>
 <li class="chapter" data-level="11.5.1" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#interpretations-2"><i class="fa fa-check"></i><b>11.5.1</b> Interpretations</a></li>
 <li class="chapter" data-level="11.5.2" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#model-checking-2"><i class="fa fa-check"></i><b>11.5.2</b> Model Checking</a></li>
 <li class="chapter" data-level="11.5.3" data-path="generalized-linear-models.html"><a href="generalized-linear-models.html#other-models-in-glm"><i class="fa fa-check"></i><b>11.5.3</b> Other models in GLM</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="missing-data.html"><a href="missing-data.html"><i class="fa fa-check"></i><b>12</b> Missing Data</a><ul>
-<li class="chapter" data-level="12.1" data-path="missing-data.html"><a href="missing-data.html#missing-data-mechanisms"><i class="fa fa-check"></i><b>12.1</b> Missing Data Mechanisms</a><ul>
+<li class="chapter" data-level="12" data-path="missing-data.html"><a href="missing-data.html"><i class="fa fa-check"></i><b>12</b> Missing Data</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="missing-data.html"><a href="missing-data.html#missing-data-mechanisms"><i class="fa fa-check"></i><b>12.1</b> Missing Data Mechanisms</a>
+<ul>
 <li class="chapter" data-level="12.1.1" data-path="missing-data.html"><a href="missing-data.html#mcar-missing-completely-at-random"><i class="fa fa-check"></i><b>12.1.1</b> MCAR (Missing Completely at Random)</a></li>
 <li class="chapter" data-level="12.1.2" data-path="missing-data.html"><a href="missing-data.html#mar-missing-at-random"><i class="fa fa-check"></i><b>12.1.2</b> MAR (Missing At Random)</a></li>
 <li class="chapter" data-level="12.1.3" data-path="missing-data.html"><a href="missing-data.html#nmar-not-missing-at-random"><i class="fa fa-check"></i><b>12.1.3</b> NMAR (Not Missing At Random)</a></li>
 <li class="chapter" data-level="12.1.4" data-path="missing-data.html"><a href="missing-data.html#ignorable-missingness"><i class="fa fa-check"></i><b>12.1.4</b> Ignorable Missingness*</a></li>
 </ul></li>
-<li class="chapter" data-level="12.2" data-path="missing-data.html"><a href="missing-data.html#bayesian-approaches-for-missing-data"><i class="fa fa-check"></i><b>12.2</b> Bayesian Approaches for Missing Data</a><ul>
+<li class="chapter" data-level="12.2" data-path="missing-data.html"><a href="missing-data.html#bayesian-approaches-for-missing-data"><i class="fa fa-check"></i><b>12.2</b> Bayesian Approaches for Missing Data</a>
+<ul>
 <li class="chapter" data-level="12.2.1" data-path="missing-data.html"><a href="missing-data.html#complete-case-analysislistwise-deletion"><i class="fa fa-check"></i><b>12.2.1</b> Complete Case Analysis/Listwise Deletion</a></li>
 <li class="chapter" data-level="12.2.2" data-path="missing-data.html"><a href="missing-data.html#treat-missing-data-as-parameters"><i class="fa fa-check"></i><b>12.2.2</b> Treat Missing Data as Parameters</a></li>
 <li class="chapter" data-level="12.2.3" data-path="missing-data.html"><a href="missing-data.html#multiple-imputation"><i class="fa fa-check"></i><b>12.2.3</b> Multiple Imputation</a></li>
@@ -381,7 +428,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="model-diagnostics" class="section level1">
+<div id="model-diagnostics" class="section level1" number="8">
 <h1><span class="header-section-number">Chapter 8</span> Model Diagnostics</h1>
 <p>All statistical models are sets of assumptions about the data generating
 process, and estimation will be meaningless or misleading if theses assumptions
@@ -389,7 +436,7 @@ do not hold for the data. As we have discussed, choosing a good model is
 generally way more important than choosing a good prior. In this week we will
 learn some tools to check the validity of linear models. Most of them are
 similar to what you have learned in frequentist regression.</p>
-<div id="assumptions-of-linear-models" class="section level2">
+<div id="assumptions-of-linear-models" class="section level2" number="8.1">
 <h2><span class="header-section-number">8.1</span> Assumptions of Linear Models</h2>
 <p>The assumptions of the linear model is encoded in the model. The model is
 <span class="math display">\[\begin{align*}
@@ -427,56 +474,56 @@ is large enough (&gt; 30) and when the degree of nonnormality is small to
 moderate.</li>
 </ol>
 </div>
-<div id="diagnostic-tools" class="section level2">
+<div id="diagnostic-tools" class="section level2" number="8.2">
 <h2><span class="header-section-number">8.2</span> Diagnostic Tools</h2>
 <p>Now let’s review some tools for regression diagnostics for Bayesian regression.
 There are hundreds of plots available that I will not cover here, and you can
 treat what is discussed in this note as a minimal requirement for regression
 diagnostics. The first one is about a correct specification of the model, which
 can be partly assessed with posterior predictive check.</p>
-<div id="posterior-predictive-check-7" class="section level3">
+<div id="posterior-predictive-check-7" class="section level3" number="8.2.1">
 <h3><span class="header-section-number">8.2.1</span> Posterior Predictive Check</h3>
-<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="model-diagnostics.html#cb215-1"></a>kidiq &lt;-<span class="st"> </span>haven<span class="op">::</span><span class="kw">read_dta</span>(<span class="st">&quot;../data/kidiq.dta&quot;</span>)</span>
-<span id="cb215-2"><a href="model-diagnostics.html#cb215-2"></a>kidiq100 &lt;-<span class="st"> </span>kidiq <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb215-3"><a href="model-diagnostics.html#cb215-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mom_iq =</span> mom_iq <span class="op">/</span><span class="st"> </span><span class="dv">100</span>,  <span class="co"># divid mom_iq by 100</span></span>
-<span id="cb215-4"><a href="model-diagnostics.html#cb215-4"></a>         <span class="dt">kid_score =</span> kid_score <span class="op">/</span><span class="st"> </span><span class="dv">100</span>,   <span class="co"># divide kid_score by 100</span></span>
-<span id="cb215-5"><a href="model-diagnostics.html#cb215-5"></a>         <span class="dt">mom_iq_c =</span> mom_iq <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, </span>
-<span id="cb215-6"><a href="model-diagnostics.html#cb215-6"></a>         <span class="dt">mom_hs =</span> <span class="kw">factor</span>(mom_hs, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>)))</span></code></pre></div>
-<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="model-diagnostics.html#cb216-1"></a>m4 &lt;-<span class="st"> </span><span class="kw">brm</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_iq_c <span class="op">*</span><span class="st"> </span>mom_hs, <span class="dt">data =</span> kidiq100, </span>
-<span id="cb216-2"><a href="model-diagnostics.html#cb216-2"></a>          <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </span>
-<span id="cb216-3"><a href="model-diagnostics.html#cb216-3"></a>                    <span class="co"># set for all &quot;b&quot; coefficients</span></span>
-<span id="cb216-4"><a href="model-diagnostics.html#cb216-4"></a>                    <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>),</span>
-<span id="cb216-5"><a href="model-diagnostics.html#cb216-5"></a>                    <span class="co"># for interaction</span></span>
-<span id="cb216-6"><a href="model-diagnostics.html#cb216-6"></a>                    <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="fl">0.5</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>, </span>
-<span id="cb216-7"><a href="model-diagnostics.html#cb216-7"></a>                          <span class="dt">coef =</span> <span class="st">&quot;mom_iq_c:mom_hsyes&quot;</span>), </span>
-<span id="cb216-8"><a href="model-diagnostics.html#cb216-8"></a>                    <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </span>
-<span id="cb216-9"><a href="model-diagnostics.html#cb216-9"></a>          <span class="dt">seed =</span> <span class="dv">2302</span></span>
-<span id="cb216-10"><a href="model-diagnostics.html#cb216-10"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="model-diagnostics.html#cb211-1"></a>kidiq &lt;-<span class="st"> </span>haven<span class="op">::</span><span class="kw">read_dta</span>(<span class="st">&quot;../data/kidiq.dta&quot;</span>)</span>
+<span id="cb211-2"><a href="model-diagnostics.html#cb211-2"></a>kidiq100 &lt;-<span class="st"> </span>kidiq <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb211-3"><a href="model-diagnostics.html#cb211-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mom_iq =</span> mom_iq <span class="op">/</span><span class="st"> </span><span class="dv">100</span>,  <span class="co"># divid mom_iq by 100</span></span>
+<span id="cb211-4"><a href="model-diagnostics.html#cb211-4"></a>         <span class="dt">kid_score =</span> kid_score <span class="op">/</span><span class="st"> </span><span class="dv">100</span>,   <span class="co"># divide kid_score by 100</span></span>
+<span id="cb211-5"><a href="model-diagnostics.html#cb211-5"></a>         <span class="dt">mom_iq_c =</span> mom_iq <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, </span>
+<span id="cb211-6"><a href="model-diagnostics.html#cb211-6"></a>         <span class="dt">mom_hs =</span> <span class="kw">factor</span>(mom_hs, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;no&quot;</span>, <span class="st">&quot;yes&quot;</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="model-diagnostics.html#cb212-1"></a>m4 &lt;-<span class="st"> </span><span class="kw">brm</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_iq_c <span class="op">*</span><span class="st"> </span>mom_hs, <span class="dt">data =</span> kidiq100, </span>
+<span id="cb212-2"><a href="model-diagnostics.html#cb212-2"></a>          <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </span>
+<span id="cb212-3"><a href="model-diagnostics.html#cb212-3"></a>                    <span class="co"># set for all &quot;b&quot; coefficients</span></span>
+<span id="cb212-4"><a href="model-diagnostics.html#cb212-4"></a>                    <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>),</span>
+<span id="cb212-5"><a href="model-diagnostics.html#cb212-5"></a>                    <span class="co"># for interaction</span></span>
+<span id="cb212-6"><a href="model-diagnostics.html#cb212-6"></a>                    <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="fl">0.5</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>, </span>
+<span id="cb212-7"><a href="model-diagnostics.html#cb212-7"></a>                          <span class="dt">coef =</span> <span class="st">&quot;mom_iq_c:mom_hsyes&quot;</span>), </span>
+<span id="cb212-8"><a href="model-diagnostics.html#cb212-8"></a>                    <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </span>
+<span id="cb212-9"><a href="model-diagnostics.html#cb212-9"></a>          <span class="dt">seed =</span> <span class="dv">2302</span></span>
+<span id="cb212-10"><a href="model-diagnostics.html#cb212-10"></a>)</span></code></pre></div>
 <p>Below is the posterior predictive graphical check for the interaction model
 we fit last week (with centering):</p>
-<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="model-diagnostics.html#cb217-1"></a><span class="kw">pp_check</span>(m4, <span class="dt">nsamples =</span> <span class="dv">100</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="model-diagnostics.html#cb213-1"></a><span class="kw">pp_check</span>(m4, <span class="dt">nsamples =</span> <span class="dv">100</span>)</span></code></pre></div>
 <p><img src="08_model_diagnostics_files/figure-html/ppc-m4-1.png" width="384" /></p>
 <p>Based on the graphical check, we do not see any major systematic discrepancies
 of our data from what can be predicted from our model.</p>
 <p>We should do the posterior predictive check with test statistics too. The
 following functions show the mean, maximum value, and minimum value of the
 outcome.</p>
-<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="model-diagnostics.html#cb218-1"></a><span class="co"># PPC for the mean (it should always fit)</span></span>
-<span id="cb218-2"><a href="model-diagnostics.html#cb218-2"></a><span class="kw">pp_check</span>(m4, <span class="dt">type =</span> <span class="st">&quot;stat_grouped&quot;</span>, <span class="dt">stat =</span> <span class="st">&quot;mean&quot;</span>, <span class="dt">group =</span> <span class="st">&quot;mom_hs&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="model-diagnostics.html#cb214-1"></a><span class="co"># PPC for the mean (it should always fit)</span></span>
+<span id="cb214-2"><a href="model-diagnostics.html#cb214-2"></a><span class="kw">pp_check</span>(m4, <span class="dt">type =</span> <span class="st">&quot;stat_grouped&quot;</span>, <span class="dt">stat =</span> <span class="st">&quot;mean&quot;</span>, <span class="dt">group =</span> <span class="st">&quot;mom_hs&quot;</span>)</span></code></pre></div>
 <pre><code>&gt;# Using all posterior samples for ppc type &#39;stat_grouped&#39; by default.</code></pre>
 <pre><code>&gt;# `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="08_model_diagnostics_files/figure-html/ppc-m4-stat-1.png" width="432" /></p>
-<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="model-diagnostics.html#cb221-1"></a><span class="co"># PPC for the maximum and minimum values</span></span>
-<span id="cb221-2"><a href="model-diagnostics.html#cb221-2"></a><span class="kw">pp_check</span>(m4, <span class="dt">type =</span> <span class="st">&quot;stat_2d&quot;</span>, <span class="dt">stat =</span> <span class="kw">c</span>(<span class="st">&quot;max&quot;</span>, <span class="st">&quot;min&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="model-diagnostics.html#cb217-1"></a><span class="co"># PPC for the maximum and minimum values</span></span>
+<span id="cb217-2"><a href="model-diagnostics.html#cb217-2"></a><span class="kw">pp_check</span>(m4, <span class="dt">type =</span> <span class="st">&quot;stat_2d&quot;</span>, <span class="dt">stat =</span> <span class="kw">c</span>(<span class="st">&quot;max&quot;</span>, <span class="st">&quot;min&quot;</span>))</span></code></pre></div>
 <pre><code>&gt;# Using all posterior samples for ppc type &#39;stat_2d&#39; by default.</code></pre>
 <p><img src="08_model_diagnostics_files/figure-html/ppc-m4-stat-2.png" width="432" /></p>
 <p>Here is a ribbon plot to check for outliers:</p>
-<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="model-diagnostics.html#cb223-1"></a><span class="kw">pp_check</span>(m4, <span class="dt">type =</span> <span class="st">&quot;ribbon_grouped&quot;</span>, <span class="dt">x =</span> <span class="st">&quot;mom_iq_c&quot;</span>, <span class="dt">group =</span> <span class="st">&quot;mom_hs&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="model-diagnostics.html#cb219-1"></a><span class="kw">pp_check</span>(m4, <span class="dt">type =</span> <span class="st">&quot;ribbon_grouped&quot;</span>, <span class="dt">x =</span> <span class="st">&quot;mom_iq_c&quot;</span>, <span class="dt">group =</span> <span class="st">&quot;mom_hs&quot;</span>)</span></code></pre></div>
 <pre><code>&gt;# Using all posterior samples for ppc type &#39;ribbon_grouped&#39; by default.</code></pre>
 <p><img src="08_model_diagnostics_files/figure-html/ppc-m4-ribbon-1.png" width="672" /></p>
 <p>Some points are outside the 90% predictive intervals.</p>
 </div>
-<div id="marginal-model-plots" class="section level3">
+<div id="marginal-model-plots" class="section level3" number="8.2.2">
 <h3><span class="header-section-number">8.2.2</span> Marginal model plots</h3>
 <p>To check the linearity assumption, we need to make sure that the conditional
 mean of <span class="math inline">\(Y\)</span> fit according to the model. A marginal model plot compares the
@@ -484,7 +531,7 @@ model predicted relationship between the outcome and each predictor, and the
 relationship obtained using nonparametric methods with smoothing. There is not a
 built-in function for marginal model plot in R for Bayesian regression, but
 it’s available in the R function <code>mmp_brm</code> I wrote.</p>
-<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="model-diagnostics.html#cb225-1"></a><span class="kw">mmp_brm</span>(m4, <span class="dt">x =</span> <span class="st">&quot;mom_iq_c&quot;</span>, <span class="dt">prob =</span> <span class="fl">.95</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="model-diagnostics.html#cb221-1"></a><span class="kw">mmp_brm</span>(m4, <span class="dt">x =</span> <span class="st">&quot;mom_iq_c&quot;</span>, <span class="dt">prob =</span> <span class="fl">.95</span>)</span></code></pre></div>
 <pre><code>&gt;# `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;
 &gt;# `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</code></pre>
 <p><img src="08_model_diagnostics_files/figure-html/mmp-m4-1.png" width="432" /></p>
@@ -501,7 +548,7 @@ predictive interval band. In this example we don’t see a great problem of
 outliers, and generally a few outliers would be okay with a moderate to large
 sample size.</p>
 </div>
-<div id="residual-plots" class="section level3">
+<div id="residual-plots" class="section level3" number="8.2.3">
 <h3><span class="header-section-number">8.2.3</span> Residual plots</h3>
 <p>For regression analyses one can learn a lot about model fit from the residuals,
 which is <span class="math inline">\(y_i - \tilde{y}_i | \theta\)</span>, i.e., subtracting the observed <span class="math inline">\(y_i\)</span>
@@ -511,27 +558,27 @@ posterior distribution for each residual. Below is a check of the average
 residual <span class="math inline">\(Y\)</span> (i.e., <span class="math inline">\(Y\)</span> - <span class="math inline">\(\hat Y\)</span>) and the true value of <span class="math inline">\(Y\)</span>. If the model fit
 the data well, the points should be scattered with no specific pattern, like the
 graph below:</p>
-<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="model-diagnostics.html#cb227-1"></a><span class="kw">pp_check</span>(m4, <span class="dt">type =</span> <span class="st">&quot;error_scatter_avg_vs_x&quot;</span>, <span class="dt">size =</span> <span class="fl">1.1</span>, </span>
-<span id="cb227-2"><a href="model-diagnostics.html#cb227-2"></a>         <span class="dt">x =</span> <span class="st">&quot;mom_iq_c&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="model-diagnostics.html#cb223-1"></a><span class="kw">pp_check</span>(m4, <span class="dt">type =</span> <span class="st">&quot;error_scatter_avg_vs_x&quot;</span>, <span class="dt">size =</span> <span class="fl">1.1</span>, </span>
+<span id="cb223-2"><a href="model-diagnostics.html#cb223-2"></a>         <span class="dt">x =</span> <span class="st">&quot;mom_iq_c&quot;</span>)</span></code></pre></div>
 <pre><code>&gt;# Using all posterior samples for ppc type &#39;error_scatter_avg_vs_x&#39; by default.</code></pre>
 <p><img src="08_model_diagnostics_files/figure-html/ppc-m4-error-x-1.png" width="336" /></p>
 <p>No big problem was found in the residuals. If you see that the <em>SD</em> of the
 residuals is not uniform, or the residuals have some non-linear relationships
 with the predictor, there can be some problems.</p>
-<div id="standardized-residuals" class="section level4">
+<div id="standardized-residuals" class="section level4" number="8.2.3.1">
 <h4><span class="header-section-number">8.2.3.1</span> Standardized Residuals</h4>
 <p>There are no intrinsic way to standardize the residuals in Bayesian methods, and
 it’s not necessary to standardize them. However, it’s easier to compare with
 frequentist results to flag cases with standardized residuals larger than 3 or 4
 in standardized values. The plot below shows the standardized residuals against
 the predicted <span class="math inline">\(y\)</span> values.</p>
-<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="model-diagnostics.html#cb229-1"></a>res_df &lt;-<span class="st"> </span>m4<span class="op">$</span>data <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb229-2"><a href="model-diagnostics.html#cb229-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">predict_y =</span> <span class="kw">predict</span>(m4)[ , <span class="st">&quot;Estimate&quot;</span>], </span>
-<span id="cb229-3"><a href="model-diagnostics.html#cb229-3"></a>         <span class="dt">std_resid =</span> <span class="kw">residuals</span>(m4, <span class="dt">type =</span> <span class="st">&quot;pearson&quot;</span>)[ , <span class="st">&quot;Estimate&quot;</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="model-diagnostics.html#cb225-1"></a>res_df &lt;-<span class="st"> </span>m4<span class="op">$</span>data <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb225-2"><a href="model-diagnostics.html#cb225-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">predict_y =</span> <span class="kw">predict</span>(m4)[ , <span class="st">&quot;Estimate&quot;</span>], </span>
+<span id="cb225-3"><a href="model-diagnostics.html#cb225-3"></a>         <span class="dt">std_resid =</span> <span class="kw">residuals</span>(m4, <span class="dt">type =</span> <span class="st">&quot;pearson&quot;</span>)[ , <span class="st">&quot;Estimate&quot;</span>])</span></code></pre></div>
 <pre><code>&gt;# Warning: Type &#39;pearson&#39; is deprecated and will be removed in the future.</code></pre>
-<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="model-diagnostics.html#cb231-1"></a><span class="kw">ggplot</span>(res_df, </span>
-<span id="cb231-2"><a href="model-diagnostics.html#cb231-2"></a>       <span class="kw">aes</span>(predict_y, std_resid)) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb231-3"><a href="model-diagnostics.html#cb231-3"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="fl">0.8</span>) <span class="op">+</span><span class="st"> </span><span class="kw">stat_smooth</span>(<span class="dt">se =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="model-diagnostics.html#cb227-1"></a><span class="kw">ggplot</span>(res_df, </span>
+<span id="cb227-2"><a href="model-diagnostics.html#cb227-2"></a>       <span class="kw">aes</span>(predict_y, std_resid)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb227-3"><a href="model-diagnostics.html#cb227-3"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="fl">0.8</span>) <span class="op">+</span><span class="st"> </span><span class="kw">stat_smooth</span>(<span class="dt">se =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
 <pre><code>&gt;# `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</code></pre>
 <p><img src="08_model_diagnostics_files/figure-html/std-resid-m4-1.png" width="384" /></p>
 <p>All points are within the -3 to 3 range, so no big issues with outliers.
@@ -543,7 +590,7 @@ misspecified and some additional predictors or nonlinear terms should be
 included.</p>
 </div>
 </div>
-<div id="multicollinearity" class="section level3">
+<div id="multicollinearity" class="section level3" number="8.2.4">
 <h3><span class="header-section-number">8.2.4</span> Multicollinearity</h3>
 <p>Strictly speaking, multicollinearity is not an assumption of regression.
 However, especially in frequentist analysis, having predictors that are strongly
@@ -558,10 +605,10 @@ deviation [which sounds like an important research project].
 <!-- inflation factor (VIF), which will indicate some problem if VIF > 5. --></p>
 <p>You can look at the posterior density of the coefficients to see how correlated
 they are:</p>
-<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="model-diagnostics.html#cb233-1"></a><span class="kw">pairs</span>(m4, <span class="dt">pars =</span> <span class="st">&quot;b&quot;</span>, </span>
-<span id="cb233-2"><a href="model-diagnostics.html#cb233-2"></a>      <span class="dt">off_diag_args =</span>  <span class="co"># arguments of the scatterplots</span></span>
-<span id="cb233-3"><a href="model-diagnostics.html#cb233-3"></a>        <span class="kw">list</span>(<span class="dt">size =</span> <span class="fl">0.5</span>,  <span class="co"># point size</span></span>
-<span id="cb233-4"><a href="model-diagnostics.html#cb233-4"></a>             <span class="dt">alpha =</span> <span class="fl">0.25</span>))  <span class="co"># transparency</span></span></code></pre></div>
+<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="model-diagnostics.html#cb229-1"></a><span class="kw">pairs</span>(m4, <span class="dt">pars =</span> <span class="st">&quot;b&quot;</span>, </span>
+<span id="cb229-2"><a href="model-diagnostics.html#cb229-2"></a>      <span class="dt">off_diag_args =</span>  <span class="co"># arguments of the scatterplots</span></span>
+<span id="cb229-3"><a href="model-diagnostics.html#cb229-3"></a>        <span class="kw">list</span>(<span class="dt">size =</span> <span class="fl">0.5</span>,  <span class="co"># point size</span></span>
+<span id="cb229-4"><a href="model-diagnostics.html#cb229-4"></a>             <span class="dt">alpha =</span> <span class="fl">0.25</span>))  <span class="co"># transparency</span></span></code></pre></div>
 <p><img src="08_model_diagnostics_files/figure-html/pairs-m4-1.png" width="720" /></p>
 <p>If some coefficients are particularly strongly correlated, you may need to
 think about using a stronger prior or combining some predictors. Principal
@@ -571,7 +618,7 @@ it’s still okay.</p>
 <!-- centering. If `mom_hs` is also centered, the VIFs will be smaller. However,  -->
 <!-- the results will be equivalent with and without centering.  -->
 </div>
-<div id="robust-models" class="section level3">
+<div id="robust-models" class="section level3" number="8.2.5">
 <h3><span class="header-section-number">8.2.5</span> Robust Models</h3>
 <p>Robustness refers to the degree to which the results of statistical analyses
 change with assumption violations; a robust method would give similar
@@ -587,38 +634,37 @@ will be considered an influential observation because it can have a relatively
 large influence on the regression line.</p>
 <pre><code>&gt;# `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <p><img src="08_model_diagnostics_files/figure-html/unnamed-chunk-1-1.png" width="384" /></p>
-<div id="students-t-regression" class="section level4">
+<div id="students-t-regression" class="section level4" number="8.2.5.1">
 <h4><span class="header-section-number">8.2.5.1</span> Student’s <span class="math inline">\(t\)</span> regression</h4>
 <p>One relatively straightforward way to extend the normal linear model to one
 with a <span class="math inline">\(t\)</span> likelihood:</p>
-<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="model-diagnostics.html#cb235-1"></a>m4t &lt;-<span class="st"> </span><span class="kw">brm</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_iq_c <span class="op">*</span><span class="st"> </span>mom_hs, <span class="dt">data =</span> kidiq100, </span>
-<span id="cb235-2"><a href="model-diagnostics.html#cb235-2"></a>           <span class="dt">family =</span> <span class="kw">student</span>(),</span>
-<span id="cb235-3"><a href="model-diagnostics.html#cb235-3"></a>           <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </span>
-<span id="cb235-4"><a href="model-diagnostics.html#cb235-4"></a>                     <span class="co"># set for all &quot;b&quot; coefficients</span></span>
-<span id="cb235-5"><a href="model-diagnostics.html#cb235-5"></a>                     <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>),</span>
-<span id="cb235-6"><a href="model-diagnostics.html#cb235-6"></a>                     <span class="co"># for interaction</span></span>
-<span id="cb235-7"><a href="model-diagnostics.html#cb235-7"></a>                     <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="fl">0.5</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>, </span>
-<span id="cb235-8"><a href="model-diagnostics.html#cb235-8"></a>                           <span class="dt">coef =</span> <span class="st">&quot;mom_iq_c:mom_hsyes&quot;</span>), </span>
-<span id="cb235-9"><a href="model-diagnostics.html#cb235-9"></a>                     <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </span>
-<span id="cb235-10"><a href="model-diagnostics.html#cb235-10"></a>           <span class="dt">seed =</span> <span class="dv">2302</span></span>
-<span id="cb235-11"><a href="model-diagnostics.html#cb235-11"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="model-diagnostics.html#cb231-1"></a>m4t &lt;-<span class="st"> </span><span class="kw">brm</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_iq_c <span class="op">*</span><span class="st"> </span>mom_hs, <span class="dt">data =</span> kidiq100, </span>
+<span id="cb231-2"><a href="model-diagnostics.html#cb231-2"></a>           <span class="dt">family =</span> <span class="kw">student</span>(),</span>
+<span id="cb231-3"><a href="model-diagnostics.html#cb231-3"></a>           <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </span>
+<span id="cb231-4"><a href="model-diagnostics.html#cb231-4"></a>                     <span class="co"># set for all &quot;b&quot; coefficients</span></span>
+<span id="cb231-5"><a href="model-diagnostics.html#cb231-5"></a>                     <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>),</span>
+<span id="cb231-6"><a href="model-diagnostics.html#cb231-6"></a>                     <span class="co"># for interaction</span></span>
+<span id="cb231-7"><a href="model-diagnostics.html#cb231-7"></a>                     <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="fl">0.5</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>, </span>
+<span id="cb231-8"><a href="model-diagnostics.html#cb231-8"></a>                           <span class="dt">coef =</span> <span class="st">&quot;mom_iq_c:mom_hsyes&quot;</span>), </span>
+<span id="cb231-9"><a href="model-diagnostics.html#cb231-9"></a>                     <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;sigma&quot;</span>)), </span>
+<span id="cb231-10"><a href="model-diagnostics.html#cb231-10"></a>           <span class="dt">seed =</span> <span class="dv">2302</span></span>
+<span id="cb231-11"><a href="model-diagnostics.html#cb231-11"></a>)</span></code></pre></div>
 <p>In <code>brms</code>, the default prior is <span class="math inline">\(\nu \sim \mathrm{Gamma}(2, 0.1)\)</span>, with a lower bound of 1:</p>
-<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="model-diagnostics.html#cb236-1"></a><span class="kw">ggplot</span>(<span class="kw">tibble</span>(<span class="dt">nu =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">50</span>)), <span class="kw">aes</span>(<span class="dt">x =</span> nu)) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb236-2"><a href="model-diagnostics.html#cb236-2"></a><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> <span class="cf">function</span>(x) {</span>
-<span id="cb236-3"><a href="model-diagnostics.html#cb236-3"></a>    <span class="kw">dgamma</span>(x, <span class="dv">2</span>, <span class="fl">0.1</span>) <span class="op">/</span><span class="st"> </span><span class="kw">pgamma</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="fl">0.1</span>, <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb236-4"><a href="model-diagnostics.html#cb236-4"></a>  })</span></code></pre></div>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="model-diagnostics.html#cb232-1"></a><span class="kw">ggplot</span>(<span class="kw">tibble</span>(<span class="dt">nu =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">50</span>)), <span class="kw">aes</span>(<span class="dt">x =</span> nu)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb232-2"><a href="model-diagnostics.html#cb232-2"></a><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> <span class="cf">function</span>(x) {</span>
+<span id="cb232-3"><a href="model-diagnostics.html#cb232-3"></a>    <span class="kw">dgamma</span>(x, <span class="dv">2</span>, <span class="fl">0.1</span>) <span class="op">/</span><span class="st"> </span><span class="kw">pgamma</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="fl">0.1</span>, <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb232-4"><a href="model-diagnostics.html#cb232-4"></a>  })</span></code></pre></div>
 <p><img src="08_model_diagnostics_files/figure-html/plot-gamma-prior-1.png" width="288" /></p>
 <p>The data did not indicate strong outlier influence, as you can see from the
 <code>nu</code> parameter:</p>
-<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="model-diagnostics.html#cb237-1"></a><span class="kw">stanplot</span>(m4t, <span class="dt">pars =</span> <span class="st">&quot;nu&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;areas&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="model-diagnostics.html#cb233-1"></a><span class="kw">stanplot</span>(m4t, <span class="dt">pars =</span> <span class="st">&quot;nu&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;areas&quot;</span>)</span></code></pre></div>
 <pre><code>&gt;# Warning: Method &#39;stanplot&#39; is deprecated. Please use &#39;mcmc_plot&#39; instead.</code></pre>
-<pre><code>&gt;# Warning: `expand_scale()` is deprecated; use `expansion()` instead.</code></pre>
 <p><img src="08_model_diagnostics_files/figure-html/plot-m4t-1.png" width="384" /></p>
 <p>which is pretty large.</p>
 <p>If you compared the results of the normal model and the <span class="math inline">\(t\)</span> model the results
 appeared similar:</p>
-<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="model-diagnostics.html#cb240-1"></a><span class="kw">source</span>(<span class="st">&quot;../codes/extract_brmsfit.R&quot;</span>)</span>
-<span id="cb240-2"><a href="model-diagnostics.html#cb240-2"></a>texreg<span class="op">::</span><span class="kw">screenreg</span>(<span class="kw">map</span>(<span class="kw">list</span>(m4, m4t), extract_brmsfit))</span></code></pre></div>
+<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="model-diagnostics.html#cb235-1"></a><span class="kw">source</span>(<span class="st">&quot;extract_brmsfit.R&quot;</span>)</span>
+<span id="cb235-2"><a href="model-diagnostics.html#cb235-2"></a>texreg<span class="op">::</span><span class="kw">screenreg</span>(<span class="kw">map</span>(<span class="kw">list</span>(m4, m4t), extract_brmsfit))</span></code></pre></div>
 <pre><code>&gt;# 
 &gt;# ==================================================
 &gt;#                     Model 1         Model 2       
@@ -637,11 +683,11 @@ appeared similar:</p>
 &gt;# loo IC              -252.03         -250.91       
 &gt;# WAIC                -252.05         -250.93       
 &gt;# ==================================================
-&gt;# * 0 outside the confidence interval</code></pre>
+&gt;# * Null hypothesis value outside the confidence interval.</code></pre>
 <p>The LOOIC and the WAIC reported, which we will talk about in the next set of
 slides, but generally we prefer a model with a smaller value of LOOIC and WAIC.</p>
 </div>
-<div id="modeling-the-variability" class="section level4">
+<div id="modeling-the-variability" class="section level4" number="8.2.5.2">
 <h4><span class="header-section-number">8.2.5.2</span> Modeling the variability</h4>
 <p>In the linear model, we have assumed that the <span class="math inline">\(\sigma\)</span> parameter is the same for
 every individual, which is the equal variance assumption. However, such an
@@ -654,21 +700,21 @@ problem). For example, you can look at the residuals in the following:</p>
 <p>If you suspect that the spreadness (<span class="math inline">\(\sigma\)</span>) depends on some predictors, you
 can run the following <code>brms</code> model to see whether the spreadness differs across
 <code>mom_hs</code> levels:</p>
-<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="model-diagnostics.html#cb243-1"></a>m4h &lt;-<span class="st"> </span><span class="kw">brm</span>(<span class="kw">bf</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_iq_c <span class="op">*</span><span class="st"> </span>mom_hs, </span>
-<span id="cb243-2"><a href="model-diagnostics.html#cb243-2"></a>              sigma <span class="op">~</span><span class="st"> </span>mom_hs), </span>
-<span id="cb243-3"><a href="model-diagnostics.html#cb243-3"></a>           <span class="dt">data =</span> kidiq100, </span>
-<span id="cb243-4"><a href="model-diagnostics.html#cb243-4"></a>           <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </span>
-<span id="cb243-5"><a href="model-diagnostics.html#cb243-5"></a>                     <span class="co"># set for all &quot;b&quot; coefficients</span></span>
-<span id="cb243-6"><a href="model-diagnostics.html#cb243-6"></a>                     <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>),</span>
-<span id="cb243-7"><a href="model-diagnostics.html#cb243-7"></a>                     <span class="co"># for interaction</span></span>
-<span id="cb243-8"><a href="model-diagnostics.html#cb243-8"></a>                     <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="fl">0.5</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>, </span>
-<span id="cb243-9"><a href="model-diagnostics.html#cb243-9"></a>                           <span class="dt">coef =</span> <span class="st">&quot;mom_iq_c:mom_hsyes&quot;</span>), </span>
-<span id="cb243-10"><a href="model-diagnostics.html#cb243-10"></a>                     <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">dpar =</span> <span class="st">&quot;sigma&quot;</span>, </span>
-<span id="cb243-11"><a href="model-diagnostics.html#cb243-11"></a>                           <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>), </span>
-<span id="cb243-12"><a href="model-diagnostics.html#cb243-12"></a>                     <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">dpar =</span> <span class="st">&quot;sigma&quot;</span>, </span>
-<span id="cb243-13"><a href="model-diagnostics.html#cb243-13"></a>                           <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>)), </span>
-<span id="cb243-14"><a href="model-diagnostics.html#cb243-14"></a>           <span class="dt">seed =</span> <span class="dv">2302</span></span>
-<span id="cb243-15"><a href="model-diagnostics.html#cb243-15"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="model-diagnostics.html#cb238-1"></a>m4h &lt;-<span class="st"> </span><span class="kw">brm</span>(<span class="kw">bf</span>(kid_score <span class="op">~</span><span class="st"> </span>mom_iq_c <span class="op">*</span><span class="st"> </span>mom_hs, </span>
+<span id="cb238-2"><a href="model-diagnostics.html#cb238-2"></a>              sigma <span class="op">~</span><span class="st"> </span>mom_hs), </span>
+<span id="cb238-3"><a href="model-diagnostics.html#cb238-3"></a>           <span class="dt">data =</span> kidiq100, </span>
+<span id="cb238-4"><a href="model-diagnostics.html#cb238-4"></a>           <span class="dt">prior =</span> <span class="kw">c</span>(<span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>), </span>
+<span id="cb238-5"><a href="model-diagnostics.html#cb238-5"></a>                     <span class="co"># set for all &quot;b&quot; coefficients</span></span>
+<span id="cb238-6"><a href="model-diagnostics.html#cb238-6"></a>                     <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>),</span>
+<span id="cb238-7"><a href="model-diagnostics.html#cb238-7"></a>                     <span class="co"># for interaction</span></span>
+<span id="cb238-8"><a href="model-diagnostics.html#cb238-8"></a>                     <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="fl">0.5</span>), <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>, </span>
+<span id="cb238-9"><a href="model-diagnostics.html#cb238-9"></a>                           <span class="dt">coef =</span> <span class="st">&quot;mom_iq_c:mom_hsyes&quot;</span>), </span>
+<span id="cb238-10"><a href="model-diagnostics.html#cb238-10"></a>                     <span class="kw">prior</span>(<span class="kw">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">dpar =</span> <span class="st">&quot;sigma&quot;</span>, </span>
+<span id="cb238-11"><a href="model-diagnostics.html#cb238-11"></a>                           <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>), </span>
+<span id="cb238-12"><a href="model-diagnostics.html#cb238-12"></a>                     <span class="kw">prior</span>(<span class="kw">student_t</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">dpar =</span> <span class="st">&quot;sigma&quot;</span>, </span>
+<span id="cb238-13"><a href="model-diagnostics.html#cb238-13"></a>                           <span class="dt">class =</span> <span class="st">&quot;Intercept&quot;</span>)), </span>
+<span id="cb238-14"><a href="model-diagnostics.html#cb238-14"></a>           <span class="dt">seed =</span> <span class="dv">2302</span></span>
+<span id="cb238-15"><a href="model-diagnostics.html#cb238-15"></a>)</span></code></pre></div>
 <p>So not much evidence for heterogeneity of variance across <code>mom_hs</code> in this case.
 The coefficients were expressed in log unit, so you need to exponentiate the
 coefficients to get back the <span class="math inline">\(\sigma\)</span> coefficient. Specifically,</p>
@@ -684,7 +730,7 @@ were not much evidence that <span class="math inline">\(\sigma\)</span> is diffe
 </div>
 </div>
 </div>
-<div id="other-topics" class="section level2">
+<div id="other-topics" class="section level2" number="8.3">
 <h2><span class="header-section-number">8.3</span> Other Topics</h2>
 <p>There are other topics we have not discussed here for diagnostics of multiple
 regression, but are just as important as in frequentist analyses. These topics

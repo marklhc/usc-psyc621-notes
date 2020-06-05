@@ -44,3 +44,13 @@ based on the book by @mcelreath2016statistical, the `brms` package
 [@Burkner2017], and the [STAN language](https://mc-stan.org/). Please [contact
 me](mailto:hokchiol@usc.edu) for any errors (as I'm sure there are plenty of
 them).
+
+You can download the EPUB version of the notes with the "Download" button. 
+
+In some chapters I sourced some extra R codes. They can be found [here](https://github.com/marklhc/usc-psyc621-notes). 
+
+The notes were last built with:
+
+```{r}
+sessioninfo::session_info()
+```

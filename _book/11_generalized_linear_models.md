@@ -62,7 +62,7 @@ marginalp %>%
 ># No summary function supplied, defaulting to `mean_se()`
 ```
 
-<img src="11_generalized_linear_models_files/figure-html/marginalp_describe-1.png" width="720" />
+![](11_generalized_linear_models_files/figure-epub3/marginalp_describe-1.png)<!-- -->
 
 The error bar is pretty high for Cognitive Psychology, because only 
 5.922% of the articles in 
@@ -114,7 +114,7 @@ pp_check(m1_norm, nsamples = 100)
 ```
 
 <div class="figure">
-<img src="11_generalized_linear_models_files/figure-html/ppc_normal_hist-1.png" alt="Posterior predictive graphical check with the normal regression model of Year predicting whether a marginal $p$ value was reported." width="672" />
+<img src="11_generalized_linear_models_files/figure-epub3/ppc_normal_hist-1.png" alt="Posterior predictive graphical check with the normal regression model of Year predicting whether a marginal $p$ value was reported."  />
 <p class="caption">(\#fig:ppc_normal_hist)Posterior predictive graphical check with the normal regression model of Year predicting whether a marginal $p$ value was reported.</p>
 </div>
 
@@ -134,7 +134,7 @@ mmp_brm(m1_norm, x = "Year10", plot_pi = TRUE, jitter = TRUE,
 ```
 
 <div class="figure">
-<img src="11_generalized_linear_models_files/figure-html/pi_m1-1.png" alt="Marginal model plot of the normal regression model of Year predicting whether a marginal $p$ value was reported." width="672" />
+<img src="11_generalized_linear_models_files/figure-epub3/pi_m1-1.png" alt="Marginal model plot of the normal regression model of Year predicting whether a marginal $p$ value was reported."  />
 <p class="caption">(\#fig:pi_m1)Marginal model plot of the normal regression model of Year predicting whether a marginal $p$ value was reported.</p>
 </div>
 
@@ -219,7 +219,7 @@ grid.arrange(p1, p2, nrow = 1)
 ```
 
 <div class="figure">
-<img src="11_generalized_linear_models_files/figure-html/logit_link-1.png" alt="(Left) Logit link of $\eta = \logit(\mu)$; (Right) inverse logit link of $\mu = \logit^{-1}(\eta)$." width="576" />
+<img src="11_generalized_linear_models_files/figure-epub3/logit_link-1.png" alt="(Left) Logit link of $\eta = \logit(\mu)$; (Right) inverse logit link of $\mu = \logit^{-1}(\eta)$."  />
 <p class="caption">(\#fig:logit_link)(Left) Logit link of $\eta = \logit(\mu)$; (Right) inverse logit link of $\mu = \logit^{-1}(\eta)$.</p>
 </div>
 
@@ -270,7 +270,7 @@ m1_bern <- brm(marginal_p ~ Year10,
 plot(m1_bern)
 ```
 
-<img src="11_generalized_linear_models_files/figure-html/plot_m1_bern-1.png" width="528" />
+![](11_generalized_linear_models_files/figure-epub3/plot_m1_bern-1.png)<!-- -->
 
 Note that in `brms` we used `family = bernoulli()`. In other R functions, such
 as `glm`, they do not distinguish between bernoulli and Binomial and only
@@ -315,11 +315,7 @@ mcmc_areas(m1_bern, pars = "b_Intercept",
            transformations = list("b_Intercept" = "plogis"), bw = "SJ")
 ```
 
-```
-># Warning: `expand_scale()` is deprecated; use `expansion()` instead.
-```
-
-<img src="11_generalized_linear_models_files/figure-html/areas_logistic_beta0-1.png" width="672" />
+![](11_generalized_linear_models_files/figure-epub3/areas_logistic_beta0-1.png)<!-- -->
 
 A simpler but not precise method is to directly obtain an estimate of 
 $\logistic(\beta_0)$ as $\logistic(-1.348) = 
@@ -443,7 +439,7 @@ mmp_brm(m1_bern, x = "Year10", plot_pi = FALSE, jitter = TRUE, smooth_method = "
 ```
 
 <div class="figure">
-<img src="11_generalized_linear_models_files/figure-html/pi_m1_bern-1.png" alt="Marginal model plot of the binary logistic regression model of Year predicting whether a marginal $p$ value was reported." width="672" />
+<img src="11_generalized_linear_models_files/figure-epub3/pi_m1_bern-1.png" alt="Marginal model plot of the binary logistic regression model of Year predicting whether a marginal $p$ value was reported."  />
 <p class="caption">(\#fig:pi_m1_bern)Marginal model plot of the binary logistic regression model of Year predicting whether a marginal $p$ value was reported.</p>
 </div>
 
@@ -592,7 +588,7 @@ mmp_brm(m1_bern_id, x = "Year10", plot_pi = FALSE, jitter = TRUE, smooth_method 
 ```
 
 <div class="figure">
-<img src="11_generalized_linear_models_files/figure-html/pi_m1_id-1.png" alt="Marginal model plot of the Bernoulli regression model with identity link of Year predicting whether a marginal $p$ value was reported." width="672" />
+<img src="11_generalized_linear_models_files/figure-epub3/pi_m1_id-1.png" alt="Marginal model plot of the Bernoulli regression model with identity link of Year predicting whether a marginal $p$ value was reported."  />
 <p class="caption">(\#fig:pi_m1_id)Marginal model plot of the Bernoulli regression model with identity link of Year predicting whether a marginal $p$ value was reported.</p>
 </div>
 
@@ -608,7 +604,7 @@ marginal_effects(m1_bern_id)
 ># 'conditional_effects' instead.
 ```
 
-<img src="11_generalized_linear_models_files/figure-html/marg_eff_m1_bern_id-1.png" width="672" />
+![](11_generalized_linear_models_files/figure-epub3/marg_eff_m1_bern_id-1.png)<!-- -->
 
 It should be pointed out that, whereas you can compare Bernoulli models with
 different link functions, you CANNOT compare the normal model with the logistic
@@ -645,7 +641,7 @@ pp_check(m1_bern_id, type = "error_binned", nsamples = 9)
 ```
 
 <div class="figure">
-<img src="11_generalized_linear_models_files/figure-html/ppc_m1_bern_id-1.png" alt="Binned residual plots in replicated data of $\tilde y - y$." width="624" />
+<img src="11_generalized_linear_models_files/figure-epub3/ppc_m1_bern_id-1.png" alt="Binned residual plots in replicated data of $\tilde y - y$."  />
 <p class="caption">(\#fig:ppc_m1_bern_id)Binned residual plots in replicated data of $\tilde y - y$.</p>
 </div>
 
@@ -678,8 +674,8 @@ m1_pred <- as.numeric(m1_pred > mean(marginalp$marginal_p))
 ```
 >#          observed
 ># predicted   0   1
->#         0 522 157
->#         1 436 354
+>#         0 538 159
+>#         1 420 352
 ```
 
 ```r
@@ -688,7 +684,7 @@ m1_pred <- as.numeric(m1_pred > mean(marginalp$marginal_p))
 ```
 
 ```
-># [1] 0.596
+># [1] 0.606
 ```
 
 ```r
@@ -698,7 +694,7 @@ m1_pred <- as.numeric(m1_pred > mean(marginalp$marginal_p))
 So from a $2 \times 2$ contingency table, the prediction is correct when the 
 predicted and the observed values are the same (i.e., the two cells in 
 the diagonal), and the prediction is incorrect otherwise. In this example, the
-classification accuracy is 59.632%.
+classification accuracy is 60.585%.
 We can consider adding more predictors and re-evaluate the classification error
 again:
 
@@ -725,8 +721,8 @@ m2_pred <- as.numeric(m2_pred > mean(marginalp$marginal_p))
 ```
 >#          observed
 ># predicted   0   1
->#         0 603 177
->#         1 355 334
+>#         0 599 182
+>#         1 359 329
 ```
 
 ```r
@@ -735,7 +731,7 @@ m2_pred <- as.numeric(m2_pred > mean(marginalp$marginal_p))
 ```
 
 ```
-># [1] 0.638
+># [1] 0.632
 ```
 
 Note that unlike information criteria, as the classification error is evaluated
@@ -793,7 +789,7 @@ pROC::roc(response = marginalp$marginal_p,
 ># Setting direction: controls < cases
 ```
 
-<img src="11_generalized_linear_models_files/figure-html/roc_m2-1.png" width="432" />
+![](11_generalized_linear_models_files/figure-epub3/roc_m2-1.png)<!-- -->
 
 ```
 ># 
@@ -801,7 +797,7 @@ pROC::roc(response = marginalp$marginal_p,
 ># roc.default(response = marginalp$marginal_p, predictor = predict(m2_bern,     type = "response")[, "Estimate"], plot = TRUE, print.auc = TRUE)
 ># 
 ># Data: predict(m2_bern, type = "response")[, "Estimate"] in 958 controls (marginalp$marginal_p 0) < 511 cases (marginalp$marginal_p 1).
-># Area under the curve: 0.683
+># Area under the curve: 0.68
 ```
 
 ### Complete Separation
@@ -923,6 +919,13 @@ However, sometimes the data may come in the form:
 marginalp_agg <- 
   summarise(group_by(marginalp, Year10), 
             marginal_p = sum(marginal_p), n = n())
+```
+
+```
+># `summarise()` ungrouping output (override with `.groups` argument)
+```
+
+```r
 head(marginalp_agg)
 ```
 
@@ -977,7 +980,7 @@ pp_check(m1_bin, type = "intervals")
 ```
 
 <div class="figure">
-<img src="11_generalized_linear_models_files/figure-html/ppc-m1_bin-1.png" alt="Posterior predictive check using the predicted and observed counts." width="672" />
+<img src="11_generalized_linear_models_files/figure-epub3/ppc-m1_bin-1.png" alt="Posterior predictive check using the predicted and observed counts."  />
 <p class="caption">(\#fig:ppc-m1_bin)Posterior predictive check using the predicted and observed counts.</p>
 </div>
 
@@ -1016,7 +1019,7 @@ ggplot(data.frame(x = c(0, 100)), aes(x)) +
 ```
 
 <div class="figure">
-<img src="11_generalized_linear_models_files/figure-html/log_link-1.png" alt="Link of $\eta = \log(\mu)$." width="672" />
+<img src="11_generalized_linear_models_files/figure-epub3/log_link-1.png" alt="Link of $\eta = \log(\mu)$."  />
 <p class="caption">(\#fig:log_link)Link of $\eta = \log(\mu)$.</p>
 </div>
 
@@ -1050,6 +1053,10 @@ redcard_ref <- redcard_dat %>%
             games = sum(games))
 ```
 
+```
+># `summarise()` ungrouping output (override with `.groups` argument)
+```
+
 First check the distribution of the counts:
 
 
@@ -1058,7 +1065,7 @@ ggplot(redcard_ref, aes(x = redCards)) +
   geom_bar()
 ```
 
-<img src="11_generalized_linear_models_files/figure-html/bar-redcard_ref-1.png" width="672" />
+![](11_generalized_linear_models_files/figure-epub3/bar-redcard_ref-1.png)<!-- -->
 
 You can see a lot of zeros. Below are the scatterplots against the predictors:
 
@@ -1081,7 +1088,7 @@ ggplot(redcard_ref, aes(x = player_dark, y = redCards)) +
 ># Warning: Removed 1855 rows containing missing values (geom_point).
 ```
 
-<img src="11_generalized_linear_models_files/figure-html/plot-redcard_ref-1.png" width="672" />
+![](11_generalized_linear_models_files/figure-epub3/plot-redcard_ref-1.png)<!-- -->
 
 ```r
 ggplot(redcard_ref, aes(x = meanExp, y = redCards)) + 
@@ -1101,7 +1108,7 @@ ggplot(redcard_ref, aes(x = meanExp, y = redCards)) +
 ># Warning: Removed 11 rows containing missing values (geom_point).
 ```
 
-<img src="11_generalized_linear_models_files/figure-html/plot-redcard_ref-2.png" width="672" />
+![](11_generalized_linear_models_files/figure-epub3/plot-redcard_ref-2.png)<!-- -->
 
 It doesn't appear that there are strong relationships. Let's fit a Poisson 
 model.
@@ -1171,11 +1178,7 @@ stanplot(m4, type = "areas", bw = "SJ")
 ># Warning: Method 'stanplot' is deprecated. Please use 'mcmc_plot' instead.
 ```
 
-```
-># Warning: `expand_scale()` is deprecated; use `expansion()` instead.
-```
-
-<img src="11_generalized_linear_models_files/figure-html/mcmc-areas-m4-1.png" width="672" />
+![](11_generalized_linear_models_files/figure-epub3/mcmc-areas-m4-1.png)<!-- -->
 
 ### Interpretations
 
@@ -1198,7 +1201,7 @@ plot(marginal_effects(m4), ask = FALSE)
 ># 'conditional_effects' instead.
 ```
 
-<img src="11_generalized_linear_models_files/figure-html/marginal_effects-m4-1.png" width="672" /><img src="11_generalized_linear_models_files/figure-html/marginal_effects-m4-2.png" width="672" /><img src="11_generalized_linear_models_files/figure-html/marginal_effects-m4-3.png" width="672" />
+![](11_generalized_linear_models_files/figure-epub3/marginal_effects-m4-1.png)<!-- -->![](11_generalized_linear_models_files/figure-epub3/marginal_effects-m4-2.png)<!-- -->![](11_generalized_linear_models_files/figure-epub3/marginal_effects-m4-3.png)<!-- -->
 
 As can be seen, there are a lot of uncertainty in the associations, and there
 was not much evidence for a positive association between `player_dark` and 
@@ -1265,7 +1268,7 @@ grid.arrange(ppc_dens_pois, ppc_max_pois, ppc_vm_ratio_pois, ppc_pzero_pois,
 ># `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 ```
 
-<img src="11_generalized_linear_models_files/figure-html/ppc_pois-1.png" width="672" />
+![](11_generalized_linear_models_files/figure-epub3/ppc_pois-1.png)<!-- -->
 
 As shown above, the fit wasn't terrible but also wasn't very good for the 
 Poisson model. One major problem is that the number of red cards for each 
@@ -1285,7 +1288,7 @@ pp_check(m4, type = "rootogram", style = "hanging")
 ># Using all posterior samples for ppc type 'rootogram' by default.
 ```
 
-<img src="11_generalized_linear_models_files/figure-html/ppc-rootogram-m4-1.png" width="672" />
+![](11_generalized_linear_models_files/figure-epub3/ppc-rootogram-m4-1.png)<!-- -->
 
 
 ### Other models in GLM
